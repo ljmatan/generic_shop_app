@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the onCookieConsentAcknowledged method from the GsaServiceCache class, for the Dart programming language.">
+  <title>onCookieConsentAcknowledged method - GsaServiceCache class - services library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">generic_shop_app</a></li>
+    <li><a href="../../services/services-library.html">services</a></li>
+    <li><a href="../../services/GsaServiceCache-class.html">GsaServiceCache</a></li>
+    <li class="self-crumb">onCookieConsentAcknowledged method</li>
+  </ol>
+  <div class="self-name">onCookieConsentAcknowledged</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="services&#47;GsaServiceCache-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-method">onCookieConsentAcknowledged</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype">Future<span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">onCookieConsentAcknowledged</span>(<wbr>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Event triggered on user cookie acknowledgement.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; onCookieConsentAcknowledged() async {
+  final version = GsaServiceCacheId.version.value as int?;
+  &#47;&#47; If the cached version is different than the current [_version], handle logic for updating cached values.
+  if (_version != version) {
+    switch (version) {
+      &#47;&#47;&#47; If the cached [version] argument is `null`, the user hasn&#39;t previously acknowledged cache service consent.
+      &#47;&#47;&#47;
+      &#47;&#47;&#47; Once the user has given their consent, default values defined for [GsaServiceCacheId] objects are recorded to device storage.
+      &#47;&#47;&#47;
+      case null:
+        for (final cacheId in GsaServiceCacheId.values) {
+          if (cacheId.defaultValue != null) {
+            try {
+              cacheId.setValue(cacheId.defaultValue);
+            } catch (e) {
+              GsaaServiceLogging.logError(&#39;Error setting default cache value: $e&#39;);
+            }
+          }
+        }
+
+      &#47;&#47;&#47; Here we can add logic for handling cached values if is a newer version of cache manager
+      &#47;&#47;&#47; for every new version add a new case
+      case _version:
+        &#47;&#47; Version is up-to-date.
+        break;
+      default:
+        throw &#39;Invalid cache manager version: $version&#39;;
+    }
+  }
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">generic_shop_app</a></li>
+    <li><a href="../../services/services-library.html">services</a></li>
+    <li><a href="../../services/GsaServiceCache-class.html">GsaServiceCache</a></li>
+    <li class="self-crumb">onCookieConsentAcknowledged method</li>
+</ol>
+
+
+    <h5>GsaServiceCache class</h5>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    generic_shop_app
+      0.1.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

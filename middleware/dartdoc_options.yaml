@@ -1,0 +1,12 @@
+# This file is used by dartdoc when generating API documentation for the Flutter code.
+dartdoc:
+  showUndocumentedCategories: true
+  includeExternal:
+    [
+      "bin/server.dart",
+      "bin/services/services.dart",
+      "bin/router/router.dart",
+      "bin/hosting/hosting.dart",
+      "bin/db/database.dart",
+      "bin/api/api.dart",
+    ]

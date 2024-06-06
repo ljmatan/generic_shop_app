@@ -1,0 +1,188 @@
+part of '../api.dart';
+
+/// API endpoint call and handling implementation references.
+///
+extension GsaaEndpointsUsersImplExt on GsaaEndpointsUsers {
+  Function get implementation {
+    switch (this) {
+      case GsaaEndpointsUsers.login:
+        return GsaaApiUsers.instance.login;
+      case GsaaEndpointsUsers.loginPassword:
+        return GsaaApiUsers.instance.loginPassword;
+      case GsaaEndpointsUsers.register:
+        return GsaaApiUsers.instance.register;
+      case GsaaEndpointsUsers.getUserDetails:
+        return GsaaApiUsers.instance.getUserDetails;
+      case GsaaEndpointsUsers.editUserDetails:
+        return GsaaApiUsers.instance.editUserDetails;
+      case GsaaEndpointsUsers.requestDeletion:
+        return GsaaApiUsers.instance.requestDeletion;
+      case GsaaEndpointsUsers.delete:
+        return GsaaApiUsers.instance.delete;
+      case GsaaEndpointsUsers.softDelete:
+        return GsaaApiUsers.instance.softDelete;
+    }
+  }
+}
+
+class GsaaApiUsers extends GsaaApi {
+  const GsaaApiUsers._() : super._();
+
+  static const instance = GsaaApiUsers._();
+
+  @override
+  String get _protocol => 'http';
+
+  @override
+  String get _identifier => 'users';
+
+  @override
+  int get _version => 0;
+
+  /// Register a user instance to the system.
+  ///
+  Future<String> register({
+    required String username,
+    required String password,
+    String? email,
+    String? phoneCountryCode,
+    String? phoneNumber,
+    String? firstName,
+    String? lastName,
+    String? gender,
+    DateTime? dateOfBirth,
+  }) async {
+    final response = await _post(
+      GsaaEndpointsUsers.register.path,
+      GsaaModelUser(
+        username: username,
+        personalDetails: GsaaModelPerson(
+          firstName: firstName,
+          lastName: lastName,
+          gender: gender,
+          dateOfBirthIso8601: dateOfBirth?.toIso8601String(),
+        ),
+        contact: GsaaModelContact(
+          email: email,
+          phoneCountryCode: phoneCountryCode,
+          phoneNumber: phoneNumber,
+        ),
+        address: GsaaModelAddress(),
+      ).toJson()
+        ..['password'] = password,
+    );
+    final userId = response['userId'];
+    if (userId == null) {
+      throw 'User ID missing from registration response.';
+    } else {
+      return userId;
+    }
+  }
+
+  /// Login a user with the given [username] and [password].
+  ///
+  Future<String> login({
+    required String username,
+    required String password,
+  }) async {
+    final response = await _post(
+      GsaaEndpointsUsers.login.path,
+      {
+        'username': username,
+        'password': password,
+      },
+    );
+    final securityToken = response['securityToken'];
+    if (securityToken is! String) {
+      throw 'Security token is missing.';
+    }
+    return securityToken;
+  }
+
+  /// Login a user with the given [password].
+  ///
+  Future<String> loginPassword({
+    required String username,
+    required String password,
+  }) async {
+    final response = await _post(
+      GsaaEndpointsUsers.loginPassword.path,
+      {
+        'password': password,
+      },
+    );
+    final securityToken = response['securityToken'];
+    if (securityToken is! String) {
+      throw 'Security token is missing.';
+    }
+    return securityToken;
+  }
+
+  /// Retrieve the details for a given user.
+  ///
+  Future<GsaaModelUser> getUserDetails([String? userId]) async {
+    final response = await _get(
+      GsaaEndpointsUsers.getUserDetails.path + (userId != null ? '?userId=$userId' : ''),
+    );
+    try {
+      final user = GsaaModelUser.fromJson(response);
+      return user;
+    } catch (e) {
+      throw 'Couldn\'t serialize user details:\n$response';
+    }
+  }
+
+  /// Edit user details with the provided information.
+  ///
+  Future<void> editUserDetails({
+    String? username,
+  }) async {
+    await _patch(
+      GsaaEndpointsUsers.editUserDetails.path,
+      {
+        if (username != null) 'username': username,
+      },
+    );
+  }
+
+  /// Request for an account deletion confirmation to be sent to the specified [email] address.
+  ///
+  Future<void> requestDeletion({
+    required String email,
+    required String password,
+  }) async {
+    await _delete(
+      GsaaEndpointsUsers.requestDeletion.path,
+      body: {
+        'email': email,
+        'password': password,
+      },
+    );
+  }
+
+  /// Deletes the user data from the database.
+  ///
+  Future<void> delete({
+    required String password,
+  }) async {
+    await _delete(
+      GsaaEndpointsUsers.delete.path,
+      body: {
+        'password': password,
+      },
+    );
+  }
+
+  /// Marks the user as deleted, without deleting the actual data from the database.
+  ///
+  Future<void> softDelete({
+    required String password,
+  }) async {
+    await _delete(
+      GsaaEndpointsUsers.softDelete.path,
+      body: {
+        'password': password,
+      },
+    );
+  }
+}

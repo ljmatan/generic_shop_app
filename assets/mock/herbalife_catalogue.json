@@ -1,0 +1,330 @@
+{
+    "merchants": [
+        {
+            "name": "Ivo Horvat",
+            "address": {
+                "latitude": "45.8150",
+                "longitude": "15.9819"
+            },
+            "contact": {
+                "phoneNumber": "0955603626"
+            },
+            "reviews": [
+                {
+                    "rating": "",
+                    "message": "",
+                    "timeCreatedIso8601": ""
+                }
+            ],
+            "logoImageUrl": ""
+        }
+    ],
+    "deliveryOptions": [
+        {
+            "id": "osobno-preuzimanje",
+            "name": "Osobno preuzimanje",
+            "descriptionShort": "Naručene proizvode možete bez dodatnih troškova preuzeti osobno.",
+            "price": {
+                "eurCents": 0
+            },
+            "payable": false
+        },
+        {
+            "id": "tisak-dostava",
+            "name": "Dostava TISAK",
+            "descriptionShort": "TISAK paket je korisna usluga koja omogućava brzu i sigurnu dostavu paketa s kioska na kiosk.",
+            "price": {
+                "eurCents": 800
+            },
+            "delivered": true
+        },
+        {
+            "id": "express-dostava",
+            "name": "Ekspres dostava",
+            "descriptionShort": "Ponekad je brza dostava od ključne važnosti. Naša Express usluga dostave savršeno je rješenje za Vas.",
+            "price": {
+                "eurCents": 2000
+            },
+            "delivered": true
+        }
+    ],
+    "paymentOptions": [
+        {
+            "id": "payment-on-delivery",
+            "name": "Plaćanje pouzećem",
+            "descriptionShort": "Ponekad je brza dostava od ključne važnosti. Naša Express usluga dostave savršeno je rješenje za vas.",
+            "price": {
+                "eurCents": 300
+            }
+        },
+        {
+            "id": "card-payment",
+            "name": "Plaćanje karticom",
+            "descriptionShort": "Ponekad je brza dostava od ključne važnosti. Naša Express usluga dostave savršeno je rješenje za vas.",
+            "price": {
+                "eurCents": 0
+            },
+            "delivered": true
+        }
+    ],
+    "categories": [
+        {
+            "id": "weight-control",
+            "name": "Weight Control",
+            "description": "Whether you're aiming to lose, gain, or maintain weight, our products provide effective support and nourishment."
+        },
+        {
+            "id": "balanced-breakfast",
+            "name": "Balanced Breakfast",
+            "description": "From hearty oats to protein-packed smoothies, our breakfast offerings ensure you kickstart your day feeling energized and satisfied."
+        },
+        {
+            "id": "sports",
+            "name": "Sports",
+            "description": "Designed to fuel your workouts and enhance recovery, our products are packed with essential nutrients and tailored to meet the demands of athletes and fitness enthusiasts."
+        },
+        {
+            "id": "supplements",
+            "name": "Supplements",
+            "description": "From immune support to promoting overall well-being, our products are formulated with carefully selected nutrients to fill in the gaps in your diet."
+        },
+        {
+            "id": "personal-care",
+            "name": "Personal Care",
+            "description": "Indulge in skincare delights and discover haircare wonders, meticulously crafted to transform your daily routine into a pampering ritual."
+        }
+    ],
+    "saleItems": [
+        {
+            "id": "phyto-complete-dodatak-prehrani",
+            "originUrl": "https://www.herbalife.hr/proizvodi/236k-phyto-complete-60-kapsula/",
+            "name": "Phyto Complete Dodatak prehrani",
+            "amount": "60",
+            "measure": "kapsula",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2024/01-Jan/236K_HR_PhytoComplete_Square_1300px.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2024/01-Jan/236K_HR_PhytoComplete_Square_1300px.jpg",
+            "price": {
+                "eurCents": 7511
+            }
+
+        },
+        {
+            "id": "formula-1-express-brusnica",
+            "originUrl": "https://www.herbalife.hr/proizvodi/4473-formula-1-express-okus-brusnice-i-bijele-cokolade-7-plocica/",
+            "name": "Formula 1 Express Pločice za hranjivi obrok okus brusnice i bijele čokolade",
+            "amount": "7",
+            "measure": "pločica (56g)",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2024/01-Jan/4473_HR_KO_ME_F1ExpressBar_Box+Foil_CranberryWhiteChoc_High_1300px_1.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2024/01-Jan/4473_HR_KO_ME_F1ExpressBar_Box+Foil_CranberryWhiteChoc_High_1300px_1.jpg",
+            "price": {
+                "eurCents": 2200
+            }
+        },
+        {
+            "id": "proteinski-cips-sour-cream-onion",
+            "originUrl": "https://www.herbalife.hr/proizvodi/142k-proteinski-cips-sour-cream-and-onion-10x30g/",
+            "name": "Proteinski čips okus sour cream & onion",
+            "amount": "10",
+            "measure": "vrećica (30g)",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/12-Dec/142K_HR_BA_KO_MK_ME_SR_ProteinChips_SCO_Box+Foil_1300px_1.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/12-Dec/142K_HR_BA_KO_MK_ME_SR_ProteinChips_SCO_Box+Foil_1300px_1.jpg",
+            "price": {
+                "eurCents": 2764
+            }
+        },
+        {
+            "id": "proteinski-cips-barbecue",
+            "originUrl": "https://www.herbalife.hr/proizvodi/141k-proteinski-cips-barbecue-10x30g/",
+            "name": "Proteinski čips okus barbecue",
+            "amount": "10",
+            "measure": "vrećica (30g)",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/12-Dec/141K_HR_BA_KO_MK_ME_SR_ProteinChips_BBQ_Box+Foil_1300px_1.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/12-Dec/141K_HR_BA_KO_MK_ME_SR_ProteinChips_BBQ_Box+Foil_1300px_1.jpg",
+            "price": {
+                "eurCents": 2700
+            }
+        },
+        {
+            "id": "probni-paket-formula-1-vanilla-creme",
+            "originUrl": "https://www.herbalife.hr/proizvodi/5b15-probni-paket-F1-vrecice-okus-vanilla-creme/",
+            "name": "Probni paket Formula 1 okus vanilla creme",
+            "amount": "1",
+            "measure": "komad",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/11-Nov/5B15_Trial_pack_CRO_1.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/11-Nov/5B15_Trial_pack_CRO_1.jpg",
+            "price": {
+                "eurCents": 7552
+            }
+        },
+        {
+            "id": "kuharica-svezak-2",
+            "originUrl": "https://www.herbalife.hr/proizvodi/3C10-Herbalife-Kuharica-svezak-2/",
+            "name": "Herbalife Kuharica Svezak 2",
+            "amount": "1",
+            "measure": "kom",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/10-Oct/Cook%20Book%20vol%202%20HR%201300px_1.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/10-Oct/Cook%20Book%20vol%202%20HR%201300px_1.jpg",
+            "price": {
+                "eurCents": 1300
+            }
+        },
+        {
+            "id": "night-mode-dodatak-prehrani-kamilica-breskva",
+            "originUrl": "",
+            "name": "Night Mode Dodatak prehrani okus kamilice i breskve",
+            "amount": "180",
+            "measure": "grama",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/09-Sep/282K_HR_SI_NightMode_Square_1300px.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/09-Sep/282K_HR_SI_NightMode_Square_1300px.jpg",
+            "price": {
+                "eurCents": 4200
+            }
+        },
+        {
+            "name": "Formula 1 Limited edition Zamjenski obrok za kontrolu tjelesne težine okus yuzu passionfruit",
+            "amount": "550",
+            "measure": "grama",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/07-Jul/255K_HR_F1_YuzuPassionfruit_Square_1300px_1.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/07-Jul/255K_HR_F1_YuzuPassionfruit_Square_1300px_1.jpg",
+            "price": {
+                "eurCents": 4500
+            }
+        },
+        {
+            "name": "H24 Achieve Proteinska pločica okus tamne čokolade",
+            "amount": "6",
+            "measure": "pločica (60g)",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/01-Jan/150K_HR_BA_ME_MK_H24_AchieveProteinBars_DarkChoc_Box+Bar_1300px.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/01-Jan/150K_HR_BA_ME_MK_H24_AchieveProteinBars_DarkChoc_Box+Bar_1300px.jpg",
+            "price": {
+                "eurCents": 2600
+            }
+        },
+        {
+            "name": "Instant biljni napitak s ekstraktima čaja izvorni okus",
+            "amount": "102",
+            "measure": "grama",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/01-Jan/179K_HR_BA_ME_Tea_Original_100g_Square_1300px_1.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2023/01-Jan/179K_HR_BA_ME_Tea_Original_100g_Square_1300px_1.jpg",
+            "price": {
+                "eurCents": 800
+            }
+        },
+        {
+            "name": "Instant biljni napitak s ekstraktima čaja okus breskve",
+            "amount": "51",
+            "measure": "grama",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/12-Dec/181K_HR_BA_ME_Tea_Peach_Square_1300px_1.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/12-Dec/181K_HR_BA_ME_Tea_Peach_Square_1300px_1.jpg",
+            "price": {
+                "eurCents": 1700
+            }
+        },
+        {
+            "name": "Immune Booster dodatak prehrani okus bobičastog voća",
+            "amount": "21",
+            "measure": "vrećica (3,7g)",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/10-Oct/233K_HR_ME_KO_ImmuneBooster_Square_1300px.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/10-Oct/233K_HR_ME_KO_ImmuneBooster_Square_1300px.jpg",
+            "price": {
+                "eurCents": 7800
+            }
+        },
+        {
+            "name": "Instant biljni napitak s ekstraktima čaja okus limuna 51 g",
+            "amount": "51",
+            "measure": "grama",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/09-Sep/180K_HR_BA_ME_Tea_Lemon_Square_1300px.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/09-Sep/180K_HR_BA_ME_Tea_Lemon_Square_1300px.jpg",
+            "price": {
+                "eurCents": 3400
+            }
+        },
+        {
+            "name": "Collagen Skin Booster Dodatak prehrani okus jagode i limuna",
+            "amount": "171",
+            "measure": "grama",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/06-Jun/076K_HR_ME_CollagenSkinBooster_Square_1300px.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/06-Jun/076K_HR_ME_CollagenSkinBooster_Square_1300px.jpg",
+            "price": {
+                "eurCents": 1400
+            }
+        },
+        {
+            "name": "Formula 1 Express Pločice za hranjivi obrok okus tamne čokolade",
+            "amount": "7 pločica (56g)",
+            "measure": "kapsula",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/05-May/4472_HR_KO_ME_SI_F1ExpressBar_Box_DarkChoc_High_1300px%20(1).jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2022/05-May/4472_HR_KO_ME_SI_F1ExpressBar_Box_DarkChoc_High_1300px%20(1).jpg",
+            "price": {
+                "eurCents": 1600
+            }
+        },
+        {
+            "name": "Protein Drink Mix Vegan, okus vanilije",
+            "amount": "560",
+            "measure": "grama",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2021/11-Nov/172k-hr-pdmvegan.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2021/11-Nov/172k-hr-pdmvegan.jpg",
+            "price": {
+                "eurCents": 2000
+            }
+        },
+        {
+            "name": "H24 LiftOff Max energetska mješavina u prahu, dodatak prehrani. Okus grejpa",
+            "amount": "10",
+            "measure": "vrećica (4,2g)",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2021/11-Nov/192k-hr-h24-liftoffmax.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2021/11-Nov/192k-hr-h24-liftoffmax.jpg",
+            "price": {
+                "eurCents": 2100
+            }
+        },
+        {
+            "name": "Microbiotic Max Dodatak prehrani okus vanilije",
+            "amount": "20",
+            "measure": "vrećica (2g)",
+            "descriptionShort": "Phyto Complete snažno djeluje dok se vi bavite svojim poslom. Promišljeno je formuliran i sadrži Fiit-NS™, znanstveno proučeni sastojak koji ima brojne koristi.",
+            "descriptionLong": "Ova kapsula bogata fitonutrijentima sadrži prirodni kofein i vitamin C, vitamin B3, krom i biljne ekstrakate guarane, zelenog čaja, grejpa, grožđa i crne mrkve. Vitamin B3 i vitamin C doprinose normalnom metabolizmu stvaranja energije i smanjenju umora i iscrpljenosti, dok krom doprinosi normalnom metabolizmu makronutrijenata.\n\nPodrška vašoj svakodnevnoj rutini s dnevnom dozom proizvoda Phyto Complete – ukorijenjenog u prirodi i utemeljenog u znanosti.",
+            "thumbnailUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2021/11-Nov/173k-hr-microbiotic-max.jpg",
+            "imageUrl": "https://assets.herbalifenutrition.com/content/dam/regional/emea/hr_hr/sites/herbalife_nutrition/web_graphic/products/2021/11-Nov/173k-hr-microbiotic-max.jpg",
+            "price": {
+                "eurCents": 1900
+            }
+        }
+    ]
+}

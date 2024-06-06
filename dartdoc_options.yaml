@@ -1,0 +1,3 @@
+# This file is used by dartdoc when generating API documentation for the Flutter code.
+dartdoc:
+  showUndocumentedCategories: true

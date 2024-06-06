@@ -1,0 +1,62 @@
+name: generic_shop_app
+description: "Generic shop mobile and web app."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  generic_shop_app_api:
+    path: ./api
+  json_annotation: ^4.8.1
+  flutter_svg: ^2.0.10+1
+  webview_flutter: ^4.7.0
+  intl: ^0.19.0
+  universal_html: ^2.2.4
+  url_launcher: ^6.2.5
+  app_tracking_transparency: ^2.0.4
+  auto_size_text: ^3.0.0
+  flutter_map: ^7.0.0-dev.1
+  flutter_markdown: ^0.7.1
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  dartdoc: ^8.0.7
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/mock/ # TODO: Remove once flavors are implemented and uncomment below.
+    # - path: assets/mock/
+    #   flavors:
+    #     - mock
+
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand-Light.ttf
+          weight: 100
+        - asset: assets/fonts/Quicksand-Light.ttf
+          weight: 200
+        - asset: assets/fonts/Quicksand-Medium.ttf
+          weight: 300
+        - asset: assets/fonts/Quicksand-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Quicksand-Regular.ttf
+          weight: 500
+        - asset: assets/fonts/Quicksand-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Quicksand-SemiBold.ttf
+          weight: 700
+        - asset: assets/fonts/Quicksand-Bold.ttf
+          weight: 800
+        - asset: assets/fonts/Quicksand-Bold.ttf
+          weight: 900
