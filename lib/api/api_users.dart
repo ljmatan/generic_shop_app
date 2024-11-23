@@ -1,4 +1,4 @@
-part of '../api.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -17,16 +17,16 @@ extension GsaaEndpointsUsersImplExt on GsaaEndpointsUsers {
         return GsaaApiUsers.instance.editUserDetails;
       case GsaaEndpointsUsers.requestDeletion:
         return GsaaApiUsers.instance.requestDeletion;
-      case GsaaEndpointsUsers.delete:
-        return GsaaApiUsers.instance.delete;
-      case GsaaEndpointsUsers.softDelete:
-        return GsaaApiUsers.instance.softDelete;
+      case GsaaEndpointsUsers.deleteAll:
+        return GsaaApiUsers.instance.deleteAll;
+      case GsaaEndpointsUsers.deleteSoft:
+        return GsaaApiUsers.instance.deleteSoft;
     }
   }
 }
 
 class GsaaApiUsers extends GsaaApi {
-  const GsaaApiUsers._() : super._();
+  const GsaaApiUsers._();
 
   static const instance = GsaaApiUsers._();
 
@@ -52,7 +52,7 @@ class GsaaApiUsers extends GsaaApi {
     String? gender,
     DateTime? dateOfBirth,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsUsers.register.path,
       GsaaModelUser(
         username: username,
@@ -85,7 +85,7 @@ class GsaaApiUsers extends GsaaApi {
     required String username,
     required String password,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsUsers.login.path,
       {
         'username': username,
@@ -105,7 +105,7 @@ class GsaaApiUsers extends GsaaApi {
     required String username,
     required String password,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsUsers.loginPassword.path,
       {
         'password': password,
@@ -121,7 +121,7 @@ class GsaaApiUsers extends GsaaApi {
   /// Retrieve the details for a given user.
   ///
   Future<GsaaModelUser> getUserDetails([String? userId]) async {
-    final response = await _get(
+    final response = await get(
       GsaaEndpointsUsers.getUserDetails.path + (userId != null ? '?userId=$userId' : ''),
     );
     try {
@@ -137,7 +137,7 @@ class GsaaApiUsers extends GsaaApi {
   Future<void> editUserDetails({
     String? username,
   }) async {
-    await _patch(
+    await patch(
       GsaaEndpointsUsers.editUserDetails.path,
       {
         if (username != null) 'username': username,
@@ -151,7 +151,7 @@ class GsaaApiUsers extends GsaaApi {
     required String email,
     required String password,
   }) async {
-    await _delete(
+    await delete(
       GsaaEndpointsUsers.requestDeletion.path,
       body: {
         'email': email,
@@ -162,11 +162,11 @@ class GsaaApiUsers extends GsaaApi {
 
   /// Deletes the user data from the database.
   ///
-  Future<void> delete({
+  Future<void> deleteAll({
     required String password,
   }) async {
-    await _delete(
-      GsaaEndpointsUsers.delete.path,
+    await delete(
+      GsaaEndpointsUsers.deleteAll.path,
       body: {
         'password': password,
       },
@@ -175,11 +175,11 @@ class GsaaApiUsers extends GsaaApi {
 
   /// Marks the user as deleted, without deleting the actual data from the database.
   ///
-  Future<void> softDelete({
+  Future<void> deleteSoft({
     required String password,
   }) async {
-    await _delete(
-      GsaaEndpointsUsers.softDelete.path,
+    await delete(
+      GsaaEndpointsUsers.deleteSoft.path,
       body: {
         'password': password,
       },

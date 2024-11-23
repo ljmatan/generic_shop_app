@@ -27,11 +27,11 @@ enum GsaaEndpointsUsers {
 
   /// Deletes all of the associated user records from the database.
   ///
-  delete,
+  deleteAll,
 
   /// Marks the user as deleted and removes any personal user data from the database.
   ///
-  softDelete,
+  deleteSoft,
 }
 
 extension GsaaEndpointsUsersPathExt on GsaaEndpointsUsers {
@@ -49,9 +49,9 @@ extension GsaaEndpointsUsersPathExt on GsaaEndpointsUsers {
         return 'details';
       case GsaaEndpointsUsers.requestDeletion:
         return 'ask-delete';
-      case GsaaEndpointsUsers.delete:
+      case GsaaEndpointsUsers.deleteAll:
         return 'delete';
-      case GsaaEndpointsUsers.softDelete:
+      case GsaaEndpointsUsers.deleteSoft:
         return 'soft-delete';
     }
   }
@@ -74,9 +74,9 @@ extension GsaaEndpointsUsersPathExt on GsaaEndpointsUsers {
         return _EndpointMethodType.patchRequest;
       case GsaaEndpointsUsers.requestDeletion:
         return _EndpointMethodType.deleteRequest;
-      case GsaaEndpointsUsers.delete:
+      case GsaaEndpointsUsers.deleteAll:
         return _EndpointMethodType.deleteRequest;
-      case GsaaEndpointsUsers.softDelete:
+      case GsaaEndpointsUsers.deleteSoft:
         return _EndpointMethodType.deleteRequest;
     }
   }

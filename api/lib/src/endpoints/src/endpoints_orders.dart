@@ -7,11 +7,11 @@ enum GsaaEndpointsOrders {
 
   /// Removes the order record from the database.
   ///
-  delete,
+  deleteAll,
 
   /// Marks the order as deleted, and removes any privately-associated data from the database.
   ///
-  softDelete,
+  deleteSoft,
 
   /// Endpoint used for creating or updating the order draft, with order overview as the return value.
   ///
@@ -27,9 +27,9 @@ extension GsaaEndpointsOrdersPathExt on GsaaEndpointsOrders {
     switch (this) {
       case GsaaEndpointsOrders.register:
         return 'register';
-      case GsaaEndpointsOrders.delete:
+      case GsaaEndpointsOrders.deleteAll:
         return 'delete';
-      case GsaaEndpointsOrders.softDelete:
+      case GsaaEndpointsOrders.deleteSoft:
         return 'soft-delete';
       case GsaaEndpointsOrders.createOrUpdateDraft:
         return 'create-draft';
@@ -46,9 +46,9 @@ extension GsaaEndpointsOrdersPathExt on GsaaEndpointsOrders {
     switch (this) {
       case GsaaEndpointsOrders.register:
         return _EndpointMethodType.postRequest;
-      case GsaaEndpointsOrders.delete:
+      case GsaaEndpointsOrders.deleteAll:
         return _EndpointMethodType.deleteRequest;
-      case GsaaEndpointsOrders.softDelete:
+      case GsaaEndpointsOrders.deleteSoft:
         return _EndpointMethodType.deleteRequest;
       case GsaaEndpointsOrders.createOrUpdateDraft:
         return _EndpointMethodType.putRequest;

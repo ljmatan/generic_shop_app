@@ -4,8 +4,8 @@ enum GsaaEndpointsMerchants {
   register,
   getMerchantDetails,
   editMerchantDetails,
-  delete,
-  softDelete,
+  deleteAll,
+  deleteSoft,
   getAllMerchants,
 }
 
@@ -18,9 +18,9 @@ extension GsaaEndpointsMerchantsPathExt on GsaaEndpointsMerchants {
         return 'details';
       case GsaaEndpointsMerchants.editMerchantDetails:
         return 'details';
-      case GsaaEndpointsMerchants.delete:
+      case GsaaEndpointsMerchants.deleteAll:
         return 'delete';
-      case GsaaEndpointsMerchants.softDelete:
+      case GsaaEndpointsMerchants.deleteSoft:
         return 'soft-delete';
       case GsaaEndpointsMerchants.getAllMerchants:
         return 'all-merchants';
@@ -39,9 +39,9 @@ extension GsaaEndpointsMerchantsPathExt on GsaaEndpointsMerchants {
         return _EndpointMethodType.getRequest;
       case GsaaEndpointsMerchants.editMerchantDetails:
         return _EndpointMethodType.patchRequest;
-      case GsaaEndpointsMerchants.delete:
+      case GsaaEndpointsMerchants.deleteAll:
         return _EndpointMethodType.deleteRequest;
-      case GsaaEndpointsMerchants.softDelete:
+      case GsaaEndpointsMerchants.deleteSoft:
         return _EndpointMethodType.deleteRequest;
       case GsaaEndpointsMerchants.getAllMerchants:
         return _EndpointMethodType.getRequest;

@@ -1,4 +1,4 @@
-part of '../api.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -11,10 +11,10 @@ extension GsaaEndpointsMerchantsImplExt on GsaaEndpointsMerchants {
         return GsaaApiMerchants.instance.getMerchantDetails;
       case GsaaEndpointsMerchants.editMerchantDetails:
         return GsaaApiMerchants.instance.editMerchantDetails;
-      case GsaaEndpointsMerchants.delete:
-        return GsaaApiMerchants.instance.delete;
-      case GsaaEndpointsMerchants.softDelete:
-        return GsaaApiMerchants.instance.softDelete;
+      case GsaaEndpointsMerchants.deleteAll:
+        return GsaaApiMerchants.instance.deleteAll;
+      case GsaaEndpointsMerchants.deleteSoft:
+        return GsaaApiMerchants.instance.deleteSoft;
       case GsaaEndpointsMerchants.getAllMerchants:
         return GsaaApiMerchants.instance.getAllMerchants;
     }
@@ -24,7 +24,7 @@ extension GsaaEndpointsMerchantsImplExt on GsaaEndpointsMerchants {
 /// Merchant / vendor related API calls and logic.
 ///
 class GsaaApiMerchants extends GsaaApi {
-  const GsaaApiMerchants._() : super._();
+  const GsaaApiMerchants._();
 
   static const instance = GsaaApiMerchants._();
 
@@ -42,7 +42,7 @@ class GsaaApiMerchants extends GsaaApi {
   Future<String> register({
     required String name,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsMerchants.register.path,
       GsaaModelMerchant(
         name: name,
@@ -61,7 +61,7 @@ class GsaaApiMerchants extends GsaaApi {
   Future<GsaaModelMerchant> getMerchantDetails({
     required String merchantId,
   }) async {
-    final response = await _get(
+    final response = await get(
       '${GsaaEndpointsMerchants.getMerchantDetails.path}?merchantId=$merchantId',
     );
     return GsaaModelMerchant.fromJson(response);
@@ -72,7 +72,7 @@ class GsaaApiMerchants extends GsaaApi {
   Future<void> editMerchantDetails({
     required String name,
   }) async {
-    await _patch(
+    await patch(
       GsaaEndpointsMerchants.editMerchantDetails.path,
       {
         'name': name,
@@ -82,11 +82,11 @@ class GsaaApiMerchants extends GsaaApi {
 
   /// Removes a merchant instance from the system database.
   ///
-  Future<void> delete({
+  Future<void> deleteAll({
     required String merchantId,
   }) async {
-    await _delete(
-      GsaaEndpointsMerchants.delete.path,
+    await delete(
+      GsaaEndpointsMerchants.deleteAll.path,
       body: {
         'merchantId': merchantId,
       },
@@ -95,11 +95,11 @@ class GsaaApiMerchants extends GsaaApi {
 
   /// Sets the merchant status as deleted in the database, but does not actually remove the data.
   ///
-  Future<void> softDelete({
+  Future<void> deleteSoft({
     required String merchantId,
   }) async {
-    await _delete(
-      GsaaEndpointsMerchants.softDelete.path,
+    await delete(
+      GsaaEndpointsMerchants.deleteSoft.path,
       body: {
         'merchantId': merchantId,
       },
@@ -109,7 +109,7 @@ class GsaaApiMerchants extends GsaaApi {
   /// Retrieves the list of all the merchants available to the user.
   ///
   Future<List<GsaaModelMerchant>?> getAllMerchants() async {
-    final response = await _get(
+    final response = await get(
       GsaaEndpointsMerchants.getAllMerchants.path,
     );
     final merchants = response['merchants'];

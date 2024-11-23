@@ -1,4 +1,4 @@
-part of '../api.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -11,10 +11,10 @@ extension GsaaEndpointsSaleItemsImplExt on GsaaEndpointsSaleItems {
         return GsaaApiSaleItems.instance.getItemDetails;
       case GsaaEndpointsSaleItems.editItemDetails:
         return GsaaApiSaleItems.instance.editItemDetails;
-      case GsaaEndpointsSaleItems.delete:
-        return GsaaApiSaleItems.instance.delete;
-      case GsaaEndpointsSaleItems.softDelete:
-        return GsaaApiSaleItems.instance.softDelete;
+      case GsaaEndpointsSaleItems.deleteAll:
+        return GsaaApiSaleItems.instance.deleteAll;
+      case GsaaEndpointsSaleItems.deleteSoft:
+        return GsaaApiSaleItems.instance.deleteSoft;
       case GsaaEndpointsSaleItems.getAllItems:
         return GsaaApiSaleItems.instance.getAllItems;
       case GsaaEndpointsSaleItems.getItemCategories:
@@ -28,7 +28,7 @@ extension GsaaEndpointsSaleItemsImplExt on GsaaEndpointsSaleItems {
 }
 
 class GsaaApiSaleItems extends GsaaApi {
-  const GsaaApiSaleItems._() : super._();
+  const GsaaApiSaleItems._();
 
   static const instance = GsaaApiSaleItems._();
 
@@ -48,7 +48,7 @@ class GsaaApiSaleItems extends GsaaApi {
   Future<String> register({
     required String name,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsSaleItems.register.path,
       GsaaModelSaleItem(
         name: name,
@@ -67,7 +67,7 @@ class GsaaApiSaleItems extends GsaaApi {
   Future<String> getItemDetails({
     required String id,
   }) async {
-    final response = await _get(
+    final response = await get(
       '${GsaaEndpointsSaleItems.getItemDetails.path}?saleItemId=$id',
     );
     final saleItemId = response['saleItemId'];
@@ -84,7 +84,7 @@ class GsaaApiSaleItems extends GsaaApi {
     required String saleItemId,
     String? name,
   }) async {
-    final response = await _patch(
+    final response = await patch(
       GsaaEndpointsSaleItems.editItemDetails.path,
       {
         'saleItemId': saleItemId,
@@ -101,11 +101,11 @@ class GsaaApiSaleItems extends GsaaApi {
 
   /// Deletes the sale item with the specified [saleItemId] from the database.
   ///
-  Future<void> delete({
+  Future<void> deleteAll({
     required String saleItemId,
   }) async {
-    await _delete(
-      GsaaEndpointsSaleItems.delete.path,
+    await delete(
+      GsaaEndpointsSaleItems.deleteAll.path,
       body: {
         'saleItemId': saleItemId,
       },
@@ -114,11 +114,11 @@ class GsaaApiSaleItems extends GsaaApi {
 
   /// Marks the sale item with the specified [saleItemId] as deleted without removing data from database.
   ///
-  Future<void> softDelete({
+  Future<void> deleteSoft({
     required String saleItemId,
   }) async {
-    await _delete(
-      GsaaEndpointsSaleItems.softDelete.path,
+    await delete(
+      GsaaEndpointsSaleItems.deleteSoft.path,
       body: {
         'saleItemId': saleItemId,
       },
@@ -128,7 +128,7 @@ class GsaaApiSaleItems extends GsaaApi {
   /// Retrieves the complete list of available sale items.
   ///
   Future<List<GsaaModelSaleItem>?> getAllItems() async {
-    final response = await _get(
+    final response = await get(
       GsaaEndpointsSaleItems.getAllItems.path,
     );
     final saleItems = response['items'];
@@ -143,7 +143,7 @@ class GsaaApiSaleItems extends GsaaApi {
   /// Retrieves the complete list of available sale items.
   ///
   Future<List<GsaaModelCategory>?> getItemCategories() async {
-    final response = await _get(
+    final response = await get(
       GsaaEndpointsSaleItems.getItemCategories.path,
     );
     final categories = response['categories'];
@@ -158,7 +158,7 @@ class GsaaApiSaleItems extends GsaaApi {
   /// Retrieves the complete list of available sale items.
   ///
   Future<List<GsaaModelSaleItem>?> getFeaturedItems() async {
-    final response = await _get(
+    final response = await get(
       GsaaEndpointsSaleItems.getFeaturedItems.path,
     );
     final saleItems = response['items'];
@@ -175,7 +175,7 @@ class GsaaApiSaleItems extends GsaaApi {
   Future<List<GsaaModelSaleItem>?> searchItems({
     required GsaaModelShopSearch filters,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsSaleItems.searchItems.path,
       filters.toJson(),
     );

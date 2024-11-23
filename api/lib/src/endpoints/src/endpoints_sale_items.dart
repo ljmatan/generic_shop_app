@@ -17,11 +17,11 @@ enum GsaaEndpointsSaleItems {
 
   /// Deletes the specified and any associated database records.
   ///
-  delete,
+  deleteAll,
 
   /// Marks the product as deleted, but does not remove the data from storage.
   ///
-  softDelete,
+  deleteSoft,
 
   /// Retrieves a full list of merchant sale items.
   ///
@@ -49,9 +49,9 @@ extension GsaaEndpointsSaleItemsPathExt on GsaaEndpointsSaleItems {
         return 'details';
       case GsaaEndpointsSaleItems.editItemDetails:
         return 'details';
-      case GsaaEndpointsSaleItems.delete:
+      case GsaaEndpointsSaleItems.deleteAll:
         return 'delete';
-      case GsaaEndpointsSaleItems.softDelete:
+      case GsaaEndpointsSaleItems.deleteSoft:
         return 'soft-delete';
       case GsaaEndpointsSaleItems.getAllItems:
         return 'all-items';
@@ -76,9 +76,9 @@ extension GsaaEndpointsSaleItemsPathExt on GsaaEndpointsSaleItems {
         return _EndpointMethodType.getRequest;
       case GsaaEndpointsSaleItems.editItemDetails:
         return _EndpointMethodType.patchRequest;
-      case GsaaEndpointsSaleItems.delete:
+      case GsaaEndpointsSaleItems.deleteAll:
         return _EndpointMethodType.deleteRequest;
-      case GsaaEndpointsSaleItems.softDelete:
+      case GsaaEndpointsSaleItems.deleteSoft:
         return _EndpointMethodType.deleteRequest;
       case GsaaEndpointsSaleItems.getAllItems:
         return _EndpointMethodType.getRequest;

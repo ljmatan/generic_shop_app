@@ -1,4 +1,4 @@
-part of '../api.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -7,10 +7,10 @@ extension GsaaEndpointsOrdersImplExt on GsaaEndpointsOrders {
     switch (this) {
       case GsaaEndpointsOrders.register:
         return GsaaApiOrders.instance.register;
-      case GsaaEndpointsOrders.delete:
-        return GsaaApiOrders.instance.delete;
-      case GsaaEndpointsOrders.softDelete:
-        return GsaaApiOrders.instance.softDelete;
+      case GsaaEndpointsOrders.deleteAll:
+        return GsaaApiOrders.instance.deleteAll;
+      case GsaaEndpointsOrders.deleteSoft:
+        return GsaaApiOrders.instance.deleteSoft;
       case GsaaEndpointsOrders.createOrUpdateDraft:
         return GsaaApiOrders.instance.createOrUpdateDraft;
       case GsaaEndpointsOrders.confirmDraft:
@@ -22,7 +22,7 @@ extension GsaaEndpointsOrdersImplExt on GsaaEndpointsOrders {
 /// Checkout and order related client APIs.
 ///
 class GsaaApiOrders extends GsaaApi {
-  const GsaaApiOrders._() : super._();
+  const GsaaApiOrders._();
 
   static const instance = GsaaApiOrders._();
 
@@ -43,7 +43,7 @@ class GsaaApiOrders extends GsaaApi {
   Future<String> register({
     required GsaaModelOrderDraft order,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsOrders.register.path,
       order.toJson(),
     );
@@ -57,11 +57,11 @@ class GsaaApiOrders extends GsaaApi {
 
   /// Deletes an order with the specific [orderId] from the system database.
   ///
-  Future<void> delete({
+  Future<void> deleteAll({
     required String orderId,
   }) async {
-    await _delete(
-      GsaaEndpointsOrders.delete.path,
+    await delete(
+      GsaaEndpointsOrders.deleteAll.path,
       body: {
         'orderId': orderId,
       },
@@ -70,11 +70,11 @@ class GsaaApiOrders extends GsaaApi {
 
   /// Marks an order as being deleted, without deleting the actual data.
   ///
-  Future<void> softDelete({
+  Future<void> deleteSoft({
     required String orderId,
   }) async {
-    await _delete(
-      GsaaEndpointsOrders.softDelete.path,
+    await delete(
+      GsaaEndpointsOrders.deleteSoft.path,
       body: {
         'orderId': orderId,
       },
@@ -86,7 +86,7 @@ class GsaaApiOrders extends GsaaApi {
   Future<GsaaModelOrderDraft> createOrUpdateDraft({
     required GsaaModelOrderDraft order,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsOrders.createOrUpdateDraft.path,
       order.toJson(),
     );
@@ -98,7 +98,7 @@ class GsaaApiOrders extends GsaaApi {
   Future<String> confirmDraft({
     required GsaaModelOrderDraft order,
   }) async {
-    final response = await _post(
+    final response = await post(
       GsaaEndpointsOrders.confirmDraft.path,
       order.toJson(),
     );

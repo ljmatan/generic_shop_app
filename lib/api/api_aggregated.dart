@@ -1,4 +1,4 @@
-part of '../api.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -16,7 +16,7 @@ extension GsaaEndpointsAggregatedImplExt on GsaaEndpointsAggregated {
 /// Merchant / vendor related API calls and logic.
 ///
 class GsaaApiAggregated extends GsaaApi {
-  const GsaaApiAggregated._() : super._();
+  const GsaaApiAggregated._();
 
   static const instance = GsaaApiAggregated._();
 
@@ -30,7 +30,7 @@ class GsaaApiAggregated extends GsaaApi {
   int get _version => 0;
 
   Future<int> getDataVersion() async {
-    final response = await _get(
+    final response = await get(
       GsaaEndpointsAggregated.getDataVersion.path,
     );
     final currentVersion = response['version'];

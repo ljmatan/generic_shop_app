@@ -12,11 +12,16 @@ import '../db/database.dart';
 import '../router/router.dart';
 import '../server.dart';
 
-part 'src/aggregated/api_aggregated_0.dart';
-part 'src/merchants/api_merchants_0.dart';
-part 'src/orders/api_orders_0.dart';
-part 'src/sale_items/api_sale_items_0.dart';
-part 'src/users/api_users_0.dart';
+part 'src/aggregated/v0/api_aggregated.dart';
+part 'src/aggregated/v0/api_aggregated_endpoints.dart';
+part 'src/merchants/v0/api_merchants.dart';
+part 'src/merchants/v0/api_merchants_endpoints.dart';
+part 'src/orders/v0/api_orders.dart';
+part 'src/orders/v0/api_orders_endpoints.dart';
+part 'src/sale_items/v0/api_sale_items.dart';
+part 'src/sale_items/v0/api_sale_items_endpoints.dart';
+part 'src/users/v0/api_users.dart';
+part 'src/users/v0/api_users_endpoints.dart';
 
 abstract class GsamApi {
   GsamApi._() {

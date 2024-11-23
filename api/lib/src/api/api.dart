@@ -6,19 +6,14 @@ library api;
 
 import 'dart:convert' as dart_convert;
 
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:http/http.dart' as http;
-
-part 'src/api_aggregated.dart';
-part 'src/api_merchants.dart';
-part 'src/api_orders.dart';
-part 'src/api_sale_items.dart';
-part 'src/api_users.dart';
 
 /// A base class for the HTTP client services.
 ///
 abstract class GsaaApi {
-  const GsaaApi._();
+  /// Constant constructor definition implementation for the subclasses.
+  ///
+  const GsaaApi();
 
   /// Network request protocol.
   ///
@@ -117,7 +112,7 @@ abstract class GsaaApi {
 
   /// Sends an HTTP GET request with the given headers to the given URL.
   ///
-  Future<dynamic> _get(
+  Future<dynamic> get(
     String endpoint, {
     bool decodedResponse = true,
   }) async {
@@ -132,7 +127,7 @@ abstract class GsaaApi {
 
   /// Sends an HTTP POST request with the given headers and body to the given URL.
   ///
-  Future<dynamic> _post(
+  Future<dynamic> post(
     String endpoint,
     Map<String, dynamic> body, {
     bool decodedResponse = true,
@@ -166,7 +161,7 @@ abstract class GsaaApi {
 
   /// Sends an HTTP PATCH request with the given headers and body to the given URL.
   ///
-  Future<dynamic> _patch(
+  Future<dynamic> patch(
     String endpoint,
     Map<String, dynamic> body, {
     bool decodedResponse = true,
@@ -183,7 +178,7 @@ abstract class GsaaApi {
 
   /// Sends an HTTP DELETE request with the given headers to the given URL.
   ///
-  Future<dynamic> _delete(
+  Future<dynamic> delete(
     String endpoint, {
     Map<String, dynamic>? body,
     bool decodedResponse = true,

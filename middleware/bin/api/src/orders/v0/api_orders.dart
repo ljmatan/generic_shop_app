@@ -1,21 +1,4 @@
-part of '../../api.dart';
-
-extension GsaaEndpointsOrdersExt on GsaaEndpointsOrders {
-  Future<shelf.Response> Function(shelf.Request) get handler {
-    switch (this) {
-      case GsaaEndpointsOrders.register:
-        return GsamApiOrders0.instance.register;
-      case GsaaEndpointsOrders.delete:
-        return GsamApiOrders0.instance.delete;
-      case GsaaEndpointsOrders.softDelete:
-        return GsamApiOrders0.instance.softDelete;
-      case GsaaEndpointsOrders.createOrUpdateDraft:
-        return GsamApiOrders0.instance.createOrUpdateDraft;
-      case GsaaEndpointsOrders.confirmDraft:
-        return GsamApiOrders0.instance.confirmDraft;
-    }
-  }
-}
+part of '../../../api.dart';
 
 class GsamApiOrders0 extends GsamApi {
   GsamApiOrders0._() : super._();
