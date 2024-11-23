@@ -1,19 +1,24 @@
+#include "../service.h"
+
 class ServiceWifi : public Service
 {
 private:
     /*
     WiFi connection SSID / network name.
     */
-    static constexpr const char *ssid = "gsap_iot";
+    static constexpr const char *ssid = "gsa_iot";
 
     /*
     Wifi connection authentication password.
     */
-    static constexpr const char *password = "gsap1234";
+    static constexpr const char *password = "gsaiot1234";
 
 public:
     ServiceWifi() {}
 
+    /*
+    Tries connecting to the WiFi connection with specified [ssid] and [password] values.
+    */
     void connectToWiFi()
     {
         // Try establishing a WiFi connection.
@@ -37,6 +42,9 @@ public:
         connectToWiFi();
     }
 
+    /*
+    Checks the current connection and tries reconnecting in case of no connection.
+    */
     void ensureConnection()
     {
         if (WiFi.status() != WL_CONNECTED)
