@@ -17,28 +17,28 @@ abstract class GsaaApi {
 
   /// Network request protocol.
   ///
-  String get _protocol => 'https';
+  String get protocol => 'https';
 
   /// Network request server host address.
   ///
-  String get _host => 'localhost';
+  String get host => 'localhost';
 
   /// The major public API version defined with the server.
   ///
-  int get _majorVersion => 0;
+  int? get majorVersion => 0;
 
   /// API identifier with the backend services.
   ///
-  String get _identifier;
+  String? get identifier => null;
 
   /// The version specific to this API.
   ///
-  int get _version;
+  int? get version => null;
 
   /// Address in URL format.
   ///
-  String get _url {
-    return '$_protocol://$_host/api/v$_majorVersion/$_identifier/v$_version/';
+  String get url {
+    return '$protocol://$host/api/v$majorVersion/$identifier/v$version/';
   }
 
   /// Headers appended to the default request [headers].
@@ -118,7 +118,7 @@ abstract class GsaaApi {
   }) async {
     return await _httpRequest(
       () async => http.get(
-        Uri.parse('$_url$endpoint'),
+        Uri.parse('$url$endpoint'),
         headers: _headers,
       ),
       decodedResponse: decodedResponse,
@@ -134,7 +134,7 @@ abstract class GsaaApi {
   }) async {
     return await _httpRequest(
       () async => http.post(
-        Uri.parse('$_url$endpoint'),
+        Uri.parse('$url$endpoint'),
         headers: _headers,
         body: dart_convert.jsonEncode(body),
       ),
@@ -144,14 +144,14 @@ abstract class GsaaApi {
 
   /// Sends an HTTP PUT request with the given headers and body to the given URL.
   ///
-  Future<dynamic> _put(
+  Future<dynamic> put(
     String endpoint,
     Map<String, dynamic> body, {
     bool decodedResponse = true,
   }) async {
     return await _httpRequest(
       () async => http.put(
-        Uri.parse('$_url$endpoint'),
+        Uri.parse('$url$endpoint'),
         headers: _headers,
         body: dart_convert.jsonEncode(body),
       ),
@@ -168,7 +168,7 @@ abstract class GsaaApi {
   }) async {
     return await _httpRequest(
       () async => http.patch(
-        Uri.parse('$_url$endpoint'),
+        Uri.parse('$url$endpoint'),
         headers: _headers,
         body: dart_convert.jsonEncode(body),
       ),
@@ -185,7 +185,7 @@ abstract class GsaaApi {
   }) async {
     return await _httpRequest(
       () async => http.delete(
-        Uri.parse('$_url$endpoint'),
+        Uri.parse('$url$endpoint'),
         headers: _headers,
         body: body,
       ),

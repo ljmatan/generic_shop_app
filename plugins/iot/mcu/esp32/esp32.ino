@@ -2,6 +2,7 @@
 #include <ESPmDNS.h>
 #include <WebServer.h>
 #include <DS1302.h>
+#include <ArduinoJson.h> 
 
 #include "services/src/service_server.ino"
 #include "services/src/service_wifi.ino"
