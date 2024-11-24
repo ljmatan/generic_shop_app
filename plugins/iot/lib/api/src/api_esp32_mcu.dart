@@ -53,14 +53,16 @@ class GiotApiEsp32Mcu extends GsaaApi {
         temperature: int.parse(response['temperature']),
         humidity: int.parse(response['humidity']),
       );
-      try {
-        GiotApiFirebase.instance.postStatusInfo(
-          airStatus.temperature,
-          airStatus.humidity,
-        );
-      } catch (e) {
-        debugPrint('$e');
-      }
+      GiotApiFirebase.instance
+          .patchStatusInfo(
+        airStatus.temperature,
+        airStatus.humidity,
+      )
+          .catchError(
+        (e) {
+          debugPrint('$e');
+        },
+      );
       return airStatus;
     } catch (e) {
       return null;
@@ -71,18 +73,29 @@ class GiotApiEsp32Mcu extends GsaaApi {
   ///
   Future<
       ({
-        num? temperature,
-        num? humidity,
-      })?> getAtmosphereStatus() async {
-    final response = await get('status/atmosphere');
-    try {
-      final json = Map<String, dynamic>.from(response);
-      return (
-        temperature: num.tryParse(json['temperature'].toString()),
-        humidity: num.tryParse(json['humidity'].toString()),
-      );
-    } catch (e) {
-      return null;
-    }
+        num temperature,
+        num humidity,
+      })> getAtmosphereStatus() async {
+    final response = await post(
+      'data',
+      {
+        'timeIso8601': DateTime.now().toIso8601String(),
+      },
+    );
+    final airStatus = (
+      temperature: int.parse(response['temperature']),
+      humidity: int.parse(response['humidity']),
+    );
+    GiotApiFirebase.instance
+        .patchStatusInfo(
+      airStatus.temperature,
+      airStatus.humidity,
+    )
+        .catchError(
+      (e) {
+        debugPrint('$e');
+      },
+    );
+    return airStatus;
   }
 }

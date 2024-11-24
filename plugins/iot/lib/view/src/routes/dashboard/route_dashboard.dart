@@ -10,6 +10,14 @@ class GiotRouteDashboard extends StatefulWidget {
 }
 
 class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
+  /// Atmosphere information retrieved from the microcontroller unit.
+  ///
+  int? _temperatureCelsius, _humidityPercentage;
+
+  /// Defines whether the atmosphere information is currently being refreshed.
+  ///
+  bool _refreshingAtmosphereInfo = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +28,8 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
             final airStatus = await GiotApiEsp32Mcu.instance.setData(
               irrigationRules: value.rules,
             );
-            return (
-              temperature: airStatus?.temperature,
-              humidity: airStatus?.humidity,
-            );
+            _temperatureCelsius = airStatus?.temperature;
+            _humidityPercentage = airStatus?.humidity;
           },
         ),
         builder: (context, snapshot) {
@@ -59,12 +65,12 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                     (
                       label: 'Temperature',
                       measure: '°C',
-                      value: snapshot.data?.temperature,
+                      value: _temperatureCelsius,
                     ),
                     (
                       label: 'Humidity',
                       measure: '%',
-                      value: snapshot.data?.humidity,
+                      value: _humidityPercentage,
                     ),
                   }.indexed)
                     Expanded(
@@ -73,7 +79,7 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: Card(
-                            color: Colors.blue.shade200,
+                            color: Theme.of(context).primaryColor,
                             child: Center(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -103,8 +109,47 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                 ],
+              ),
+              SizedBox(
+                height: 80,
+                child: Center(
+                  child: StatefulBuilder(
+                    builder: (context, setButtonState) {
+                      return _refreshingAtmosphereInfo
+                          ? SizedBox.square(
+                              dimension: 16,
+                              child: CircularProgressIndicator(),
+                            )
+                          : OutlinedButton.icon(
+                              label: Text(
+                                'REFRESH',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                              ),
+                              onPressed: () async {
+                                setButtonState(() => _refreshingAtmosphereInfo = true);
+                                try {
+                                  final airStatus = await GiotApiEsp32Mcu.instance.getAtmosphereStatus();
+                                  _temperatureCelsius = airStatus.temperature.toInt();
+                                  _humidityPercentage = airStatus.humidity.toInt();
+                                } catch (e) {
+                                  debugPrint('Error retrieving airStatus: $e');
+                                }
+                                setState(() => _refreshingAtmosphereInfo = false);
+                              },
+                            );
+                    },
+                  ),
+                ),
               ),
             ],
           );

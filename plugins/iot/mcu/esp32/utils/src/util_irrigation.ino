@@ -9,12 +9,12 @@ private:
     /*
     Number of the pin connected to the paint gun relay.
     */
-    static constexpr const int pinPowerPaintGun = 27;
+    static constexpr const int pinPowerPaintGun = 16;
 
     /*
     Number of the pin connected to the paint gun pump relay.
     */
-    static constexpr const int pinPowerPaintGunPump = 26;
+    static constexpr const int pinPowerPaintGunPump = 17;
 
     /*
     Activates the relay controlling the irrigation devices.

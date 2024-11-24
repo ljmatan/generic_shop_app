@@ -39,18 +39,20 @@ class GiotApiFirebase extends GsaaApi {
 
   /// Updates the status information on the server.
   ///
-  Future<void> postStatusInfo(
+  Future<void> patchStatusInfo(
     num temperature,
     num humidity,
   ) async {
-    debugPrint((await patch(
-      'status$_urlSuffix',
-      {
-        'temperature': temperature,
-        'humidity': humidity,
-      },
-    ))
-        .toString());
+    debugPrint((
+      await patch(
+        'status$_urlSuffix',
+        {
+          'time': DateTime.now().toIso8601String(),
+          'temperature': temperature,
+          'humidity': humidity,
+        },
+      ),
+    ).toString());
   }
 
   /// Retrieves the heating information from the server.

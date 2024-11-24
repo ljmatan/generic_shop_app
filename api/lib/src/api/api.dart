@@ -74,7 +74,7 @@ abstract class GsaaApi {
   }) async {
     final requestTime = DateTime.now();
     try {
-      final response = await request();
+      final response = await request().timeout(_timeoutDuration);
       final uri = Uri.parse('${response.request?.url}');
       dynamic decodedRequestBody, decodedResponseBody;
       try {

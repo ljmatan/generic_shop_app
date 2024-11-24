@@ -50,6 +50,9 @@ class _GsapIotAppState extends State<_GsapIotApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.blue.shade200,
+      ),
       home: GiotRouteDashboard(),
     );
   }

@@ -9,17 +9,17 @@ private:
     /*
     Number of the pin connected to the DHT11 data pin.
     */
-    static constexpr const int pinSensor0 = 19;
+    static constexpr const int pinSensor0 = 4;
 
     /*
     Number of the pin connected to the DHT11 data pin.
     */
-    static constexpr const int pinSensor1 = 18;
+    static constexpr const int pinSensor1 = 0;
 
     /*
     Number of the pin connected to the DHT11 data pin.
     */
-    static constexpr const int pinSensor2 = 5;
+    static constexpr const int pinSensor2 = 2;
 
     /*
     One of the 3 available DHT11 sensors connected to the ESP32 device.
