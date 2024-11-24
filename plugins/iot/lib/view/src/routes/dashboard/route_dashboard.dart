@@ -16,7 +16,10 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
       body: FutureBuilder(
         future: GiotApiFirebase.instance.getIrrigationInfo().then(
           (value) async {
-            await GiotApiEsp32Mcu.instance.setData(value.rules);
+            await GiotApiEsp32Mcu.instance.getConnectionStatus();
+            await GiotApiEsp32Mcu.instance.setData(
+              irrigationRules: value.rules,
+            );
           },
         ),
         builder: (context, snapshot) {

@@ -1,6 +1,7 @@
 #include "../service.h"
 #include "../../utils/src/util_clock.ino"
 #include "../../utils/src/util_irrigation.ino"
+#include "../../utils/src/util_air_t_h_sensor.ino"
 
 /*
 Web server running on this ESP32 device.
@@ -114,14 +115,26 @@ private:
                         Serial.println(String(cyclePauseTimeSeconds));
                     }
                 }
-                server.send(200, "text/plain", "OK");
+                server.send(
+                    200,
+                    "text/plain",
+                    "{\"temperature\":\"" +
+                        String(UtilAirTemperatureHumiditySensor::temperatureCelsius) +
+                        "\", \"humidity\":\"" +
+                        String(UtilAirTemperatureHumiditySensor::humidityPercent) +
+                        "\"}");
             };
         }
     }
 
+    /*
+    Method implemented for handling root server address logic.
+
+    Useful for testing if the WebServer.h service is functioning properly.
+    */
     static void handleRootEndpoint()
     {
-        server.send(200, "text/html", "<h1>ESP32 Web Server</h1><p><a href=\"/LED_ON\">Turn On LED</a></p><p><a href=\"/LED_OFF\">Turn Off LED</a></p>");
+        server.send(200, "text/html", "OK");
     }
 
 public:
@@ -166,5 +179,10 @@ public:
         // Start the web server service.
         server.begin();
         Serial.println("Web server started.");
+    }
+
+    void handleClient()
+    {
+        server.handleClient();
     }
 };

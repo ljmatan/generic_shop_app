@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 
@@ -15,13 +16,29 @@ class GiotApiEsp32Mcu extends GsaaApi {
   String get protocol => 'http';
 
   @override
-  String get host => 'giotesp32.local';
+  String get host => '192.168.43.183:80';
+
+  @override
+  String get url => '$protocol://$host/';
+
+  /// Checks the connection by sending a request to serve the root web server content.
+  ///
+  Future<void> getConnectionStatus() async {
+    await get(
+      '',
+      decodedResponse: false,
+    );
+  }
 
   /// Sends the current time information to the ESP32 device.
   ///
-  Future<void> setData(
-    ModelGiotFirebaseDatabaseIrrigationRules? irrigationRules,
-  ) async {
+  Future<
+      ({
+        int temperature,
+        int humidity,
+      })?> setData({
+    required ModelGiotFirebaseDatabaseIrrigationRules? irrigationRules,
+  }) async {
     final response = await post(
       'data',
       {
@@ -29,6 +46,15 @@ class GiotApiEsp32Mcu extends GsaaApi {
         if (irrigationRules != null) ...irrigationRules.toJson(),
       },
     );
+    debugPrint('Set ESP32 data:\n${response.toString()}');
+    try {
+      return (
+        temperature: int.parse(response['temperature']),
+        humidity: int.parse(response['humidity']),
+      );
+    } catch (e) {
+      return null;
+    }
   }
 
   /// Requests for the atmosphere information to be forwarded from the ESP32 device.

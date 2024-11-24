@@ -109,14 +109,7 @@ public:
 
     void setup() override
     {
-        // Pause the program execution until the clock information
-        // has been received from the controlling device.
-        Serial.print("Waiting for clock information...");
-        while (year == 0)
-        {
-            delay(1000);
-            Serial.print(".");
-        }
+        Serial.println("Waiting for clock information.");
     }
 
     /*
@@ -125,8 +118,11 @@ public:
     static bool parseCurrentTimeIso8601(String iso8601)
     {
         // Expected format: YYYY-MM-DDTHH:MM:SSZ
-        if (iso8601.length() != 20)
+        if (iso8601.length() < 20)
+        {
+            Serial.println("ISO time length must be at least 20 characters.");
             return false;
+        }
 
         // Extract each part using substrings
         int yearValue = iso8601.substring(0, 4).toInt();
@@ -136,10 +132,69 @@ public:
         int minuteValue = iso8601.substring(14, 16).toInt();
         int secondValue = iso8601.substring(17, 19).toInt();
 
-        // Validate the parsed values.
-        if (yearValue < 1000 || monthValue < 1 || monthValue > 12 || dayValue < 1 || dayValue > 31 ||
-            hourValue < 0 || hourValue > 23 || minuteValue < 0 || minuteValue > 59 || secondValue < 0 || secondValue > 59)
+        if (yearValue < 2000)
         {
+            Serial.println("Year less than 2000.");
+            return false;
+        }
+
+        if (monthValue < 1)
+        {
+            Serial.println("Negative months.");
+            return false;
+        }
+
+        if (monthValue > 12)
+        {
+            Serial.println("More than 12 months.");
+            return false;
+        }
+
+        if (dayValue < 1)
+        {
+            Serial.println("Negative days.");
+            return false;
+        }
+
+        if (dayValue > 31)
+        {
+            Serial.println("More than 31 days.");
+            return false;
+        }
+
+        if (hourValue < 0)
+        {
+            Serial.println("Negative hours.");
+            return false;
+        }
+
+        if (hourValue > 23)
+        {
+            Serial.println("More than 23 hours.");
+            return false;
+        }
+
+        if (minuteValue < 0)
+        {
+            Serial.println("Negative minutes.");
+            return false;
+        }
+
+        if (minuteValue > 59)
+        {
+            Serial.println("More than 59 minutes.");
+            return false;
+        }
+
+        if (secondValue < 0)
+        {
+            Serial.println("Negative seconds.");
+            return false;
+        }
+
+        if (secondValue > 59)
+        {
+            Serial.println("More than 59 seconds.");
             return false;
         }
 
@@ -198,6 +253,10 @@ public:
                 Serial.print(second);
                 Serial.println();
             }
+        }
+        else
+        {
+            Serial.println("No date and time information available.");
         }
     }
 

@@ -1,5 +1,8 @@
 #include "../util.h"
 
+#ifndef UTIL_AIR_T_H_SENSOR
+#define UTIL_AIR_T_H_SENSOR
+
 class UtilAirTemperatureHumiditySensor : public Util
 {
 private:
@@ -145,3 +148,5 @@ public:
         }
     }
 };
+
+#endif

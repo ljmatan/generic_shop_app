@@ -35,5 +35,6 @@ void loop() {
   utilClock->updateTime();
   serviceWifi->ensureConnection();
   utilAirTHSensor->readAllSensors();
+  serviceServer->handleClient();
   delay(1000);
 }

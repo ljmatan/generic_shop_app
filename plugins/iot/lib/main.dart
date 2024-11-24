@@ -10,7 +10,10 @@ void giotBgCallbackDispatcher() {
     (task, inputData) async {
       try {
         final irrigationInfo = await GiotApiFirebase.instance.getIrrigationInfo();
-        await GiotApiEsp32Mcu.instance.setData(irrigationInfo.rules);
+        await GiotApiEsp32Mcu.instance.getConnectionStatus();
+        await GiotApiEsp32Mcu.instance.setData(
+          irrigationRules: irrigationInfo.rules,
+        );
       } catch (e) {
         // ignore: avoid_print
         print('$e');
@@ -21,6 +24,8 @@ void giotBgCallbackDispatcher() {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(giotBgCallbackDispatcher);
   Workmanager().registerPeriodicTask(
     'giotBackgroundTask',
     'giotBgCallbackDispatcher',
@@ -41,6 +46,7 @@ class _GsapIotAppState extends State<_GsapIotApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: GiotRouteDashboard(),
     );
   }
