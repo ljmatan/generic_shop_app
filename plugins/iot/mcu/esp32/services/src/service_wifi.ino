@@ -6,12 +6,12 @@ private:
     /*
     WiFi connection SSID / network name.
     */
-    static constexpr const char *ssid = "gsa_iot";
+    static constexpr const char *ssid = "AndroidAP4D71"; // "gsa_iot";
 
     /*
     Wifi connection authentication password.
     */
-    static constexpr const char *password = "gsaiot1234";
+    static constexpr const char *password = "12345678"; // "gsaiot1234";
 
 public:
     ServiceWifi() {}

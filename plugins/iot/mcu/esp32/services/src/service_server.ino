@@ -26,9 +26,8 @@ private:
     */
     enum Endpoints
     {
-        ROOT = 0,
-        STATUS = 1,
-        SET_DATA = 2
+        STATUS = 0,
+        SET_DATA = 1
     };
 
     /*
@@ -38,8 +37,6 @@ private:
     {
         switch (endpoint)
         {
-        case ROOT:
-            return "/";
         case STATUS:
             return "/status";
         case SET_DATA:
@@ -55,8 +52,6 @@ private:
     {
         switch (endpoint)
         {
-        case ROOT:
-            return HTTP_GET;
         case STATUS:
             return HTTP_GET;
         case SET_DATA:
@@ -71,11 +66,6 @@ private:
     {
         switch (endpoint)
         {
-        case ROOT:
-            return []()
-            {
-                server.send(200, "text/plain", "OK");
-            };
         case STATUS:
             return []()
             {
@@ -129,6 +119,11 @@ private:
         }
     }
 
+    static void handleRootEndpoint()
+    {
+        server.send(200, "text/html", "<h1>ESP32 Web Server</h1><p><a href=\"/LED_ON\">Turn On LED</a></p><p><a href=\"/LED_OFF\">Turn Off LED</a></p>");
+    }
+
 public:
     /*
     Public class constructor,
@@ -156,8 +151,10 @@ public:
             Serial.println("Hostname set to: " + String(hostname));
         }
 
+        server.on("/", HTTP_GET, handleRootEndpoint);
+
         // Specify the server endpoint handling.
-        for (int i = Endpoints::ROOT; i <= Endpoints::STATUS; ++i)
+        for (int i = Endpoints::STATUS; i <= Endpoints::SET_DATA; ++i)
         {
             Endpoints endpoint = static_cast<Endpoints>(i);
             server.on(

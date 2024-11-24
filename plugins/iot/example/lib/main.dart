@@ -1,5 +1,5 @@
-import 'package:iot/main.dart' as iot_main;
+import 'package:iot/main.dart' as giot_main;
 
 void main() {
-  iot_main.main();
+  giot_main.main();
 }

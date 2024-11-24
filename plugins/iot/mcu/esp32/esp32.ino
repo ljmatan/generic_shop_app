@@ -20,8 +20,7 @@ UtilClock *utilClock = new UtilClock();
 UtilIrrigation *utilIrrigation = new UtilIrrigation();
 UtilAirTemperatureHumiditySensor *utilAirTHSensor = new UtilAirTemperatureHumiditySensor();
 
-void setup()
-{
+void setup() {
   Serial.begin(115200);
 
   serviceWifi->setup();
@@ -32,8 +31,7 @@ void setup()
   utilAirTHSensor->setup();
 }
 
-void loop()
-{
+void loop() {
   utilClock->updateTime();
   serviceWifi->ensureConnection();
   utilAirTHSensor->readAllSensors();

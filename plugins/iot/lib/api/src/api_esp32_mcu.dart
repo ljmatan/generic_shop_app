@@ -7,6 +7,8 @@ import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 class GiotApiEsp32Mcu extends GsaaApi {
   const GiotApiEsp32Mcu._();
 
+  /// Globally-accessible class instance.
+  ///
   static const instance = GiotApiEsp32Mcu._();
 
   @override
