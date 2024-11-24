@@ -2,18 +2,21 @@
 #include <ESPmDNS.h>
 #include <WebServer.h>
 #include <DS1302.h>
-#include <ArduinoJson.h> 
+#include <ArduinoJson.h>
+#include <DHT.h>
 
 #include "services/src/service_server.ino"
 #include "services/src/service_wifi.ino"
 #include "utils/src/util_clock.ino"
 #include "utils/src/util_irrigation.ino"
+#include "utils/src/util_air_t_h_sensor.ino"
 
 ServiceWifi *serviceWifi = new ServiceWifi();
 ServiceServer *serviceServer = new ServiceServer();
 
 UtilClock *utilClock = new UtilClock();
 UtilIrrigation *utilIrrigation = new UtilIrrigation();
+UtilAirTemperatureHumiditySensor *utilAirTHSensor = new UtilAirTemperatureHumiditySensor();
 
 void setup()
 {
@@ -24,9 +27,12 @@ void setup()
 
   utilClock->setup();
   utilIrrigation->setup();
+  utilAirTHSensor->setup();
 }
 
 void loop()
 {
   serviceWifi->ensureConnection();
+  utilAirTHSensor->readAllSensors();
+  delay(5000);
 }
