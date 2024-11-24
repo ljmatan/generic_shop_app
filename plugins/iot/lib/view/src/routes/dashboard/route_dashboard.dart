@@ -17,8 +17,12 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
         future: GiotApiFirebase.instance.getIrrigationInfo().then(
           (value) async {
             await GiotApiEsp32Mcu.instance.getConnectionStatus();
-            await GiotApiEsp32Mcu.instance.setData(
+            final airStatus = await GiotApiEsp32Mcu.instance.setData(
               irrigationRules: value.rules,
+            );
+            return (
+              temperature: airStatus?.temperature,
+              humidity: airStatus?.humidity,
             );
           },
         ),
@@ -39,8 +43,57 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
               ),
             );
           }
-          return Center(
-            child: Icon(Icons.check),
+          return ListView(
+            children: [
+              Row(
+                children: [
+                  for (final airStat in <({
+                    String label,
+                    String measure,
+                    dynamic value,
+                  })>{
+                    (
+                      label: 'Temperature',
+                      measure: '°C',
+                      value: snapshot.data?.temperature,
+                    ),
+                    (
+                      label: 'Humidity',
+                      measure: '%',
+                      value: snapshot.data?.humidity,
+                    ),
+                  }.indexed)
+                    Padding(
+                      padding: airStat.$1 == 0 ? const EdgeInsets.only(right: 4) : const EdgeInsets.only(left: 4),
+                      child: Card(
+                        color: Colors.blue.shade200,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                '${airStat.$2.value}${airStat.$2.measure}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                airStat.$2.label,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                ],
+              ),
+            ],
           );
         },
       ),
