@@ -1,4 +1,6 @@
 #include "../service.h"
+#include "../../utils/src/util_clock.ino"
+#include "../../utils/src/util_irrigation.ino"
 
 /*
 Web server running on this ESP32 device.
@@ -26,7 +28,7 @@ private:
     {
         ROOT = 0,
         STATUS = 1,
-        SET_IRRIGATION_CYCLE_TIME = 2
+        SET_DATA = 2
     };
 
     /*
@@ -40,8 +42,8 @@ private:
             return "/";
         case STATUS:
             return "/status";
-        case SET_IRRIGATION_CYCLE_TIME:
-            return "/irrigation/cycle-time";
+        case SET_DATA:
+            return "/data";
         }
     }
 
@@ -57,7 +59,7 @@ private:
             return HTTP_GET;
         case STATUS:
             return HTTP_GET;
-        case SET_IRRIGATION_CYCLE_TIME:
+        case SET_DATA:
             return HTTP_POST;
         }
     }
@@ -79,9 +81,50 @@ private:
             {
                 server.send(200, "text/plain", "STATUS OK");
             };
-        case SET_IRRIGATION_CYCLE_TIME:
-            return []() {
-
+        case SET_DATA:
+            return []()
+            {
+                String body = server.arg("plain");
+                StaticJsonDocument<1024> jsonBody;
+                DeserializationError error = deserializeJson(jsonBody, body);
+                if (error)
+                {
+                    server.send(400, "text/plain", "Failed to parse JSON");
+                }
+                if (jsonBody.containsKey("timeIso8601"))
+                {
+                    String timeIso8601 = jsonBody["timeIso8601"];
+                    Serial.println("Received time: " + timeIso8601);
+                    if (UtilClock::parseCurrentTimeIso8601(timeIso8601) != true)
+                    {
+                        server.send(400, "text/plain", "Invalid ISO 8601 time format");
+                    }
+                }
+                else
+                {
+                    server.send(400, "text/plain", "Missing 'timeIso8601' key");
+                }
+                if (jsonBody.containsKey("irrigationRules"))
+                {
+                    JsonObject irrigationRules = jsonBody["irrigationRules"];
+                    if (irrigationRules.containsKey("cycle_repeat_time"))
+                    {
+                        int cycleRepeatTime = irrigationRules["cycle_repeat_time"];
+                        UtilIrrigation::cycleRepeatTime = cycleRepeatTime;
+                        int cycleTimeOffsetMinutes = irrigationRules["cycle_time_offset_minutes"];
+                        UtilIrrigation::cycleTimeOffsetMinutes = cycleTimeOffsetMinutes;
+                        int cycleTimeSeconds = irrigationRules["cycle_time_seconds"];
+                        UtilIrrigation::cycleTimeSeconds = cycleTimeSeconds;
+                        int cyclePauseTimeSeconds = irrigationRules["pause_time_seconds"];
+                        UtilIrrigation::cyclePauseTimeSeconds = cyclePauseTimeSeconds;
+                        Serial.print("Received Irrigation Rules:\n");
+                        Serial.print(String(cycleRepeatTime) + ":\n");
+                        Serial.print(String(cycleTimeOffsetMinutes) + ":\n");
+                        Serial.print(String(cycleTimeSeconds) + ":\n");
+                        Serial.println(String(cyclePauseTimeSeconds));
+                    }
+                }
+                server.send(200, "text/plain", "OK");
             };
         }
     }

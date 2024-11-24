@@ -4,6 +4,8 @@
 #include <DS1302.h>
 #include <ArduinoJson.h>
 #include <DHT.h>
+#include <cmath>
+#include <time.h>
 
 #include "services/src/service_server.ino"
 #include "services/src/service_wifi.ino"
@@ -32,7 +34,8 @@ void setup()
 
 void loop()
 {
+  utilClock->updateTime();
   serviceWifi->ensureConnection();
   utilAirTHSensor->readAllSensors();
-  delay(5000);
+  delay(1000);
 }

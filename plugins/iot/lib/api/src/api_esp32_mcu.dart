@@ -1,9 +1,14 @@
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 
 /// API interface implementation for communication with an ESP32 device
 /// controlling the automated system.
 ///
 class GiotApiEsp32Mcu extends GsaaApi {
+  const GiotApiEsp32Mcu._();
+
+  static const instance = GiotApiEsp32Mcu._();
+
   @override
   String get protocol => 'http';
 
@@ -12,11 +17,14 @@ class GiotApiEsp32Mcu extends GsaaApi {
 
   /// Sends the current time information to the ESP32 device.
   ///
-  Future<void> setTime() async {
-    await post(
-      'time',
+  Future<void> setData(
+    ModelGiotFirebaseDatabaseIrrigationRules? irrigationRules,
+  ) async {
+    final response = await post(
+      'data',
       {
         'timeIso8601': DateTime.now().toIso8601String(),
+        if (irrigationRules != null) ...irrigationRules.toJson(),
       },
     );
   }
@@ -38,24 +46,5 @@ class GiotApiEsp32Mcu extends GsaaApi {
     } catch (e) {
       return null;
     }
-  }
-
-  /// Updates the ESP32 device with the latest irrigation settings.
-  ///
-  Future<void> updateIrrigationSettings({
-    required int cycleRepeatTime,
-    required int cycleTimeOffsetMinutes,
-    required int cycleTimeSeconds,
-    required int pauseTimeSeconds,
-  }) async {
-    await post(
-      'irrigation',
-      {
-        'cycle_repeat_time': cycleRepeatTime,
-        'cycle_time_offset_minutes': cycleTimeOffsetMinutes,
-        'cycle_time_seconds': cycleTimeSeconds,
-        'pause_time_seconds': pauseTimeSeconds,
-      },
-    );
   }
 }

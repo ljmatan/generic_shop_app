@@ -72,12 +72,12 @@ public:
     /*
     Globally-accessible latest-recorded temperature value.
     */
-    static int temperatureCelsius;
+    static inline int temperatureCelsius = 0;
 
     /*
     Globally-accessible latest-recorded humidity value.
     */
-    static int humidityPercent;
+    static inline int humidityPercent = 0;
 
     /*
     Reads all sensors and calculates the average value.
@@ -130,13 +130,13 @@ public:
         {
             float avgTemp = sumTemp / validSensors;
             float avgHum = sumHum / validSensors;
-            temperatureCelsius = avgTemp;
-            humidityPercent = avgHum;
-            Serial.print("Average Temperature: ");
-            Serial.print(avgTemp);
+            temperatureCelsius = static_cast<int>(round(avgTemp));
+            humidityPercent = static_cast<int>(round(avgHum));
+            Serial.print("Current Temperature: ");
+            Serial.print(temperatureCelsius);
             Serial.println(" °C");
-            Serial.print("Average Humidity: ");
-            Serial.print(avgHum);
+            Serial.print("Current Humidity: ");
+            Serial.print(humidityPercent);
             Serial.println(" %");
         }
         else
