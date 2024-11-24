@@ -70,7 +70,10 @@ private:
         case STATUS:
             return []()
             {
-                server.send(200, "text/plain", "STATUS OK");
+                server.send(
+                    200,
+                    "application/json",
+                    "{\"status\": \"OK\"}");
             };
         case SET_DATA:
             return []()
@@ -97,27 +100,41 @@ private:
                 }
                 if (jsonBody.containsKey("irrigationRules"))
                 {
+                    Serial.println("Received irrigationRules");
                     JsonObject irrigationRules = jsonBody["irrigationRules"];
-                    if (irrigationRules.containsKey("cycle_repeat_time"))
+                    if (irrigationRules.containsKey("cycle_repeat_time") &&
+                        irrigationRules["cycle_repeat_time"].is<int>())
                     {
-                        int cycleRepeatTime = irrigationRules["cycle_repeat_time"];
-                        UtilIrrigation::cycleRepeatTime = cycleRepeatTime;
-                        int cycleTimeOffsetMinutes = irrigationRules["cycle_time_offset_minutes"];
-                        UtilIrrigation::cycleTimeOffsetMinutes = cycleTimeOffsetMinutes;
-                        int cycleTimeSeconds = irrigationRules["cycle_time_seconds"];
-                        UtilIrrigation::cycleTimeSeconds = cycleTimeSeconds;
-                        int cyclePauseTimeSeconds = irrigationRules["pause_time_seconds"];
-                        UtilIrrigation::cyclePauseTimeSeconds = cyclePauseTimeSeconds;
-                        Serial.print("Received Irrigation Rules:\n");
-                        Serial.print(String(cycleRepeatTime) + ":\n");
-                        Serial.print(String(cycleTimeOffsetMinutes) + ":\n");
-                        Serial.print(String(cycleTimeSeconds) + ":\n");
-                        Serial.println(String(cyclePauseTimeSeconds));
+                        int cycleRepeatTimeValue = irrigationRules["cycle_repeat_time"];
+                        UtilIrrigation::cycleRepeatTime = cycleRepeatTimeValue;
                     }
+                    if (irrigationRules.containsKey("cycle_time_offset_minutes") &&
+                        irrigationRules["cycle_time_offset_minutes"].is<int>())
+                    {
+                        int cycleTimeOffsetMinutesValue = irrigationRules["cycle_time_offset_minutes"];
+                        UtilIrrigation::cycleTimeOffsetMinutes = cycleTimeOffsetMinutesValue;
+                    }
+                    if (irrigationRules.containsKey("cycle_time_seconds") &&
+                        irrigationRules["cycle_time_seconds"].is<int>())
+                    {
+                        int cycleTimeSecondsValue = irrigationRules["cycle_time_seconds"];
+                        UtilIrrigation::cycleTimeSeconds = cycleTimeSecondsValue;
+                    }
+                    if (irrigationRules.containsKey("pause_time_seconds") &&
+                        irrigationRules["pause_time_seconds"].is<int>())
+                    {
+                        int cyclePauseTimeSecondsValue = irrigationRules["pause_time_seconds"];
+                        UtilIrrigation::cyclePauseTimeSeconds = cyclePauseTimeSecondsValue;
+                    }
+                    Serial.print("Received Irrigation Rules:\n");
+                    Serial.print(String(UtilIrrigation::cycleRepeatTime) + ":\n");
+                    Serial.print(String(UtilIrrigation::cycleTimeOffsetMinutes) + ":\n");
+                    Serial.print(String(UtilIrrigation::cycleTimeSeconds) + ":\n");
+                    Serial.println(String(UtilIrrigation::cyclePauseTimeSeconds));
                 }
                 server.send(
                     200,
-                    "text/plain",
+                    "application/json",
                     "{\"temperature\":\"" +
                         String(UtilAirTemperatureHumiditySensor::temperatureCelsius) +
                         "\", \"humidity\":\"" +
