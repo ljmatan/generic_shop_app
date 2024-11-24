@@ -44,7 +44,11 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
             );
           }
           return ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
             children: [
+              SizedBox(
+                height: MediaQuery.of(context).padding.top,
+              ),
               Row(
                 children: [
                   for (final airStat in <({
@@ -63,30 +67,39 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                       value: snapshot.data?.humidity,
                     ),
                   }.indexed)
-                    Padding(
-                      padding: airStat.$1 == 0 ? const EdgeInsets.only(right: 4) : const EdgeInsets.only(left: 4),
-                      child: Card(
-                        color: Colors.blue.shade200,
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                '${airStat.$2.value}${airStat.$2.measure}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                    Expanded(
+                      child: Padding(
+                        padding: airStat.$1 == 0 ? const EdgeInsets.only(right: 4) : const EdgeInsets.only(left: 4),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            color: Colors.blue.shade200,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '${airStat.$2.value}${airStat.$2.measure}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      airStat.$2.label,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                airStat.$2.label,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),

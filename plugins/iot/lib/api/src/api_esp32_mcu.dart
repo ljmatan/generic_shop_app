@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:iot/api/src/api_firebase.dart';
 import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 
 /// API interface implementation for communication with an ESP32 device
@@ -48,10 +49,19 @@ class GiotApiEsp32Mcu extends GsaaApi {
     );
     debugPrint('Set ESP32 data:\n${response.toString()}');
     try {
-      return (
+      final airStatus = (
         temperature: int.parse(response['temperature']),
         humidity: int.parse(response['humidity']),
       );
+      try {
+        GiotApiFirebase.instance.postStatusInfo(
+          airStatus.temperature,
+          airStatus.humidity,
+        );
+      } catch (e) {
+        debugPrint('$e');
+      }
+      return airStatus;
     } catch (e) {
       return null;
     }

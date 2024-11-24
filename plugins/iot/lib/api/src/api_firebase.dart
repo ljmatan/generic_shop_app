@@ -1,5 +1,5 @@
+import 'package:flutter/foundation.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:iot/giot.dart';
 import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 
 /// Firebase REST API services based on the
@@ -21,7 +21,7 @@ class GiotApiFirebase extends GsaaApi {
   /// Suffix applied to request URLs in order to comply with the
   /// [Firebase Authentication rules](https://firebase.google.com/docs/database/rest/auth).
   ///
-  final _urlSuffix = '.json?access_token=${Giot.instance.firebaseAccessToken}';
+  final _urlSuffix = '.json';
 
   /// Retrieves the contents of the entire database.
   ///
@@ -39,17 +39,18 @@ class GiotApiFirebase extends GsaaApi {
 
   /// Updates the status information on the server.
   ///
-  Future<void> putStatusInfo(
+  Future<void> postStatusInfo(
     num temperature,
     num humidity,
   ) async {
-    await put(
+    debugPrint((await patch(
       'status$_urlSuffix',
       {
         'temperature': temperature,
         'humidity': humidity,
       },
-    );
+    ))
+        .toString());
   }
 
   /// Retrieves the heating information from the server.

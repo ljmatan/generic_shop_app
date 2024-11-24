@@ -9,8 +9,8 @@ void giotBgCallbackDispatcher() {
   Workmanager().executeTask(
     (task, inputData) async {
       try {
-        final irrigationInfo = await GiotApiFirebase.instance.getIrrigationInfo();
         await GiotApiEsp32Mcu.instance.getConnectionStatus();
+        final irrigationInfo = await GiotApiFirebase.instance.getIrrigationInfo();
         await GiotApiEsp32Mcu.instance.setData(
           irrigationRules: irrigationInfo.rules,
         );
@@ -25,7 +25,10 @@ void giotBgCallbackDispatcher() {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(giotBgCallbackDispatcher);
+  Workmanager().initialize(
+    giotBgCallbackDispatcher,
+    isInDebugMode: true,
+  );
   Workmanager().registerPeriodicTask(
     'giotBackgroundTask',
     'giotBgCallbackDispatcher',
