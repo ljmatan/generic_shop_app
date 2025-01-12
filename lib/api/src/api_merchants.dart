@@ -26,16 +26,18 @@ extension GsaaEndpointsMerchantsImplExt on GsaaEndpointsMerchants {
 class GsaaApiMerchants extends GsaaApi {
   const GsaaApiMerchants._();
 
+  /// Globally-accessible singleton class instance.
+  ///
   static const instance = GsaaApiMerchants._();
 
   @override
-  String get _protocol => 'http';
+  String get protocol => 'http';
 
   @override
-  String get _identifier => 'merchants';
+  String get identifier => 'merchants';
 
   @override
-  int get _version => 0;
+  int get version => 0;
 
   /// Registers a merchant instance into the system database.
   ///

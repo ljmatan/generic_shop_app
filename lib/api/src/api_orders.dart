@@ -27,13 +27,13 @@ class GsaaApiOrders extends GsaaApi {
   static const instance = GsaaApiOrders._();
 
   @override
-  String get _protocol => 'http';
+  String get protocol => 'http';
 
   @override
-  String get _identifier => 'orders';
+  String get identifier => 'orders';
 
   @override
-  int get _version => 0;
+  int get version => 0;
 
   /// Registers a given [order] to the system.
   ///

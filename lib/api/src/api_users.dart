@@ -31,13 +31,13 @@ class GsaaApiUsers extends GsaaApi {
   static const instance = GsaaApiUsers._();
 
   @override
-  String get _protocol => 'http';
+  String get protocol => 'http';
 
   @override
-  String get _identifier => 'users';
+  String get identifier => 'users';
 
   @override
-  int get _version => 0;
+  int get version => 0;
 
   /// Register a user instance to the system.
   ///

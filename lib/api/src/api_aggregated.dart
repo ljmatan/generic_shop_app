@@ -21,13 +21,13 @@ class GsaaApiAggregated extends GsaaApi {
   static const instance = GsaaApiAggregated._();
 
   @override
-  String get _protocol => 'http';
+  String get protocol => 'http';
 
   @override
-  String get _identifier => 'aggregated';
+  String get identifier => 'aggregated';
 
   @override
-  int get _version => 0;
+  int get version => 0;
 
   Future<int> getDataVersion() async {
     final response = await get(

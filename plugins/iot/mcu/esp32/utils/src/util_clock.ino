@@ -81,7 +81,6 @@ private:
     };
 
     static
-
         /*
         Records the time information to the static variable instances.
         */

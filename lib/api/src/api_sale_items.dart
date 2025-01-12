@@ -33,13 +33,13 @@ class GsaaApiSaleItems extends GsaaApi {
   static const instance = GsaaApiSaleItems._();
 
   @override
-  String get _protocol => 'http';
+  String get protocol => 'http';
 
   @override
-  String get _identifier => 'sale-items';
+  String get identifier => 'sale-items';
 
   @override
-  int get _version => 0;
+  int get version => 0;
 
   /// Registers the given sale item data to the system.
   ///
