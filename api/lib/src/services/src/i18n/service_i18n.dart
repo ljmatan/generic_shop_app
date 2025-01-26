@@ -1,4 +1,5 @@
 import 'package:generic_shop_app_api/src/services/services.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
 part 'values/service_i18n_values.dart';
 part 'values/service_i18n_values_route.dart';
@@ -19,7 +20,7 @@ part 'values/service_i18n_values_route_terms_and_conditions.dart';
 
 /// Central access point for the internationalization services.
 ///
-class GsaaServiceI18N extends GsaaService {
+class GsaaServiceI18N extends GsarService {
   GsaaServiceI18N._();
 
   static final _instance = GsaaServiceI18N._();

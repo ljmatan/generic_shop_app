@@ -1,8 +1,8 @@
-import 'package:generic_shop_app/services/services.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// User activity tracking service.
 ///
-class GsaServiceTracking extends GsaService {
+class GsaServiceTracking extends GsarService {
   GsaServiceTracking._();
 
   static final _instance = GsaServiceTracking._();

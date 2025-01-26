@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_switch.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_field.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route providing user authentication options, such as login, registration, or guest user login.
 ///
-class GsaRouteLogin extends GsaRoute {
+class GsaRouteLogin extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteLogin({super.key});
 
@@ -21,7 +21,7 @@ class GsaRouteLogin extends GsaRoute {
   String get displayName => 'Authentication';
 }
 
-class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
+class _GsaRouteLoginState extends GsarRouteState<GsaRouteLogin> {
   final _emailTextController = TextEditingController(), _passwordTextController = TextEditingController();
 
   bool _userAgreementAccepted = false;

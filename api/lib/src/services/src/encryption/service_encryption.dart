@@ -1,6 +1,6 @@
-import 'package:generic_shop_app_api/src/services/services.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
-class GsaaServiceEncryption extends GsaaService {
+class GsaaServiceEncryption extends GsarService {
   GsaaServiceEncryption._();
 
   static final _instance = GsaaServiceEncryption._();

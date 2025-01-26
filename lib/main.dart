@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/data/data.dart';
-import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/common/view_builder.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 @pragma('vm:entry-point')
 void main() {
@@ -26,10 +26,10 @@ class _GsaState extends State<Gsa> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: GsaServiceNavigator.instance.navigatorStateKey,
+      navigatorKey: GsarRoute.navigatorKey,
       debugShowCheckedModeBanner: false,
       builder: (context, child) => GsaViewBuilder(child!),
-      navigatorObservers: [GsaServiceNavigator.instance.navigatorObserver],
+      navigatorObservers: [GsarRoute.navigatorObserver],
       home: GsaConfig.requiresAuthentication && !GsaDataUser.instance.authenticated ? const GsaRouteLogin() : const GsaRouteShop(),
       onGenerateRoute: (settings) {
         final primary = settings.name?.split('/')[0];

@@ -1,9 +1,10 @@
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Class responsible for handling any user privacy-related consent requests and statuses.
 ///
-class GsaServiceConsent extends GsaService {
+class GsaServiceConsent extends GsarService {
   GsaServiceConsent._();
 
   static final _instance = GsaServiceConsent._();
@@ -15,8 +16,8 @@ class GsaServiceConsent extends GsaService {
   ///
   Future<void> onConsentStatusChanged() async {
     await GsaServiceCache.instance.onCookieConsentAcknowledged();
-    await GsaService.revaluateAll();
-    GsaRoute.rebuildAll();
+    await GsarService.revaluateAll();
+    GsarRoute.rebuildAll();
   }
 
   final consentStatus = (mandatoryCookies: () => GsaServiceCacheId.mandatoryCookiesConsent.value,);

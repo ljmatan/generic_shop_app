@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app/services/services.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Widget overlay serving for user input blocking.
 ///
@@ -11,15 +11,18 @@ class GsaWidgetOverlayContentBlocking extends StatefulWidget {
   /// The [context] property can optionally be provided, otherwise the top-most BuildContext object is used.
   ///
   static Future<void> open([BuildContext? context]) async {
-    return await showDialog(
-      context: context ?? GsaServiceNavigator.instance.context,
-      barrierDismissible: false,
-      useSafeArea: false,
-      barrierColor: Colors.transparent,
-      builder: (context) {
-        return const GsaWidgetOverlayContentBlocking._();
-      },
-    );
+    context ??= GsarRoute.navigatorKey.currentContext;
+    if (context != null) {
+      return await showDialog(
+        context: context,
+        barrierDismissible: false,
+        useSafeArea: false,
+        barrierColor: Colors.transparent,
+        builder: (context) {
+          return const GsaWidgetOverlayContentBlocking._();
+        },
+      );
+    }
   }
 
   @override

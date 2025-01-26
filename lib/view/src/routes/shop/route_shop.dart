@@ -14,8 +14,8 @@ import 'package:generic_shop_app/view/src/common/widgets/widget_image.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_merchant_preview.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_sale_item_carousel.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 part 'widgets/widget_banner.dart';
 part 'widgets/widget_header.dart';
@@ -28,7 +28,7 @@ part 'widgets/widget_search_suggestions.dart';
 
 /// Shop route, displaying product info, alongisde of the search services.
 ///
-class GsaRouteShop extends GsaRoute {
+class GsaRouteShop extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteShop({super.key});
 
@@ -42,7 +42,7 @@ class GsaRouteShop extends GsaRoute {
   String get displayName => 'Shop';
 }
 
-class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
+class _GsaRouteShopState extends GsarRouteState<GsaRouteShop> {
   final _filters = GsaaModelShopSearch(
     id: null,
     originId: null,
@@ -137,7 +137,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
   void didPushNext() {
     super.didPushNext();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (GsaRoute.presenting != runtimeType) _clearSearchFilters();
+      if (presentingRoute != runtimeType) _clearSearchFilters();
     });
   }
 

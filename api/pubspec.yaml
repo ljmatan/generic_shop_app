@@ -1,11 +1,14 @@
 name: generic_shop_app_api
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
+publish_to: none
 
 environment:
   sdk: ^3.3.3
 
 dependencies:
+  generic_shop_app_architecture:
+    path: ../plugins/arch
   json_annotation: ^4.9.0
   http: ^1.2.1
   encrypt: ^5.0.3

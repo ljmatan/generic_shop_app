@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route displaying the application personalization settings.
 ///
-class GsaRouteSettings extends GsaRoute {
+class GsaRouteSettings extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteSettings({super.key});
 
@@ -17,7 +17,7 @@ class GsaRouteSettings extends GsaRoute {
   String get displayName => 'Settings';
 }
 
-class _GsaRouteSettingsState extends GsaRouteState<GsaRouteSettings> {
+class _GsaRouteSettingsState extends GsarRouteState<GsaRouteSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

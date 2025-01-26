@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 
 /// Firebase REST API services based on the
 /// [Realtime Database](https://firebase.google.com/docs/database).
 ///
-class GiotApiFirebase extends GsaaApi {
+class GiotApiFirebase extends GsarApi {
   GiotApiFirebase._();
 
   /// Globally-accessible class instance.
@@ -14,9 +14,6 @@ class GiotApiFirebase extends GsaaApi {
 
   @override
   String get host => 'mushroom-farm-tim-default-rtdb.europe-west1.firebasedatabase.app';
-
-  @override
-  String get url => '$protocol://$host/';
 
   /// Suffix applied to request URLs in order to comply with the
   /// [Firebase Authentication rules](https://firebase.google.com/docs/database/rest/auth).

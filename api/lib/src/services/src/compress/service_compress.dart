@@ -1,6 +1,6 @@
-import 'package:generic_shop_app_api/src/services/services.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
-class GsaaServiceCompress extends GsaaService {
+class GsaaServiceCompress extends GsarService {
   GsaaServiceCompress._();
 
   static final _instance = GsaaServiceCompress._();

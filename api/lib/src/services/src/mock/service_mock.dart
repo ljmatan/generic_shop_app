@@ -3,6 +3,7 @@ import 'dart:io' as dart_io;
 import 'dart:math' as dart_math;
 
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
 part 'values/service_mock_values_category.dart';
 part 'values/service_mock_values_city.dart';
@@ -17,7 +18,7 @@ part 'values/service_mock_values_street.dart';
 
 /// Data mocking services used for debugging and automated testing.
 ///
-class GsaaServiceMock extends GsaaService {
+class GsaaServiceMock extends GsarService {
   GsaaServiceMock._();
 
   static final _instance = GsaaServiceMock._();

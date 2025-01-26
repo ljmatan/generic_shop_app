@@ -1,6 +1,6 @@
-import 'package:generic_shop_app_api/src/services/services.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
-class GsaaServiceCalendar extends GsaaService {
+class GsaaServiceCalendar extends GsarService {
   GsaaServiceCalendar._();
 
   static final _instance = GsaaServiceCalendar._();

@@ -9,13 +9,13 @@ import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay
 import 'package:generic_shop_app/view/src/common/widgets/widget_total_cart_price.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_headline.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 part 'widgets/widget_cart_item.dart';
 
 /// Route providing the cart / checkout overview and the related data manipulation options.
 ///
-class GsaRouteCart extends GsaRoute {
+class GsaRouteCart extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteCart({super.key});
 
@@ -29,7 +29,7 @@ class GsaRouteCart extends GsaRoute {
   String get displayName => 'Cart';
 }
 
-class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
+class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
   late Set<String> _saleItemCategoryIds;
 
   @override

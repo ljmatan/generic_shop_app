@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 import 'package:iot/api/src/api_firebase.dart';
 import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 
 /// API interface implementation for communication with an ESP32 device
 /// controlling the automated system.
 ///
-class GiotApiEsp32Mcu extends GsaaApi {
+class GiotApiEsp32Mcu extends GsarApi {
   const GiotApiEsp32Mcu._();
 
   /// Globally-accessible class instance.

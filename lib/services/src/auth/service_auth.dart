@@ -1,6 +1,6 @@
-import 'package:generic_shop_app/services/services.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
-class GsaServiceAuth extends GsaService {
+class GsaServiceAuth extends GsarService {
   GsaServiceAuth._();
 
   static final _instance = GsaServiceAuth._();

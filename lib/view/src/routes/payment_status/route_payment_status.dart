@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_web_content.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route for displaying of the payment status after the checkout process has been completed.
 ///
-class GsaRoutePaymentStatus extends GsaRoute {
+class GsaRoutePaymentStatus extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRoutePaymentStatus({super.key});
 
@@ -18,7 +18,7 @@ class GsaRoutePaymentStatus extends GsaRoute {
   String get displayName => 'Payment Status';
 }
 
-class _GsaRoutePaymentStatusState extends GsaRouteState<GsaRoutePaymentStatus> {
+class _GsaRoutePaymentStatusState extends GsarRouteState<GsaRoutePaymentStatus> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

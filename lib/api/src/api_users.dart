@@ -1,4 +1,5 @@
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -25,7 +26,7 @@ extension GsaaEndpointsUsersImplExt on GsaaEndpointsUsers {
   }
 }
 
-class GsaaApiUsers extends GsaaApi {
+class GsaaApiUsers extends GsarApi {
   const GsaaApiUsers._();
 
   static const instance = GsaaApiUsers._();

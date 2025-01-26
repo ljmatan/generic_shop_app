@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Project-level configuration methods and properties.
 ///
@@ -66,10 +66,9 @@ class GsaConfig {
   static Future<void> init() async {
     // Configure the visual display.
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    await GsaaConfig.init();
     // Allocate the application runtime resources according to the given configuration.
-    await GsaData.initAll();
-    await GsaService.initAll();
+    await GsarData.initAll();
+    await GsarService.initAll();
   }
 }
 

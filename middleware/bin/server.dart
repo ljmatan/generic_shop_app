@@ -2,15 +2,12 @@ library generic_shop_app_middleware;
 
 import 'dart:io' as dart_io;
 
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-
 import 'api/api.dart';
 import 'db/database.dart';
 import 'hosting/hosting.dart';
 import 'router/router.dart';
 
 Future<void> main() async {
-  await GsaaConfig.init();
   await GsamConfig.init();
 }
 

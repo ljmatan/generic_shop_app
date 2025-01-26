@@ -1,14 +1,13 @@
 import 'dart:convert' as dart_convert;
 
-import 'package:generic_shop_app_api/src/services/services.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
 part 'models/model_error_log.dart';
 part 'models/model_general_log.dart';
-part 'models/model_network_log.dart';
 
 /// Session logging services, extending to general, error, or network logs.
 ///
-class GsaaServiceLogging extends GsaaService {
+class GsaaServiceLogging extends GsarService {
   GsaaServiceLogging._();
 
   static final _instance = GsaaServiceLogging._();
@@ -26,7 +25,6 @@ class GsaaServiceLogging extends GsaaService {
   final logs = (
     general: <GsaaServiceLoggingModelGeneralLog>[],
     error: <GsaaServiceLoggingModelErrorLog>[],
-    network: <GsaaServiceLoggingModelNetworkLog>[],
   );
 
   void _logGeneral(GsaaServiceLoggingModelGeneralLog log) {
@@ -35,10 +33,6 @@ class GsaaServiceLogging extends GsaaService {
 
   void _logError(GsaaServiceLoggingModelErrorLog log) {
     logs.error.add(log);
-  }
-
-  void _logNetworkRequest(GsaaServiceLoggingModelNetworkLog log) {
-    logs.network.add(log);
   }
 
   /// Logs any given message.
@@ -100,38 +94,6 @@ class GsaaServiceLogging extends GsaaService {
         //     .toList(),
       );
       instance._logError(log);
-    } catch (e) {
-      // Do nothing, service is disabled.
-    }
-  }
-
-  /// Method provided for logging network requests made from the app.
-  ///
-  static void logNetworkRequest({
-    required int statusCode,
-    required DateTime requestTime,
-    required Uri uri,
-    required String method,
-    required Map<String, String> requestHeaders,
-    required Map<String, dynamic> requestBody,
-    required Map<String, String> responseHeaders,
-    required Map<String, dynamic> responseBody,
-  }) {
-    try {
-      final log = GsaaServiceLoggingModelNetworkLog._(
-        statusCode: statusCode,
-        requestTime: requestTime,
-        responseTime: DateTime.now(),
-        method: method,
-        url: uri.toString(),
-        host: uri.host,
-        endpoint: uri.path,
-        requestBody: requestHeaders,
-        responseBody: responseBody,
-        requestHeaders: requestHeaders,
-        responseHeaders: responseHeaders,
-      );
-      instance._logNetworkRequest(log);
     } catch (e) {
       // Do nothing, service is disabled.
     }

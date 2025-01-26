@@ -5,6 +5,7 @@ import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/common/theme.dart';
 import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay_consent.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_error.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 
 /// A builder for inserting widgets above the [Navigator].
 ///
@@ -43,7 +44,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
         Duration.zero,
         () {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            GsaWidgetOverlayConsent.open(GsaServiceNavigator.instance.context);
+            GsaWidgetOverlayConsent.open();
           });
         },
       );
@@ -113,7 +114,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
                     _recordedNumberOfTaps++;
                     if (_recordedNumberOfTaps == 10) {
                       _recordedNumberOfTaps = 0;
-                      Navigator.pushNamed(GsaServiceNavigator.instance.context, 'debug');
+                      GsaRouteDebug().navigate();
                     } else {
                       Future.delayed(
                         const Duration(seconds: 3),

@@ -4,10 +4,10 @@ class _WidgetDrawer extends StatefulWidget {
   const _WidgetDrawer();
 
   @override
-  State<_WidgetDrawer> createState() => __WidgetDrawerState();
+  State<_WidgetDrawer> createState() => _WidgetDrawerState();
 }
 
-class __WidgetDrawerState extends State<_WidgetDrawer> {
+class _WidgetDrawerState extends State<_WidgetDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -76,7 +76,7 @@ class __WidgetDrawerState extends State<_WidgetDrawer> {
                                           id: language.name,
                                           label: language.displayName,
                                           onTap: () {
-                                            GsaRoute.rebuildAll();
+                                            context.routeState?.rebuildAllRoutes();
                                             GsaConfig.languageNotifier.value = language;
                                           },
                                         ),
@@ -87,7 +87,7 @@ class __WidgetDrawerState extends State<_WidgetDrawer> {
                                           id: currency.name,
                                           label: currency.displayName,
                                           onTap: () {
-                                            GsaRoute.rebuildAll();
+                                            context.routeState?.rebuildAllRoutes();
                                             GsaConfig.currencyNotifier.value = currency;
                                           },
                                         ),

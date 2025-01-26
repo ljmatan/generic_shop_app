@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_switch.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Widget overlay displaying user privacy policy and terms and conditions consent content.
 ///
@@ -13,13 +14,16 @@ class GsaWidgetOverlayConsent extends StatefulWidget {
   /// The [context] property can optionally be provided, otherwise the top-most BuildContext object is used.
   ///
   static Future<void> open([BuildContext? context]) async {
-    return await showDialog(
-      context: context ?? GsaServiceNavigator.instance.context,
-      barrierDismissible: GsaServiceConsent.instance.consentStatus.mandatoryCookies() != null,
-      builder: (context) {
-        return const GsaWidgetOverlayConsent._();
-      },
-    );
+    context ??= GsarRoute.navigatorKey.currentContext;
+    if (context != null) {
+      return await showDialog(
+        context: context,
+        barrierDismissible: GsaServiceConsent.instance.consentStatus.mandatoryCookies() != null,
+        builder: (context) {
+          return const GsaWidgetOverlayConsent._();
+        },
+      );
+    }
   }
 
   @override

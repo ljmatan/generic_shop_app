@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app/services/services.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Session logging services, extending to general, error, or network logs.
 ///
-class GsaServiceLogging extends GsaService {
+class GsaServiceLogging extends GsarService {
   GsaServiceLogging._();
 
   static final _instance = GsaServiceLogging._();

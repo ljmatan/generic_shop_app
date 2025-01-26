@@ -1,6 +1,7 @@
 import 'package:generic_shop_app/services/services.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
-class GsaServiceBookmarks extends GsaService {
+class GsaServiceBookmarks extends GsarService {
   GsaServiceBookmarks._();
 
   static final _instance = GsaServiceBookmarks._();

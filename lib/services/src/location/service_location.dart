@@ -1,8 +1,8 @@
-import 'package:generic_shop_app/services/services.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Linter services with custom code inspection configuration.
 ///
-class GsaServiceLocation extends GsaService {
+class GsaServiceLocation extends GsarService {
   GsaServiceLocation._();
 
   static final _instance = GsaServiceLocation._();

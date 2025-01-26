@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_web_content.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route displaying the application terms and conditions content and consent mechanisms.
 ///
-class GsaRouteTermsAndConditions extends GsaRoute {
+class GsaRouteTermsAndConditions extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteTermsAndConditions({super.key});
 
@@ -18,7 +19,7 @@ class GsaRouteTermsAndConditions extends GsaRoute {
   String get displayName => 'Terms and Conditions';
 }
 
-class _GsaRouteTermsAndConditionsState extends GsaRouteState<GsaRouteTermsAndConditions> {
+class _GsaRouteTermsAndConditionsState extends GsarRouteState<GsaRouteTermsAndConditions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

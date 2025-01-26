@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_web_content.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route designed for displaying of the cookie policy and related consent mechanisms.
 ///
-class GsaRouteCookiePolicy extends GsaRoute {
+class GsaRouteCookiePolicy extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteCookiePolicy({super.key});
 
@@ -18,7 +19,7 @@ class GsaRouteCookiePolicy extends GsaRoute {
   String get displayName => 'Cookie Policy';
 }
 
-class _GsaRouteCookiePolicyState extends GsaRouteState<GsaRouteCookiePolicy> {
+class _GsaRouteCookiePolicyState extends GsarRouteState<GsaRouteCookiePolicy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

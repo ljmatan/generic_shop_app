@@ -1,8 +1,8 @@
-import 'package:generic_shop_app_api/src/services/services.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
 /// User-generated input validation services.
 ///
-class GsaaServiceInputValidation extends GsaaService {
+class GsaaServiceInputValidation extends GsarService {
   GsaaServiceInputValidation._();
 
   static final _instance = GsaaServiceInputValidation._();

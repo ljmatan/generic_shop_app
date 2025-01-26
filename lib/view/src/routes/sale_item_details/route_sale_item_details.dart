@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_api/src/models/models.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_web_content.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route displaying the sale item details, also providing related checkout / cart mechanisms.
 ///
-class GsaRouteProductDetails extends GsaRoute {
+class GsaRouteProductDetails extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteProductDetails({
     super.key,
@@ -26,7 +26,7 @@ class GsaRouteProductDetails extends GsaRoute {
   String get displayName => 'Item Details';
 }
 
-class _GsaRouteProductDetailsState extends GsaRouteState<GsaRouteProductDetails> {
+class _GsaRouteProductDetailsState extends GsarRouteState<GsaRouteProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

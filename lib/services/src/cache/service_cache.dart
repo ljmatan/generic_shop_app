@@ -1,12 +1,13 @@
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 import 'package:shared_preferences/shared_preferences.dart' as shared_preferences;
 
 part 'service_cache_values.dart';
 
 /// Cache data manager, implemented with the [shared_preferences](https://pub.dev/packages/shared_preferences) package.
 ///
-class GsaServiceCache extends GsaService {
+class GsaServiceCache extends GsarService {
   GsaServiceCache._();
 
   static final _instance = GsaServiceCache._();

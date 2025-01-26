@@ -1,8 +1,8 @@
-import 'package:generic_shop_app_api/src/services/services.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
 /// On-device search services used for filtering results with the given parameters.
 ///
-class GsaaServiceSearch extends GsaaService {
+class GsaaServiceSearch extends GsarService {
   GsaaServiceSearch._();
 
   static final _instance = GsaaServiceSearch._();

@@ -16,6 +16,7 @@ import 'package:generic_shop_app/view/src/common/widgets/widget_phone_number_inp
 import 'package:generic_shop_app/view/src/common/widgets/widget_terms_confirmation.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 import 'package:latlong2/latlong.dart';
 
 part 'widgets/widget_checkout_option.dart';
@@ -26,7 +27,7 @@ part 'widgets/widget_checkout_overview.dart';
 /// Route aimed at checkout integration,
 /// with all of the checkout options (delivery, payment, info propagation) implemented.
 ///
-class GsaRouteCheckout extends GsaRoute {
+class GsaRouteCheckout extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteCheckout({super.key});
 
@@ -40,7 +41,7 @@ class GsaRouteCheckout extends GsaRoute {
   String get displayName => 'Checkout';
 }
 
-class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
+class _GsaRouteCheckoutState extends GsarRouteState<GsaRouteCheckout> {
   final _pageController = PageController();
 
   Future<void> _goToNextStep() async {

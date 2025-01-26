@@ -1,9 +1,9 @@
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 import 'package:json_annotation/json_annotation.dart' as json_annotation;
 
 /// Service implementing several useful methods and properties for currency management.
 ///
-class GsaaServiceCurrency extends GsaaService {
+class GsaaServiceCurrency extends GsarService {
   GsaaServiceCurrency._();
 
   static final _instance = GsaaServiceCurrency._();

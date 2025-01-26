@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route displaying the merchant / vendor information.
 ///
-class GsaRouteMerchant extends GsaRoute {
+class GsaRouteMerchant extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteMerchant({super.key});
 
@@ -18,7 +18,7 @@ class GsaRouteMerchant extends GsaRoute {
   String get displayName => 'Merchant Details';
 }
 
-class _GsaRouteMerchantState extends GsaRouteState<GsaRouteMerchant> {
+class _GsaRouteMerchantState extends GsarRouteState<GsaRouteMerchant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

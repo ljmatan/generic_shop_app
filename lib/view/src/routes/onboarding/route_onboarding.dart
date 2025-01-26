@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route displaying the application onboarding guide and other relevant information.
 ///
-class GsaRouteOnboarding extends GsaRoute {
+class GsaRouteOnboarding extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteOnboarding({super.key});
 
@@ -18,7 +18,7 @@ class GsaRouteOnboarding extends GsaRoute {
   String get displayName => 'Onboarding';
 }
 
-class _GsaRouteOnboardingState extends GsaRouteState<GsaRouteOnboarding> {
+class _GsaRouteOnboardingState extends GsarRouteState<GsaRouteOnboarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

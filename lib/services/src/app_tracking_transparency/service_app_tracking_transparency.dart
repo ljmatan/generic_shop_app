@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:generic_shop_app/services/services.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart' as att;
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// The AppTrackingTransparency framework presents an app-tracking authorization request to the user
 /// and provides the tracking authorization status.
@@ -12,7 +12,7 @@ import 'package:app_tracking_transparency/app_tracking_transparency.dart' as att
 ///
 /// https://developer.apple.com/documentation/apptrackingtransparency
 ///
-class GsaServiceAppTrackingTransparency extends GsaService {
+class GsaServiceAppTrackingTransparency extends GsarService {
   GsaServiceAppTrackingTransparency._();
 
   static final _instance = GsaServiceAppTrackingTransparency._();

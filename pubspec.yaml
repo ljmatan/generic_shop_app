@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   generic_shop_app_api:
     path: ./api
+  gsa_architecture:
+    path: ./plugins/arch
   json_annotation: ^4.9.0
   flutter_svg: ^2.0.15
   webview_flutter: ^4.10.0

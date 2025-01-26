@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
-class GsaRouteChat extends GsaRoute {
+class GsaRouteChat extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteChat({super.key});
 
@@ -15,7 +16,7 @@ class GsaRouteChat extends GsaRoute {
   String get displayName => 'Chat';
 }
 
-class _GsaRouteChatState extends GsaRouteState<GsaRouteChat> {
+class _GsaRouteChatState extends GsarRouteState<GsaRouteChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

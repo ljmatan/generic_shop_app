@@ -1,6 +1,6 @@
-import 'package:generic_shop_app_api/src/services/services.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
-class GsaaServiceCoordinates extends GsaaService {
+class GsaaServiceCoordinates extends GsarService {
   GsaaServiceCoordinates._();
 
   static final _instance = GsaaServiceCoordinates._();

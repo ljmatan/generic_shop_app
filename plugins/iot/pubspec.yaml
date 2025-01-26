@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  generic_shop_app_architecture:
+    path: ../arch
   generic_shop_app_api:
     path: ../../api
   workmanager: ^0.5.2

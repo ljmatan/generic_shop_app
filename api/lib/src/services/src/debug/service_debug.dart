@@ -1,8 +1,8 @@
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsa_architecture.dart';
 
 /// Debugging services used for development purposes.
 ///
-class GsaaServiceDebug extends GsaaService {
+class GsaaServiceDebug extends GsarService {
   GsaaServiceDebug._();
 
   static final _instance = GsaaServiceDebug._();

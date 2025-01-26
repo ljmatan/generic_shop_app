@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:gsa_architecture/gsa_architecture.dart';
 
 /// Route providing user authentication options, such as login, registration, or guest user login.
 ///
-class GsaRouteRegister extends GsaRoute {
+class GsaRouteRegister extends GsarRoute {
   // ignore: public_member_api_docs
   const GsaRouteRegister({
     super.key,
@@ -26,7 +26,7 @@ class GsaRouteRegister extends GsaRoute {
   String get displayName => 'Register';
 }
 
-class _GsaRouteRegisterState extends GsaRouteState<GsaRouteRegister> {
+class _GsaRouteRegisterState extends GsarRouteState<GsaRouteRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
