@@ -9,7 +9,7 @@ import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay
 import 'package:generic_shop_app/view/src/common/widgets/widget_total_cart_price.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_headline.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 part 'widgets/widget_cart_item.dart';
 

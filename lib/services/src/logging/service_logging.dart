@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 /// Session logging services, extending to general, error, or network logs.
 ///

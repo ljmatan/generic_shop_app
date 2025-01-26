@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 extension GsaServiceI18nExt on String {
   ///

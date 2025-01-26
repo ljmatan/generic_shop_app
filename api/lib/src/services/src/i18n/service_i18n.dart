@@ -1,5 +1,5 @@
 import 'package:generic_shop_app_api/src/services/services.dart';
-import 'package:generic_shop_app_architecture/gsa_architecture.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 part 'values/service_i18n_values.dart';
 part 'values/service_i18n_values_route.dart';

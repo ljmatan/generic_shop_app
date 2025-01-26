@@ -1,6 +1,6 @@
 import 'dart:convert' as dart_convert;
 
-import 'package:generic_shop_app_architecture/gsa_architecture.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 part 'models/model_error_log.dart';
 part 'models/model_general_log.dart';

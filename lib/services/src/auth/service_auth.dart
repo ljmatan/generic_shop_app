@@ -1,4 +1,4 @@
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 class GsaServiceAuth extends GsarService {
   GsaServiceAuth._();

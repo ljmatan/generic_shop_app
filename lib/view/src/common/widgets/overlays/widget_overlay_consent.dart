@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_switch.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 /// Widget overlay displaying user privacy policy and terms and conditions consent content.
 ///

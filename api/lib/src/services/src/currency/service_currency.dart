@@ -1,4 +1,4 @@
-import 'package:generic_shop_app_architecture/gsa_architecture.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:json_annotation/json_annotation.dart' as json_annotation;
 
 /// Service implementing several useful methods and properties for currency management.

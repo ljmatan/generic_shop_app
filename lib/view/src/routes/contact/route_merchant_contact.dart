@@ -4,7 +4,7 @@ import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_fie
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 /// Route for displaying of the contact input forms and general merchant contact information.
 ///

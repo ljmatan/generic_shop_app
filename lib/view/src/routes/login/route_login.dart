@@ -3,7 +3,7 @@ import 'package:generic_shop_app/view/src/common/widgets/actions/widget_switch.d
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_field.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 /// Route providing user authentication options, such as login, registration, or guest user login.
 ///

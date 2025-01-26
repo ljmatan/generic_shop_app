@@ -3,7 +3,7 @@ import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/view/src/common/view_builder.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 @pragma('vm:entry-point')
 void main() {

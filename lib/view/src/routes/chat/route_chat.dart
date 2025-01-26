@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 class GsaRouteChat extends GsarRoute {
   // ignore: public_member_api_docs

@@ -1,5 +1,5 @@
 import 'package:generic_shop_app/services/services.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 class GsaServiceBookmarks extends GsarService {
   GsaServiceBookmarks._();

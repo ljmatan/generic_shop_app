@@ -1,6 +1,6 @@
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
-import 'package:gsa_architecture/gsa_architecture.dart';
+import 'package:gsa_architecture/gsar.dart';
 
 /// Class responsible for handling any user privacy-related consent requests and statuses.
 ///
