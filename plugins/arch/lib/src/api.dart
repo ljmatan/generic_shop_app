@@ -226,12 +226,8 @@ enum GsarApiEndpointMethodType {
 
   /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE
   ///
-  httpDelete,
-}
+  httpDelete;
 
-/// Extension methods and properties for the [GsarApiEndpointMethodType] object.
-///
-extension GsarApiEndpointMethodTypeExt on GsarApiEndpointMethodType {
   /// Human-readable method identifier.
   ///
   String get id {
