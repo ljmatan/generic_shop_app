@@ -19,6 +19,8 @@ extension GsaaEndpointsAggregatedImplExt on GsaaEndpointsAggregated {
 class GsaaApiAggregated extends GsarApi {
   const GsaaApiAggregated._();
 
+  /// Globally-accessible class instance.
+  ///
   static const instance = GsaaApiAggregated._();
 
   @override

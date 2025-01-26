@@ -281,7 +281,7 @@ abstract class GsarApiEndpoints {
   ///
   String get path;
 
-  /// Method defined for the specified endpoint.
+  /// Method type defined for the specified endpoint.
   ///
   GsarApiEndpointMethodType get method;
 }
