@@ -79,15 +79,35 @@ abstract class GsarApi {
   ///
   /// The method will return a result if any errors are detected.
   ///
-  List<String>? validateFields(
+  List<String>? validateFields({
+    GsarApiEndpointsFields? fieldValidators,
     List<
             ({
               String key,
               Type type,
-            })>
+            })>?
         validators,
-    dynamic fields,
-  ) {
+    required dynamic fields,
+  }) {
+    if (fieldValidators == null && validators == null) {
+      print('Either fieldValidators or validator property must be specified.');
+      return null;
+    }
+
+    validators ??= fieldValidators?.responseFields
+        ?.map(
+          (fieldValidator) => (
+            key: fieldValidator.key,
+            type: fieldValidator.type,
+          ),
+        )
+        .toList();
+
+    if (validators?.isNotEmpty != true) {
+      print('Property validators must not be empty.');
+      return null;
+    }
+
     /// List of errors discovered during the validation process.
     ///
     final errors = <String>[];
@@ -95,7 +115,7 @@ abstract class GsarApi {
     /// Verifies the fields against the provided values.
     ///
     void verify(Map<String, dynamic> value) {
-      for (final field in validators) {
+      for (final field in validators!) {
         final valueType = value[field.key].runtimeType;
         if (valueType != field.type) {
           errors.add('Key ${field.key} is not of type ${field.type}. Found $valueType');
@@ -366,7 +386,16 @@ abstract class GsarApiEndpointsFields {
         String key,
         Type type,
         bool isRequired,
-      })>? get fields;
+      })>? get requestFields;
+
+  /// Specified list of fields and their associated runtime types,
+  /// referenced during the validation process.
+  ///
+  List<
+      ({
+        String key,
+        Type type,
+      })>? get responseFields;
 }
 
 /// Model class defining the network log data structure.
