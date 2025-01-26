@@ -5,6 +5,7 @@ import 'dart:convert' as dart_convert;
 import 'dart:io' as dart_io;
 
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
 

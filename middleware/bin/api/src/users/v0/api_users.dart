@@ -22,7 +22,7 @@ class GsamApiUsers0 extends GsamApi {
       for (final endpoint in GsaaEndpointsUsers.values)
         (
           path: endpoint.path,
-          method: endpoint.method,
+          method: endpoint.method.id,
           handler: endpoint.handler,
         ),
     ];

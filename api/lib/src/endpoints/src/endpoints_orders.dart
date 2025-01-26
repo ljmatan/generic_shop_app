@@ -1,6 +1,6 @@
 part of '../endpoints.dart';
 
-enum GsaaEndpointsOrders {
+enum GsaaEndpointsOrders implements GsarApiEndpoints {
   /// Registers a new order into the database.
   ///
   register,
@@ -19,10 +19,9 @@ enum GsaaEndpointsOrders {
 
   /// Marks the order draft as confirmed from the user side.
   ///
-  confirmDraft,
-}
+  confirmDraft;
 
-extension GsaaEndpointsOrdersPathExt on GsaaEndpointsOrders {
+  @override
   String get path {
     switch (this) {
       case GsaaEndpointsOrders.register:
@@ -38,22 +37,19 @@ extension GsaaEndpointsOrdersPathExt on GsaaEndpointsOrders {
     }
   }
 
-  String get method {
-    return _method.id;
-  }
-
-  _EndpointMethodType get _method {
+  @override
+  GsarApiEndpointMethodType get method {
     switch (this) {
       case GsaaEndpointsOrders.register:
-        return _EndpointMethodType.postRequest;
+        return GsarApiEndpointMethodType.httpPost;
       case GsaaEndpointsOrders.deleteAll:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
       case GsaaEndpointsOrders.deleteSoft:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
       case GsaaEndpointsOrders.createOrUpdateDraft:
-        return _EndpointMethodType.putRequest;
+        return GsarApiEndpointMethodType.httpPut;
       case GsaaEndpointsOrders.confirmDraft:
-        return _EndpointMethodType.postRequest;
+        return GsarApiEndpointMethodType.httpPost;
     }
   }
 }

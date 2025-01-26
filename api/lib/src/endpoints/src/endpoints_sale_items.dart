@@ -2,7 +2,7 @@ part of '../endpoints.dart';
 
 /// Specified endpoints for the sale item API services.
 ///
-enum GsaaEndpointsSaleItems {
+enum GsaaEndpointsSaleItems implements GsarApiEndpoints {
   /// Registers a new sale item record into the database.
   ///
   register,
@@ -37,10 +37,9 @@ enum GsaaEndpointsSaleItems {
 
   /// Endpoint for generic sale item search (by text, with filters, etc.).
   ///
-  searchItems,
-}
+  searchItems;
 
-extension GsaaEndpointsSaleItemsPathExt on GsaaEndpointsSaleItems {
+  @override
   String get path {
     switch (this) {
       case GsaaEndpointsSaleItems.register:
@@ -64,30 +63,27 @@ extension GsaaEndpointsSaleItemsPathExt on GsaaEndpointsSaleItems {
     }
   }
 
-  String get method {
-    return _method.id;
-  }
-
-  _EndpointMethodType get _method {
+  @override
+  GsarApiEndpointMethodType get method {
     switch (this) {
       case GsaaEndpointsSaleItems.register:
-        return _EndpointMethodType.postRequest;
+        return GsarApiEndpointMethodType.httpPost;
       case GsaaEndpointsSaleItems.getItemDetails:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
       case GsaaEndpointsSaleItems.editItemDetails:
-        return _EndpointMethodType.patchRequest;
+        return GsarApiEndpointMethodType.httpPatch;
       case GsaaEndpointsSaleItems.deleteAll:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
       case GsaaEndpointsSaleItems.deleteSoft:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
       case GsaaEndpointsSaleItems.getAllItems:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
       case GsaaEndpointsSaleItems.getItemCategories:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
       case GsaaEndpointsSaleItems.getFeaturedItems:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
       case GsaaEndpointsSaleItems.searchItems:
-        return _EndpointMethodType.postRequest;
+        return GsarApiEndpointMethodType.httpPost;
     }
   }
 }

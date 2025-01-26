@@ -1,11 +1,10 @@
 part of '../endpoints.dart';
 
-enum GsaaEndpointsAggregated {
+enum GsaaEndpointsAggregated implements GsarApiEndpoints {
   getDataVersion,
-  getMobileAppData,
-}
+  getMobileAppData;
 
-extension GsaaEndpointsAggregatedPathExt on GsaaEndpointsAggregated {
+  @override
   String get path {
     switch (this) {
       case GsaaEndpointsAggregated.getDataVersion:
@@ -15,16 +14,13 @@ extension GsaaEndpointsAggregatedPathExt on GsaaEndpointsAggregated {
     }
   }
 
-  String get method {
-    return _method.id;
-  }
-
-  _EndpointMethodType get _method {
+  @override
+  GsarApiEndpointMethodType get method {
     switch (this) {
       case GsaaEndpointsAggregated.getDataVersion:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
       case GsaaEndpointsAggregated.getMobileAppData:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
     }
   }
 }

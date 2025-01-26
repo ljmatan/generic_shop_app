@@ -22,7 +22,7 @@ class GsamApiOrders0 extends GsamApi {
       for (final endpoint in GsaaEndpointsOrders.values)
         (
           path: endpoint.path,
-          method: endpoint.method,
+          method: endpoint.method.id,
           handler: endpoint.handler,
         ),
     ];

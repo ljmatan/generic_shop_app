@@ -1,15 +1,14 @@
 part of '../endpoints.dart';
 
-enum GsaaEndpointsMerchants {
+enum GsaaEndpointsMerchants implements GsarApiEndpoints {
   register,
   getMerchantDetails,
   editMerchantDetails,
   deleteAll,
   deleteSoft,
-  getAllMerchants,
-}
+  getAllMerchants;
 
-extension GsaaEndpointsMerchantsPathExt on GsaaEndpointsMerchants {
+  @override
   String get path {
     switch (this) {
       case GsaaEndpointsMerchants.register:
@@ -27,24 +26,21 @@ extension GsaaEndpointsMerchantsPathExt on GsaaEndpointsMerchants {
     }
   }
 
-  String get method {
-    return _method.id;
-  }
-
-  _EndpointMethodType get _method {
+  @override
+  GsarApiEndpointMethodType get method {
     switch (this) {
       case GsaaEndpointsMerchants.register:
-        return _EndpointMethodType.postRequest;
+        return GsarApiEndpointMethodType.httpPost;
       case GsaaEndpointsMerchants.getMerchantDetails:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
       case GsaaEndpointsMerchants.editMerchantDetails:
-        return _EndpointMethodType.patchRequest;
+        return GsarApiEndpointMethodType.httpPatch;
       case GsaaEndpointsMerchants.deleteAll:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
       case GsaaEndpointsMerchants.deleteSoft:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
       case GsaaEndpointsMerchants.getAllMerchants:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
     }
   }
 }

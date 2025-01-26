@@ -1,6 +1,6 @@
 part of '../endpoints.dart';
 
-enum GsaaEndpointsUsers {
+enum GsaaEndpointsUsers implements GsarApiEndpoints {
   /// Registers a given user record to the database.
   ///
   register,
@@ -31,10 +31,9 @@ enum GsaaEndpointsUsers {
 
   /// Marks the user as deleted and removes any personal user data from the database.
   ///
-  deleteSoft,
-}
+  deleteSoft;
 
-extension GsaaEndpointsUsersPathExt on GsaaEndpointsUsers {
+  @override
   String get path {
     switch (this) {
       case GsaaEndpointsUsers.login:
@@ -56,28 +55,25 @@ extension GsaaEndpointsUsersPathExt on GsaaEndpointsUsers {
     }
   }
 
-  String get method {
-    return _method.id;
-  }
-
-  _EndpointMethodType get _method {
+  @override
+  GsarApiEndpointMethodType get method {
     switch (this) {
       case GsaaEndpointsUsers.login:
-        return _EndpointMethodType.postRequest;
+        return GsarApiEndpointMethodType.httpPost;
       case GsaaEndpointsUsers.loginPassword:
-        return _EndpointMethodType.postRequest;
+        return GsarApiEndpointMethodType.httpPost;
       case GsaaEndpointsUsers.register:
-        return _EndpointMethodType.postRequest;
+        return GsarApiEndpointMethodType.httpPost;
       case GsaaEndpointsUsers.getUserDetails:
-        return _EndpointMethodType.getRequest;
+        return GsarApiEndpointMethodType.httpGet;
       case GsaaEndpointsUsers.editUserDetails:
-        return _EndpointMethodType.patchRequest;
+        return GsarApiEndpointMethodType.httpPatch;
       case GsaaEndpointsUsers.requestDeletion:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
       case GsaaEndpointsUsers.deleteAll:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
       case GsaaEndpointsUsers.deleteSoft:
-        return _EndpointMethodType.deleteRequest;
+        return GsarApiEndpointMethodType.httpDelete;
     }
   }
 }

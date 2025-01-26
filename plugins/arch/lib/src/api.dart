@@ -205,9 +205,92 @@ abstract class GsarApi {
   }
 }
 
+/// Supported types of HTTP network requests.
+///
+enum GsarApiEndpointMethodType {
+  /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET
+  ///
+  httpGet,
+
+  /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST
+  ///
+  httpPost,
+
+  /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH
+  ///
+  httpPatch,
+
+  /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT
+  ///
+  httpPut,
+
+  /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE
+  ///
+  httpDelete,
+}
+
+/// Extension methods and properties for the [GsarApiEndpointMethodType] object.
+///
+extension GsarApiEndpointMethodTypeExt on GsarApiEndpointMethodType {
+  /// Human-readable method identifier.
+  ///
+  String get id {
+    switch (this) {
+      case GsarApiEndpointMethodType.httpGet:
+        return 'GET';
+      case GsarApiEndpointMethodType.httpPost:
+        return 'POST';
+      case GsarApiEndpointMethodType.httpPatch:
+        return 'PATCH';
+      case GsarApiEndpointMethodType.httpPut:
+        return 'PUT';
+      case GsarApiEndpointMethodType.httpDelete:
+        return 'DELETE';
+    }
+  }
+}
+
+/// Class defining main endpoint fields for subsequent implementations.
+///
+/// The object can be used as in below example:
+///
+/// ```dart
+/// enum ExampleEnum implements GsarApiEndpoints {
+///   example,
+///
+///   @override
+///   String get path {
+///     switch (this) {
+///       case ExampleEnum.example:
+///         return 'example';
+///     }
+///   }
+///
+///   @override
+///   GsarApiEndpointMethodType get method {
+///     switch (this) {
+///       case ExampleEnum.example:
+///         return GsarApiEndpointMethodType.get;
+///     }
+///   }
+/// }
+/// ```
+///
+abstract class GsarApiEndpoints {
+  /// URL path of the network resource.
+  ///
+  String get path;
+
+  /// Method defined for the specified endpoint.
+  ///
+  GsarApiEndpointMethodType get method;
+}
+
 /// Model class defining the network log data structure.
 ///
 class GsarApiModelLog {
+  /// Default unnamed class constructor.
+  ///
   const GsarApiModelLog({
     required this.statusCode,
     required this.requestTime,

@@ -22,7 +22,7 @@ class GsamApiMerchants0 extends GsamApi {
       for (final endpoint in GsaaEndpointsMerchants.values)
         (
           path: endpoint.path,
-          method: endpoint.method,
+          method: endpoint.method.id,
           handler: endpoint.handler,
         ),
     ];
