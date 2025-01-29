@@ -6,7 +6,7 @@ class _WidgetMerchantMapFinder extends StatefulWidget {
     required this.goToNextStep,
   });
 
-  final GsaaModelTranslated? notice;
+  final String? notice;
 
   final Function goToNextStep;
 

@@ -1,5 +1,6 @@
 import 'dart:convert' as dart_convert;
 
+import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:http/http.dart' as http;
 
 /// A base class for the HTTP client services.
@@ -73,76 +74,6 @@ abstract class GsarApi {
   Future<void> _log(GsarApiModelLog log) async {
     if (!loggingEnabled) return;
     logs.add(log);
-  }
-
-  /// Method used for validating [fields] against the values provided by the [validators].
-  ///
-  /// The method will return a result if any errors are detected.
-  ///
-  List<String>? validateFields({
-    GsarApiEndpointsFields? fieldValidators,
-    List<
-            ({
-              String key,
-              Type type,
-            })>?
-        validators,
-    required dynamic fields,
-  }) {
-    if (fieldValidators == null && validators == null) {
-      print('Either fieldValidators or validator property must be specified.');
-      return null;
-    }
-
-    validators ??= fieldValidators?.responseFields
-        ?.map(
-          (fieldValidator) => (
-            key: fieldValidator.key,
-            type: fieldValidator.type,
-          ),
-        )
-        .toList();
-
-    if (validators?.isNotEmpty != true) {
-      print('Property validators must not be empty.');
-      return null;
-    }
-
-    /// List of errors discovered during the validation process.
-    ///
-    final errors = <String>[];
-
-    /// Verifies the fields against the provided values.
-    ///
-    void verify(Map<String, dynamic> value) {
-      for (final field in validators!) {
-        final valueType = value[field.key].runtimeType;
-        if (valueType != field.type) {
-          errors.add('Key ${field.key} is not of type ${field.type}. Found $valueType');
-        }
-      }
-    }
-
-    /// Parses the provided field and calls the [verify] method on it.
-    ///
-    void parse(dynamic value) {
-      try {
-        final fields = Map<String, dynamic>.from(value);
-        verify(fields);
-      } catch (e) {
-        errors.add('Unexpected validation error: $e');
-      }
-    }
-
-    if (fields is Iterable) {
-      for (final field in fields) {
-        parse(field);
-      }
-    } else {
-      parse(fields);
-    }
-
-    return errors.isEmpty ? null : errors;
   }
 
   /// Default HTTP request and response handler.
@@ -273,6 +204,51 @@ abstract class GsarApi {
       decodedResponse: decodedResponse,
     );
   }
+
+  /// Method used for validating [fields] against the values provided by the [validators].
+  ///
+  /// The method will return a result if any errors are detected.
+  ///
+  List<String>? validateFields({
+    required GsarModel validators,
+    required dynamic fields,
+  }) {
+    /// List of errors discovered during the validation process.
+    ///
+    final errors = <String>[];
+
+    /// Verifies the fields against the provided values.
+    ///
+    void verify(Map<String, dynamic> value) {
+      for (final field in validators.generateFields()) {
+        final valueType = value[field.key].runtimeType;
+        if (valueType != field.type) {
+          errors.add('Key ${field.key} is not of type ${field.type}. Found $valueType');
+        }
+      }
+    }
+
+    /// Parses the provided field and calls the [verify] method on it.
+    ///
+    void parse(dynamic value) {
+      try {
+        final fields = Map<String, dynamic>.from(value);
+        verify(fields);
+      } catch (e) {
+        errors.add('Unexpected validation error: $e');
+      }
+    }
+
+    if (fields is Iterable) {
+      for (final field in fields) {
+        parse(field);
+      }
+    } else {
+      parse(fields);
+    }
+
+    return errors.isEmpty ? null : errors;
+  }
 }
 
 /// Supported types of HTTP network requests.
@@ -352,50 +328,14 @@ abstract class GsarApiEndpoints {
   /// Method type defined for the specified endpoint.
   ///
   GsarApiEndpointMethodType get method;
-}
 
-/// Endpoint input data validation methods and properties.
-///
-/// Such object can be implemented in order to provide detailed endpoint information:
-///
-/// ```dart
-/// enum ExampleEnum implements GsarApiEndpointsFields {
-///   exampleGet, examplePost;
-///
-///   List<({String key, Type type, bool isRequired})>? get fields {
-///     switch (this) {
-///       case ExampleEnum.examplePost:
-///         return [
-///           ...
-///         ];
-///       default:
-///         return null;
-///     }
-///   }
-/// }
-/// ```
-///
-/// This information can both be used for field validation and for documentation generation.
-///
-abstract class GsarApiEndpointsFields {
-  /// Specified list of fields and their associated runtime types,
-  /// referenced during the validation process.
+  /// Endpoint field definitions, used to define the request fields.
   ///
-  List<
-      ({
-        String key,
-        Type type,
-        bool isRequired,
-      })>? get requestFields;
+  GsarModel? get requestFields;
 
-  /// Specified list of fields and their associated runtime types,
-  /// referenced during the validation process.
+  /// Endpoint field definitions, used to define the response fields.
   ///
-  List<
-      ({
-        String key,
-        Type type,
-      })>? get responseFields;
+  GsarModel? get responseFields;
 }
 
 /// Model class defining the network log data structure.

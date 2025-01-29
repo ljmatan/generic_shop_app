@@ -37,7 +37,9 @@ class __WidgetCartItemState extends State<_WidgetCartItem> {
     );
     if (confirmed) {
       setState(() => GsaDataCheckout.instance.removeItem(widget.cartItem));
-      if (GsaDataCheckout.instance.orderDraft.items.isEmpty) Navigator.pop(context);
+      if (GsaDataCheckout.instance.orderDraft.items?.isNotEmpty != true) {
+        Navigator.pop(context);
+      }
     }
   }
 

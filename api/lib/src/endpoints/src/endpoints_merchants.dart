@@ -43,4 +43,14 @@ enum GsaaEndpointsMerchants implements GsarApiEndpoints {
         return GsarApiEndpointMethodType.httpGet;
     }
   }
+
+  @override
+  GsarModel? get requestFields {
+    return null;
+  }
+
+  @override
+  GsarModel? get responseFields {
+    return null;
+  }
 }

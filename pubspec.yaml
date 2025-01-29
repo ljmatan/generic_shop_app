@@ -4,14 +4,14 @@ publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ^3.6.0
 
 dependencies:
   flutter:
     sdk: flutter
   generic_shop_app_api:
     path: ./api
-  gsa_architecture:
+  generic_shop_app_architecture:
     path: ./plugins/arch
   json_annotation: ^4.9.0
   flutter_svg: ^2.0.15

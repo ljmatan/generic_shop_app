@@ -15,7 +15,7 @@ import 'package:generic_shop_app/view/src/common/widgets/widget_merchant_preview
 import 'package:generic_shop_app/view/src/common/widgets/widget_sale_item_carousel.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 part 'widgets/widget_banner.dart';
 part 'widgets/widget_header.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route providing user authentication options, such as login, registration, or guest user login.
 ///

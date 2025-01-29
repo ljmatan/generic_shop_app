@@ -1,5 +1,4 @@
 import 'package:generic_shop_app_architecture/gsar.dart';
-import 'package:json_annotation/json_annotation.dart' as json_annotation;
 
 /// Service implementing several useful methods and properties for currency management.
 ///
@@ -21,17 +20,14 @@ class GsaaServiceCurrency extends GsarService {
 enum GsaaServiceCurrencyType {
   /// The euro (symbol: €; code: EUR), official currency of 20 of the 27 member states of the European Union.
   ///
-  @json_annotation.JsonValue('eur')
   eur,
 
   /// The United States dollar (symbol: $; code: USD), official currency of the United States and several other countries.
   ///
-  @json_annotation.JsonValue('usd')
   usd,
 
   /// The yen (Japanese: 円, symbol: ¥; code: JPY) is the official currency of Japan.
   ///
-  @json_annotation.JsonValue('jpy')
   jpy,
 }
 

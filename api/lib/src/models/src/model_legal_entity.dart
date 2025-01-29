@@ -1,25 +1,14 @@
-part of '../models.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
-@JsonSerializable(explicitToJson: true)
-class GsaModelLegalEntity extends _Model {
+@GsarModelMacro()
+class GsaModelLegalEntity {
   GsaModelLegalEntity({
-    super.id,
-    super.originId,
-    this.name,
-    this.address,
+    required this.name,
+    required this.address,
   });
 
-  GsaaModelTranslated? name;
+  String? name;
 
   GsaaModelAddress? address;
-
-  // ignore: public_member_api_docs
-  factory GsaModelLegalEntity.fromJson(Map json) {
-    return _$GsaModelLegalEntityFromJson(Map<String, dynamic>.from(json));
-  }
-
-  // ignore: public_member_api_docs
-  Map<String, dynamic> toJson() {
-    return _$GsaModelLegalEntityToJson(this);
-  }
 }

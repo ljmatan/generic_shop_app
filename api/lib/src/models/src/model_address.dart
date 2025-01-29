@@ -1,27 +1,10 @@
-part of '../models.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Generic-format address details.
 ///
-@JsonSerializable(explicitToJson: true)
-class GsaaModelAddress extends _Model {
-  // ignore: public_member_api_docs
-  GsaaModelAddress({
-    super.id,
-    super.originId,
-    super.categoryId,
-    this.streetName,
-    this.houseNumber,
-    this.zipCode,
-    this.city,
-    this.state,
-    this.country,
-    this.latitude,
-    this.longitude,
-    this.note,
-    this.personalDetails,
-    this.contactDetails,
-  });
-
+@GsarModelMacro()
+class GsaaModelAddress extends GsarModel {
   /// Custom display name specified for [this] address.
   ///
   String? displayName;
@@ -73,34 +56,4 @@ class GsaaModelAddress extends _Model {
   /// Custom contact details associated with the address.
   ///
   GsaaModelContact? contactDetails;
-
-  // ignore: public_member_api_docs
-  factory GsaaModelAddress.fromJson(Map json) {
-    return _$GsaaModelAddressFromJson(Map<String, dynamic>.from(json));
-  }
-
-  // ignore: public_member_api_docs
-  Map<String, dynamic> toJson() {
-    return _$GsaaModelAddressToJson(this);
-  }
-
-  // ignore: public_member_api_docs
-  factory GsaaModelAddress.mock() {
-    return GsaaModelAddress(
-      id: _Model._generateRandomString(8),
-      originId: _Model._generateRandomString(8),
-      categoryId: _Model._generateRandomString(8),
-      streetName: _Model._generateRandomString(12),
-      houseNumber: _Model._generateRandomString(3),
-      zipCode: _Model._generateRandomNumber(5).toString(),
-      city: _Model._generateRandomString(8),
-      state: _Model._generateRandomString(8),
-      country: _Model._generateRandomString(8),
-      note: _Model._generateRandomString(40),
-      latitude: 45.75 + Random().nextDouble() * .2,
-      longitude: 15.9 + Random().nextDouble() * .2,
-      personalDetails: GsaaModelPerson.mock(),
-      contactDetails: GsaaModelContact.mock(),
-    );
-  }
 }

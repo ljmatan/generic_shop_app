@@ -86,4 +86,14 @@ enum GsaaEndpointsSaleItems implements GsarApiEndpoints {
         return GsarApiEndpointMethodType.httpPost;
     }
   }
+
+  @override
+  GsarModel? get requestFields {
+    return null;
+  }
+
+  @override
+  GsarModel? get responseFields {
+    return null;
+  }
 }

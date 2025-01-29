@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 import 'package:generic_shop_app/services/services.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 export 'src/app_tracking_transparency/service_app_tracking_transparency.dart';
 export 'src/auth/service_auth.dart';

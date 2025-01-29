@@ -1,13 +1,11 @@
-part of '../models.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Model class specifying the parameters for any applicable client consent (terms and conditions).
 ///
-@JsonSerializable(explicitToJson: true)
-class GsaaModelConsent extends _Model {
+@GsarModelMacro()
+class GsaaModelConsent {
   // ignore: public_member_api_docs
   GsaaModelConsent({
-    required super.id,
-    required super.originId,
     required this.version,
     required this.text,
     required this.publishTimeIso8601,
@@ -15,7 +13,6 @@ class GsaaModelConsent extends _Model {
     required this.consented,
     required this.acknowledged,
     required this.requisite,
-    required super.originUrl,
   });
 
   /// Version identifier for [this] consent instance.
@@ -71,30 +68,4 @@ class GsaaModelConsent extends _Model {
   /// - `null`: no consent requirement status
   ///
   final bool? requisite;
-
-  // ignore: public_member_api_docs
-  factory GsaaModelConsent.fromJson(Map json) {
-    return _$GsaaModelConsentFromJson(Map<String, dynamic>.from(json));
-  }
-
-  // ignore: public_member_api_docs
-  Map<String, dynamic> toJson() {
-    return _$GsaaModelConsentToJson(this);
-  }
-
-  // ignore: public_member_api_docs
-  factory GsaaModelConsent.mock() {
-    return GsaaModelConsent(
-      id: _Model._generateRandomString(8),
-      originId: _Model._generateRandomString(8),
-      version: _Model._generateRandomString(8),
-      text: _Model._generateRandomString(300),
-      publishTimeIso8601: DateTime.now().subtract(const Duration(hours: 24)).toIso8601String(),
-      deadlineTimeIso8601: DateTime.now().subtract(const Duration(hours: 24)).toIso8601String(),
-      consented: Random().nextBool() ? Random().nextBool() : null,
-      acknowledged: null,
-      requisite: Random().nextBool(),
-      originUrl: 'https://wikipedia.org',
-    );
-  }
 }

@@ -1,14 +1,12 @@
-part of '../models.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Details associated with the service user.
 ///
-@JsonSerializable(explicitToJson: true)
-class GsaaModelUser extends _Model {
+@GsarModelMacro()
+class GsaaModelUser {
   // ignore: public_member_api_docs
   GsaaModelUser({
-    super.id,
-    super.originId,
-    super.categoryId,
     this.username,
     this.personalDetails,
     this.contact,
@@ -40,27 +38,4 @@ class GsaaModelUser extends _Model {
   /// The legal address of the buyer or the address where they receive correspondence.
   ///
   List<GsaaModelAddress>? invoiceAddresses;
-
-  // ignore: public_member_api_docs
-  factory GsaaModelUser.fromJson(Map json) {
-    return _$GsaaModelUserFromJson(Map<String, dynamic>.from(json));
-  }
-
-  // ignore: public_member_api_docs
-  Map<String, dynamic> toJson() {
-    return _$GsaaModelUserToJson(this);
-  }
-
-  // ignore: public_member_api_docs
-  factory GsaaModelUser.mock() {
-    return GsaaModelUser(
-      id: _Model._generateRandomString(8),
-      originId: _Model._generateRandomString(8),
-      categoryId: _Model._generateRandomString(8),
-      personalDetails: GsaaModelPerson.mock(),
-      username: _Model._generateRandomString(8),
-      contact: GsaaModelContact.mock(),
-      address: GsaaModelAddress.mock(),
-    );
-  }
 }

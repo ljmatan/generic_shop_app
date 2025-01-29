@@ -1,14 +1,12 @@
-part of '../models.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Contact details parameters.
 ///
-@JsonSerializable(explicitToJson: true)
-class GsaaModelContact extends _Model {
+@GsarModelMacro()
+class GsaaModelContact {
   // ignore: public_member_api_docs
   GsaaModelContact({
-    super.id,
-    super.originId,
-    super.categoryId,
     this.email,
     this.phoneCountryCode,
     this.phoneNumber,
@@ -40,25 +38,4 @@ class GsaaModelContact extends _Model {
   /// Address details associated with this contact entity.
   ///
   GsaaModelAddress? addressDetails;
-
-  // ignore: public_member_api_docs
-  factory GsaaModelContact.fromJson(Map json) {
-    return _$GsaaModelContactFromJson(Map<String, dynamic>.from(json));
-  }
-
-  // ignore: public_member_api_docs
-  Map<String, dynamic> toJson() {
-    return _$GsaaModelContactToJson(this);
-  }
-
-  // ignore: public_member_api_docs
-  factory GsaaModelContact.mock() {
-    return GsaaModelContact(
-      id: _Model._generateRandomString(8),
-      originId: _Model._generateRandomString(8),
-      email: '${_Model._generateRandomString(8)}@email.com',
-      phoneCountryCode: '1',
-      phoneNumber: _Model._generateRandomNumber(8).toString(),
-    );
-  }
 }

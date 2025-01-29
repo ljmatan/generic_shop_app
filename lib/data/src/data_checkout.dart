@@ -12,7 +12,7 @@ class GsaDataCheckout extends GsaData {
 
   /// Draft for the current order initiated by the user.
   ///
-  final orderDraft = GsaaModelOrderDraft.mock();
+  final orderDraft = GsaaModelOrderDraft();
 
   @override
   Future<void> init() async {
@@ -29,8 +29,10 @@ class GsaDataCheckout extends GsaData {
   ///
   int get totalItemCount {
     int count = 0;
-    for (final item in orderDraft.items) {
-      if (item.cartCount != null) count += item.cartCount!;
+    if (orderDraft.items != null) {
+      for (final item in orderDraft.items!) {
+        if (item.cartCount != null) count += item.cartCount!;
+      }
     }
     return count;
   }
@@ -51,7 +53,7 @@ class GsaDataCheckout extends GsaData {
   ///
   int? itemCount(GsaaModelSaleItem product) {
     try {
-      return orderDraft.items.firstWhere((item) => item.id == product.id).cartCount;
+      return orderDraft.items?.firstWhere((item) => item.id == product.id).cartCount;
     } catch (e) {
       return null;
     }
@@ -61,9 +63,11 @@ class GsaDataCheckout extends GsaData {
   ///
   int get totalItemPriceEurCents {
     int price = 0;
-    for (final item in orderDraft.items) {
-      if (item.price?.eurCents != null) {
-        price += (item.cartCount ?? 0) * item.price!.eurCents!;
+    if (orderDraft.items != null) {
+      for (final item in orderDraft.items!) {
+        if (item.price?.eurCents != null) {
+          price += (item.cartCount ?? 0) * item.price!.eurCents!;
+        }
       }
     }
     return price;
@@ -85,9 +89,11 @@ class GsaDataCheckout extends GsaData {
   ///
   int get totalPriceEurCents {
     int price = 0;
-    for (final item in orderDraft.items) {
-      if (item.price?.eurCents != null) {
-        price += (item.cartCount ?? 0) * item.price!.eurCents!;
+    if (orderDraft.items != null) {
+      for (final item in orderDraft.items!) {
+        if (item.price?.eurCents != null) {
+          price += (item.cartCount ?? 0) * item.price!.eurCents!;
+        }
       }
     }
     price += orderDraft.deliveryType?.price?.eurCents ?? 0;
@@ -114,12 +120,12 @@ class GsaDataCheckout extends GsaData {
     final productItemCount = itemCount(saleItem);
     if (productItemCount == null) {
       // This item hasn't been previously added to the cart.
-      orderDraft.items.add(saleItem..cartCount = 1);
+      orderDraft.items?.add(saleItem..cartCount = 1);
     } else if (productItemCount < 100000) {
       // This product has already been added to the cart in amount less than 100.
-      final cartItemIndex = orderDraft.items.indexWhere((item) => item.id == saleItem.id);
+      final cartItemIndex = orderDraft.items?.indexWhere((item) => item.id == saleItem.id) ?? -1;
       saleItem.cartCount = saleItem.cartCount! + 1;
-      orderDraft.items[cartItemIndex] = saleItem;
+      orderDraft.items?[cartItemIndex] = saleItem;
     } else {
       throw 'Error.';
     }
@@ -129,7 +135,7 @@ class GsaDataCheckout extends GsaData {
   /// Removes a sale item from the cart.
   ///
   void removeItem(GsaaModelSaleItem product) {
-    orderDraft.items.removeWhere((item) => item.id == product.id);
+    orderDraft.items?.removeWhere((item) => item.id == product.id);
     notifierCartUpdate.value = totalItemCount;
   }
 
@@ -149,8 +155,8 @@ class GsaDataCheckout extends GsaData {
     if (count < 2) {
       removeItem(saleItem);
     } else {
-      final cartItemIndex = orderDraft.items.indexWhere((item) => item.id == saleItem.id);
-      orderDraft.items[cartItemIndex] = saleItem;
+      final cartItemIndex = orderDraft.items?.indexWhere((item) => item.id == saleItem.id);
+      if (cartItemIndex != null) orderDraft.items?[cartItemIndex] = saleItem;
     }
     notifierCartUpdate.value = totalItemCount;
   }

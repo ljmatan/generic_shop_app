@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Widget overlay serving for user input blocking.
 ///

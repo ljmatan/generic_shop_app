@@ -76,4 +76,14 @@ enum GsaaEndpointsUsers implements GsarApiEndpoints {
         return GsarApiEndpointMethodType.httpDelete;
     }
   }
+
+  @override
+  GsarModel? get requestFields {
+    return null;
+  }
+
+  @override
+  GsarModel? get responseFields {
+    return null;
+  }
 }

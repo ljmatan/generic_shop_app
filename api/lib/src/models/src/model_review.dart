@@ -1,15 +1,9 @@
-part of '../models.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Model representing item reviews with a rating and a comment.
 ///
-@JsonSerializable(explicitToJson: true)
-class GsaaModelReview extends _Model {
-  // ignore: public_member_api_docs
-  GsaaModelReview({
-    super.id,
-    super.originId,
-  });
-
+@GsarModelMacro()
+class GsaaModelReview {
   double? rating;
 
   String? comment;
@@ -19,14 +13,4 @@ class GsaaModelReview extends _Model {
   /// Creation time in the [DateTime] format.
   ///
   DateTime? get timeCreated => timeCreatedIso8601 != null ? DateTime.tryParse(timeCreatedIso8601!) : null;
-
-  // ignore: public_member_api_docs
-  factory GsaaModelReview.fromJson(Map json) {
-    return _$GsaaModelReviewFromJson(Map<String, dynamic>.from(json));
-  }
-
-  // ignore: public_member_api_docs
-  Map<String, dynamic> toJson() {
-    return _$GsaaModelReviewToJson(this);
-  }
 }

@@ -4,17 +4,16 @@ version: 1.0.0
 publish_to: none
 
 environment:
-  sdk: ^3.3.3
+  sdk: ^3.6.0
 
 dependencies:
+  flutter:
+    sdk: flutter
   generic_shop_app_architecture:
     path: ../plugins/arch
-  json_annotation: ^4.9.0
   http: ^1.2.1
   encrypt: ^5.0.3
 
 dev_dependencies:
-  lints: ^3.0.0
+  flutter_lints: ^3.0.0
   test: ^1.24.0
-  build_runner: ^2.4.9
-  json_serializable: ^6.8.0

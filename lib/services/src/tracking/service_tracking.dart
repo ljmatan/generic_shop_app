@@ -1,4 +1,4 @@
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// User activity tracking service.
 ///

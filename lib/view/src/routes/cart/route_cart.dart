@@ -9,7 +9,7 @@ import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay
 import 'package:generic_shop_app/view/src/common/widgets/widget_total_cart_price.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_headline.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 part 'widgets/widget_cart_item.dart';
 
@@ -133,64 +133,66 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        for (final category in GsaDataCheckout.instance.orderDraft.items
-                            .map(
-                              (saleItem) => GsaDataSaleItems.instance.categories.firstWhere(
-                                (category) => category.id == saleItem.categoryId,
-                              ),
-                            )
-                            .indexed)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 9),
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  _filteredCategoryIds.contains(category.$2.id) ? Theme.of(context).primaryColor : null,
+                        if (GsaDataCheckout.instance.orderDraft.items != null)
+                          for (final category in GsaDataCheckout.instance.orderDraft.items!
+                              .map(
+                                (saleItem) => GsaDataSaleItems.instance.categories.firstWhere(
+                                  (category) => category.id == saleItem.categoryId,
                                 ),
+                              )
+                              .indexed)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 9),
+                              child: OutlinedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    _filteredCategoryIds.contains(category.$2.id) ? Theme.of(context).primaryColor : null,
+                                  ),
+                                ),
+                                child: GsaWidgetText(
+                                  '${category.$2.name} '
+                                  '( TODO )',
+                                  style: _filteredCategoryIds.contains(category.$2.id)
+                                      ? const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        )
+                                      : const TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                ),
+                                onPressed: () {
+                                  if (category.$2.id != null) {
+                                    setState(
+                                      () {
+                                        _filteredCategoryIds.contains(category.$2.id)
+                                            ? _filteredCategoryIds.remove(category.$2.id)
+                                            : _filteredCategoryIds.add(category.$2.id!);
+                                      },
+                                    );
+                                  }
+                                },
                               ),
-                              child: GsaWidgetText(
-                                '${category.$2.name} '
-                                '( TODO )',
-                                style: _filteredCategoryIds.contains(category.$2.id)
-                                    ? const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      )
-                                    : const TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                              ),
-                              onPressed: () {
-                                if (category.$2.id != null) {
-                                  setState(
-                                    () {
-                                      _filteredCategoryIds.contains(category.$2.id)
-                                          ? _filteredCategoryIds.remove(category.$2.id)
-                                          : _filteredCategoryIds.add(category.$2.id!);
-                                    },
-                                  );
-                                }
-                              },
                             ),
-                          ),
                       ],
                     ),
                   ),
                 const SizedBox(height: 26),
-                for (final item in _filteredCategoryIds.isEmpty
-                    ? GsaDataCheckout.instance.orderDraft.items
-                    : GsaDataCheckout.instance.orderDraft.items.where(
-                        (saleItem) {
-                          return _filteredCategoryIds.contains(saleItem.categoryId);
-                        },
-                      ))
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: _WidgetCartItem(
-                      item,
-                      key: UniqueKey(),
+                if (GsaDataCheckout.instance.orderDraft.items != null)
+                  for (final item in _filteredCategoryIds.isEmpty
+                      ? GsaDataCheckout.instance.orderDraft.items!
+                      : GsaDataCheckout.instance.orderDraft.items!.where(
+                          (saleItem) {
+                            return _filteredCategoryIds.contains(saleItem.categoryId);
+                          },
+                        ))
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: _WidgetCartItem(
+                        item,
+                        key: UniqueKey(),
+                      ),
                     ),
-                  ),
                 const SizedBox(height: 12),
                 const GsaWidgetText(
                   'The items in your cart are subject to verification and adjustment at the time of checkout. '
