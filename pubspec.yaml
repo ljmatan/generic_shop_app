@@ -4,14 +4,14 @@ publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ^3.6.0
 
 dependencies:
   flutter:
     sdk: flutter
   generic_shop_app_api:
     path: ./api
-  gsa_architecture:
+  generic_shop_app_architecture:
     path: ./plugins/arch
   json_annotation: ^4.9.0
   flutter_svg: ^2.0.15
@@ -23,6 +23,11 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_map: ^7.0.2
   shared_preferences: ^2.3.3
+  collection: ^1.19.1
+
+  # Client implementations.
+  generic_shop_app_ivancica:
+    path: ./plugins/ivancica
 
 dev_dependencies:
   flutter_test:

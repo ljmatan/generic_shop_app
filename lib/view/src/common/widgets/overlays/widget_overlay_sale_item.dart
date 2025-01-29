@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/data/data.dart';
-import 'package:generic_shop_app_api/src/models/models.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_image.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 /// Overlay view displaying sale item details and containing associated cart functionalities.
 ///
@@ -77,12 +77,12 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
               ),
             ),
             const SizedBox(height: 20),
-            if (widget.saleItem.imageUrl != null)
+            if (widget.saleItem.imageUrls?.isNotEmpty == true)
               Padding(
                 padding: const EdgeInsets.only(bottom: 14),
                 child: Center(
                   child: GsaWidgetImage.network(
-                    widget.saleItem.imageUrl!,
+                    widget.saleItem.imageUrls![0],
                     height: MediaQuery.of(context).size.width * .3,
                   ),
                 ),
@@ -98,21 +98,11 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   ),
                 ),
               ),
-            if (widget.saleItem.descriptionShort != null)
+            if (widget.saleItem.description != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 14),
                 child: Text(
-                  widget.saleItem.descriptionShort!,
-                ),
-              ),
-            if (1 == 2 && widget.saleItem.descriptionLong != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 14),
-                child: Text(
-                  widget.saleItem.descriptionLong!,
-                  style: const TextStyle(
-                    fontSize: 12,
-                  ),
+                  widget.saleItem.description!,
                 ),
               ),
             Padding(

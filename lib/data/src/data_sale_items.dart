@@ -1,9 +1,9 @@
-import 'package:generic_shop_app/data/data.dart';
-import 'package:generic_shop_app_api/src/models/models.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Data class implementing the merchant / vendor methods and properties.
 ///
-class GsaDataSaleItems extends GsaData {
+class GsaDataSaleItems extends GsarData {
   GsaDataSaleItems._();
 
   // ignore: public_member_api_docs

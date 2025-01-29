@@ -7,7 +7,7 @@ import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_fie
 import 'package:generic_shop_app/view/src/common/widgets/widget_phone_number_input.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_terms_confirmation.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route for entering the guest user information, to be used in checkout process.
 ///
@@ -43,12 +43,8 @@ class _GsaRouteGuestInfoState extends GsarRouteState<GsaRouteGuestInfo> {
     _firstNameController = TextEditingController(
       text: GsaDataUser.instance.user?.personalDetails?.firstName ?? (kDebugMode ? 'First' : null),
     );
-    _lastNameController = TextEditingController(
-      text: GsaDataUser.instance.user?.personalDetails?.lastName ?? (kDebugMode ? 'Last' : null),
-    );
-    _emailController = TextEditingController(
-      text: GsaDataUser.instance.user?.contact?.email ?? (kDebugMode ? 'example@email.com' : null),
-    );
+    _lastNameController = TextEditingController(text: GsaDataUser.instance.user?.personalDetails?.lastName ?? (kDebugMode ? 'Last' : null));
+    _emailController = TextEditingController(text: GsaDataUser.instance.user?.contact?.email ?? (kDebugMode ? 'example@email.com' : null));
     _phoneNumberController = TextEditingController(
       text: GsaDataUser.instance.user?.contact?.phoneNumber ?? (kDebugMode ? '12345678' : null),
     );
@@ -58,9 +54,7 @@ class _GsaRouteGuestInfoState extends GsarRouteState<GsaRouteGuestInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.displayName),
-      ),
+      appBar: AppBar(title: Text(widget.displayName)),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -70,19 +64,10 @@ class _GsaRouteGuestInfoState extends GsarRouteState<GsaRouteGuestInfo> {
             const GsaWidgetText(
               'The personal data you provide in the checkout process will be processed and shared with the order provider and any '
               'affiliated companies for the purpose of completing your transaction and delivering your order.',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 12,
-              ),
+              style: TextStyle(color: Colors.grey, fontSize: 12),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Personal Details',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-              ),
-            ),
+            const Text('Personal Details', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
             const SizedBox(height: 16),
             GsaWidgetTextField(
               controller: _firstNameController,
@@ -97,13 +82,7 @@ class _GsaRouteGuestInfoState extends GsarRouteState<GsaRouteGuestInfo> {
                 validator: (input) => GsaaServiceInputValidation.instance.firstName(input!),
               ),
             ),
-            const Text(
-              'Contact Details',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-              ),
-            ),
+            const Text('Contact Details', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: GsaWidgetTextField(
@@ -139,13 +118,7 @@ class _GsaRouteGuestInfoState extends GsarRouteState<GsaRouteGuestInfo> {
       floatingActionButton: FloatingActionButton.extended(
         heroTag: null,
         icon: const Icon(Icons.check),
-        label: const GsaWidgetText(
-          'SUBMIT',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 12,
-          ),
-        ),
+        label: const GsaWidgetText('SUBMIT', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
         onPressed: () {
           if (_termsCheckboxKey.currentState?.validate() != true) {
             _scrollController.animateTo(

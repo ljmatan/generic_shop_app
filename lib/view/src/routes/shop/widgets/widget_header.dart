@@ -66,29 +66,13 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            if (1 == 1)
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: kToolbarHeight,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    GsaWidgetImage.asset(
-                                      'assets/mock/herbalife_logo.png',
-                                      width: MediaQuery.of(context).size.width / 2,
-                                      height: 24,
-                                    ),
-                                    const GsaWidgetText(
-                                      'INDEPENDENT DISTRIBUTORS',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.grey,
-                                        fontSize: 8,
-                                        height: 2,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            if (GsaDataMerchant.instance.merchant?.logoImageUrl != null)
+                              (GsaDataMerchant.instance.merchant!.logoImageUrl!.startsWith('assets')
+                                  ? GsaWidgetImage.asset
+                                  : GsaWidgetImage.network)(
+                                GsaDataMerchant.instance.merchant!.logoImageUrl!,
+                                width: MediaQuery.of(context).size.width / 2,
+                                height: 40,
                               )
                             else if (GsaConfig.mockBuild)
                               const GsaWidgetText.rich(
@@ -108,12 +92,6 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
                                     ),
                                   ),
                                 ],
-                              )
-                            else if (GsaDataMerchant.instance.merchant?.logoImageUrl != null)
-                              GsaWidgetImage.network(
-                                GsaDataMerchant.instance.merchant!.logoImageUrl!,
-                                width: MediaQuery.of(context).size.width / 2,
-                                height: 40,
                               ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

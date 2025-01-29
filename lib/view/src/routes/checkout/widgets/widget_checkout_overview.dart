@@ -1,7 +1,7 @@
 part of '../route_checkout.dart';
 
 class _WidgetCheckoutOverview extends StatefulWidget {
-  const _WidgetCheckoutOverview({super.key});
+  const _WidgetCheckoutOverview();
 
   @override
   State<_WidgetCheckoutOverview> createState() => __WidgetCheckoutOverviewState();
@@ -26,11 +26,11 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
           GsaWidgetText(
             GsaDataCheckout.instance.orderDraft.deliveryType!.name ?? 'N/A',
           ),
-          if (GsaDataCheckout.instance.orderDraft.deliveryType!.descriptionShort != null)
+          if (GsaDataCheckout.instance.orderDraft.deliveryType!.description != null)
             Padding(
               padding: const EdgeInsets.only(top: 6),
               child: GsaWidgetText(
-                GsaDataCheckout.instance.orderDraft.deliveryType!.descriptionShort!,
+                GsaDataCheckout.instance.orderDraft.deliveryType!.description!,
                 style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 12,
@@ -53,11 +53,11 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
           GsaWidgetText(
             GsaDataCheckout.instance.orderDraft.paymentType!.name ?? 'N/A',
           ),
-          if (GsaDataCheckout.instance.orderDraft.deliveryType!.descriptionShort != null)
+          if (GsaDataCheckout.instance.orderDraft.deliveryType!.description != null)
             Padding(
               padding: const EdgeInsets.only(top: 6),
               child: GsaWidgetText(
-                GsaDataCheckout.instance.orderDraft.deliveryType!.descriptionShort!,
+                GsaDataCheckout.instance.orderDraft.deliveryType!.description!,
                 style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 12,
@@ -83,13 +83,13 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (product.$2.imageUrl != null)
+                if (product.$2.imageUrls?.isNotEmpty == true)
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: GsaWidgetImage.network(
-                        product.$2.imageUrl!,
+                        product.$2.imageUrls![0],
                         width: 60,
                         height: 60,
                       ),

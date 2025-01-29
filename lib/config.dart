@@ -1,8 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Project-level configuration methods and properties.
 ///
@@ -11,7 +11,12 @@ class GsaConfig {
 
   /// Defines the host client provider.
   ///
-  static GsaConfigProvider provider = GsaConfigProvider.demo;
+  /// App handling, such as the initialisation or content display, is based on this value.
+  ///
+  static GsaConfigProvider provider = GsaConfigProvider.values.firstWhereOrNull(
+        (provider) => provider.name.toLowerCase() == const String.fromEnvironment('gsaProvider').toLowerCase(),
+      ) ??
+      GsaConfigProvider.demo;
 
   static const _version = String.fromEnvironment('gsaVersion');
 
@@ -76,8 +81,20 @@ class GsaConfig {
 ///
 enum GsaConfigProvider {
   demo,
-
   herbalife,
-
   woocommerce,
+  ivancica,
+}
+
+extension GsaConfigProviderExt on GsaConfigProvider {
+  /// Main theme color applied to the provider.
+  ///
+  Color? get primaryColor {
+    switch (this) {
+      case GsaConfigProvider.ivancica:
+        return Color(0xff8DC63F);
+      default:
+        return null;
+    }
+  }
 }

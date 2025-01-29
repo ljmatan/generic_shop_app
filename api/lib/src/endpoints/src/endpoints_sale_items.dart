@@ -2,7 +2,7 @@ part of '../endpoints.dart';
 
 /// Specified endpoints for the sale item API services.
 ///
-enum GsaaEndpointsSaleItems implements GsarApiEndpoints {
+enum GsaaEndpointsSaleItems with GsarApiEndpoints {
   /// Registers a new sale item record into the database.
   ///
   register,

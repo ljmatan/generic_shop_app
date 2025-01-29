@@ -1,6 +1,6 @@
 part of '../endpoints.dart';
 
-enum GsaaEndpointsAggregated implements GsarApiEndpoints {
+enum GsaaEndpointsAggregated with GsarApiEndpoints {
   getDataVersion,
   getMobileAppData;
 

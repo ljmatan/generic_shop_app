@@ -1,5 +1,5 @@
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -42,15 +42,8 @@ class GsaaApiMerchants extends GsarApi {
 
   /// Registers a merchant instance into the system database.
   ///
-  Future<String> register({
-    required String name,
-  }) async {
-    final response = await post(
-      GsaaEndpointsMerchants.register.path,
-      GsaaModelMerchant(
-        name: name,
-      ).toJson(),
-    );
+  Future<String> register({required String name}) async {
+    final response = await post(GsaaEndpointsMerchants.register.path, GsaaModelMerchant(name: name).toJson());
     final merchantId = response['merchantId'];
     if (merchantId == null) {
       throw 'Merchant ID missing from registration response.';
@@ -61,60 +54,33 @@ class GsaaApiMerchants extends GsarApi {
 
   /// Registers a merchant instance into the system database.
   ///
-  Future<GsaaModelMerchant> getMerchantDetails({
-    required String merchantId,
-  }) async {
-    final response = await get(
-      '${GsaaEndpointsMerchants.getMerchantDetails.path}?merchantId=$merchantId',
-    );
+  Future<GsaaModelMerchant> getMerchantDetails({required String merchantId}) async {
+    final response = await get('${GsaaEndpointsMerchants.getMerchantDetails.path}?merchantId=$merchantId');
     return GsaaModelMerchant.fromJson(response);
   }
 
   /// Registers a merchant instance into the system database.
   ///
-  Future<void> editMerchantDetails({
-    required String name,
-  }) async {
-    await patch(
-      GsaaEndpointsMerchants.editMerchantDetails.path,
-      {
-        'name': name,
-      },
-    );
+  Future<void> editMerchantDetails({required String name}) async {
+    await patch(GsaaEndpointsMerchants.editMerchantDetails.path, {'name': name});
   }
 
   /// Removes a merchant instance from the system database.
   ///
-  Future<void> deleteAll({
-    required String merchantId,
-  }) async {
-    await delete(
-      GsaaEndpointsMerchants.deleteAll.path,
-      body: {
-        'merchantId': merchantId,
-      },
-    );
+  Future<void> deleteAll({required String merchantId}) async {
+    await delete(GsaaEndpointsMerchants.deleteAll.path, body: {'merchantId': merchantId});
   }
 
   /// Sets the merchant status as deleted in the database, but does not actually remove the data.
   ///
-  Future<void> deleteSoft({
-    required String merchantId,
-  }) async {
-    await delete(
-      GsaaEndpointsMerchants.deleteSoft.path,
-      body: {
-        'merchantId': merchantId,
-      },
-    );
+  Future<void> deleteSoft({required String merchantId}) async {
+    await delete(GsaaEndpointsMerchants.deleteSoft.path, body: {'merchantId': merchantId});
   }
 
   /// Retrieves the list of all the merchants available to the user.
   ///
   Future<List<GsaaModelMerchant>?> getAllMerchants() async {
-    final response = await get(
-      GsaaEndpointsMerchants.getAllMerchants.path,
-    );
+    final response = await get(GsaaEndpointsMerchants.getAllMerchants.path);
     final merchants = response['merchants'];
     if (merchants is! Iterable) {
       // TODO: Log error

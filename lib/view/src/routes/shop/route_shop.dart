@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/services/src/i18n/service_i18n.dart';
@@ -15,7 +17,7 @@ import 'package:generic_shop_app/view/src/common/widgets/widget_merchant_preview
 import 'package:generic_shop_app/view/src/common/widgets/widget_sale_item_carousel.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 part 'widgets/widget_banner.dart';
 part 'widgets/widget_header.dart';
@@ -101,10 +103,7 @@ class _GsaRouteShopState extends GsarRouteState<GsaRouteShop> {
       // Clear current state.
       setState(() => _searchFuture = null);
       // Set timer to run in 600ms.
-      _searchFutureUpdateTimer = Timer(
-        const Duration(milliseconds: 600),
-        () => _onFiltersUpdated(),
-      );
+      _searchFutureUpdateTimer = Timer(const Duration(milliseconds: 600), () => _onFiltersUpdated());
     }
   }
 
@@ -117,11 +116,7 @@ class _GsaRouteShopState extends GsarRouteState<GsaRouteShop> {
     _searchTermController.clear();
     setState(() {});
     if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        0,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.ease,
-      );
+      _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
     }
   }
 
@@ -160,9 +155,7 @@ class _GsaRouteShopState extends GsarRouteState<GsaRouteShop> {
                         return const _WidgetSearchSuggestions();
                       } else {
                         if (_searchFuture == null || searchResponse.connectionState != ConnectionState.done) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const Center(child: CircularProgressIndicator());
                         }
                         if (searchResponse.hasError || searchResponse.data?.isNotEmpty != true) {
                           return GsaWidgetError(
@@ -187,17 +180,11 @@ class _GsaRouteShopState extends GsarRouteState<GsaRouteShop> {
                                 if (1 == 2 && GsaDataMerchant.instance.merchant != null)
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                    child: GsaWidgetMerchantPreview(
-                                      GsaDataMerchant.instance.merchant!,
-                                    ),
+                                    child: GsaWidgetMerchantPreview(GsaDataMerchant.instance.merchant!),
                                   )
                                 else
                                   const SizedBox(),
-                                GsaWidgetSaleItemCarousel(
-                                  GsaDataSaleItems.instance.products,
-                                  label: 'Featured',
-                                  horizontalPadding: 20,
-                                ),
+                                GsaWidgetSaleItemCarousel(GsaDataSaleItems.instance.products, label: 'Featured', horizontalPadding: 20),
                                 if (GsaDataSaleItems.instance.categories.isNotEmpty)
                                   _WidgetCategories(
                                     GsaDataSaleItems.instance.categories,
@@ -215,10 +202,7 @@ class _GsaRouteShopState extends GsarRouteState<GsaRouteShop> {
                               bottom: MediaQuery.of(context).padding.bottom + 12,
                               child: FloatingActionButton(
                                 heroTag: null,
-                                child: const Icon(
-                                  Icons.chat,
-                                  color: Colors.white,
-                                ),
+                                child: const Icon(Icons.chat, color: Colors.white),
                                 onPressed: () {
                                   Navigator.of(context).pushNamed('contact');
                                 },

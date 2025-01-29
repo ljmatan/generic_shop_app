@@ -4,7 +4,7 @@ import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_fie
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route for displaying of the contact input forms and general merchant contact information.
 ///
@@ -30,13 +30,12 @@ class _GsaRouteMerchantContactState extends GsarRouteState<GsaRouteMerchantConta
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.displayName),
-      ),
+      appBar: AppBar(title: Text(widget.displayName)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height -
+          height:
+              MediaQuery.of(context).size.height -
               MediaQuery.of(context).padding.vertical -
               MediaQuery.of(context).viewInsets.bottom -
               kToolbarHeight,
@@ -49,9 +48,7 @@ class _GsaRouteMerchantContactState extends GsarRouteState<GsaRouteMerchantConta
                   child: GsaWidgetText(
                     'We may share your message and email with our partner companies to help us field your questions and offer support.\n\n'
                     'Your details are used to respond to your inquiries or assist you with the products and services.',
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(color: Colors.grey),
                   ),
                 ),
                 Column(
@@ -80,14 +77,9 @@ class _GsaRouteMerchantContactState extends GsarRouteState<GsaRouteMerchantConta
                     const SizedBox(height: 8),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: OutlinedButton(
-                        child: const GsaWidgetText('Send'),
-                        onPressed: () async {},
-                      ),
+                      child: OutlinedButton(child: const GsaWidgetText('Send'), onPressed: () async {}),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.bottom,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).padding.bottom),
                   ],
                 ),
               ],

@@ -31,13 +31,13 @@ class __WidgetSearchResultsState extends State<_WidgetSearchResults> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (saleItem.imageUrl != null)
+                            if (saleItem.imageUrls?.isNotEmpty == true)
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: GsaWidgetImage.network(
-                                    saleItem.imageUrl!,
+                                    saleItem.imageUrls![0],
                                     width: 60,
                                     height: 70,
                                   ),

@@ -12,11 +12,10 @@ class GsaaModelSaleItem extends _Model {
     this.name,
     this.amount,
     this.measure,
-    this.descriptionShort,
-    this.descriptionLong,
+    this.description,
     this.disclaimer,
-    this.thumbnailUrl,
-    this.imageUrl,
+    this.imageUrls,
+    this.thumbnailUrls,
     this.price,
     this.cartCount,
     this.availableCount,
@@ -31,6 +30,7 @@ class GsaaModelSaleItem extends _Model {
     this.informationList,
     super.originUrl,
     super.consentIds,
+    super.tags,
   });
 
   /// Item display name.
@@ -62,7 +62,7 @@ class GsaaModelSaleItem extends _Model {
 
   /// Client-facing item description.
   ///
-  String? descriptionShort, descriptionLong;
+  String? description;
 
   /// Product disclaimer, usually representing a legally-required notice.
   ///
@@ -70,7 +70,7 @@ class GsaaModelSaleItem extends _Model {
 
   /// Item graphical representation.
   ///
-  String? thumbnailUrl, imageUrl;
+  List<String>? imageUrls, thumbnailUrls;
 
   /// Price associated with the item.
   ///
@@ -145,11 +145,10 @@ class GsaaModelSaleItem extends _Model {
       name: _Model._generateRandomString(20),
       amount: _Model._generateRandomNumber(1),
       measure: _Model._generateRandomString(4),
-      descriptionLong: _Model._generateRandomString(300),
-      descriptionShort: _Model._generateRandomString(40),
+      description: _Model._generateRandomString(300),
       disclaimer: null,
-      thumbnailUrl: 'https://picsum.photos/${200 + Random().nextInt(100)}/${300 + Random().nextInt(100)}',
-      imageUrl: 'https://picsum.photos/${1000 + Random().nextInt(100)}/${1600 + Random().nextInt(100)}',
+      thumbnailUrls: ['https://picsum.photos/${200 + Random().nextInt(100)}/${300 + Random().nextInt(100)}'],
+      imageUrls: ['https://picsum.photos/${1000 + Random().nextInt(100)}/${1600 + Random().nextInt(100)}'],
       price: GsaaModelPrice.mock(),
       availableCount: _Model._generateRandomNumber(2),
       maxCount: _Model._generateRandomNumber(2),

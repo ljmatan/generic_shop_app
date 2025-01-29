@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:generic_shop_app/config.dart';
 
 /// The default theme configuration for the application project.
 ///
@@ -13,6 +14,9 @@ class GsaTheme {
   static Brightness platformBrightness = PlatformDispatcher.instance.platformBrightness;
 
   static Color get _primaryColor {
+    if (GsaConfig.provider.primaryColor != null) {
+      return GsaConfig.provider.primaryColor!;
+    }
     return platformBrightness == Brightness.light ? (1 == 1 ? const Color(0xff67bc2a) : const Color(0xffB7C9E2)) : const Color(0xff63183f);
   }
 

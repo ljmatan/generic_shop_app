@@ -1,0 +1,62 @@
+name: generic_shop_app
+description: "https://www.froddo.com."
+publish_to: "none"
+version: 2025.01.29+1
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  generic_shop_app_ivancica:
+    path: ../
+  generic_shop_app_api:
+    path: ../../../api
+  generic_shop_app_architecture:
+    path: ../../arch
+  json_annotation: ^4.9.0
+  flutter_svg: ^2.0.15
+  webview_flutter: ^4.10.0
+  intl: ^0.20.0
+  universal_html: ^2.2.4
+  url_launcher: ^6.3.1
+  app_tracking_transparency: ^2.0.6
+  auto_size_text: ^3.0.0
+  flutter_map: ^7.0.2
+  shared_preferences: ^2.3.3
+  collection: ^1.19.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  dartdoc: ^8.1.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/ivancica/
+
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand-Light.ttf
+          weight: 100
+        - asset: assets/fonts/Quicksand-Light.ttf
+          weight: 200
+        - asset: assets/fonts/Quicksand-Medium.ttf
+          weight: 300
+        - asset: assets/fonts/Quicksand-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Quicksand-Regular.ttf
+          weight: 500
+        - asset: assets/fonts/Quicksand-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Quicksand-SemiBold.ttf
+          weight: 700
+        - asset: assets/fonts/Quicksand-Bold.ttf
+          weight: 800
+        - asset: assets/fonts/Quicksand-Bold.ttf
+          weight: 900

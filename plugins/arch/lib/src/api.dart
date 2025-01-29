@@ -35,6 +35,20 @@ abstract class GsarApi {
     return '$protocol://$host/';
   }
 
+  /// Security token used for authentication.
+  ///
+  /// The token is added automatically to the [headers] field if applied,
+  /// taking precedence over the [bearerTokenCredentials] value, if it's also provided.
+  ///
+  String? get bearerToken => null;
+
+  /// A set of credentials for bearer token authentication.
+  ///
+  /// These credentials are added automatically to the [headers] field if applied,
+  /// and if [bearerToken] value is not already provided.
+  ///
+  ({String username, String password})? get bearerTokenCredentials => null;
+
   /// Headers appended to the default request [headers].
   ///
   /// Overriding this property is used to provide additional headers,
@@ -53,6 +67,14 @@ abstract class GsarApi {
     return {
       'Content-Type': 'application/json; charset=utf-8',
       'Accept': 'application/json; charset=utf-8',
+      if (bearerToken != null)
+        'Authorization': 'Bearer ${bearerToken!}'
+      else if (bearerTokenCredentials != null)
+        'Authorization': 'Bearer ${dart_convert.base64.encode(
+          dart_convert.utf8.encode(
+            '${bearerTokenCredentials!.username}:${bearerTokenCredentials!.password}',
+          ),
+        )}',
     }..addAll(additionalHeaders);
   }
 
@@ -344,7 +366,7 @@ enum GsarApiEndpointMethodType {
 ///
 /// In the above example, endpoint properties are defined by inheritance.
 ///
-abstract class GsarApiEndpoints {
+abstract mixin class GsarApiEndpoints {
   /// URL path of the network resource.
   ///
   String get path;
@@ -352,6 +374,54 @@ abstract class GsarApiEndpoints {
   /// Method type defined for the specified endpoint.
   ///
   GsarApiEndpointMethodType get method;
+
+  /// Network request defined for this endpoint.
+  ///
+  Future<dynamic> request(
+    GsarApi client, {
+    Map<String, dynamic>? body,
+    bool decodedResponse = true,
+  }) {
+    switch (method) {
+      case GsarApiEndpointMethodType.httpGet:
+        return client.get(
+          path,
+          decodedResponse: decodedResponse,
+        );
+      case GsarApiEndpointMethodType.httpPost:
+      case GsarApiEndpointMethodType.httpPatch:
+      case GsarApiEndpointMethodType.httpPut:
+        body ??= {};
+        switch (method) {
+          case GsarApiEndpointMethodType.httpPost:
+            return client.post(
+              path,
+              body,
+              decodedResponse: decodedResponse,
+            );
+          case GsarApiEndpointMethodType.httpPatch:
+            return client.patch(
+              path,
+              body,
+              decodedResponse: decodedResponse,
+            );
+          case GsarApiEndpointMethodType.httpPut:
+            return client.post(
+              path,
+              body,
+              decodedResponse: decodedResponse,
+            );
+          default:
+            throw 'HTTP method not implemented.';
+        }
+      case GsarApiEndpointMethodType.httpDelete:
+        return client.delete(
+          path,
+          body: body,
+          decodedResponse: decodedResponse,
+        );
+    }
+  }
 }
 
 /// Endpoint input data validation methods and properties.

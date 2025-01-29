@@ -205,11 +205,11 @@ class __WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Auto
                               ),
                             ],
                           ),
-                          if (option.$2.descriptionShort != null)
+                          if (option.$2.description != null)
                             Padding(
                               padding: const EdgeInsets.only(top: 8),
                               child: GsaWidgetText(
-                                option.$2.descriptionShort!,
+                                option.$2.description!,
                                 style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12,

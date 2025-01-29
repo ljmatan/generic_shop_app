@@ -1,6 +1,6 @@
 part of '../endpoints.dart';
 
-enum GsaaEndpointsOrders implements GsarApiEndpoints {
+enum GsaaEndpointsOrders with GsarApiEndpoints {
   /// Registers a new order into the database.
   ///
   register,

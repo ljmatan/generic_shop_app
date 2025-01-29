@@ -72,9 +72,9 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: widget.saleItem.imageUrl != null
+                                child: widget.saleItem.thumbnailUrls?.isNotEmpty == true || widget.saleItem.imageUrls?.isNotEmpty == true
                                     ? GsaWidgetImage.network(
-                                        widget.saleItem.thumbnailUrl!,
+                                        (widget.saleItem.thumbnailUrls ?? widget.saleItem.imageUrls)![0],
                                         width: MediaQuery.of(context).size.width,
                                         height: 100,
                                       )
@@ -96,7 +96,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               ),
                             ],
                           ),
-                          if (widget.saleItem.price?.discount?.eurCents != null)
+                          if (widget.saleItem.price?.discount?.centum != null)
                             Positioned(
                               top: 0,
                               right: 0,
@@ -136,7 +136,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               Expanded(
                                 child: Text(
                                   '${widget.saleItem.price!.formatted()} ${GsaConfig.currency.code}' +
-                                      (widget.saleItem.price?.discount?.eurCents != null
+                                      (widget.saleItem.price?.discount?.centum != null
                                           ? ' ${widget.saleItem.price!.discount!.formatted()}'
                                           : ''),
                                   maxLines: 1,

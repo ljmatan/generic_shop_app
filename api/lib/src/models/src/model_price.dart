@@ -6,11 +6,11 @@ part of '../models.dart';
 class GsaaModelPrice extends _Model {
   // ignore: public_member_api_docs
   GsaaModelPrice({
-    required super.id,
-    required super.originId,
+    super.id,
+    super.originId,
     this.originalPriceCentum,
     this.originalPriceId,
-    required this.eurCents,
+    this.eurCents,
     this.discount,
     this.clientVisible,
   });
@@ -84,28 +84,28 @@ class GsaaModelPrice extends _Model {
 class GsaaModelDiscount extends _Model {
   // ignore: public_member_api_docs
   GsaaModelDiscount({
-    required super.id,
-    required super.originId,
-    required super.categoryId,
-    required this.eurCents,
-    required this.timeStartIso8601,
-    required this.timeEndIso8601,
+    super.id,
+    super.originId,
+    super.categoryId,
+    this.centum,
+    this.timeStartIso8601,
+    this.timeEndIso8601,
     super.consentIds,
   });
 
   /// The amount of discount in EUR cents.
   ///
-  int? eurCents;
+  int? centum;
 
   /// The amount of discount in EUR.
   ///
-  double? get eur => eurCents != null ? _Model._fromCentum(eurCents!) : null;
+  double? get unity => centum != null ? _Model._fromCentum(centum!) : null;
 
   /// Human-readable discount amount in EUR, or in any other currency with applied [conversionFactor].
   ///
   String? formatted() {
-    return eur != null
-        ? (GsaaModelPrice.conversionFactor != null ? (eur! * GsaaModelPrice.conversionFactor!) : eur!).toStringAsFixed(2)
+    return centum != null
+        ? (GsaaModelPrice.conversionFactor != null ? (centum! * GsaaModelPrice.conversionFactor!) : centum!).toStringAsFixed(2)
         : null;
   }
 

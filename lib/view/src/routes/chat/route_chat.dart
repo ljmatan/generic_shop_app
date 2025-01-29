@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 class GsaRouteChat extends GsarRoute {
   // ignore: public_member_api_docs
@@ -19,10 +19,6 @@ class GsaRouteChat extends GsarRoute {
 class _GsaRouteChatState extends GsarRouteState<GsaRouteChat> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.displayName),
-      ),
-    );
+    return Scaffold(appBar: AppBar(title: Text(widget.displayName)));
   }
 }

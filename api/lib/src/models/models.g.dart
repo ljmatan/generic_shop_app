@@ -430,7 +430,7 @@ GsaaModelDiscount _$GsaaModelDiscountFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
-      eurCents: (json['eurCents'] as num?)?.toInt(),
+      centum: (json['centum'] as num?)?.toInt(),
       timeStartIso8601: json['timeStartIso8601'] as String?,
       timeEndIso8601: json['timeEndIso8601'] as String?,
       consentIds: (json['consentIds'] as List<dynamic>?)
@@ -454,7 +454,7 @@ Map<String, dynamic> _$GsaaModelDiscountToJson(GsaaModelDiscount instance) =>
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
-      'eurCents': instance.eurCents,
+      'centum': instance.centum,
       'timeStartIso8601': instance.timeStartIso8601,
       'timeEndIso8601': instance.timeEndIso8601,
     };
@@ -539,11 +539,14 @@ GsaaModelSaleItem _$GsaaModelSaleItemFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String?,
       amount: GsaaModelSaleItem._amountFromJson(json['amount']),
       measure: json['measure'] as String?,
-      descriptionShort: json['descriptionShort'] as String?,
-      descriptionLong: json['descriptionLong'] as String?,
+      description: json['description'] as String?,
       disclaimer: json['disclaimer'] as String?,
-      thumbnailUrl: json['thumbnailUrl'] as String?,
-      imageUrl: json['imageUrl'] as String?,
+      imageUrls: (json['imageUrls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      thumbnailUrls: (json['thumbnailUrls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       price: json['price'] == null
           ? null
           : GsaaModelPrice.fromJson(json['price'] as Map<String, dynamic>),
@@ -575,10 +578,9 @@ GsaaModelSaleItem _$GsaaModelSaleItemFromJson(Map<String, dynamic> json) =>
       consentIds: (json['consentIds'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
     )
       ..deleted = json['deleted'] as bool?
-      ..tags =
-          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
       ..logs =
           (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
       ..condition = json['condition'] as String?;
@@ -596,11 +598,10 @@ Map<String, dynamic> _$GsaaModelSaleItemToJson(GsaaModelSaleItem instance) =>
       'name': instance.name,
       'amount': instance.amount,
       'measure': instance.measure,
-      'descriptionShort': instance.descriptionShort,
-      'descriptionLong': instance.descriptionLong,
+      'description': instance.description,
       'disclaimer': instance.disclaimer,
-      'thumbnailUrl': instance.thumbnailUrl,
-      'imageUrl': instance.imageUrl,
+      'imageUrls': instance.imageUrls,
+      'thumbnailUrls': instance.thumbnailUrls,
       'price': instance.price?.toJson(),
       'cartCount': instance.cartCount,
       'availableCount': instance.availableCount,

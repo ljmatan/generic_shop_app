@@ -1,5 +1,5 @@
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -46,15 +46,8 @@ class GsaaApiSaleItems extends GsarApi {
   ///
   /// Returns the newly-created sale item ID on successful response.
   ///
-  Future<String> register({
-    required String name,
-  }) async {
-    final response = await post(
-      GsaaEndpointsSaleItems.register.path,
-      GsaaModelSaleItem(
-        name: name,
-      ).toJson(),
-    );
+  Future<String> register({required String name}) async {
+    final response = await post(GsaaEndpointsSaleItems.register.path, GsaaModelSaleItem(name: name).toJson());
     final saleItemId = response['saleItemId'];
     if (saleItemId == null) {
       throw 'Sale item ID missing from the registration response.';
@@ -65,12 +58,8 @@ class GsaaApiSaleItems extends GsarApi {
 
   /// Retrieves the details for the sale item with the specified [id] property.
   ///
-  Future<String> getItemDetails({
-    required String id,
-  }) async {
-    final response = await get(
-      '${GsaaEndpointsSaleItems.getItemDetails.path}?saleItemId=$id',
-    );
+  Future<String> getItemDetails({required String id}) async {
+    final response = await get('${GsaaEndpointsSaleItems.getItemDetails.path}?saleItemId=$id');
     final saleItemId = response['saleItemId'];
     if (saleItemId == null) {
       throw 'Sale item ID missing from the registration response.';
@@ -81,17 +70,8 @@ class GsaaApiSaleItems extends GsarApi {
 
   /// Updates the sale item details with the provided values.
   ///
-  Future<String> editItemDetails({
-    required String saleItemId,
-    String? name,
-  }) async {
-    final response = await patch(
-      GsaaEndpointsSaleItems.editItemDetails.path,
-      {
-        'saleItemId': saleItemId,
-        if (name != null) 'name': name,
-      },
-    );
+  Future<String> editItemDetails({required String saleItemId, String? name}) async {
+    final response = await patch(GsaaEndpointsSaleItems.editItemDetails.path, {'saleItemId': saleItemId, if (name != null) 'name': name});
     final responseSaleItemId = response['saleItemId'];
     if (responseSaleItemId == null) {
       throw 'Sale item ID missing from the registration response.';
@@ -102,36 +82,20 @@ class GsaaApiSaleItems extends GsarApi {
 
   /// Deletes the sale item with the specified [saleItemId] from the database.
   ///
-  Future<void> deleteAll({
-    required String saleItemId,
-  }) async {
-    await delete(
-      GsaaEndpointsSaleItems.deleteAll.path,
-      body: {
-        'saleItemId': saleItemId,
-      },
-    );
+  Future<void> deleteAll({required String saleItemId}) async {
+    await delete(GsaaEndpointsSaleItems.deleteAll.path, body: {'saleItemId': saleItemId});
   }
 
   /// Marks the sale item with the specified [saleItemId] as deleted without removing data from database.
   ///
-  Future<void> deleteSoft({
-    required String saleItemId,
-  }) async {
-    await delete(
-      GsaaEndpointsSaleItems.deleteSoft.path,
-      body: {
-        'saleItemId': saleItemId,
-      },
-    );
+  Future<void> deleteSoft({required String saleItemId}) async {
+    await delete(GsaaEndpointsSaleItems.deleteSoft.path, body: {'saleItemId': saleItemId});
   }
 
   /// Retrieves the complete list of available sale items.
   ///
   Future<List<GsaaModelSaleItem>?> getAllItems() async {
-    final response = await get(
-      GsaaEndpointsSaleItems.getAllItems.path,
-    );
+    final response = await get(GsaaEndpointsSaleItems.getAllItems.path);
     final saleItems = response['items'];
     if (saleItems is! Iterable) {
       // TODO: Log error
@@ -144,9 +108,7 @@ class GsaaApiSaleItems extends GsarApi {
   /// Retrieves the complete list of available sale items.
   ///
   Future<List<GsaaModelCategory>?> getItemCategories() async {
-    final response = await get(
-      GsaaEndpointsSaleItems.getItemCategories.path,
-    );
+    final response = await get(GsaaEndpointsSaleItems.getItemCategories.path);
     final categories = response['categories'];
     if (categories is! Iterable) {
       // TODO: Log error
@@ -159,9 +121,7 @@ class GsaaApiSaleItems extends GsarApi {
   /// Retrieves the complete list of available sale items.
   ///
   Future<List<GsaaModelSaleItem>?> getFeaturedItems() async {
-    final response = await get(
-      GsaaEndpointsSaleItems.getFeaturedItems.path,
-    );
+    final response = await get(GsaaEndpointsSaleItems.getFeaturedItems.path);
     final saleItems = response['items'];
     if (saleItems is! Iterable) {
       // TODO: Log error
@@ -173,13 +133,8 @@ class GsaaApiSaleItems extends GsarApi {
 
   /// Retrieves the complete list of available sale items.
   ///
-  Future<List<GsaaModelSaleItem>?> searchItems({
-    required GsaaModelShopSearch filters,
-  }) async {
-    final response = await post(
-      GsaaEndpointsSaleItems.searchItems.path,
-      filters.toJson(),
-    );
+  Future<List<GsaaModelSaleItem>?> searchItems({required GsaaModelShopSearch filters}) async {
+    final response = await post(GsaaEndpointsSaleItems.searchItems.path, filters.toJson());
     final saleItems = response['items'];
     if (saleItems is! Iterable) {
       // TODO: Log error

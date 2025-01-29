@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_switch.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Widget overlay displaying user privacy policy and terms and conditions consent content.
 ///
@@ -73,15 +73,13 @@ class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.fastOutSlowIn,
     );
-    setState(
-      () {
-        for (int i = 0; i < _cookieIdConsentStatus.length; i++) {
-          if (_cookieIds.entries.elementAt(i).key != GsaServiceCacheId.mandatoryCookiesConsent) {
-            _cookieIdConsentStatus[i] = false;
-          }
+    setState(() {
+      for (int i = 0; i < _cookieIdConsentStatus.length; i++) {
+        if (_cookieIds.entries.elementAt(i).key != GsaServiceCacheId.mandatoryCookiesConsent) {
+          _cookieIdConsentStatus[i] = false;
         }
-      },
-    );
+      }
+    });
   }
 
   Future<void> _acceptSelection() async {
@@ -108,9 +106,7 @@ class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 600,
-            ),
+            constraints: const BoxConstraints(maxWidth: 600),
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Card(
@@ -120,19 +116,11 @@ class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const GsaWidgetText(
-                        'Cookie Notice',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                        ),
-                      ),
+                      const GsaWidgetText('Cookie Notice', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
                       const SizedBox(height: 12),
                       const Divider(height: 0),
                       ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * .6,
-                        ),
+                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * .6),
                         child: SingleChildScrollView(
                           controller: _scrollController,
                           padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -141,77 +129,54 @@ class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 20),
-                              GsaWidgetText.rich(
-                                [
-                                  const GsaWidgetTextSpan(
-                                    'We use cookies and similar technologies to help provide and improve content.\n\n'
-                                    'You have control over the optional cookies that we use, '
-                                    'and you can review or change your choices at any time.\n\n'
-                                    'Learn more about cookies and how we use them by reviewing our ',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
+                              GsaWidgetText.rich([
+                                const GsaWidgetTextSpan(
+                                  'We use cookies and similar technologies to help provide and improve content.\n\n'
+                                  'You have control over the optional cookies that we use, '
+                                  'and you can review or change your choices at any time.\n\n'
+                                  'Learn more about cookies and how we use them by reviewing our ',
+                                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                                ),
+                                GsaWidgetTextSpan(
+                                  'Cookie Policy',
+                                  style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.grey,
+                                    fontSize: 12,
                                   ),
-                                  GsaWidgetTextSpan(
-                                    'Cookie Policy',
-                                    style: const TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed('cookie-policy');
-                                    },
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('cookie-policy');
+                                  },
+                                ),
+                                const GsaWidgetTextSpan(', ', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                                GsaWidgetTextSpan(
+                                  'Privacy Policy',
+                                  style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.grey,
+                                    fontSize: 12,
                                   ),
-                                  const GsaWidgetTextSpan(
-                                    ', ',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('privacy-policy');
+                                  },
+                                ),
+                                const GsaWidgetTextSpan(', and ', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                                GsaWidgetTextSpan(
+                                  'Terms and Conditions',
+                                  style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.grey,
+                                    fontSize: 12,
                                   ),
-                                  GsaWidgetTextSpan(
-                                    'Privacy Policy',
-                                    style: const TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed('privacy-policy');
-                                    },
-                                  ),
-                                  const GsaWidgetTextSpan(
-                                    ', and ',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  GsaWidgetTextSpan(
-                                    'Terms and Conditions',
-                                    style: const TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed('terms-and-conditions');
-                                    },
-                                  ),
-                                  const GsaWidgetTextSpan(
-                                    '.',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('terms-and-conditions');
+                                  },
+                                ),
+                                const GsaWidgetTextSpan('.', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                              ]),
                               const SizedBox(height: 20),
                               for (final cookieId in _cookieIds.entries.indexed)
                                 Padding(
@@ -219,17 +184,11 @@ class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
                                   child: GsaWidgetSwitch(
                                     label: GsaWidgetText(
                                       cookieId.$2.key.displayName,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12,
-                                      ),
+                                      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
                                     ),
                                     child: GsaWidgetText(
                                       cookieId.$2.value,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 10,
-                                      ),
+                                      style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 10),
                                     ),
                                     enabled: cookieId.$2.key != GsaServiceCacheId.mandatoryCookiesConsent,
                                     value: _cookieIdConsentStatus[cookieId.$1],
@@ -252,11 +211,7 @@ class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
                         child: FilledButton(
                           child: const GsaWidgetText(
                             'CONFIRM SELECTION',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                            ),
+                            style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w900),
                           ),
                           onPressed: () => _acceptSelection(),
                         ),
@@ -264,43 +219,36 @@ class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
                       AnimatedSize(
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.fastEaseInToSlowEaseOut,
-                        child: _cookieIdConsentStatus.every((consentStatus) => consentStatus)
-                            ? SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: TextButton(
-                                  child: const GsaWidgetText(
-                                    'DECLINE OPTIONAL',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w900,
+                        child:
+                            _cookieIdConsentStatus.every((consentStatus) => consentStatus)
+                                ? SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: TextButton(
+                                    child: const GsaWidgetText(
+                                      'DECLINE OPTIONAL',
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900),
                                     ),
+                                    onPressed: () => _declineOptional(),
                                   ),
-                                  onPressed: () => _declineOptional(),
-                                ),
-                              )
-                            : const SizedBox(),
+                                )
+                                : const SizedBox(),
                       ),
                       AnimatedSize(
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.fastEaseInToSlowEaseOut,
-                        child: _cookieIdConsentStatus.any((consentStatus) => !consentStatus)
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: TextButton(
-                                    child: const GsaWidgetText(
-                                      'ACCEPT ALL',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w900,
-                                      ),
+                        child:
+                            _cookieIdConsentStatus.any((consentStatus) => !consentStatus)
+                                ? Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: TextButton(
+                                      child: const GsaWidgetText('ACCEPT ALL', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900)),
+                                      onPressed: () => _acceptAll(),
                                     ),
-                                    onPressed: () => _acceptAll(),
                                   ),
-                                ),
-                              )
-                            : const SizedBox(),
+                                )
+                                : const SizedBox(),
                       ),
                     ],
                   ),

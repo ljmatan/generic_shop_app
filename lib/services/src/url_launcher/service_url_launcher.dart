@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 /// Service responsible for opening external apps via specified addresses.
@@ -28,43 +28,31 @@ class GsaServiceUrlLauncher extends GsarService {
 
   /// Launches a http or https URL in an external browser.
   ///
-  Future<void> launchWeb(
-    String url,
-  ) async {
+  Future<void> launchWeb(String url) async {
     await _launch(url);
   }
 
   /// Launches the email app with the specified email address.
   ///
-  Future<void> launchEmail(
-    String email,
-  ) async {
+  Future<void> launchEmail(String email) async {
     await _launch('mailto:$email');
   }
 
   /// Launches the text messaging app with the specified number.
   ///
-  Future<void> launchSms(
-    String number,
-  ) async {
+  Future<void> launchSms(String number) async {
     await _launch('sms:$number');
   }
 
   /// Launches the dialer app with the specified phone number.
   ///
-  Future<void> launchCall(
-    String number,
-  ) async {
+  Future<void> launchCall(String number) async {
     await _launch('tel:$number');
   }
 
   /// Launches the external maps app.
   ///
-  Future<void> launchMaps(
-    double latitude,
-    double longitude, {
-    String? displayName,
-  }) async {
+  Future<void> launchMaps(double latitude, double longitude, {String? displayName}) async {
     launchWeb(
       !kIsWeb && Platform.isIOS
           ? 'http://maps.apple.com/?ll=$latitude,$longitude'

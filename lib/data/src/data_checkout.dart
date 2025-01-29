@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Data class implementing the checkout methods and properties.
 ///
-class GsaDataCheckout extends GsaData {
+class GsaDataCheckout extends GsarData {
   GsaDataCheckout._();
 
   // ignore: public_member_api_docs

@@ -49,15 +49,15 @@ class __WidgetCartItemState extends State<_WidgetCartItem> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (widget.cartItem.imageUrl != null)
+              if (widget.cartItem.imageUrls?.isNotEmpty == true)
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      widget.cartItem.imageUrl!,
-                      width: 80.0,
-                      height: 80.0,
+                      widget.cartItem.imageUrls![0],
+                      width: 80,
+                      height: 80,
                       fit: BoxFit.cover,
                     ),
                   ),

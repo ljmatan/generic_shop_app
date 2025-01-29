@@ -1,6 +1,6 @@
 part of '../endpoints.dart';
 
-enum GsaaEndpointsMerchants implements GsarApiEndpoints {
+enum GsaaEndpointsMerchants with GsarApiEndpoints {
   register,
   getMerchantDetails,
   editMerchantDetails,

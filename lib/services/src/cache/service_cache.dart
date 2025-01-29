@@ -1,6 +1,6 @@
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:shared_preferences/shared_preferences.dart' as shared_preferences;
 
 part 'service_cache_values.dart';
@@ -78,9 +78,7 @@ class GsaServiceCache extends GsarService {
 
   /// Persistent cache data; shouldn't be deleted.
   ///
-  Set<GsaServiceCacheId> persistent = {
-    GsaServiceCacheId.version,
-  };
+  Set<GsaServiceCacheId> persistent = {GsaServiceCacheId.version};
 
   /// Removes all cache data from the device storage,
   /// except for the keys noted under the [persistent] list.

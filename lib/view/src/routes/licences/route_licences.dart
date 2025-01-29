@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route for display of the 3rd-party software licence and attribution information.
 ///
@@ -20,10 +20,6 @@ class GsaRouteLicences extends GsarRoute {
 class _GsaRouteLicencesState extends GsarRouteState<GsaRouteLicences> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.displayName),
-      ),
-    );
+    return Scaffold(appBar: AppBar(title: Text(widget.displayName)));
   }
 }

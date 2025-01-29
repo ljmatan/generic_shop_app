@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app/config.dart';
-import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/view/src/common/view_builder.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app/view/src/routes/splash/route_splash.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 @pragma('vm:entry-point')
 void main() {
@@ -30,7 +29,7 @@ class _GsaState extends State<Gsa> {
       debugShowCheckedModeBanner: false,
       builder: (context, child) => GsaViewBuilder(child!),
       navigatorObservers: [GsarRoute.navigatorObserver],
-      home: GsaConfig.requiresAuthentication && !GsaDataUser.instance.authenticated ? const GsaRouteLogin() : const GsaRouteShop(),
+      home: GsaRouteSplash(),
       onGenerateRoute: (settings) {
         final primary = settings.name?.split('/')[0];
         return MaterialPageRoute<void>(
@@ -50,9 +49,7 @@ class _GsaState extends State<Gsa> {
             'order-status' => const GsaRouteOrderStatus(),
             'privacy-policy' => const GsaRoutePrivacyPolicy(),
             'register' => const GsaRouteRegister(),
-            'sale-item' => GsaRouteProductDetails(
-                saleItem: (settings.arguments as Map?)?['saleItem'],
-              ),
+            'sale-item' => GsaRouteProductDetails(saleItem: (settings.arguments as Map?)?['saleItem']),
             'settings' => const GsaRouteSettings(),
             'shop' => const GsaRouteShop(),
             'terms-and-conditions' => const GsaRouteTermsAndConditions(),

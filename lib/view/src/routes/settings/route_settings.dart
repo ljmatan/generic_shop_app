@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route displaying the application personalization settings.
 ///
@@ -20,10 +20,6 @@ class GsaRouteSettings extends GsarRoute {
 class _GsaRouteSettingsState extends GsarRouteState<GsaRouteSettings> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.displayName),
-      ),
-    );
+    return Scaffold(appBar: AppBar(title: Text(widget.displayName)));
   }
 }

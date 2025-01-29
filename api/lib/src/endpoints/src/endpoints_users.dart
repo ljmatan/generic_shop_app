@@ -1,6 +1,6 @@
 part of '../endpoints.dart';
 
-enum GsaaEndpointsUsers implements GsarApiEndpoints {
+enum GsaaEndpointsUsers with GsarApiEndpoints {
   /// Registers a given user record to the database.
   ///
   register,

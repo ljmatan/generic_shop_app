@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Widget overlay serving for user input blocking.
 ///
@@ -32,12 +32,6 @@ class GsaWidgetOverlayContentBlocking extends StatefulWidget {
 class _GsaWidgetOverlayContentBlockingState extends State<GsaWidgetOverlayContentBlocking> {
   @override
   Widget build(BuildContext context) {
-    return const PopScope(
-      canPop: false,
-      child: DecoratedBox(
-        decoration: BoxDecoration(color: Colors.white70),
-        child: SizedBox.expand(),
-      ),
-    );
+    return const PopScope(canPop: false, child: DecoratedBox(decoration: BoxDecoration(color: Colors.white70), child: SizedBox.expand()));
   }
 }

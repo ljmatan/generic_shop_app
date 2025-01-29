@@ -1,5 +1,5 @@
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// API endpoint call and handling implementation references.
 ///
@@ -33,9 +33,7 @@ class GsaaApiAggregated extends GsarApi {
   int get version => 0;
 
   Future<int> getDataVersion() async {
-    final response = await get(
-      GsaaEndpointsAggregated.getDataVersion.path,
-    );
+    final response = await get(GsaaEndpointsAggregated.getDataVersion.path);
     final currentVersion = response['version'];
     if (currentVersion is! String) {
       throw 'Current data version is not a string: $currentVersion.';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_web_content.dart';
-import 'package:gsa_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route displaying user help and support information.
 ///
@@ -21,11 +21,6 @@ class GsaRouteHelp extends GsarRoute {
 class _GsaRouteHelpState extends GsarRouteState<GsaRouteHelp> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.displayName),
-      ),
-      body: const GsaWidgetWebContent('https://example.org'),
-    );
+    return Scaffold(appBar: AppBar(title: Text(widget.displayName)), body: const GsaWidgetWebContent('https://example.org'));
   }
 }
