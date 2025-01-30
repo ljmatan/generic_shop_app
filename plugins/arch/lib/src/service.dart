@@ -8,9 +8,7 @@ abstract class GsarService {
   ///
   GsarService() {
     _observables.add(this);
-    if (!enabled) {
-      debugPrint('Service $runtimeType is disabled.');
-    }
+    if (!enabled) debugPrint('Service $runtimeType is disabled.');
   }
 
   /// To allow an subclass instance to be called like a function,

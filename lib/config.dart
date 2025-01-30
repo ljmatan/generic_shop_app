@@ -1,6 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:generic_shop_app/data/data.dart';
+import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
@@ -72,8 +74,21 @@ class GsaConfig {
     // Configure the visual display.
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     // Allocate the application runtime resources according to the given configuration.
-    await GsarData.initAll();
+    GsaServiceAppTrackingTransparency.instance;
+    GsaServiceAuth.instance;
+    GsaServiceBookmarks.instance;
+    GsaServiceCache.instance;
+    GsaServiceConsent.instance;
+    GsaServiceLocation.instance;
+    GsaServiceLogging.instance;
+    GsaServiceTracking.instance;
+    GsaServiceUrlLauncher.instance;
     await GsarService.initAll();
+    GsaDataCheckout.instance;
+    GsaDataMerchant.instance;
+    GsaDataSaleItems.instance;
+    GsaDataUser.instance;
+    await GsarData.initAll();
   }
 }
 

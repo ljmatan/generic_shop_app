@@ -89,6 +89,8 @@ class GsaWidgetImage extends StatefulWidget {
         path = '',
         networkImage = false;
 
+  static const _placeholderAssetPath = 'assets/svg/placeholder.svg';
+
   /// Used for displaying of the placeholder image.
   ///
   const GsaWidgetImage.placeholder({
@@ -101,7 +103,7 @@ class GsaWidgetImage extends StatefulWidget {
     this.colorFilter,
     this.shadows,
     this.fit = BoxFit.contain,
-  })  : path = 'assets/svg/placeholder.svg',
+  })  : path = _placeholderAssetPath,
         networkImage = false;
 
   /// The asset image path or network image URL.
@@ -186,13 +188,24 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                         colorFilter: widget.colorFilter == null ? null : ColorFilter.mode(widget.colorFilter!, BlendMode.srcIn),
                         fit: widget.fit,
                       )
-                    : SvgPicture.asset(
-                        widget.path,
-                        width: widget.width,
-                        height: widget.height,
-                        colorFilter: widget.colorFilter == null ? null : ColorFilter.mode(widget.colorFilter!, BlendMode.srcIn),
-                        fit: widget.fit,
-                      )
+                    : widget.path == GsaWidgetImage._placeholderAssetPath
+                        ? SizedBox(
+                            width: widget.width,
+                            height: widget.height,
+                            child: Center(
+                              child: Icon(
+                                Icons.broken_image_rounded,
+                                size: (((widget.width ?? 0) > (widget.height ?? 0) ? widget.width : widget.height) ?? 0) / 1.5,
+                              ),
+                            ),
+                          )
+                        : SvgPicture.asset(
+                            widget.path,
+                            width: widget.width,
+                            height: widget.height,
+                            colorFilter: widget.colorFilter == null ? null : ColorFilter.mode(widget.colorFilter!, BlendMode.srcIn),
+                            fit: widget.fit,
+                          )
                 : widget.networkImage == true
                     ? Image.network(
                         widget.path,

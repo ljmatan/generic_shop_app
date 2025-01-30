@@ -15,7 +15,6 @@ import 'package:generic_shop_app/view/src/common/widgets/widget_headline.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_phone_number_input.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_terms_confirmation.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -91,8 +90,7 @@ class _GsaRouteCheckoutState extends GsarRouteState<GsaRouteCheckout> {
               title: 'Delivery Options',
               subtitle: 'Delivery options are specified and can be configured below.',
               inputFieldsTitle: 'Delivery Info',
-              inputFieldsNotice:
-                  'Below information is specified as the item delivery address. '
+              inputFieldsNotice: 'Below information is specified as the item delivery address. '
                   'This information is shared with the vendor and courier companies for the purposes of order fullfilment.',
               onCartSettingsUpdate: () => setState(() {}),
               goToNextStep: _goToNextStep,
@@ -104,8 +102,7 @@ class _GsaRouteCheckoutState extends GsarRouteState<GsaRouteCheckout> {
               title: 'Payment Options',
               subtitle: 'Payment options are specified and can be configured below.',
               inputFieldsTitle: 'Invoice Address',
-              inputFieldsNotice:
-                  'Below information is specified as your legal address or the address where you receive correspondence. '
+              inputFieldsNotice: 'Below information is specified as your legal address or the address where you receive correspondence. '
                   'This information is shared with the vendor and courier companies for the purposes of order fullfilment.',
               onCartSettingsUpdate: () => setState(() {}),
               goToNextStep: _goToNextStep,

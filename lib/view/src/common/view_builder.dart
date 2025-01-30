@@ -49,41 +49,40 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: GsaTheme.systemUiOverlayStyle,
-      child: Theme(
-        data: GsaTheme.data,
-        child: MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: TextScaler.linear(
-              MediaQuery.of(context).size.width < 400
-                  ? 1
-                  : MediaQuery.of(context).size.width < 600
-                      ? 1.1
-                      : MediaQuery.of(context).size.width < 800
-                          ? 1.2
-                          : MediaQuery.of(context).size.width < 1000
-                              ? 1.3
-                              : MediaQuery.of(context).size.width < 1400
-                                  ? 1.4
-                                  : 1.6,
-            ),
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(
+            MediaQuery.of(context).size.width < 400
+                ? 1
+                : MediaQuery.of(context).size.width < 600
+                    ? 1.1
+                    : MediaQuery.of(context).size.width < 800
+                        ? 1.2
+                        : MediaQuery.of(context).size.width < 1000
+                            ? 1.3
+                            : MediaQuery.of(context).size.width < 1400
+                                ? 1.4
+                                : 1.6,
           ),
-          child: Listener(
-            child: widget.child,
-            onPointerDown: GsaConfig.qaBuild
-                ? (_) {
-                    _recordedNumberOfTaps++;
-                    if (_recordedNumberOfTaps == 10) {
-                      _recordedNumberOfTaps = 0;
-                      GsaRouteDebug().navigate();
-                    } else {
-                      Future.delayed(
-                        const Duration(seconds: 3),
-                        () => _recordedNumberOfTaps--,
-                      );
-                    }
+        ),
+        child: Listener(
+          child: widget.child,
+          onPointerDown: GsaConfig.qaBuild
+              ? (_) {
+                  _recordedNumberOfTaps++;
+                  if (_recordedNumberOfTaps == 10) {
+                    _recordedNumberOfTaps = 0;
+                    GsaRouteDebug().navigate();
+                  } else {
+                    Future.delayed(
+                      const Duration(seconds: 3),
+                      () {
+                        if (_recordedNumberOfTaps > 0) _recordedNumberOfTaps--;
+                      },
+                    );
                   }
-                : null,
-          ),
+                }
+              : null,
         ),
       ),
     );

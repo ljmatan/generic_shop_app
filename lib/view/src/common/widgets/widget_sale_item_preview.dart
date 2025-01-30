@@ -72,9 +72,11 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: widget.saleItem.thumbnailUrls?.isNotEmpty == true || widget.saleItem.imageUrls?.isNotEmpty == true
+                                child: widget.saleItem.imageUrls?.isNotEmpty == true || widget.saleItem.thumbnailUrls?.isNotEmpty == true
                                     ? GsaWidgetImage.network(
-                                        (widget.saleItem.thumbnailUrls ?? widget.saleItem.imageUrls)![0],
+                                        (widget.saleItem.imageUrls?.isNotEmpty == true
+                                            ? widget.saleItem.imageUrls
+                                            : widget.saleItem.thumbnailUrls)![0],
                                         width: MediaQuery.of(context).size.width,
                                         height: 100,
                                       )
@@ -83,14 +85,28 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                         height: 100,
                                       ),
                               ),
-                              const Positioned(
-                                right: 0,
-                                bottom: 0,
+                              Positioned(
+                                right: 4,
+                                bottom: 4,
                                 child: GsaWidgetText(
-                                  'Product may differ.',
+                                  'ILLUSTRATION IMAGE\nActual product may vary.',
+                                  textAlign: TextAlign.end,
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.black,
                                     fontSize: 8,
+                                    shadows: [
+                                      for (final offset in <Offset>{
+                                        Offset(-.5, -.5),
+                                        Offset(.5, -.5),
+                                        Offset(.5, .5),
+                                        Offset(-.5, .5),
+                                      })
+                                        Shadow(
+                                          offset: offset,
+                                          color: Colors.white,
+                                        ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -132,7 +148,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           ),
                         Row(
                           children: [
-                            if (widget.saleItem.price?.eurCents != null)
+                            if (widget.saleItem.price?.centum != null)
                               Expanded(
                                 child: Text(
                                   '${widget.saleItem.price!.formatted()} ${GsaConfig.currency.code}' +

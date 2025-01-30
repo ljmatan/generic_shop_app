@@ -108,7 +108,7 @@ abstract class GsarRouteState<T extends GsarRoute> extends State<T> with RouteAw
     SystemChrome.setApplicationSwitcherDescription(
       ApplicationSwitcherDescription(
         label: widget.displayName,
-        primaryColor: Theme.of(context).primaryColor.toARGB32(),
+        primaryColor: Theme.of(context).primaryColor.value,
       ),
     );
     if (kIsWeb) html.window.history.replaceState(null, widget.displayName, '/${widget.routeId}');

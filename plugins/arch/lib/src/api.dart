@@ -319,23 +319,6 @@ enum GsarApiEndpointMethodType {
   /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE
   ///
   httpDelete;
-
-  /// Human-readable method identifier.
-  ///
-  String get id {
-    switch (this) {
-      case GsarApiEndpointMethodType.httpGet:
-        return 'GET';
-      case GsarApiEndpointMethodType.httpPost:
-        return 'POST';
-      case GsarApiEndpointMethodType.httpPatch:
-        return 'PATCH';
-      case GsarApiEndpointMethodType.httpPut:
-        return 'PUT';
-      case GsarApiEndpointMethodType.httpDelete:
-        return 'DELETE';
-    }
-  }
 }
 
 /// Class defining main endpoint fields for subsequent implementations.
@@ -379,7 +362,7 @@ abstract mixin class GsarApiEndpoints {
   ///
   Future<dynamic> request(
     GsarApi client, {
-    Map<String, dynamic>? body,
+    Map<String, dynamic> body = const {},
     bool decodedResponse = true,
   }) {
     switch (method) {
@@ -391,7 +374,6 @@ abstract mixin class GsarApiEndpoints {
       case GsarApiEndpointMethodType.httpPost:
       case GsarApiEndpointMethodType.httpPatch:
       case GsarApiEndpointMethodType.httpPut:
-        body ??= {};
         switch (method) {
           case GsarApiEndpointMethodType.httpPost:
             return client.post(

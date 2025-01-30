@@ -29,6 +29,17 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
   ///
   bool _readyToInitialise = GsaServiceConsent.instance.hasMandatoryConsent;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        await GsaWidgetOverlayConsent.open();
+        setState(() => _readyToInitialise = true);
+      },
+    );
+  }
+
   Future<void> _initialise() async {
     switch (GsaConfig.provider) {
       case GsaConfigProvider.demo:
@@ -61,15 +72,7 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_readyToInitialise) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) async {
-          await GsaWidgetOverlayConsent.open();
-          setState(() => _readyToInitialise = true);
-        },
-      );
-      return const SizedBox();
-    }
+    if (!_readyToInitialise) return const SizedBox();
     return Scaffold(
       body: FutureBuilder<void>(
         future: _initialise(),

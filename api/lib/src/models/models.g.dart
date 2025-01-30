@@ -385,7 +385,7 @@ GsaaModelPrice _$GsaaModelPriceFromJson(Map<String, dynamic> json) =>
       originId: json['originId'] as String?,
       originalPriceCentum: (json['originalPriceCentum'] as num?)?.toInt(),
       originalPriceId: json['originalPriceId'] as String?,
-      eurCents: (json['eurCents'] as num?)?.toInt(),
+      centum: (json['centum'] as num?)?.toInt(),
       discount: json['discount'] == null
           ? null
           : GsaaModelDiscount.fromJson(
@@ -419,7 +419,7 @@ Map<String, dynamic> _$GsaaModelPriceToJson(GsaaModelPrice instance) =>
       'logs': instance.logs,
       'originalPriceCentum': instance.originalPriceCentum,
       'originalPriceId': instance.originalPriceId,
-      'eurCents': instance.eurCents,
+      'centum': instance.centum,
       'discount': instance.discount?.toJson(),
       'promoDiscount': instance.promoDiscount?.toJson(),
       'clientVisible': instance.clientVisible,

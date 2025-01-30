@@ -10,7 +10,7 @@ class GsaaModelPrice extends _Model {
     super.originId,
     this.originalPriceCentum,
     this.originalPriceId,
-    this.eurCents,
+    this.centum,
     this.discount,
     this.clientVisible,
   });
@@ -23,14 +23,14 @@ class GsaaModelPrice extends _Model {
   ///
   String? originalPriceId;
 
-  /// The price amount in EUR cents.
+  /// Price denoted at 1/100 (e.g., euro cents).
   ///
-  int? eurCents;
+  int? centum;
 
-  /// The price amount in EUR.
+  /// Price denoted at 1/1 (e.g., euros).
   ///
-  double? get eur {
-    return eurCents != null ? _Model._fromCentum(eurCents!) : null;
+  double? get unity {
+    return centum != null ? _Model._fromCentum(centum!) : null;
   }
 
   /// Conversion factor applied to the [formatted] method for price display.
@@ -40,7 +40,7 @@ class GsaaModelPrice extends _Model {
   /// Formatted price amount in EUR, or with an applied currency conersion factor.
   ///
   String? formatted() {
-    return eur != null ? (conversionFactor != null ? (eur! * conversionFactor!) : eur!).toStringAsFixed(2) : null;
+    return unity != null ? (conversionFactor != null ? (unity! * conversionFactor!) : unity!).toStringAsFixed(2) : null;
   }
 
   /// The discount applied to this price.
@@ -72,7 +72,7 @@ class GsaaModelPrice extends _Model {
       originId: _Model._generateRandomString(8),
       originalPriceCentum: null,
       originalPriceId: null,
-      eurCents: _Model._generateRandomNumber(3),
+      centum: _Model._generateRandomNumber(3),
       discount: null,
     );
   }

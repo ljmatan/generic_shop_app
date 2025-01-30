@@ -3,7 +3,7 @@ import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_ivancica/endpoints/src/endpoints_products.dart';
 import 'package:generic_shop_app_ivancica/models/src/response/model_product.dart';
 
-///
+/// Methods related to the product APIs provided by the `api.ivancica.hr` service.
 ///
 class GivApiProducts extends GsarApi {
   const GivApiProducts._();

@@ -26,7 +26,7 @@ class GsaWidgetSaleItemCarousel extends StatelessWidget {
   ///
   final double horizontalPadding;
 
-  static const _internalPadding = 8;
+  static const _internalPadding = 8.0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +54,11 @@ class GsaWidgetSaleItemCarousel extends StatelessWidget {
             ),
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.only(
-                right: horizontalPadding < _internalPadding ? horizontalPadding : _internalPadding.toDouble(),
+                right: horizontalPadding < _internalPadding ? horizontalPadding : _internalPadding,
               ),
-              child: GsaWidgetSaleItemPreview(saleItems[index]),
+              child: GsaWidgetSaleItemPreview(
+                saleItems[index],
+              ),
             ),
           ),
         ),

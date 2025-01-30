@@ -23,7 +23,7 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_map: ^7.0.2
   shared_preferences: ^2.3.3
-  collection: ^1.19.1
+  collection: ^1.19.0
 
   # Client implementations.
   generic_shop_app_ivancica:
