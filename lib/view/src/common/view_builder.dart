@@ -6,6 +6,7 @@ import 'package:generic_shop_app/view/src/common/theme.dart';
 import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay_consent.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_error.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// A builder for inserting widgets above the [Navigator].
 ///
@@ -37,20 +38,11 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
   /// As the widget defined in this class is placed above all other content,
   /// this [Future] will also handle the user privacy consent process.
   ///
-  final _setupSession = Future(() async {
+  Future<void> _setupSession() async {
     await GsaConfig.init();
-    if (GsaServiceConsent.instance.consentStatus.mandatoryCookies() == null) {
-      Future.delayed(
-        Duration.zero,
-        () {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            GsaWidgetOverlayConsent.open();
-          });
-        },
-      );
-      return;
-    }
-  });
+    await GsarService.initAll();
+    await GsarData.initAll();
+  }
 
   @override
   void didChangeDependencies() {
@@ -92,7 +84,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
           ),
           child: Listener(
             child: FutureBuilder(
-              future: _setupSession,
+              future: _setupSession(),
               builder: (context, setupResponse) {
                 if (setupResponse.connectionState != ConnectionState.done) {
                   return const Center(

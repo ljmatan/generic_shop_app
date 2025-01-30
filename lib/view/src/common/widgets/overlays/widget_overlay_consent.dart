@@ -18,7 +18,7 @@ class GsaWidgetOverlayConsent extends StatefulWidget {
     if (context != null) {
       return await showDialog(
         context: context,
-        barrierDismissible: GsaServiceConsent.instance.consentStatus.mandatoryCookies() != null,
+        barrierDismissible: GsaServiceConsent.instance.hasMandatoryConsent,
         builder: (context) {
           return const GsaWidgetOverlayConsent._();
         },
@@ -219,36 +219,34 @@ class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
                       AnimatedSize(
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.fastEaseInToSlowEaseOut,
-                        child:
-                            _cookieIdConsentStatus.every((consentStatus) => consentStatus)
-                                ? SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: TextButton(
-                                    child: const GsaWidgetText(
-                                      'DECLINE OPTIONAL',
-                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900),
-                                    ),
-                                    onPressed: () => _declineOptional(),
+                        child: _cookieIdConsentStatus.every((consentStatus) => consentStatus)
+                            ? SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: TextButton(
+                                  child: const GsaWidgetText(
+                                    'DECLINE OPTIONAL',
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900),
                                   ),
-                                )
-                                : const SizedBox(),
+                                  onPressed: () => _declineOptional(),
+                                ),
+                              )
+                            : const SizedBox(),
                       ),
                       AnimatedSize(
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.fastEaseInToSlowEaseOut,
-                        child:
-                            _cookieIdConsentStatus.any((consentStatus) => !consentStatus)
-                                ? Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: TextButton(
-                                      child: const GsaWidgetText('ACCEPT ALL', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900)),
-                                      onPressed: () => _acceptAll(),
-                                    ),
+                        child: _cookieIdConsentStatus.any((consentStatus) => !consentStatus)
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: TextButton(
+                                    child: const GsaWidgetText('ACCEPT ALL', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900)),
+                                    onPressed: () => _acceptAll(),
                                   ),
-                                )
-                                : const SizedBox(),
+                                ),
+                              )
+                            : const SizedBox(),
                       ),
                     ],
                   ),

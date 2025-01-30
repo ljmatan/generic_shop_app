@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/data/data.dart';
+import 'package:generic_shop_app/services/src/consent/service_consent.dart';
+import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay_consent.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
@@ -23,39 +25,58 @@ class GsaRouteSplash extends GsarRoute {
 }
 
 class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
+  /// Defines whether the application content is ready for initialisation and display.
+  ///
+  bool _readyToInitialise = GsaServiceConsent.instance.hasMandatoryConsent;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        setState(() => _readyToInitialise = true);
+      },
+    );
+  }
+
+  Future<void> _initialise() async {
+    switch (GsaConfig.provider) {
+      case GsaConfigProvider.demo:
+        throw UnimplementedError();
+      case GsaConfigProvider.woocommerce:
+        throw UnimplementedError();
+      case GsaConfigProvider.ivancica:
+        final products = await GivApiProducts.instance.getProducts();
+        GsaDataSaleItems.instance.products.addAll(products);
+        GsaDataMerchant.instance.merchant = GsaaModelMerchant(
+          name: 'froddo',
+          logoImageUrl: 'assets/ivancica/logo.png',
+        );
+    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return GsaConfig.requiresAuthentication && !GsaDataUser.instance.authenticated ? const GsaRouteLogin() : const GsaRouteShop();
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (!_readyToInitialise) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) async {
+          await GsaWidgetOverlayConsent.open();
+          setState(() => _readyToInitialise = true);
+        },
+      );
+      return const SizedBox();
+    }
     return Scaffold(
       body: FutureBuilder<void>(
-        future: switch (GsaConfig.provider) {
-          GsaConfigProvider.ivancica => Future(
-              () async {
-                final products = await GivApiProducts.instance.getProducts();
-                GsaDataSaleItems.instance.products.addAll(products);
-                GsaDataMerchant.instance.merchant = GsaaModelMerchant(
-                  name: 'froddo',
-                  logoImageUrl: 'assets/ivancica/logo.png',
-                );
-              },
-            ),
-          GsaConfigProvider.demo => throw UnimplementedError(),
-          GsaConfigProvider.herbalife => throw UnimplementedError(),
-          GsaConfigProvider.woocommerce => throw UnimplementedError(),
-        }
-            .then(
-          (_) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return GsaConfig.requiresAuthentication && !GsaDataUser.instance.authenticated
-                      ? const GsaRouteLogin()
-                      : const GsaRouteShop();
-                },
-              ),
-            );
-          },
-        ),
+        future: _initialise(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Center(

@@ -81,7 +81,6 @@ class GsaConfig {
 ///
 enum GsaConfigProvider {
   demo,
-  herbalife,
   woocommerce,
   ivancica,
 }
