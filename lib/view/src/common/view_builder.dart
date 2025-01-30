@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app/config.dart';
-import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/common/theme.dart';
-import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay_consent.dart';
-import 'package:generic_shop_app/view/src/common/widgets/widget_error.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// A builder for inserting widgets above the [Navigator].
 ///

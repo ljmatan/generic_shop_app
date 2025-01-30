@@ -67,14 +67,14 @@ abstract class GsarApi {
     return {
       'Content-Type': 'application/json; charset=utf-8',
       'Accept': 'application/json; charset=utf-8',
-      if (bearerToken != null)
-        'Authorization': 'Bearer ${bearerToken!}'
-      else if (bearerTokenCredentials != null)
-        'Authorization': 'Bearer ${dart_convert.base64.encode(
-          dart_convert.utf8.encode(
-            '${bearerTokenCredentials!.username}:${bearerTokenCredentials!.password}',
-          ),
-        )}',
+      if (bearerToken != null || bearerTokenCredentials != null)
+        'Authorization': 'Bearer ' +
+            (bearerToken ??
+                dart_convert.base64.encode(
+                  dart_convert.utf8.encode(
+                    '${bearerTokenCredentials!.username}:${bearerTokenCredentials!.password}',
+                  ),
+                )),
     }..addAll(additionalHeaders);
   }
 

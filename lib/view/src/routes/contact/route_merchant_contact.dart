@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app/services/src/i18n/service_i18n.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_field.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
@@ -34,8 +33,7 @@ class _GsaRouteMerchantContactState extends GsarRouteState<GsaRouteMerchantConta
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: SizedBox(
-          height:
-              MediaQuery.of(context).size.height -
+          height: MediaQuery.of(context).size.height -
               MediaQuery.of(context).padding.vertical -
               MediaQuery.of(context).viewInsets.bottom -
               kToolbarHeight,

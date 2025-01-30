@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 
 enum _GsaRouteAuthType {
   passwordOnly,
   usernameAndPassword,
 }
 
-class GsaRouteAuth extends StatefulWidget {
+class GsaRouteAuth extends GsarRoute {
   const GsaRouteAuth({super.key});
-
-  @override
-  State<GsaRouteAuth> createState() => _GsaRouteAuthState();
 
   @override
   String get routeId => 'auth';
 
   @override
   String get displayName => 'Authentication';
+
+  @override
+  GsarRouteState<GsaRouteAuth> createState() => _GsaRouteAuthState();
 }
 
-class _GsaRouteAuthState extends State<GsaRouteAuth> {
+class _GsaRouteAuthState extends GsarRouteState<GsaRouteAuth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

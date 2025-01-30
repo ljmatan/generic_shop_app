@@ -7,16 +7,25 @@ class GsaServiceTracking extends GsarService {
 
   static final _instance = GsaServiceTracking._();
 
-  // ignore: public_member_api_docs
+  /// Globally-accessible singleton class instance.
+  ///
   static GsaServiceTracking get instance => _instance() as GsaServiceTracking;
 
+  /// Records a log entry implemented by the tracking service.
+  ///
   Future<void> logEvent() async {}
 
+  /// Methods used for logging of cart-related events.
+  ///
   final cart = const _GsaServiceTrackingCart();
 
+  /// Methods used for logging of route-related events.
+  ///
   final route = const _GsaServiceTrackingRoute();
 
-  final device = const _GsaServiceTrackingRoute();
+  /// Methods used for logging of device-related events.
+  ///
+  final device = const _GsaServiceTrackingDevice();
 }
 
 class _GsaServiceTrackingCart {
