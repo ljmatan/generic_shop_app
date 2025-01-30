@@ -52,6 +52,12 @@ class __WidgetCustomerNoticeState extends State<_WidgetCustomerNotice> {
                 urlPath: 'cookie-policy',
                 url: GsaConfig.provider.documentUrls.cookieNotice!,
               ),
+            if (GsaConfig.provider.documentUrls.helpAndFaq != null)
+              (
+                label: 'Help and FAQ',
+                urlPath: 'help-and-faq',
+                url: GsaConfig.provider.documentUrls.helpAndFaq!,
+              ),
           })
             InkWell(
               child: Padding(

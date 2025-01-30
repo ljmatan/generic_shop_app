@@ -121,13 +121,14 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           Navigator.pushNamed(context, 'contact');
                         },
                       ),
-                    (
-                      label: 'Help & FAQ',
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, 'help');
-                      },
-                    ),
+                    if (GsaConfig.provider.documentUrls.helpAndFaq != null)
+                      (
+                        label: 'Help & FAQ',
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, 'help');
+                        },
+                      ),
                     (
                       label: 'Settings',
                       onTap: () {

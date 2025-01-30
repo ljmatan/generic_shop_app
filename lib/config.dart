@@ -128,6 +128,7 @@ extension GsaConfigProviderExt on GsaConfigProvider {
     String? termsAndConditions,
     String? privacyPolicy,
     String? cookieNotice,
+    String? helpAndFaq,
   }) get documentUrls => (
         termsAndConditions: switch (this) {
           GsaConfigProvider.ivancica => 'https://www.froddo.com/hr/politika-privatnosti-1',
@@ -141,6 +142,11 @@ extension GsaConfigProviderExt on GsaConfigProvider {
         },
         cookieNotice: switch (this) {
           GsaConfigProvider.ivancica => null,
+          GsaConfigProvider.demo => null,
+          GsaConfigProvider.woocommerce => null,
+        },
+        helpAndFaq: switch (this) {
+          GsaConfigProvider.ivancica => 'https://shop.ivancica.hr/pitanja-i-odgovori',
           GsaConfigProvider.demo => null,
           GsaConfigProvider.woocommerce => null,
         }
