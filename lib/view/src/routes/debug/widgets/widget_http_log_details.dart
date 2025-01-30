@@ -14,6 +14,13 @@ class _WidgetHttpLogDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                log.requestTimeFormatted() + ' - ${log.responseTime.difference(log.requestTime).inMilliseconds}ms',
+                style: TextStyle(
+                  fontSize: 8,
+                ),
+              ),
+              const SizedBox(height: 5),
               Row(
                 children: [
                   Text(

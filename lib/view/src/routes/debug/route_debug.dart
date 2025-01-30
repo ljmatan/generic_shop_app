@@ -28,7 +28,7 @@ class _GsaRouteDebugState extends GsarRouteState<GsaRouteDebug> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text(widget.routeId),
+        title: Text(widget.displayName),
       ),
       body: Column(
         children: [
@@ -64,7 +64,7 @@ class _GsaRouteDebugState extends GsarRouteState<GsaRouteDebug> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               children: switch (_tabNotifier.value) {
                 0 => [
-                    for (final log in GsarApi.logs.indexed)
+                    for (final log in GsarApi.logs.reversed.indexed)
                       Padding(
                         padding: log.$1 == 0 ? EdgeInsets.zero : const EdgeInsets.only(top: 10),
                         child: _WidgetHttpLogDetails(log.$2),

@@ -9,10 +9,11 @@ class _WidgetPromoCarousel extends StatefulWidget {
 
 class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
   final _carouselItemUrls = const <String>{
-    'https://pbs.twimg.com/media/F8xUybwXIAA-pQ-?format=jpg',
-    'https://www.zenskirecenziraj.com/data/public/2023-04/herbalife-zenskirecenziraj-iskustva.png',
-    'https://www.futurefit.co.uk/wp-content/uploads/2023/03/herbalife-review-future-fit.jpeg',
-    'https://media.zenfs.com/en/prnewswire.com/a9f40e0e5c3738ada0194b6e5eb98029',
+    'https://www.froddo.com/media/nova-kolekcija-blog-aw24.jpg',
+    'https://www.froddo.com/demo-2/img/ivancicadd.jpg',
+    'https://www.froddo.com/demo-2/img/7X-OKO-ZEMLJE.webp',
+    'https://www.froddo.com/demo-2/img/8d65e5d8e8a6f49319eb17ee76950cbb.jpg',
+    'https://www.froddo.com/demo-2/img/6df54f473a3b30c1a45feee9f30ac2be.jpg',
   };
 
   final _carouselItems = [];

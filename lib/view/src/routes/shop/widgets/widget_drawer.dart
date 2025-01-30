@@ -113,22 +113,16 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         GsaWidgetOverlayConsent.open(context);
                       },
                     ),
+                    if (GsaDataMerchant.instance.merchant != null)
+                      (
+                        label: 'Contact',
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, 'contact');
+                        },
+                      ),
                     (
-                      label: 'Contact',
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, 'contact');
-                      },
-                    ),
-                    (
-                      label: 'Privacy Policy',
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, 'privacy-policy');
-                      },
-                    ),
-                    (
-                      label: 'Help',
+                      label: 'Help & FAQ',
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.pushNamed(context, 'help');
@@ -148,6 +142,22 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         Navigator.pushNamed(context, 'licences');
                       },
                     ),
+                    if (GsaConfig.provider.documentUrls.termsAndConditions != null)
+                      (
+                        label: 'Terms and Conditions',
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, 'privacy-policy');
+                        },
+                      ),
+                    if (GsaConfig.provider.documentUrls.privacyPolicy != null)
+                      (
+                        label: 'Privacy Policy',
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, 'privacy-policy');
+                        },
+                      ),
                   })
                     TextButton(
                       child: GsaWidgetText(
@@ -162,7 +172,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                       onPressed: action.onTap,
                     ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(14, 16, 14, 0),
                     child: Text.rich(
                       TextSpan(
                         children: [

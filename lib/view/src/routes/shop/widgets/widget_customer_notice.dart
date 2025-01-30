@@ -29,23 +29,28 @@ class __WidgetCustomerNoticeState extends State<_WidgetCustomerNotice> {
             ),
           ),
           const SizedBox(height: 14),
-          for (final legalUrl in {
-            (
-              label: 'Terms and Conditions',
-              onTap: () {},
-            ),
-            (
-              label: 'Privacy Policy',
-              onTap: () {},
-            ),
-            (
-              label: 'Cookie Policy',
-              onTap: () {},
-            ),
-            if (GsaDataUser.instance.authenticated)
+          for (final content in <({
+            String label,
+            String urlPath,
+            String url,
+          })>{
+            if (GsaConfig.provider.documentUrls.termsAndConditions != null)
               (
-                label: 'Logout',
-                onTap: () {},
+                label: 'Terms and Conditions',
+                urlPath: 'terms-and-conditions',
+                url: GsaConfig.provider.documentUrls.termsAndConditions!,
+              ),
+            if (GsaConfig.provider.documentUrls.privacyPolicy != null)
+              (
+                label: 'Privacy Policy',
+                urlPath: 'privacy-policy',
+                url: GsaConfig.provider.documentUrls.privacyPolicy!,
+              ),
+            if (GsaConfig.provider.documentUrls.cookieNotice != null)
+              (
+                label: 'Cookie Policy',
+                urlPath: 'cookie-policy',
+                url: GsaConfig.provider.documentUrls.cookieNotice!,
               ),
           })
             InkWell(
@@ -54,7 +59,7 @@ class __WidgetCustomerNoticeState extends State<_WidgetCustomerNotice> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: GsaWidgetText(
-                    legalUrl.label,
+                    content.label,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
@@ -63,48 +68,19 @@ class __WidgetCustomerNoticeState extends State<_WidgetCustomerNotice> {
                   ),
                 ),
               ),
-              onTap: legalUrl.onTap,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => GsaRouteWebView(
+                      url: content.url,
+                      urlPath: content.urlPath,
+                      title: content.label,
+                    ),
+                  ),
+                );
+              },
             ),
           const SizedBox(height: 16),
-          const GsaWidgetText(
-            'Herbalife International Inc.',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          const Divider(),
-          const SizedBox(height: 8),
-          const GsaWidgetText(
-            'This app is developed by a third-party entity and is not directly affiliated with the Herbalife International.\n\n'
-            'Reproduced with the permission of Herbalife International. All rights to the Herbalife name and logo and any trademarks '
-            'or trade names of Herbalife, are the property of Herbalife International and its subsidiaries or associated companies.\n\n'
-            'We extend our heartfelt support for the incredible work and community support Herbalife consistently provides.',
-            textAlign: TextAlign.justify,
-            style: TextStyle(
-              height: 1.7,
-              fontSize: 12,
-            ),
-          ),
-          const SizedBox(height: 20),
-          const GsaWidgetText(
-            'Independent Herbalife Distributors',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          const Divider(),
-          const SizedBox(height: 8),
-          const GsaWidgetText(
-            'Herbalife is a company that manufactures and sells weight-management and nutrition products. '
-            'A Herbalife independent distributor is someone who sells Herbalife products directly to consumers.\n\n'
-            'Independent distributors are not Herbalife employees, '
-            'but rather independent contractors who purchase products from Herbalife and then resell them to customers.',
-            textAlign: TextAlign.justify,
-            style: TextStyle(
-              height: 1.7,
-              fontSize: 12,
-            ),
-          ),
         ],
       ),
     );

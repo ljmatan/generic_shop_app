@@ -475,6 +475,47 @@ class GsarApiModelLog {
   ///
   final DateTime requestTime, responseTime;
 
+  /// Method used for the formatting of [DateTime] objects.
+  ///
+  String _timeFormatted(
+    DateTime time, {
+    bool numerical = true,
+  }) {
+    if (numerical) {
+      return '${time.day < 10 ? '0${time.day}' : time.day}.'
+          '${time.month < 10 ? '0${time.month}' : time.month}.'
+          '${time.year}. '
+          '${time.hour < 10 ? '0${time.hour}' : time.hour}:'
+          '${time.minute < 10 ? '0${time.minute}' : time.minute}:'
+          '${time.second < 10 ? '0${time.second}' : time.second}:'
+          '${time.millisecond < 10 ? '0${time.millisecond}' : time.millisecond}';
+    } else {
+      throw UnimplementedError();
+    }
+  }
+
+  /// Formatted display of the [requestTime] object.
+  ///
+  String requestTimeFormatted({
+    bool numerical = true,
+  }) {
+    return _timeFormatted(
+      requestTime,
+      numerical: numerical,
+    );
+  }
+
+  /// Formatted display of the [responseTime] object.
+  ///
+  String responseTimeFormatted({
+    bool numerical = true,
+  }) {
+    return _timeFormatted(
+      responseTime,
+      numerical: numerical,
+    );
+  }
+
   /// Server endpoint information.
   ///
   final String url;

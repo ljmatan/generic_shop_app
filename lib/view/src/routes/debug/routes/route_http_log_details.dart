@@ -21,7 +21,7 @@ class __RouteHttpLogDetailsState extends GsarRouteState<_RouteHttpLogDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.routeId,
+          widget.displayName,
         ),
       ),
       body: ListView(
@@ -91,6 +91,9 @@ class __RouteHttpLogDetailsState extends GsarRouteState<_RouteHttpLogDetails> {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: Text(
                   httpInformation.value,
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ),

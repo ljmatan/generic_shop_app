@@ -14,10 +14,8 @@ class GsaTheme {
   static Brightness platformBrightness = PlatformDispatcher.instance.platformBrightness;
 
   static Color get _primaryColor {
-    if (GsaConfig.provider.primaryColor != null) {
-      return GsaConfig.provider.primaryColor!;
-    }
-    return platformBrightness == Brightness.light ? (1 == 1 ? const Color(0xff67bc2a) : const Color(0xffB7C9E2)) : const Color(0xff63183f);
+    if (GsaConfig.provider.themeColor != null) return GsaConfig.provider.themeColor!;
+    return platformBrightness == Brightness.light ? const Color(0xff67bc2a) : const Color(0xff63183f);
   }
 
   static Color get _secondaryColor {

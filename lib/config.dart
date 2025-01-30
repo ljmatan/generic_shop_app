@@ -95,15 +95,25 @@ class GsaConfig {
 /// App client / checkout process provider.
 ///
 enum GsaConfigProvider {
+  /// Demo provider, implemented for app mock data display.
+  ///
   demo,
+
+  /// Generic WooCommerce client provider identifier.
+  ///
   woocommerce,
+
+  /// Shoe sales client with a custom API system implementation.
+  ///
   ivancica,
 }
 
+/// Extension methods and properties for the [GsaConfigProvider] object.
+///
 extension GsaConfigProviderExt on GsaConfigProvider {
   /// Main theme color applied to the provider.
   ///
-  Color? get primaryColor {
+  Color? get themeColor {
     switch (this) {
       case GsaConfigProvider.ivancica:
         return Color(0xff8DC63F);
@@ -111,4 +121,28 @@ extension GsaConfigProviderExt on GsaConfigProvider {
         return null;
     }
   }
+
+  /// Curated collection of provider document network resource URLs.
+  ///
+  ({
+    String? termsAndConditions,
+    String? privacyPolicy,
+    String? cookieNotice,
+  }) get documentUrls => (
+        termsAndConditions: switch (this) {
+          GsaConfigProvider.ivancica => 'https://www.froddo.com/hr/politika-privatnosti-1',
+          GsaConfigProvider.demo => null,
+          GsaConfigProvider.woocommerce => null,
+        },
+        privacyPolicy: switch (this) {
+          GsaConfigProvider.ivancica => null,
+          GsaConfigProvider.demo => null,
+          GsaConfigProvider.woocommerce => null,
+        },
+        cookieNotice: switch (this) {
+          GsaConfigProvider.ivancica => null,
+          GsaConfigProvider.demo => null,
+          GsaConfigProvider.woocommerce => null,
+        }
+      );
 }
