@@ -3,6 +3,7 @@ import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/services/src/consent/service_consent.dart';
 import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay_consent.dart';
+import 'package:generic_shop_app/view/src/common/widgets/widget_error.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
@@ -29,17 +30,8 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
   ///
   bool _readyToInitialise = GsaServiceConsent.instance.hasMandatoryConsent;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) async {
-        await GsaWidgetOverlayConsent.open();
-        setState(() => _readyToInitialise = true);
-      },
-    );
-  }
-
+  /// Function implemented for application runtime memory setup.
+  ///
   Future<void> _initialise() async {
     switch (GsaConfig.provider) {
       case GsaConfigProvider.demo:
@@ -50,6 +42,11 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
         GsaDataMerchant.instance.merchant = GsaaModelMerchant(
           name: 'froddo',
           logoImageUrl: 'assets/ivancica/logo.png',
+          contact: GsaaModelContact(
+            email: 'web.shop@ivancica.hr',
+            phoneCountryCode: '+385',
+            phoneNumber: '42 402 271',
+          ),
         );
         final products = await GivApiProducts.instance.getProducts();
         GsaDataSaleItems.instance.products.addAll(products);
@@ -70,12 +67,32 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
     return;
   }
 
+  /// Property holding the [Future] state of the [_initialise] method.
+  ///
+  late Future<void> _initialiser;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        await GsaWidgetOverlayConsent.open();
+        setState(
+          () {
+            _readyToInitialise = true;
+            _initialiser = _initialise();
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_readyToInitialise) return const SizedBox();
     return Scaffold(
       body: FutureBuilder<void>(
-        future: _initialise(),
+        future: _initialiser,
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Center(
@@ -83,16 +100,14 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
             );
           }
           if (snapshot.hasError) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  snapshot.error.toString(),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+            return GsaWidgetError(
+              snapshot.error.toString(),
+              retry: () {
+                setState(() => _initialiser = _initialise());
+              },
             );
           }
+
           return const SizedBox();
         },
       ),

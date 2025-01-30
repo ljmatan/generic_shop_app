@@ -37,13 +37,13 @@ class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
                 label: 'Delivery',
                 display: GsaDataCheckout.instance.orderDraft.deliveryType == null
                     ? 'Specified at Checkout'
-                    : GsaDataCheckout.instance.orderDraft.deliveryType?.price?.eurCents == 0
+                    : GsaDataCheckout.instance.orderDraft.deliveryType?.price?.centum == 0
                         ? 'FREE'
                         : '${GsaDataCheckout.instance.orderDraft.deliveryType!.price?.formatted() ?? 'N/A'} ${GsaaServiceCurrency.currency.code}',
                 tooltip: 'Optional doorstep delivery.',
               ),
-              if (GsaDataCheckout.instance.orderDraft.paymentType?.price?.eurCents != null &&
-                  GsaDataCheckout.instance.orderDraft.paymentType!.price!.eurCents! > 0)
+              if (GsaDataCheckout.instance.orderDraft.paymentType?.price?.centum != null &&
+                  GsaDataCheckout.instance.orderDraft.paymentType!.price!.centum! > 0)
                 (
                   label: 'Payment',
                   display: '${GsaDataCheckout.instance.orderDraft.paymentType!.price!.formatted()} ${GsaaServiceCurrency.currency.code}',

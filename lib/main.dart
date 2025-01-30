@@ -35,33 +35,33 @@ class _GsaState extends State<Gsa> {
       navigatorObservers: [GsarRoute.navigatorObserver],
       home: GsaRouteSplash(),
       theme: GsaTheme.data,
-      // onGenerateRoute: (settings) {
-      //   final primary = settings.name?.split('/')[0];
-      //   return MaterialPageRoute<void>(
-      //     builder: (BuildContext context) => switch (primary) {
-      //       'auth' => const GsaRouteLogin(),
-      //       'cart' => const GsaRouteCart(),
-      //       'chat' => const GsaRouteChat(),
-      //       'checkout' => const GsaRouteCheckout(),
-      //       'cookie-policy' => const GsaRouteCookiePolicy(),
-      //       'contact' => const GsaRouteMerchantContact(),
-      //       'debug' => const GsaRouteDebug(),
-      //       'guest-info' => const GsaRouteGuestInfo(),
-      //       'help' => const GsaRouteHelp(),
-      //       'licences' => const GsaRouteLicences(),
-      //       'merchant' => const GsaRouteMerchant(),
-      //       'onboarding' => const GsaRouteOnboarding(),
-      //       'order-status' => const GsaRouteOrderStatus(),
-      //       'privacy-policy' => const GsaRoutePrivacyPolicy(),
-      //       'register' => const GsaRouteRegister(),
-      //       'sale-item' => GsaRouteProductDetails(saleItem: (settings.arguments as Map?)?['saleItem']),
-      //       'settings' => const GsaRouteSettings(),
-      //       'shop' => const GsaRouteShop(),
-      //       'terms-and-conditions' => const GsaRouteTermsAndConditions(),
-      //       null || String() => throw UnimplementedError(),
-      //     },
-      //   );
-      // },
+      onGenerateRoute: (settings) {
+        final primary = settings.name?.split('/')[0];
+        return MaterialPageRoute<void>(
+          builder: (BuildContext context) => switch (primary) {
+            'auth' => const GsaRouteLogin(),
+            'cart' => const GsaRouteCart(),
+            'chat' => const GsaRouteChat(),
+            'checkout' => const GsaRouteCheckout(),
+            'cookie-policy' => const GsaRouteCookiePolicy(),
+            'contact' => const GsaRouteMerchantContact(),
+            'debug' => const GsaRouteDebug(),
+            'guest-info' => const GsaRouteGuestInfo(),
+            'help' => const GsaRouteHelp(),
+            'licences' => const GsaRouteLicences(),
+            'merchant' => const GsaRouteMerchant(),
+            'onboarding' => const GsaRouteOnboarding(),
+            'order-status' => const GsaRouteOrderStatus(),
+            'privacy-policy' => const GsaRoutePrivacyPolicy(),
+            'register' => const GsaRouteRegister(),
+            'sale-item' => GsaRouteProductDetails(saleItem: (settings.arguments as Map?)?['saleItem']),
+            'settings' => const GsaRouteSettings(),
+            'shop' => const GsaRouteShop(),
+            'terms-and-conditions' => const GsaRouteTermsAndConditions(),
+            null || String() => throw UnimplementedError(),
+          },
+        );
+      },
     );
   }
 }

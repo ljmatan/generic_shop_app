@@ -122,7 +122,7 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
                               ),
                               const Spacer(),
                               GsaWidgetText(
-                                ' ${((product.$2.cartCount ?? 0) * (product.$2.price?.eur ?? 0)).toStringAsFixed(2)} ${GsaaServiceCurrency.currency.code}',
+                                ' ${((product.$2.cartCount ?? 0) * (product.$2.price?.unity ?? 0)).toStringAsFixed(2)} ${GsaaServiceCurrency.currency.code}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,

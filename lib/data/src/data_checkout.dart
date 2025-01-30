@@ -62,8 +62,8 @@ class GsaDataCheckout extends GsarData {
   int get totalItemPriceEurCents {
     int price = 0;
     for (final item in orderDraft.items) {
-      if (item.price?.eurCents != null) {
-        price += (item.cartCount ?? 0) * item.price!.eurCents!;
+      if (item.price?.centum != null) {
+        price += (item.cartCount ?? 0) * item.price!.centum!;
       }
     }
     return price;
@@ -86,12 +86,12 @@ class GsaDataCheckout extends GsarData {
   int get totalPriceEurCents {
     int price = 0;
     for (final item in orderDraft.items) {
-      if (item.price?.eurCents != null) {
-        price += (item.cartCount ?? 0) * item.price!.eurCents!;
+      if (item.price?.centum != null) {
+        price += (item.cartCount ?? 0) * item.price!.centum!;
       }
     }
-    price += orderDraft.deliveryType?.price?.eurCents ?? 0;
-    price += orderDraft.paymentType?.price?.eurCents ?? 0;
+    price += orderDraft.deliveryType?.price?.centum ?? 0;
+    price += orderDraft.paymentType?.price?.centum ?? 0;
     return price;
   }
 

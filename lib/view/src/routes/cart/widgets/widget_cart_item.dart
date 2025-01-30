@@ -92,7 +92,7 @@ class __WidgetCartItemState extends State<_WidgetCartItem> {
           Row(
             children: [
               Expanded(
-                child: widget.cartItem.price?.eurCents != null
+                child: widget.cartItem.price?.centum != null
                     ? DecoratedBox(
                         decoration: BoxDecoration(
                           border: Border(
@@ -116,7 +116,7 @@ class __WidgetCartItemState extends State<_WidgetCartItem> {
                                 ),
                               ),
                               GsaWidgetText(
-                                '${(widget.cartItem.price!.eur! * _cartCount).toStringAsFixed(2)} ${GsaConfig.currency.code}',
+                                '${(widget.cartItem.price!.unity! * _cartCount).toStringAsFixed(2)} ${GsaConfig.currency.code}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 13,
