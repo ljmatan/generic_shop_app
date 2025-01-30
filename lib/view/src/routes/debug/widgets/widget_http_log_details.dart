@@ -72,7 +72,11 @@ class _WidgetHttpLogDetails extends StatelessWidget {
         ),
       ),
       onTap: () {
-        const _RouteHttpLogDetails().navigate(context);
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => _RouteHttpLogDetails(log),
+          ),
+        );
       },
     );
   }

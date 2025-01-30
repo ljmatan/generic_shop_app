@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/view/src/common/view_builder.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app/view/src/routes/splash/route_splash.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
 @pragma('vm:entry-point')
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GsaConfig.init();
   runApp(const Gsa());
 }
 

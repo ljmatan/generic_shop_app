@@ -28,7 +28,7 @@ class _GsaRouteDebugState extends GsarRouteState<GsaRouteDebug> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('Debug'),
+        title: Text(widget.routeId),
       ),
       body: Column(
         children: [

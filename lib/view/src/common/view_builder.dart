@@ -33,17 +33,6 @@ class GsaViewBuilder extends StatefulWidget {
 }
 
 class _GsaViewBuilderState extends State<GsaViewBuilder> {
-  /// Handles the specified (URL) route initialisation and ensures the app resource allocation.
-  ///
-  /// As the widget defined in this class is placed above all other content,
-  /// this [Future] will also handle the user privacy consent process.
-  ///
-  Future<void> _setupSession() async {
-    await GsaConfig.init();
-    await GsarService.initAll();
-    await GsarData.initAll();
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -83,24 +72,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
             ),
           ),
           child: Listener(
-            child: FutureBuilder(
-              future: _setupSession(),
-              builder: (context, setupResponse) {
-                if (setupResponse.connectionState != ConnectionState.done) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (setupResponse.hasError) {
-                  return Material(
-                    child: GsaWidgetError(
-                      setupResponse.error.toString(),
-                    ),
-                  );
-                }
-                return widget.child;
-              },
-            ),
+            child: widget.child,
             onPointerDown: GsaConfig.qaBuild
                 ? (_) {
                     _recordedNumberOfTaps++;
