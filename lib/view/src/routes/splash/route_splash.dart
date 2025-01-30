@@ -29,16 +29,6 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
   ///
   bool _readyToInitialise = GsaServiceConsent.instance.hasMandatoryConsent;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        setState(() => _readyToInitialise = true);
-      },
-    );
-  }
-
   Future<void> _initialise() async {
     switch (GsaConfig.provider) {
       case GsaConfigProvider.demo:
@@ -46,12 +36,12 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
       case GsaConfigProvider.woocommerce:
         throw UnimplementedError();
       case GsaConfigProvider.ivancica:
-        final products = await GivApiProducts.instance.getProducts();
-        GsaDataSaleItems.instance.products.addAll(products);
         GsaDataMerchant.instance.merchant = GsaaModelMerchant(
           name: 'froddo',
           logoImageUrl: 'assets/ivancica/logo.png',
         );
+        final products = await GivApiProducts.instance.getProducts();
+        GsaDataSaleItems.instance.products.addAll(products);
     }
     Navigator.pushReplacement(
       context,
