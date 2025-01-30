@@ -43,14 +43,20 @@ class _GsaRouteSplashState extends GsarRouteState<GsaRouteSplash> {
         final products = await GivApiProducts.instance.getProducts();
         GsaDataSaleItems.instance.products.addAll(products);
     }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return GsaConfig.requiresAuthentication && !GsaDataUser.instance.authenticated ? const GsaRouteLogin() : const GsaRouteShop();
-        },
-      ),
+    Future.delayed(
+      Duration.zero,
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return GsaConfig.requiresAuthentication && !GsaDataUser.instance.authenticated ? const GsaRouteLogin() : const GsaRouteShop();
+            },
+          ),
+        );
+      },
     );
+    return;
   }
 
   @override

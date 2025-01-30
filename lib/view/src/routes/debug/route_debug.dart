@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
 part 'widgets/widget_http_log_details.dart';
+part 'routes/route_http_log_details.dart';
 
 /// Route integrated with development / debugging features.
 ///
@@ -75,6 +76,13 @@ class _GsaRouteDebugState extends GsarRouteState<GsaRouteDebug> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: null,
+        child: Icon(Icons.share),
+        onPressed: () async {
+          // TODO
+        },
       ),
     );
   }
