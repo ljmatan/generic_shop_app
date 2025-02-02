@@ -12,7 +12,12 @@ class GsamApiAggregated0 extends GsamApi {
   String get identifier => 'aggregated';
 
   @override
-  List<({Future<shelf.Response> Function(shelf.Request p1) handler, String method, String path})> get endpoints {
+  List<
+      ({
+        Future<shelf.Response> Function(shelf.Request p1) handler,
+        GsarApiEndpointMethodType method,
+        String path,
+      })> get endpoints {
     return [];
   }
 

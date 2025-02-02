@@ -50,7 +50,7 @@ abstract class GsamApi {
   List<
       ({
         String path,
-        String method,
+        GsarApiEndpointMethodType method,
         Future<shelf.Response> Function(shelf.Request) handler,
       })> get endpoints;
 
@@ -60,24 +60,22 @@ abstract class GsamApi {
     final router = shelf_router.Router();
     GsamRouterType.api.router.mount('/api/v$majorVersion/$identifier/v$version', router.call);
     for (final endpoint in endpoints) {
-      switch (endpoint.method.toUpperCase()) {
-        case 'GET':
+      switch (endpoint.method) {
+        case GsarApiEndpointMethodType.httpGet:
           router.get('/${endpoint.path}', endpoint.handler);
           break;
-        case 'POST':
+        case GsarApiEndpointMethodType.httpPost:
           router.post('/${endpoint.path}', endpoint.handler);
           break;
-        case 'PUT':
+        case GsarApiEndpointMethodType.httpPut:
           router.put('/${endpoint.path}', endpoint.handler);
           break;
-        case 'PATCH':
+        case GsarApiEndpointMethodType.httpPatch:
           router.patch('/${endpoint.path}', endpoint.handler);
           break;
-        case 'DELETE':
+        case GsarApiEndpointMethodType.httpDelete:
           router.delete('/${endpoint.path}', endpoint.handler);
           break;
-        default:
-          throw 'Handler method ${endpoint.method} is not supported.';
       }
     }
   }

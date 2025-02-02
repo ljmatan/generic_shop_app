@@ -15,14 +15,14 @@ class GsamApiOrders0 extends GsamApi {
   List<
       ({
         String path,
-        String method,
+        GsarApiEndpointMethodType method,
         Future<shelf.Response> Function(shelf.Request) handler,
       })> get endpoints {
     return [
       for (final endpoint in GsaaEndpointsOrders.values)
         (
           path: endpoint.path,
-          method: endpoint.method.id,
+          method: endpoint.method,
           handler: endpoint.handler,
         ),
     ];
