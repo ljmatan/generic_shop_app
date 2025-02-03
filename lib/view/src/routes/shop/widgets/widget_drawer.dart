@@ -68,7 +68,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                             child: GsaWidgetDropdown(
                               valueAt: i == 0
                                   ? GsaaServiceI18NLanguage.values.indexOf(GsaConfig.language)
-                                  : GsaaServiceCurrencyType.values.indexOf(GsaConfig.currency),
+                                  : GsaaModelPriceCurrencyType.values.indexOf(GsaConfig.currency),
                               children: i == 0
                                   ? [
                                       for (final language in GsaaServiceI18NLanguage.values)
@@ -82,7 +82,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                                         ),
                                     ]
                                   : [
-                                      for (final currency in GsaaServiceCurrencyType.values)
+                                      for (final currency in GsaaModelPriceCurrencyType.values)
                                         (
                                           id: currency.name,
                                           label: currency.displayName,

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
@@ -78,7 +79,7 @@ class GsaDataCheckout extends GsarData {
   /// User-visible price representation.
   ///
   String get totalItemPriceFormatted {
-    return totalPriceEur.toStringAsFixed(2);
+    return totalPriceEur.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
   }
 
   /// Total cart price in EUR cents.'

@@ -142,6 +142,7 @@ class _GivRouteProductDetailsState extends GsarRouteState<GivRouteProductDetails
                           TextSpan(
                             text: '\n${widget.saleItem.productCode!}',
                             style: TextStyle(
+                              fontWeight: FontWeight.w300,
                               color: Colors.grey,
                               fontSize: 10,
                             ),

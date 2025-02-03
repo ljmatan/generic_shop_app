@@ -62,11 +62,11 @@ class GsaConfig {
 
   /// The specified runtime display currency.
   ///
-  static final currencyNotifier = ValueNotifier<GsaaServiceCurrencyType>(GsaaServiceCurrencyType.eur);
+  static final currencyNotifier = GsaaModelPrice.conversionFactorNotifier;
 
   /// The specified runtime currency.
   ///
-  static GsaaServiceCurrencyType get currency => currencyNotifier.value;
+  static GsaaModelPriceCurrencyType get currency => currencyNotifier.value;
 
   /// Initialise the runtime resources with the specified parameters.
   ///

@@ -115,14 +115,14 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
                           Row(
                             children: [
                               GsaWidgetText(
-                                '${product.$2.cartCount} × ${product.$2.price?.formatted()} ${GsaaServiceCurrency.currency.code} ',
+                                '${product.$2.cartCount} × ${product.$2.price?.formatted()} ${GsaConfig.currency.code} ',
                                 style: const TextStyle(
                                   fontSize: 12,
                                 ),
                               ),
                               const Spacer(),
                               GsaWidgetText(
-                                ' ${((product.$2.cartCount ?? 0) * (product.$2.price?.unity ?? 0)).toStringAsFixed(2)} ${GsaaServiceCurrency.currency.code}',
+                                ' ${((product.$2.cartCount ?? 0) * (product.$2.price?.unity ?? 0)).toStringAsFixed(2)} ${GsaConfig.currency.code}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,

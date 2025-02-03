@@ -197,7 +197,7 @@ class __WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Auto
                                 ),
                               ),
                               GsaWidgetText(
-                                ' ${option.$2.price?.formatted()} ${GsaaServiceCurrency.currency.code}',
+                                ' ${option.$2.price?.formatted()}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,

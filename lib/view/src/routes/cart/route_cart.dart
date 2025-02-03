@@ -77,7 +77,7 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
                                 valueListenable: GsaDataCheckout.instance.notifierCartUpdate,
                                 builder: (context, value, child) {
                                   return GsaWidgetText(
-                                    GsaDataCheckout.instance.totalItemPriceFormatted + ' ' + GsaaServiceCurrency.currency.code,
+                                    GsaDataCheckout.instance.totalItemPriceFormatted,
                                     style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w700, fontSize: 16),
                                   );
                                 },
@@ -101,13 +101,12 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        for (final category
-                            in GsaDataCheckout.instance.orderDraft.items
-                                .map(
-                                  (saleItem) =>
-                                      GsaDataSaleItems.instance.categories.firstWhere((category) => category.id == saleItem.categoryId),
-                                )
-                                .indexed)
+                        for (final category in GsaDataCheckout.instance.orderDraft.items
+                            .map(
+                              (saleItem) =>
+                                  GsaDataSaleItems.instance.categories.firstWhere((category) => category.id == saleItem.categoryId),
+                            )
+                            .indexed)
                           Padding(
                             padding: const EdgeInsets.only(right: 9),
                             child: OutlinedButton(
@@ -119,10 +118,9 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
                               child: GsaWidgetText(
                                 '${category.$2.name} '
                                 '( TODO )',
-                                style:
-                                    _filteredCategoryIds.contains(category.$2.id)
-                                        ? const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)
-                                        : const TextStyle(color: Colors.grey),
+                                style: _filteredCategoryIds.contains(category.$2.id)
+                                    ? const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)
+                                    : const TextStyle(color: Colors.grey),
                               ),
                               onPressed: () {
                                 if (category.$2.id != null) {
@@ -139,12 +137,11 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
                     ),
                   ),
                 const SizedBox(height: 26),
-                for (final item
-                    in _filteredCategoryIds.isEmpty
-                        ? GsaDataCheckout.instance.orderDraft.items
-                        : GsaDataCheckout.instance.orderDraft.items.where((saleItem) {
-                          return _filteredCategoryIds.contains(saleItem.categoryId);
-                        }))
+                for (final item in _filteredCategoryIds.isEmpty
+                    ? GsaDataCheckout.instance.orderDraft.items
+                    : GsaDataCheckout.instance.orderDraft.items.where((saleItem) {
+                        return _filteredCategoryIds.contains(saleItem.categoryId);
+                      }))
                   Padding(padding: const EdgeInsets.only(bottom: 20), child: _WidgetCartItem(item, key: UniqueKey())),
                 const SizedBox(height: 12),
                 const GsaWidgetText(

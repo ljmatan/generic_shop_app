@@ -3,7 +3,6 @@ import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/data/src/data_checkout.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_headline.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 class GsaWidgetTotalCartPrice extends StatefulWidget {
   const GsaWidgetTotalCartPrice({super.key});
@@ -39,19 +38,19 @@ class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
                     ? 'Specified at Checkout'
                     : GsaDataCheckout.instance.orderDraft.deliveryType?.price?.centum == 0
                         ? 'FREE'
-                        : '${GsaDataCheckout.instance.orderDraft.deliveryType!.price?.formatted() ?? 'N/A'} ${GsaaServiceCurrency.currency.code}',
+                        : GsaDataCheckout.instance.orderDraft.deliveryType!.price?.formatted() ?? 'N/A',
                 tooltip: 'Optional doorstep delivery.',
               ),
               if (GsaDataCheckout.instance.orderDraft.paymentType?.price?.centum != null &&
                   GsaDataCheckout.instance.orderDraft.paymentType!.price!.centum! > 0)
                 (
                   label: 'Payment',
-                  display: '${GsaDataCheckout.instance.orderDraft.paymentType!.price!.formatted()} ${GsaaServiceCurrency.currency.code}',
+                  display: GsaDataCheckout.instance.orderDraft.paymentType!.price!.formatted(),
                   tooltip: 'The additional cost of the specified payment method.',
                 ),
               (
                 label: 'Total',
-                display: GsaDataCheckout.instance.totalPriceFormatted + ' ${GsaaServiceCurrency.currency.code}',
+                display: GsaDataCheckout.instance.totalPriceFormatted,
                 tooltip: 'The total amount due for the items in your cart.',
               ),
             }.indexed)
@@ -76,7 +75,7 @@ class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
                         ),
                       ),
                       GsaWidgetText(
-                        priceItem.$2.display,
+                        priceItem.$2.display ?? 'N/A',
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                         ),

@@ -1,5 +1,96 @@
 part of '../models.dart';
 
+/// Identifiers for the supported currency types.
+///
+enum GsaaModelPriceCurrencyType {
+  /// The euro (symbol: €; code: EUR), official currency of 20 of the 27 member states of the European Union.
+  ///
+  eur,
+
+  /// The United States dollar (symbol: $; code: USD), official currency of the United States and several other countries.
+  ///
+  usd,
+
+  /// The yen (Japanese: 円, symbol: ¥; code: JPY) is the official currency of Japan.
+  ///
+  jpy;
+
+  /// The symbol of the currency.
+  ///
+  String get symbol {
+    switch (this) {
+      case GsaaModelPriceCurrencyType.eur:
+        return '€';
+      case GsaaModelPriceCurrencyType.usd:
+        return '\$';
+      case GsaaModelPriceCurrencyType.jpy:
+        return '¥';
+    }
+  }
+
+  /// User-visible display name for [this] currency.
+  ///
+  String get displayName {
+    switch (this) {
+      case GsaaModelPriceCurrencyType.eur:
+        return 'Euro ( $symbol )';
+      case GsaaModelPriceCurrencyType.usd:
+        return 'US Dollar ( $symbol )';
+      case GsaaModelPriceCurrencyType.jpy:
+        return 'Japanese Yen ( $symbol )';
+    }
+  }
+
+  /// The international currency code.
+  ///
+  String get code {
+    switch (this) {
+      case GsaaModelPriceCurrencyType.eur:
+        return 'EUR';
+      case GsaaModelPriceCurrencyType.usd:
+        return 'USD';
+      case GsaaModelPriceCurrencyType.jpy:
+        return 'JPY';
+    }
+  }
+
+  /// The given exchange factor in comparison to euro.
+  ///
+  /// For example, if 10 EUR equals 11 USD, the exchange factor will be 1.1,
+  /// and this is the amount by which the given price will be multiplied.
+  ///
+  double get exchangeFactor {
+    switch (this) {
+      case GsaaModelPriceCurrencyType.eur:
+        return 1;
+      case GsaaModelPriceCurrencyType.usd:
+        return 1.03;
+      case GsaaModelPriceCurrencyType.jpy:
+        return 159.44;
+    }
+  }
+
+  /// Converts an amount in centum from one currency to another.
+  ///
+  int convertCentum(
+    GsaaModelPriceCurrencyType other,
+    int amount,
+  ) {
+    double amountInEur = amount / (exchangeFactor * 100);
+    return (amountInEur * other.exchangeFactor * 100).round();
+  }
+
+  /// Converts an amount in whole units from one currency to another
+  ///
+  double convertUnity(
+    GsaaModelPriceCurrencyType other,
+    double amount,
+  ) {
+    double amountInEur = amount / exchangeFactor;
+    return amountInEur * other.exchangeFactor;
+  }
+}
+
 /// A model class representing product price values.
 ///
 @JsonSerializable(explicitToJson: true)
@@ -8,15 +99,15 @@ class GsaaModelPrice extends _Model {
   GsaaModelPrice({
     super.id,
     super.originId,
-    this.originalPriceId,
+    this.currencyType,
     this.centum,
     this.discount,
     this.clientVisible,
   });
 
-  /// Identifier for the given original (source) price.
+  /// The type of the currency with which the price is denoted.
   ///
-  String? originalPriceId;
+  GsaaModelPriceCurrencyType? currencyType;
 
   /// Price denoted at 1/100 (e.g., euro cents).
   ///
@@ -30,12 +121,18 @@ class GsaaModelPrice extends _Model {
 
   /// Conversion factor applied to the [formatted] method for price display.
   ///
-  static double? conversionFactor;
+  static final conversionFactorNotifier = ValueNotifier<GsaaModelPriceCurrencyType>(
+    GsaaModelPriceCurrencyType.eur,
+  );
 
   /// Formatted price amount in EUR, or with an applied currency conersion factor.
   ///
   String? formatted() {
-    return unity != null ? (conversionFactor != null ? (unity! * conversionFactor!) : unity!).toStringAsFixed(2) : null;
+    if (centum == null) return null;
+    return (currencyType != null && currencyType != conversionFactorNotifier.value
+            ? currencyType!.convertUnity(conversionFactorNotifier.value, unity!).toStringAsFixed(2)
+            : unity!.toStringAsFixed(2)) +
+        ' ${conversionFactorNotifier.value.symbol}';
   }
 
   /// The discount applied to this price.
@@ -65,7 +162,6 @@ class GsaaModelPrice extends _Model {
     return GsaaModelPrice(
       id: _Model._generateRandomString(8),
       originId: _Model._generateRandomString(8),
-      originalPriceId: null,
       centum: _Model._generateRandomNumber(3),
       discount: null,
     );
@@ -81,11 +177,16 @@ class GsaaModelDiscount extends _Model {
     super.id,
     super.originId,
     super.categoryId,
+    this.currencyType,
     this.centum,
     this.timeStartIso8601,
     this.timeEndIso8601,
     super.consentIds,
   });
+
+  /// The type of the currency with which the price is denoted.
+  ///
+  GsaaModelPriceCurrencyType? currencyType;
 
   /// The amount of discount in EUR cents.
   ///
@@ -98,9 +199,11 @@ class GsaaModelDiscount extends _Model {
   /// Human-readable discount amount in EUR, or in any other currency with applied [conversionFactor].
   ///
   String? formatted() {
-    return centum != null
-        ? (GsaaModelPrice.conversionFactor != null ? (centum! * GsaaModelPrice.conversionFactor!) : centum!).toStringAsFixed(2)
-        : null;
+    if (centum == null) return null;
+    return (currencyType != null && currencyType != GsaaModelPrice.conversionFactorNotifier.value
+            ? currencyType!.convertUnity(GsaaModelPrice.conversionFactorNotifier.value, unity!).toStringAsFixed(2)
+            : unity!.toStringAsFixed(2)) +
+        ' ${GsaaModelPrice.conversionFactorNotifier.value.symbol}';
   }
 
   /// The start time of when the discount is applicable in ISO 8601 format.
