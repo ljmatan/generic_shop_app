@@ -76,8 +76,8 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                                           id: language.name,
                                           label: language.displayName,
                                           onTap: () {
-                                            context.routeState?.rebuildAllRoutes();
                                             GsaConfig.languageNotifier.value = language;
+                                            context.routeState?.rebuildAllRoutes();
                                           },
                                         ),
                                     ]
@@ -87,8 +87,8 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                                           id: currency.name,
                                           label: currency.displayName,
                                           onTap: () {
-                                            context.routeState?.rebuildAllRoutes();
                                             GsaConfig.currencyNotifier.value = currency;
+                                            context.routeState?.rebuildAllRoutes();
                                           },
                                         ),
                                     ],

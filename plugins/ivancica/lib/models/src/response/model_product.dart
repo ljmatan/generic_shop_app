@@ -133,6 +133,7 @@ class GivModelProduct {
                   name: option.size,
                   availableCount: stocks?.firstWhereOrNull((stock) => stock.size == option.size)?.available,
                   price: GsaaModelPrice(
+                    currencyType: GsaaModelPriceCurrencyType.eur,
                     centum: option.oldPrice != null && option.oldPrice != 0 ? option.oldPrice : option.price,
                     discount: option.oldPrice != null && option.oldPrice != 0 && option.price != null
                         ? GsaaModelDiscount(centum: option.price! - option.oldPrice!)

@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 
 class GsaWidgetDropdown extends StatefulWidget {
-  final String? label;
-  final int? valueAt;
-  final List<({String label, String? id, Function onTap})>? children;
-  final TextStyle? labelStyle;
-  final double height, padding;
-  final bool loading;
-
   const GsaWidgetDropdown({
     super.key,
     this.label,
@@ -18,6 +11,13 @@ class GsaWidgetDropdown extends StatefulWidget {
     this.padding = 12,
     this.loading = false,
   }) : assert(label != null || children != null);
+
+  final String? label;
+  final int? valueAt;
+  final List<({String label, String? id, Function onTap})>? children;
+  final TextStyle? labelStyle;
+  final double height, padding;
+  final bool loading;
 
   @override
   GsaWidgetDropdownState createState() => GsaWidgetDropdownState();
@@ -251,7 +251,7 @@ class GsaWidgetDropdownState extends State<GsaWidgetDropdown> {
             if (widget.loading)
               DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface.withOpacity(.7),
+                  color: Theme.of(context).colorScheme.surface.withValues(alpha: .7),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: SizedBox(

@@ -146,7 +146,7 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
               color: Theme.of(context).colorScheme.tertiary,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.only(top: 20, bottom: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -293,9 +293,32 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
                           Icons.shopping_bag,
                           color: Theme.of(context).primaryColor,
                         ),
-                        label: Text('Add to Cart'),
+                        label: Text(
+                          'Add to Cart',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         onPressed: () {},
                       ),
+                    ),
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Text(
+                        'or',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: TextButton(
+                      child: Text('Add to Favorites'),
+                      onPressed: () {},
                     ),
                   ),
                 ],
@@ -383,7 +406,7 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
                             children: [
                               Icon(
                                 productAvailable ? Icons.check : Icons.close,
-                                color: productAvailable ? null : Colors.grey,
+                                color: productAvailable ? Theme.of(context).primaryColor : Colors.grey,
                                 size: 13,
                               ),
                               Padding(
@@ -392,7 +415,7 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
                                   storeLocation,
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: productAvailable ? null : Colors.grey,
+                                    color: productAvailable ? Theme.of(context).primaryColor : Colors.grey,
                                   ),
                                 ),
                               ),
