@@ -26,9 +26,15 @@ class _GsaRouteSaleItemDetailsState extends GsarRouteState<GsaRouteSaleItemDetai
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.displayName)),
+      appBar: AppBar(
+        title: Text(
+          widget.displayName,
+        ),
+      ),
       body: widget.saleItem?.originUrl != null
-          ? GsaWidgetWebContent(widget.saleItem!.originUrl!)
+          ? GsaWidgetWebContent(
+              widget.saleItem!.originUrl!,
+            )
           : ListView(
               children: [],
             ),

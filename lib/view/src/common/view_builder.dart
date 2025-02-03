@@ -72,7 +72,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
                   _recordedNumberOfTaps++;
                   if (_recordedNumberOfTaps == 10) {
                     _recordedNumberOfTaps = 0;
-                    GsaRouteDebug().navigate();
+                    GsaRouteDebug().push();
                   } else {
                     Future.delayed(
                       const Duration(seconds: 3),

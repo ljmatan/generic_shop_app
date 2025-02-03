@@ -103,16 +103,23 @@ abstract class GsarRoute extends StatefulWidget {
 
   /// Navigates to the given route using the [Navigator.push] method.
   ///
-  Future<dynamic> navigate([
+  Future<dynamic> push({
     BuildContext? context,
-  ]) async {
+    bool replacement = false,
+  }) async {
     context ??= navigatorKey.currentContext;
     if (context != null) {
-      return await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => this,
-        ),
+      final route = MaterialPageRoute<void>(
+        builder: (BuildContext context) => this,
       );
+      return replacement
+          ? await Navigator.of(context).pushAndRemoveUntil(
+              route,
+              (_) => false,
+            )
+          : await Navigator.of(context).push(
+              route,
+            );
     }
   }
 

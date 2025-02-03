@@ -37,7 +37,7 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
         },
       );
     } else {
-      Navigator.of(context).pushNamed('cart');
+      GsaRouteCart().push();
     }
   }
 

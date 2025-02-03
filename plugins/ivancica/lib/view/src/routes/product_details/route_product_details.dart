@@ -367,7 +367,7 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
                 ),
                 Wrap(
                   spacing: 12,
-                  runSpacing: 12,
+                  runSpacing: 10,
                   children: [
                     for (final storeLocation in <String>{
                       'Pula Max City',

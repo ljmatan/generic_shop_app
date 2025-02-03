@@ -121,25 +121,11 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => switch (GsaConfig.provider) {
-                          GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
-                          _ => GsaRouteSaleItemDetails(widget.saleItem),
-                        },
-                      ),
-                    );
-                    switch (GsaConfig.provider) {
-                      case GsaConfigProvider.ivancica:
-                        break;
-                      default:
-                        Navigator.of(context).pushNamed(
-                          'sale-item',
-                          arguments: {
-                            'saleItem': widget.saleItem,
-                          },
-                        );
-                    }
+                    (switch (GsaConfig.provider) {
+                      GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
+                      _ => GsaRouteSaleItemDetails(widget.saleItem),
+                    })
+                        .push();
                   },
                 ),
               ),
