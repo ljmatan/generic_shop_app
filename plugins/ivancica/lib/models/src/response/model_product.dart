@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 class GivModelProduct {
@@ -115,7 +116,14 @@ class GivModelProduct {
       id: proId?.toString(),
       productCode: productCode,
       name: productName,
-      description: productDescription,
+      description: productDescription?.isNotEmpty == true
+          ? productDescription
+          // TODO: Remove
+          : kDebugMode
+              ? 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
+                  'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, '
+                  'when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+              : null,
       imageUrls: images == null
           ? null
           : List<String>.from(

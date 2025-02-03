@@ -14,6 +14,7 @@ dependencies:
   generic_shop_app_api:
     path: ../../api
   collection: ^1.19.0
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
