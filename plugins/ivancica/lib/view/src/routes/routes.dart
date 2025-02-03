@@ -1,6 +1,10 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_ivancica/view/src/routes/product_details/route_product_details.dart';
 
+/// Collection of Route objects implemented by the "Generic Shop App" project.
+///
 enum GivRoutes implements GsarRouteType {
   productDetails;
 
@@ -48,7 +52,9 @@ abstract class GivRoute extends GsarRoute {
   const GivRoute({super.key});
 
   @override
-  GsarRouteType get routeType => GivRoutes.values.firstWhere(
-        (route) => route.routeRuntimeType == runtimeType,
-      );
+  GsarRouteType get routeType {
+    return GivRoutes.values.firstWhere(
+      (route) => route.routeRuntimeType == runtimeType,
+    );
+  }
 }

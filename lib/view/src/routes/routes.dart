@@ -49,7 +49,7 @@ export 'splash/route_splash.dart';
 export 'user_profile/route_user_profile.dart';
 export 'webview/route_webview.dart';
 
-/// A curated collection of route objects supported by the "Generic Shop App" project.
+/// Collection of Route objects implemented by the "Generic Shop App" project.
 ///
 enum GsaRoutes implements GsarRouteType {
   auth,
@@ -161,7 +161,9 @@ abstract class GsaRoute extends GsarRoute {
   const GsaRoute({super.key});
 
   @override
-  GsarRouteType get routeType => GsaRoutes.values.firstWhere(
-        (route) => route.routeRuntimeType == runtimeType,
-      );
+  GsarRouteType get routeType {
+    return GsaRoutes.values.firstWhere(
+      (route) => route.routeRuntimeType == runtimeType,
+    );
+  }
 }
