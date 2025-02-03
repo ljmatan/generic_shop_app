@@ -2,23 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app/services/src/i18n/service_i18n.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_field.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route for displaying of the contact input forms and general merchant contact information.
 ///
-class GsaRouteMerchantContact extends GsarRoute {
-  // ignore: public_member_api_docs
+class GsaRouteMerchantContact extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteMerchantContact({super.key});
 
   @override
   State<GsaRouteMerchantContact> createState() => _GsaRouteMerchantContactState();
-
-  @override
-  String get routeId => 'contact';
-
-  @override
-  String get displayName => 'Contact';
 }
 
 class _GsaRouteMerchantContactState extends GsarRouteState<GsaRouteMerchantContact> {
@@ -29,7 +25,11 @@ class _GsaRouteMerchantContactState extends GsarRouteState<GsaRouteMerchantConta
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.displayName)),
+      appBar: AppBar(
+        title: Text(
+          widget.displayName,
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: SizedBox(

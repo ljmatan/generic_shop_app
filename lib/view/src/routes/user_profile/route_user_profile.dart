@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
-/// Route displaying the application personalization settings.
+/// Route displaying the user profile details.
 ///
-class GsaRouteSettings extends GsaRoute {
+class GsaRouteUserProfile extends GsaRoute {
   /// Default, unnamed widget constructor.
   ///
-  const GsaRouteSettings({super.key});
+  const GsaRouteUserProfile({super.key});
 
   @override
-  State<GsaRouteSettings> createState() => _GsaRouteSettingsState();
+  State<GsaRouteUserProfile> createState() => _GsaRouteUserProfileState();
 }
 
-class _GsaRouteSettingsState extends GsarRouteState<GsaRouteSettings> {
+class _GsaRouteUserProfileState extends GsarRouteState<GsaRouteUserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

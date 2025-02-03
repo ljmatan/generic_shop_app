@@ -6,23 +6,19 @@ import 'package:generic_shop_app/view/src/common/widgets/actions/widget_switch.d
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_field.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_phone_number_input.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_terms_confirmation.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route for entering the guest user information, to be used in checkout process.
 ///
-class GsaRouteGuestInfo extends GsarRoute {
-  // ignore: public_member_api_docs
+class GsaRouteGuestInfo extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteGuestInfo({super.key});
 
   @override
   State<GsaRouteGuestInfo> createState() => _GsaRouteGuestInfoState();
-
-  @override
-  String get routeId => 'guest-info';
-
-  @override
-  String get displayName => 'User Info';
 }
 
 class _GsaRouteGuestInfoState extends GsarRouteState<GsaRouteGuestInfo> {

@@ -37,27 +37,6 @@ class _GsaState extends State<Gsa> {
       theme: GsaTheme.data,
       onGenerateRoute: (settings) {
         final primary = settings.name?.split('/')[0];
-        return MaterialPageRoute<void>(
-          builder: (BuildContext context) => switch (primary) {
-            'auth' => const GsaRouteLogin(),
-            'cart' => const GsaRouteCart(),
-            'chat' => const GsaRouteChat(),
-            'checkout' => const GsaRouteCheckout(),
-            'contact' => const GsaRouteMerchantContact(),
-            'debug' => const GsaRouteDebug(),
-            'guest-info' => const GsaRouteGuestInfo(),
-            'help' => const GsaRouteHelp(),
-            'licences' => const GsaRouteLicences(),
-            'merchant' => const GsaRouteMerchant(),
-            'onboarding' => const GsaRouteOnboarding(),
-            'order-status' => const GsaRouteOrderStatus(),
-            'register' => const GsaRouteRegister(),
-            'sale-item' => GsaRouteProductDetails((settings.arguments as Map?)?['saleItem']),
-            'settings' => const GsaRouteSettings(),
-            'shop' => const GsaRouteShop(),
-            null || String() => throw UnimplementedError(),
-          },
-        );
       },
     );
   }

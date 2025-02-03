@@ -6,6 +6,54 @@ import 'package:flutter/services.dart';
 
 import 'package:universal_html/html.dart' as html;
 
+/// Type identifier for the [GsarRoute] objects.
+///
+/// The class can be implemented with [Enum] types so that route structure is always valid:
+///
+/// ```dart
+/// enum ExampleRouteEnum implements GsarRouteType {
+///   example;
+///
+///   @override
+///   Type get routeType {
+///     switch (this) {
+///       case ExampleRouteEnum.example:
+///         return ExampleRouteType;
+///     }
+///   }
+///
+///   @override
+///   String get routeId {
+///     switch (this) {
+///       case ExampleRouteEnum.example:
+///         return 'example-route';
+///     }
+///   }
+///
+///   @override
+///   String get displayName {
+///     switch (this) {
+///       case ExampleRouteEnum.example:
+///         return 'Example Route';
+///     }
+///   }
+/// }
+/// ```
+///
+abstract class GsarRouteType {
+  /// Specified route for this type.
+  ///
+  Type get routeRuntimeType;
+
+  /// Route identifier used with named routes, URL path identifiers, etc.
+  ///
+  String get routeId;
+
+  /// Human-readable route display name.
+  ///
+  String get displayName;
+}
+
 /// Interface for the application navigation targets implemented with [MaterialPageRoute].
 ///
 abstract class GsarRoute extends StatefulWidget {
@@ -13,17 +61,25 @@ abstract class GsarRoute extends StatefulWidget {
   ///
   const GsarRoute({super.key});
 
+  /// The defined type of any subclass instance.
+  ///
+  GsarRouteType get routeType;
+
+  /// Route identifier used with named routes, URL path identifiers, etc.
+  ///
+  /// Derived from [routeType], but can be overridden within subclass instances.
+  ///
+  String get routeId => routeType.routeId;
+
+  /// Human-readable route display name.
+  ///
+  /// Derived from [routeType], but can be overridden within subclass instances.
+  ///
+  String get displayName => routeType.displayName;
+
   /// Whether the route is enabled for client display.
   ///
   bool get enabled => true;
-
-  /// Route identifier compatible as, for example, URL path.
-  ///
-  String get routeId;
-
-  /// Route display name.
-  ///
-  String get displayName;
 
   /// Collection of [GsarRouteState] subclass instances or [State] object references.
   ///
@@ -51,7 +107,13 @@ abstract class GsarRoute extends StatefulWidget {
     BuildContext? context,
   ]) async {
     context ??= navigatorKey.currentContext;
-    if (context != null) return await Navigator.of(context).pushNamed(routeId);
+    if (context != null) {
+      return await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => this,
+        ),
+      );
+    }
   }
 
   /// Route observer informing of any route navigation changes.
@@ -107,11 +169,17 @@ abstract class GsarRouteState<T extends GsarRoute> extends State<T> with RouteAw
   void _setUrlPath() {
     SystemChrome.setApplicationSwitcherDescription(
       ApplicationSwitcherDescription(
-        label: widget.displayName,
+        label: widget.routeType.displayName,
         primaryColor: Theme.of(context).primaryColor.value,
       ),
     );
-    if (kIsWeb) html.window.history.replaceState(null, widget.displayName, '/${widget.routeId}');
+    if (kIsWeb) {
+      html.window.history.replaceState(
+        null,
+        widget.routeType.displayName,
+        '/${widget.routeId}',
+      );
+    }
   }
 
   /// The amount of time the user has seen this screen content.

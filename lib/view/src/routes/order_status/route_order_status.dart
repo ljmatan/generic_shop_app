@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route displaying the order status information.
 ///
-class GsaRouteOrderStatus extends GsarRoute {
-  // ignore: public_member_api_docs
+class GsaRouteOrderStatus extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteOrderStatus({super.key});
 
   @override
   State<GsaRouteOrderStatus> createState() => _GsaRouteOrderStatusState();
-
-  @override
-  String get routeId => 'order-status';
-
-  @override
-  String get displayName => 'Order Status';
 }
 
 class _GsaRouteOrderStatusState extends GsarRouteState<GsaRouteOrderStatus> {

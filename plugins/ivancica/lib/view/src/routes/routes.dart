@@ -1,0 +1,54 @@
+import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_ivancica/view/src/routes/product_details/route_product_details.dart';
+
+enum GivRoutes implements GsarRouteType {
+  productDetails;
+
+  @override
+  Type get routeRuntimeType {
+    switch (this) {
+      case GivRoutes.productDetails:
+        return GivRouteSaleItemDetails;
+    }
+  }
+
+  @override
+  String get routeId {
+    switch (this) {
+      default:
+        return name.replaceAllMapped(
+          RegExp(r'([a-z0-9])([A-Z])'),
+          (Match m) => '${m[1]}-${m[2]!.toLowerCase()}',
+        );
+    }
+  }
+
+  @override
+  String get displayName {
+    switch (this) {
+      default:
+        return name
+            .replaceAllMapped(
+              RegExp(r'([a-z0-9])([A-Z])'),
+              (Match m) => '${m[1]} ${m[2]}',
+            )
+            .replaceFirstMapped(
+              RegExp(r'^[a-z]'),
+              (Match m) => m[0]!.toUpperCase(),
+            );
+    }
+  }
+}
+
+/// A base Route class implementing the [GsarRoute] interface.
+///
+abstract class GivRoute extends GsarRoute {
+  /// Default, unnamed widget constructor.
+  ///
+  const GivRoute({super.key});
+
+  @override
+  GsarRouteType get routeType => GivRoutes.values.firstWhere(
+        (route) => route.routeRuntimeType == runtimeType,
+      );
+}

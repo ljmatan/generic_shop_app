@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
 part 'widgets/widget_http_log_details.dart';
@@ -6,18 +7,13 @@ part 'routes/route_http_log_details.dart';
 
 /// Route integrated with development / debugging features.
 ///
-class GsaRouteDebug extends GsarRoute {
-  // ignore: public_member_api_docs
+class GsaRouteDebug extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteDebug({super.key});
 
   @override
   State<GsaRouteDebug> createState() => _GsaRouteDebugState();
-
-  @override
-  String get routeId => 'debug';
-
-  @override
-  String get displayName => 'Debug';
 }
 
 class _GsaRouteDebugState extends GsarRouteState<GsaRouteDebug> {

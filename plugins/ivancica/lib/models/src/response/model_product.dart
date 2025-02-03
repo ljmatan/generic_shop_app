@@ -53,10 +53,6 @@ class GivModelProduct {
     this.attributes,
   });
 
-  factory GivModelProduct.fromRawJson(String str) => GivModelProduct.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory GivModelProduct.fromJson(Map<String, dynamic> json) => GivModelProduct(
         proId: json['proId'],
         productCode: json['productCode'],

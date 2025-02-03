@@ -1,6 +1,6 @@
 part of '../route_debug.dart';
 
-class _RouteHttpLogDetails extends GsarRoute {
+class _RouteHttpLogDetails extends GsaRoute {
   const _RouteHttpLogDetails(this.log);
 
   final GsarApiModelLog log;

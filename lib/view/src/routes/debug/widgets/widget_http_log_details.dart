@@ -15,7 +15,9 @@ class _WidgetHttpLogDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                log.requestTimeFormatted() + ' - ${log.responseTime.difference(log.requestTime).inMilliseconds}ms',
+                'Request start at ' +
+                    log.requestTimeFormatted() +
+                    ', finished in ${log.responseTime.difference(log.requestTime).inMilliseconds}ms',
                 style: TextStyle(
                   fontSize: 8,
                 ),

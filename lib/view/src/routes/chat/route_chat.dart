@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
-class GsaRouteChat extends GsarRoute {
-  // ignore: public_member_api_docs
+/// Screen providing chat functionalities.
+///
+class GsaRouteChat extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteChat({super.key});
 
   @override
   State<GsaRouteChat> createState() => _GsaRouteChatState();
-
-  @override
-  String get routeId => 'chat';
-
-  @override
-  String get displayName => 'Chat';
 }
 
 class _GsaRouteChatState extends GsarRouteState<GsaRouteChat> {
@@ -20,7 +18,9 @@ class _GsaRouteChatState extends GsarRouteState<GsaRouteChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.displayName),
+        title: Text(
+          widget.displayName,
+        ),
       ),
     );
   }

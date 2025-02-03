@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/services/src/i18n/service_i18n.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_field.dart';
 import 'package:generic_shop_app/view/src/common/widgets/overlays/widget_overlay_confirmation.dart';
@@ -15,18 +16,13 @@ part 'widgets/widget_cart_item.dart';
 
 /// Route providing the cart / checkout overview and the related data manipulation options.
 ///
-class GsaRouteCart extends GsarRoute {
-  // ignore: public_member_api_docs
+class GsaRouteCart extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteCart({super.key});
 
   @override
   State<GsaRouteCart> createState() => _GsaRouteCartState();
-
-  @override
-  String get routeId => 'cart';
-
-  @override
-  String get displayName => 'Cart';
 }
 
 class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
@@ -45,7 +41,11 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: GsaWidgetText(widget.displayName)),
+      appBar: AppBar(
+        title: GsaWidgetText(
+          widget.displayName,
+        ),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -60,8 +60,19 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
                       children: [
                         Expanded(
                           child: GsaWidgetText.rich([
-                            const GsaWidgetTextSpan('Cart Items ', style: TextStyle(fontWeight: FontWeight.w500, color: Colors.grey)),
-                            GsaWidgetTextSpan('($cartItemCount)', style: const TextStyle(fontWeight: FontWeight.w700)),
+                            const GsaWidgetTextSpan(
+                              'Cart Items ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            GsaWidgetTextSpan(
+                              '($cartItemCount)',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                           ], style: const TextStyle(fontSize: 16)),
                         ),
                         Tooltip(
@@ -78,13 +89,21 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
                                 builder: (context, value, child) {
                                   return GsaWidgetText(
                                     GsaDataCheckout.instance.totalItemPriceFormatted,
-                                    style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w700, fontSize: 16),
+                                    style: const TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                    ),
                                   );
                                 },
                               ),
                               const Padding(
                                 padding: EdgeInsets.only(left: 6),
-                                child: Icon(Icons.info_outline, color: Colors.grey, size: 16),
+                                child: Icon(
+                                  Icons.info_outline,
+                                  color: Colors.grey,
+                                  size: 16,
+                                ),
                               ),
                             ],
                           ),
@@ -94,7 +113,13 @@ class _GsaRouteCartState extends GsarRouteState<GsaRouteCart> {
                   },
                 ),
                 const Divider(height: 30),
-                const GsaWidgetText('Browse and review the items in your cart.', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                const GsaWidgetText(
+                  'Browse and review the items in your cart.',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
                 if (_saleItemCategoryIds.length > 1)
                   SizedBox(
                     height: 38,

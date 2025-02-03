@@ -4,30 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_ivancica/view/src/routes/routes.dart';
 
-class GivRouteProductDetails extends GsarRoute {
+/// Screen displaying product details and other relevant functionalities and content.
+///
+class GivRouteSaleItemDetails extends GivRoute {
   /// Default, unnamed widget constructor.
   ///
-  const GivRouteProductDetails(
+  const GivRouteSaleItemDetails(
     this.saleItem, {
     super.key,
   });
 
-  ///
+  /// The sale item specified for viewing.
   ///
   final GsaaModelSaleItem saleItem;
 
   @override
-  State<GivRouteProductDetails> createState() => _GivRouteProductDetailsState();
-
-  @override
-  String get routeId => 'product-details';
-
-  @override
-  String get displayName => 'Product Details';
+  State<GivRouteSaleItemDetails> createState() => _GivRouteSaleItemDetailsState();
 }
 
-class _GivRouteProductDetailsState extends GsarRouteState<GivRouteProductDetails> {
+class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetails> {
   /// Controller handling the selection of the sale item image.
   ///
   late ValueNotifier<String?> _imageUrlSelectionNotifier;

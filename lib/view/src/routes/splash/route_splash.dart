@@ -11,15 +11,10 @@ import 'package:generic_shop_app_ivancica/api/api.dart';
 
 /// Route dislaying all of the logged information, implemented for debugging purposes.
 ///
-class GsaRouteSplash extends GsarRoute {
-  // ignore: public_member_api_docs
+class GsaRouteSplash extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteSplash({super.key});
-
-  @override
-  String get routeId => 'logging';
-
-  @override
-  String get displayName => 'Logger';
 
   @override
   GsarRouteState<GsaRouteSplash> createState() => _GsaRouteSplashState();

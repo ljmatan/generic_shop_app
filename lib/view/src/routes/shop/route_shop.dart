@@ -29,18 +29,13 @@ part 'widgets/widget_search_suggestions.dart';
 
 /// Shop route, displaying product info, alongisde of the search services.
 ///
-class GsaRouteShop extends GsarRoute {
-  // ignore: public_member_api_docs
+class GsaRouteShop extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteShop({super.key});
 
   @override
   State<GsaRouteShop> createState() => _GsaRouteShopState();
-
-  @override
-  String get routeId => 'shop';
-
-  @override
-  String get displayName => 'Shop';
 }
 
 class _GsaRouteShopState extends GsarRouteState<GsaRouteShop> {

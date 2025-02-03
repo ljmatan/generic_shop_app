@@ -124,8 +124,8 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                     Navigator.of(context).push(
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) => switch (GsaConfig.provider) {
-                          GsaConfigProvider.ivancica => GivRouteProductDetails(widget.saleItem),
-                          _ => GsaRouteProductDetails(widget.saleItem),
+                          GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
+                          _ => GsaRouteSaleItemDetails(widget.saleItem),
                         },
                       ),
                     );

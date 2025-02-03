@@ -1,6 +1,7 @@
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_ivancica/endpoints/src/endpoints_user.dart';
-import 'package:generic_shop_app_ivancica/models/src/response/model_product.dart';
+import 'package:generic_shop_app_ivancica/models/src/response/model_user.dart';
 
 /// Methods related to the user APIs provided by the `api.ivancica.hr` service.
 ///
@@ -19,7 +20,17 @@ class GivApiUser extends GsarApi {
 
   /// Retrieves a list of sale items.
   ///
-  Future<dynamic> login() async {
-    final response = await GivEndpointsUser.login.request(this);
+  Future<GsaaModelUser> login({
+    required String email,
+    required String password,
+  }) async {
+    final response = await GivEndpointsUser.login.request(
+      this,
+      body: {
+        'email': email,
+        'password': password,
+      },
+    );
+    return GivModelUser.fromJson(response).toSupportedType();
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/services/src/i18n/service_i18n.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app/services/services.dart';
 import 'package:generic_shop_app/view/src/common/widgets/actions/widget_text_field.dart';
@@ -27,18 +28,13 @@ part 'widgets/widget_checkout_overview.dart';
 /// Route aimed at checkout integration,
 /// with all of the checkout options (delivery, payment, info propagation) implemented.
 ///
-class GsaRouteCheckout extends GsarRoute {
-  // ignore: public_member_api_docs
+class GsaRouteCheckout extends GsaRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaRouteCheckout({super.key});
 
   @override
   State<GsaRouteCheckout> createState() => _GsaRouteCheckoutState();
-
-  @override
-  String get routeId => 'checkout';
-
-  @override
-  String get displayName => 'Checkout';
 }
 
 class _GsaRouteCheckoutState extends GsarRouteState<GsaRouteCheckout> {
@@ -78,7 +74,9 @@ class _GsaRouteCheckoutState extends GsarRouteState<GsaRouteCheckout> {
             }
           },
         ),
-        title: GsaWidgetText(widget.displayName),
+        title: GsaWidgetText(
+          widget.displayName,
+        ),
       ),
       body: PageView(
         controller: _pageController,
