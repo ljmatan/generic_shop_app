@@ -52,7 +52,7 @@ class _GsaState extends State<Gsa> {
             'onboarding' => const GsaRouteOnboarding(),
             'order-status' => const GsaRouteOrderStatus(),
             'register' => const GsaRouteRegister(),
-            'sale-item' => GsaRouteProductDetails(saleItem: (settings.arguments as Map?)?['saleItem']),
+            'sale-item' => GsaRouteProductDetails((settings.arguments as Map?)?['saleItem']),
             'settings' => const GsaRouteSettings(),
             'shop' => const GsaRouteShop(),
             null || String() => throw UnimplementedError(),

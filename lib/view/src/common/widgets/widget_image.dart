@@ -194,7 +194,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                             height: widget.height,
                             child: Center(
                               child: Icon(
-                                Icons.broken_image_rounded,
+                                Icons.broken_image_outlined,
                                 color: Colors.grey,
                                 size: (((widget.width ?? 0) > (widget.height ?? 0) ? widget.height : widget.width) ?? 0) / 1.5,
                               ),

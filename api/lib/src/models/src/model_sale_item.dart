@@ -10,6 +10,7 @@ class GsaaModelSaleItem extends _Model {
     super.originId,
     super.categoryId,
     this.name,
+    this.productCode,
     this.amount,
     this.measure,
     this.description,
@@ -36,7 +37,10 @@ class GsaaModelSaleItem extends _Model {
   /// Item display name.
   ///
   String? name;
-  // GsaaModelTranslated? name;
+
+  /// A unique, user-visible product code.
+  ///
+  String? productCode;
 
   static num? _amountFromJson(json) {
     return num.tryParse(json.toString());

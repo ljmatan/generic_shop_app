@@ -111,12 +111,22 @@ enum GsaConfigProvider {
 /// Extension methods and properties for the [GsaConfigProvider] object.
 ///
 extension GsaConfigProviderExt on GsaConfigProvider {
-  /// Main theme color applied to the provider.
+  /// Theme properties associated with a provider.
   ///
-  Color? get themeColor {
+  ({
+    String? fontFamily,
+    Color? primary,
+    Color? secondary,
+    Color? tertiary,
+  })? get themeProperties {
     switch (this) {
       case GsaConfigProvider.ivancica:
-        return Color(0xff8DC63F);
+        return (
+          fontFamily: 'Merriweather Sans',
+          primary: const Color(0xff8DC63F),
+          secondary: const Color(0xff303945),
+          tertiary: const Color(0xffF6F9FC),
+        );
       default:
         return null;
     }

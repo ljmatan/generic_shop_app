@@ -8,16 +8,11 @@ class GsaaModelPrice extends _Model {
   GsaaModelPrice({
     super.id,
     super.originId,
-    this.originalPriceCentum,
     this.originalPriceId,
     this.centum,
     this.discount,
     this.clientVisible,
   });
-
-  /// The value of original (source) price in centum (1 / 100).
-  ///
-  int? originalPriceCentum;
 
   /// Identifier for the given original (source) price.
   ///
@@ -70,7 +65,6 @@ class GsaaModelPrice extends _Model {
     return GsaaModelPrice(
       id: _Model._generateRandomString(8),
       originId: _Model._generateRandomString(8),
-      originalPriceCentum: null,
       originalPriceId: null,
       centum: _Model._generateRandomNumber(3),
       discount: null,
@@ -139,24 +133,24 @@ class GsaaModelPromotionalDiscount extends _Model {
     required super.id,
     required super.originId,
     required super.categoryId,
-    required this.eurCents,
+    required this.centum,
     required this.timeStartIso8601,
     required this.timeEndIso8601,
     super.consentIds,
   });
 
-  /// The amount of discount in EUR cents.
+  /// The amount of discount expressed as 1/100.
   ///
-  int? eurCents;
+  int? centum;
 
-  /// The amount of discount in EUR.
+  /// The amount of discount expressed as 1/1.
   ///
-  double? get eur => eurCents != null ? _Model._fromCentum(eurCents!) : null;
+  double? get unity => centum != null ? _Model._fromCentum(centum!) : null;
 
   /// Human-readable discount amount in EUR, or in any other currency with applied [conversionFactor].
   ///
   String? formatted([double? conversionFactor]) {
-    return eur != null ? (conversionFactor != null ? (eur! * conversionFactor) : eur!).toStringAsFixed(2) : null;
+    return unity != null ? (conversionFactor != null ? (unity! * conversionFactor) : unity!).toStringAsFixed(2) : null;
   }
 
   /// The start time of when the discount is applicable in ISO 8601 format.

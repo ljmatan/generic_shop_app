@@ -14,11 +14,12 @@ class GsaTheme {
   static Brightness platformBrightness = PlatformDispatcher.instance.platformBrightness;
 
   static Color get _primaryColor {
-    if (GsaConfig.provider.themeColor != null) return GsaConfig.provider.themeColor!;
+    if (GsaConfig.provider.themeProperties?.primary != null) return GsaConfig.provider.themeProperties!.primary!;
     return platformBrightness == Brightness.light ? const Color(0xff67bc2a) : const Color(0xff63183f);
   }
 
   static Color get _secondaryColor {
+    if (GsaConfig.provider.themeProperties?.secondary != null) return GsaConfig.provider.themeProperties!.secondary!;
     return platformBrightness == Brightness.light ? const Color(0xff63183f) : const Color(0xffB7C9E2);
   }
 
@@ -27,7 +28,7 @@ class GsaTheme {
   static ThemeData get data {
     return ThemeData(
       primaryColor: _primaryColor,
-      fontFamily: 'Quicksand',
+      fontFamily: GsaConfig.provider.themeProperties?.fontFamily ?? 'Quicksand',
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
@@ -52,6 +53,7 @@ class GsaTheme {
               onPrimary: Colors.white,
               secondary: _secondaryColor,
               onSecondary: Colors.white,
+              tertiary: GsaConfig.provider.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: Colors.white,
@@ -66,6 +68,7 @@ class GsaTheme {
               onPrimary: Colors.grey,
               secondary: _secondaryColor,
               onSecondary: Colors.grey,
+              tertiary: GsaConfig.provider.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: const Color(0xff333333),

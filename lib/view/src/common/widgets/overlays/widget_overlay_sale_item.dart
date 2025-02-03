@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app/config.dart';
 import 'package:generic_shop_app/data/data.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_image.dart';
 import 'package:generic_shop_app/view/src/common/widgets/widget_text.dart';
+import 'package:generic_shop_app/view/src/routes/routes.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_ivancica/view/routes/product_details/route_product_details.dart';
 
 /// Overlay view displaying sale item details and containing associated cart functionalities.
 ///
@@ -118,12 +121,25 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    Navigator.of(context).pushNamed(
-                      'sale-item',
-                      arguments: {
-                        'saleItem': widget.saleItem,
-                      },
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => switch (GsaConfig.provider) {
+                          GsaConfigProvider.ivancica => GivRouteProductDetails(widget.saleItem),
+                          _ => GsaRouteProductDetails(widget.saleItem),
+                        },
+                      ),
                     );
+                    switch (GsaConfig.provider) {
+                      case GsaConfigProvider.ivancica:
+                        break;
+                      default:
+                        Navigator.of(context).pushNamed(
+                          'sale-item',
+                          arguments: {
+                            'saleItem': widget.saleItem,
+                          },
+                        );
+                    }
                   },
                 ),
               ),

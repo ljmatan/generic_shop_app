@@ -7,7 +7,10 @@ import 'package:generic_shop_app_architecture/gsar.dart';
 ///
 class GsaRouteProductDetails extends GsarRoute {
   // ignore: public_member_api_docs
-  const GsaRouteProductDetails({super.key, this.saleItem});
+  const GsaRouteProductDetails(
+    this.saleItem, {
+    super.key,
+  });
 
   /// Sale item visually represented by this route.
   ///

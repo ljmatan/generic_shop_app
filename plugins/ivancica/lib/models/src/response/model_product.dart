@@ -113,8 +113,7 @@ class GivModelProduct {
   GsaaModelSaleItem toSupportedType() {
     return GsaaModelSaleItem(
       id: proId?.toString(),
-      originId: productCode,
-      categoryId: alfaCode,
+      productCode: productCode,
       name: productName,
       description: productDescription,
       imageUrls: images == null
@@ -130,7 +129,7 @@ class GivModelProduct {
                   name: option.size,
                   availableCount: stocks?.firstWhereOrNull((stock) => stock.size == option.size)?.available,
                   price: GsaaModelPrice(
-                    originalPriceCentum: option.oldPrice != null && option.oldPrice != 0 ? option.oldPrice : option.price,
+                    centum: option.oldPrice != null && option.oldPrice != 0 ? option.oldPrice : option.price,
                     discount: option.oldPrice != null && option.oldPrice != 0 && option.price != null
                         ? GsaaModelDiscount(centum: option.price! - option.oldPrice!)
                         : null,

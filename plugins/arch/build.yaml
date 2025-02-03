@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      metadata_generator:
+        generate_for:
+          include:
+            - lib/src/**.dart
