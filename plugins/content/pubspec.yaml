@@ -24,6 +24,7 @@ dependencies:
   flutter_svg: ^2.0.17
   webview_flutter: ^4.10.0
   flutter_map: ^7.0.2
+  collection: ^1.19.0
 
 dev_dependencies:
   flutter_test:

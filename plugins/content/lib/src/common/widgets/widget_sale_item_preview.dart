@@ -3,7 +3,6 @@ import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 /// Visual element specified for product details preview.
 ///
@@ -38,14 +37,11 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
     setState(() => _setCartCount());
   }
 
-  late bool _favorited;
-
   @override
   void initState() {
     super.initState();
     _setCartCount();
     GsaDataCheckout.instance.notifierCartUpdate.addListener(_onCartCountUpdate);
-    _favorited = GsaServiceBookmarks.instance.isFavorited(widget.saleItem.id ?? '');
   }
 
   @override
@@ -281,24 +277,8 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
           ),
           Positioned(
             right: 0,
-            child: IconButton(
-              icon: _favorited
-                  ? Icon(
-                      Icons.favorite,
-                      color: Theme.of(context).primaryColor,
-                    )
-                  : const Icon(
-                      Icons.favorite_outline,
-                      color: Colors.grey,
-                    ),
-              onPressed: () async {
-                if (_favorited) {
-                  await GsaServiceBookmarks.instance.removeBookmark(widget.saleItem.id ?? '');
-                } else {
-                  await GsaServiceBookmarks.instance.addBookmark(widget.saleItem.id ?? '');
-                }
-                setState(() => _favorited = !_favorited);
-              },
+            child: GsaWidgetBookmarkButton(
+              widget.saleItem,
             ),
           ),
         ],

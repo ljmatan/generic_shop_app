@@ -79,13 +79,8 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                         ),
                   Positioned(
                     right: 8,
-                    child: StatefulBuilder(
-                      builder: (context, setState) {
-                        return IconButton(
-                          icon: Icon(Icons.favorite_outline),
-                          onPressed: () {},
-                        );
-                      },
+                    child: GsaWidgetBookmarkButton(
+                      widget.saleItem,
                     ),
                   ),
                 ],
@@ -317,9 +312,20 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                     ),
                   ],
                   Center(
-                    child: TextButton(
-                      child: GsaWidgetText('Add to Favorites'),
-                      onPressed: () {},
+                    child: GsaWidgetBookmarkButton(
+                      widget.saleItem,
+                      child: (bookmarked) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: GsaWidgetText(
+                          bookmarked ? 'Remove from Favorites' : 'Add to Favorites',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).primaryColor,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],

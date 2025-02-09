@@ -13,10 +13,17 @@ class _WidgetBannerState extends State<_WidgetBanner> {
     return InkWell(
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Color.lerp(Theme.of(context).primaryColor, Colors.white, .5),
+          color: Color.lerp(
+            Theme.of(context).primaryColor,
+            Colors.white,
+            .5,
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 12,
+          ),
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: GsaWidgetText.rich(

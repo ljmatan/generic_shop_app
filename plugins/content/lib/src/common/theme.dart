@@ -80,14 +80,21 @@ class GsaTheme {
               surfaceTint: const Color(0xff212121),
             ),
       appBarTheme: AppBarTheme(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.light,
+        ),
+        color: _primaryColor,
         shape: Border(
           bottom: BorderSide(
             color: Colors.grey.shade200,
           ),
         ),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
         titleTextStyle: TextStyle(
           fontFamily: _fontFamily,
-          color: Colors.black,
+          color: Colors.white,
           fontSize: 18,
         ),
       ),
