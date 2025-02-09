@@ -69,13 +69,40 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                           horizontal: 14,
                           vertical: 20,
                         ),
-                        child: Column(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (item.imageUrls?.isNotEmpty == true)
-                              GsaWidgetImage.network(
-                                item.imageUrls![0],
-                                width: MediaQuery.of(context).size.width,
-                                height: 80,
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      width: 2,
+                                      color: Theme.of(context).colorScheme.tertiary,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: GsaWidgetImage.network(
+                                        item.imageUrls![0],
+                                        width: 80,
+                                        height: 80,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            if (item.name != null)
+                              Text(
+                                item.name!,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                           ],
                         ),
