@@ -186,7 +186,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                         if (GsaConfig.provider == GsaConfigProvider.ivancica && widget.saleItem.options?.isNotEmpty == true)
                           Builder(
                             builder: (context) {
-                              final sortedOptions = widget.saleItem.options!
+                              final sortedOptions = List.from(widget.saleItem.options!)
                                 ..sort(
                                   (a, b) => (a.price?.centum ?? double.infinity).compareTo(
                                     b.price?.centum ?? double.infinity,

@@ -40,10 +40,10 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(12),
                     child: GsaWidgetText.rich(
                       [
-                        GsaWidgetTextSpan(
+                        const GsaWidgetTextSpan(
                           'Join a community that puts you first.\n\n'
                           'With a free account, you\'ll unlock exclusive features, personalized content, '
                           'and a seamless experience across all your devices. Whether you\'re here to explore, connect, or get things done faster, '
