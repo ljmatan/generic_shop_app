@@ -57,53 +57,54 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                 ),
                 const SizedBox(height: 30),
                 for (int i = 0; i < 2; i++)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: GsaWidgetText(
-                            i == 0 ? 'Language' : 'Currency',
-                            style: const TextStyle(),
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: GsaWidgetDropdown(
-                              valueAt: i == 0
-                                  ? GsaServiceI18NLanguage.values.indexOf(GsaConfig.language)
-                                  : GsaModelPriceCurrencyType.values.indexOf(GsaConfig.currency),
-                              children: i == 0
-                                  ? [
-                                      for (final language in GsaServiceI18NLanguage.values)
-                                        (
-                                          id: language.name,
-                                          label: language.displayName,
-                                          onTap: () {
-                                            GsaConfig.languageNotifier.value = language;
-                                            context.routeState?.rebuildAllRoutes();
-                                          },
-                                        ),
-                                    ]
-                                  : [
-                                      for (final currency in GsaModelPriceCurrencyType.values)
-                                        (
-                                          id: currency.name,
-                                          label: currency.displayName,
-                                          onTap: () {
-                                            GsaConfig.currencyNotifier.value = currency;
-                                            context.routeState?.rebuildAllRoutes();
-                                          },
-                                        ),
-                                    ],
+                  if (i == 0 || i == 1 && GsaConfig.cartEnabled)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: GsaWidgetText(
+                              i == 0 ? 'Language' : 'Currency',
+                              style: const TextStyle(),
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: GsaWidgetDropdown(
+                                valueAt: i == 0
+                                    ? GsaServiceI18NLanguage.values.indexOf(GsaConfig.language)
+                                    : GsaModelPriceCurrencyType.values.indexOf(GsaConfig.currency),
+                                children: i == 0
+                                    ? [
+                                        for (final language in GsaServiceI18NLanguage.values)
+                                          (
+                                            id: language.name,
+                                            label: language.displayName,
+                                            onTap: () {
+                                              GsaConfig.languageNotifier.value = language;
+                                              context.routeState?.rebuildAllRoutes();
+                                            },
+                                          ),
+                                      ]
+                                    : [
+                                        for (final currency in GsaModelPriceCurrencyType.values)
+                                          (
+                                            id: currency.name,
+                                            label: currency.displayName,
+                                            onTap: () {
+                                              GsaConfig.currencyNotifier.value = currency;
+                                              context.routeState?.rebuildAllRoutes();
+                                            },
+                                          ),
+                                      ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
               ],
             ),
             SizedBox(

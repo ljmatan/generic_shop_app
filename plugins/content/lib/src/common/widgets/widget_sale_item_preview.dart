@@ -21,7 +21,7 @@ class GsaWidgetSaleItemPreview extends StatefulWidget {
 
   /// Specified widget preview height.
   ///
-  static final previewHeight = 270.0 - (GsaConfig.cartEnabled ? 80 : 0);
+  static final previewHeight = 270.0 - (GsaConfig.cartEnabled ? 0 : 80);
 
   @override
   State<GsaWidgetSaleItemPreview> createState() => _GsaWidgetSaleItemPreviewState();
@@ -149,7 +149,9 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           widget.saleItem.name ?? 'N/A',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         if (GsaConfig.cartEnabled && widget.saleItem.price?.centum != null)
                           GsaWidgetText(
@@ -211,66 +213,67 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           ),
                       ],
                     ),
-                    Center(
-                      child: OutlinedButton(
-                        style: ButtonStyle(
-                          side: WidgetStatePropertyAll(
-                            BorderSide(
-                              color: Theme.of(context).primaryColor,
+                    if (GsaConfig.cartEnabled)
+                      Center(
+                        child: OutlinedButton(
+                          style: ButtonStyle(
+                            side: WidgetStatePropertyAll(
+                              BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                           ),
-                        ),
-                        child: SizedBox(
-                          width: 60,
-                          child: widget.saleItem.price == null &&
-                                  widget.saleItem.options?.where((saleItemOption) => saleItemOption.price != null).isNotEmpty != true
-                              ? const GsaWidgetText(
-                                  'INQUIRE',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.shopping_cart),
-                                    if (_cartCount > 0)
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 6),
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Theme.of(context).primaryColor,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: GsaWidgetText(
-                                              '$_cartCount',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white,
+                          child: SizedBox(
+                            width: 60,
+                            child: widget.saleItem.price == null &&
+                                    widget.saleItem.options?.where((saleItemOption) => saleItemOption.price != null).isNotEmpty != true
+                                ? const GsaWidgetText(
+                                    'INQUIRE',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.shopping_cart),
+                                      if (_cartCount > 0)
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 6),
+                                          child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Theme.of(context).primaryColor,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: GsaWidgetText(
+                                                '$_cartCount',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                          ),
+                          onPressed: () async {
+                            if (widget.saleItem.price != null) {
+                              GsaDataCheckout.instance.addItem(widget.saleItem);
+                              GsaWidgetOverlaySaleItem.open(context, widget.saleItem);
+                            } else {
+                              (switch (GsaConfig.provider) {
+                                GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
+                                _ => GsaRouteSaleItemDetails(widget.saleItem),
+                              })
+                                  .push();
+                            }
+                          },
                         ),
-                        onPressed: () async {
-                          if (widget.saleItem.price != null) {
-                            GsaDataCheckout.instance.addItem(widget.saleItem);
-                            GsaWidgetOverlaySaleItem.open(context, widget.saleItem);
-                          } else {
-                            (switch (GsaConfig.provider) {
-                              GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
-                              _ => GsaRouteSaleItemDetails(widget.saleItem),
-                            })
-                                .push();
-                          }
-                        },
                       ),
-                    ),
                   ],
                 ),
               ),
