@@ -5,7 +5,7 @@
 
 // ignore_for_file: unused_element
 
-library models;
+library;
 
 import 'dart:math';
 
@@ -41,6 +41,7 @@ abstract class _Model {
     this.consentIds,
     this.tags,
     this.logs,
+    this.originData,
   });
 
   /// Unique identifier for the GSA service.
@@ -84,6 +85,10 @@ abstract class _Model {
   /// String-type logs associated with this instance.
   ///
   List<String>? logs;
+
+  /// The model object this class has been derived from.
+  ///
+  dynamic originData;
 
   static String _generateRandomString(int length) {
     const chars = ' abcdefghijklmnopqrstuvwxyz0123456789';

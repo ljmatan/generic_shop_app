@@ -15,6 +15,7 @@ class GsaModelUser extends _Model {
     this.address,
     this.deliveryAddresses,
     this.invoiceAddresses,
+    super.originData,
   });
 
   /// Custom username for the given user.

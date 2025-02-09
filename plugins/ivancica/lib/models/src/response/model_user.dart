@@ -1,19 +1,7 @@
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 class GivModelUser {
-  int? statusResponse;
-  int? userId;
-  String? email;
-  String? loyaltyCard;
-  int? loyaltyPoints;
-  String? loyaltyValue;
-  String? currency;
-  int? status;
-  String? name;
-  String? surname;
-
   GivModelUser({
-    this.statusResponse,
     this.userId,
     this.email,
     this.loyaltyCard,
@@ -25,8 +13,17 @@ class GivModelUser {
     this.surname,
   });
 
+  int? userId;
+  String? email;
+  String? loyaltyCard;
+  int? loyaltyPoints;
+  String? loyaltyValue;
+  String? currency;
+  int? status;
+  String? name;
+  String? surname;
+
   factory GivModelUser.fromJson(Map<String, dynamic> json) => GivModelUser(
-        statusResponse: json['statusResponse'],
         userId: json['userId'],
         email: json['email'],
         loyaltyCard: json['loyaltyCard'],
@@ -39,7 +36,6 @@ class GivModelUser {
       );
 
   Map<String, dynamic> toJson() => {
-        'statusResponse': statusResponse,
         'userId': userId,
         'email': email,
         'loyaltyCard': loyaltyCard,
@@ -60,6 +56,10 @@ class GivModelUser {
         firstName: name,
         lastName: surname,
       ),
+      contact: GsaModelContact(
+        email: email,
+      ),
+      originData: this,
     );
   }
 }

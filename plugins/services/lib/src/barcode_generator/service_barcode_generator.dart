@@ -16,7 +16,10 @@ class GsaServiceBarcodeGenerator extends GsaService {
   ///
   String generateCode128Svg(String data) {
     final generator = Barcode.code128();
-    final code = generator.toSvg(data);
+    final code = generator.toSvg(
+      data,
+      drawText: false,
+    );
     return code;
   }
 }

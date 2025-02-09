@@ -29,11 +29,12 @@ class _WidgetProfile extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 5),
-                        const Text(
+                        Text(
                           'Update your details, adjust your preferences, and manage your account all in one place.',
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w300,
+                            color: Colors.grey.shade600,
                           ),
                         ),
                       ],
