@@ -20,7 +20,7 @@ class GsaWidgetSaleItemPreview extends StatefulWidget {
 
   /// Specified widget preview height.
   ///
-  static final previewHeight = 270.0 - (GsaConfig.cartEnabled ? 0 : 80);
+  static final previewHeight = 270.0 - (GsaConfig.cartEnabled ? 0 : 60);
 
   @override
   State<GsaWidgetSaleItemPreview> createState() => _GsaWidgetSaleItemPreviewState();
@@ -149,7 +149,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        if (GsaConfig.cartEnabled && widget.saleItem.price?.centum != null)
+                        if (widget.saleItem.price?.centum != null)
                           GsaWidgetText(
                             '${widget.saleItem.price!.formatted()}' +
                                 (widget.saleItem.price?.discount?.centum != null ? ' ${widget.saleItem.price!.discount!.formatted()}' : ''),
@@ -158,8 +158,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               fontWeight: FontWeight.w700,
                             ),
                           )
-                        else if (GsaConfig.cartEnabled &&
-                            widget.saleItem.options?.any((saleItemOption) => saleItemOption.price?.centum != null) == true)
+                        else if (widget.saleItem.options?.any((saleItemOption) => saleItemOption.price?.centum != null) == true)
                           GsaWidgetText.rich(
                             [
                               const GsaWidgetTextSpan(

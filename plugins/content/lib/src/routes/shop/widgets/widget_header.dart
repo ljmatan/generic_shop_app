@@ -110,7 +110,9 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
                               top: 0,
                               right: 0,
                               child: ValueListenableBuilder(
-                                valueListenable: GsaDataCheckout.instance.notifierCartUpdate,
+                                valueListenable: GsaConfig.cartEnabled
+                                    ? GsaDataCheckout.instance.notifierCartUpdate
+                                    : GsaServiceBookmarks.instance.notifierBookmarkCount,
                                 builder: (context, cartItemCount, child) {
                                   if (cartItemCount == 0) return const SizedBox();
                                   return DecoratedBox(

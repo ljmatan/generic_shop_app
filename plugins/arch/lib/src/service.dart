@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:generic_shop_app_services/services.dart';
 
 /// This abstract class defines a globally-accessible service with various Flutter APIs
 /// such as currency conversion, caching, logging, user authentication, and internationalization.
@@ -37,6 +38,7 @@ abstract class GsaService {
 
   /// Allocate the service resources.
   ///
+  @mustCallSuper
   Future<void> init() async {
     if (!enabled) throw _disabledErrorMessage;
   }
@@ -47,12 +49,11 @@ abstract class GsaService {
     await Future.wait(
       [
         for (final observer in _observables.where((observer) => !observer.manualInit && observer.enabled))
-          observer.init().catchError(
+          (observer).init().catchError(
             (e) {
               final errorMessage = 'Critical service error: $e';
               if (e != observer._disabledErrorMessage) {
-                // TODO
-                // GsaServiceLogging.logError(errorMessage);
+                GsaServiceLogging.logError(errorMessage);
               }
               if (observer.critical) throw errorMessage;
             },

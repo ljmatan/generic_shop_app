@@ -30,19 +30,17 @@ class GsaWidgetBookmarkButton extends StatefulWidget {
 class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
   late bool _bookmarked;
 
-  late StreamSubscription _updateSubscription;
+  void _onBookmarkUpdate() {
+    setState(
+      () => _bookmarked = GsaServiceBookmarks.instance.isFavorited(widget.saleItem.id ?? ''),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     _bookmarked = GsaServiceBookmarks.instance.isFavorited(widget.saleItem.id ?? '');
-    _updateSubscription = GsaServiceBookmarks.instance.updateController.stream.listen(
-      (bookmarkId) {
-        if (bookmarkId == widget.saleItem.id) {
-          setState(() => _bookmarked = !_bookmarked);
-        }
-      },
-    );
+    GsaServiceBookmarks.instance.notifierBookmarkCount.addListener(_onBookmarkUpdate);
   }
 
   Future<void> _onBookmarkStateChange() async {
@@ -80,7 +78,7 @@ class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
 
   @override
   void dispose() {
-    _updateSubscription.cancel();
+    GsaServiceBookmarks.instance.notifierBookmarkCount.removeListener(_onBookmarkUpdate);
     super.dispose();
   }
 }

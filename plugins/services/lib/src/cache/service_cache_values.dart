@@ -1,9 +1,57 @@
 part of 'service_cache.dart';
 
-/// Extension methods for the cached data values,
-/// including methods for retrieving and storing of data to the device memory.
+/// Identifiers (keys) for cached values.
 ///
-extension GsaServiceCacheIdExt on GsaServiceCacheId {
+enum GsaServiceCacheId {
+  /// Cache manager version, used for migration purposes.
+  ///
+  /// Version will be null with a freshly-installed app.
+  /// With app updates, the [GsaServiceCache] version can also be updated, which can then be referenced against this value.
+  ///
+  version,
+
+  /// Token used to authenticate the user with the backend.
+  ///
+  /// https://en.wikipedia.org/wiki/JSON_Web_Token
+  ///
+  authenticationToken,
+
+  /// JSON-encoded string representing the cached guest user information.
+  ///
+  guestUserEncodedData,
+
+  /// Status of the mandatory cookies user privacy consent.
+  ///
+  /// The status will be `null` if the user has not responded to the consent confirmation request,
+  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
+  ///
+  mandatoryCookiesConsent,
+
+  /// Status of the functional cookies user privacy consent.
+  ///
+  /// The status will be `null` if the user has not responded to the consent confirmation request,
+  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
+  ///
+  functionalCookiesConsent,
+
+  /// Status of the statistical cookies user privacy consent.
+  ///
+  /// The status will be `null` if the user has not responded to the consent confirmation request,
+  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
+  ///
+  statisticalCookiesConsent,
+
+  /// Status of the marketing cookies user privacy consent.
+  ///
+  /// The status will be `null` if the user has not responded to the consent confirmation request,
+  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
+  ///
+  marketingCookiesConsent,
+
+  /// Bookmarked sale item identifiers.
+  ///
+  bookmarks;
+
   /// The specified data type for this cache value.
   ///
   Type get dataType {
@@ -155,57 +203,4 @@ extension GsaServiceCacheIdExt on GsaServiceCacheId {
         return 'Bookmarks';
     }
   }
-}
-
-/// Identifiers (keys) for cached values.
-///
-enum GsaServiceCacheId {
-  /// Cache manager version, used for migration purposes.
-  ///
-  /// Version will be null with a freshly-installed app.
-  /// With app updates, the [GsaServiceCache] version can also be updated, which can then be referenced against this value.
-  ///
-  version,
-
-  /// Token used to authenticate the user with the backend.
-  ///
-  /// https://en.wikipedia.org/wiki/JSON_Web_Token
-  ///
-  authenticationToken,
-
-  /// JSON-encoded string representing the cached guest user information.
-  ///
-  guestUserEncodedData,
-
-  /// Status of the mandatory cookies user privacy consent.
-  ///
-  /// The status will be `null` if the user has not responded to the consent confirmation request,
-  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
-  ///
-  mandatoryCookiesConsent,
-
-  /// Status of the functional cookies user privacy consent.
-  ///
-  /// The status will be `null` if the user has not responded to the consent confirmation request,
-  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
-  ///
-  functionalCookiesConsent,
-
-  /// Status of the statistical cookies user privacy consent.
-  ///
-  /// The status will be `null` if the user has not responded to the consent confirmation request,
-  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
-  ///
-  statisticalCookiesConsent,
-
-  /// Status of the marketing cookies user privacy consent.
-  ///
-  /// The status will be `null` if the user has not responded to the consent confirmation request,
-  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
-  ///
-  marketingCookiesConsent,
-
-  /// Bookmarked sale item identifiers.
-  ///
-  bookmarks,
 }

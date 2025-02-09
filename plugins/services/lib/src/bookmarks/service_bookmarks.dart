@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+
 import '../../services.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
@@ -8,27 +10,33 @@ class GsaServiceBookmarks extends GsaService {
 
   static final _instance = GsaServiceBookmarks._();
 
-  // ignore: public_member_api_docs
+  /// Globally-accessible class instance.
+  ///
   static GsaServiceBookmarks get instance => _instance() as GsaServiceBookmarks;
 
+  /// Runtime-accessible list of bookmarked sale item IDs.
+  ///
   final bookmarks = <String>{};
+
+  /// Notifier in charge of providing updates with the total number of bookmarked items.
+  ///
+  late ValueNotifier<int> notifierBookmarkCount;
 
   @override
   Future<void> init() async {
     await super.init();
-    bookmarks.addAll(GsaServiceCacheId.bookmarks.value);
+    bookmarks.addAll(
+      GsaServiceCacheId.bookmarks.value ?? [],
+    );
+    notifierBookmarkCount = ValueNotifier<int>(bookmarks.length);
   }
-
-  /// Notifier triggered on each bookmark update.
-  ///
-  final updateController = StreamController.broadcast();
 
   /// Adds a unique bookmark ID to the cached list of bookmarks.
   ///
   Future<void> addBookmark(String saleItemId) async {
     bookmarks.add(saleItemId);
     await GsaServiceCacheId.bookmarks.setValue(bookmarks.toList());
-    updateController.add(saleItemId);
+    notifierBookmarkCount.value = bookmarks.length;
   }
 
   /// Removes the bookmark ID from the cached list of bookmarks.
@@ -36,7 +44,7 @@ class GsaServiceBookmarks extends GsaService {
   Future<void> removeBookmark(String saleItemId) async {
     bookmarks.add(saleItemId);
     await GsaServiceCacheId.bookmarks.setValue(bookmarks.toList());
-    updateController.add(saleItemId);
+    notifierBookmarkCount.value = bookmarks.length;
   }
 
   /// Determines whether the given ID is cached to the device as a bookmark.

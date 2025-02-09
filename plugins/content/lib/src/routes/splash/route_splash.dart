@@ -67,17 +67,21 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) async {
-        await GsaWidgetOverlayConsent.open();
-        setState(
-          () {
-            _readyToInitialise = true;
-            _initialiser = _initialise();
-          },
-        );
-      },
-    );
+    if (_readyToInitialise) {
+      _initialiser = _initialise();
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) async {
+          await GsaWidgetOverlayConsent.open();
+          setState(
+            () {
+              _readyToInitialise = true;
+              _initialiser = _initialise();
+            },
+          );
+        },
+      );
+    }
   }
 
   @override

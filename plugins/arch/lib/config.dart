@@ -101,6 +101,7 @@ class GsaConfig {
     GsaServiceTracking.instance;
     GsaServiceUrlLauncher.instance;
     GsaServiceBarcodeGenerator.instance;
+    await GsaServiceCache.instance.init();
     await GsaService.initAll();
     GsaDataCheckout.instance;
     GsaDataMerchant.instance;
