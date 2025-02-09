@@ -1,4 +1,0 @@
-# This file is used by dartdoc when generating API documentation for the Flutter code.
-dartdoc:
-  include: [generic_shop_app_cms]
-  showUndocumentedCategories: true
