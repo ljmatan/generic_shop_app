@@ -31,6 +31,8 @@ class GsaServiceBookmarks extends GsaService {
     notifierBookmarkCount = ValueNotifier<int>(bookmarks.length);
   }
 
+  /// Controller object used for updating [Stream] subscriber state on bookmark updates.
+  ///
   final controllerUpdate = StreamController.broadcast();
 
   /// Adds a unique bookmark ID to the cached list of bookmarks.
