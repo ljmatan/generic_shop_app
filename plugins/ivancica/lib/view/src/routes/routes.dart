@@ -2,17 +2,24 @@
 
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_ivancica/view/src/routes/product_details/route_product_details.dart';
+import 'package:generic_shop_app_ivancica/view/src/routes/user_profile/route_user_profile.dart';
+
+export 'product_details/route_product_details.dart';
+export 'user_profile/route_user_profile.dart';
 
 /// Collection of Route objects implemented by the "Generic Shop App" project.
 ///
 enum GivRoutes implements GsaRouteType {
-  productDetails;
+  productDetails,
+  userProfile;
 
   @override
   Type get routeRuntimeType {
     switch (this) {
       case GivRoutes.productDetails:
         return GivRouteSaleItemDetails;
+      case GivRoutes.userProfile:
+        return GivRouteUserProfile;
     }
   }
 

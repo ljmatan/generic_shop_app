@@ -35,9 +35,13 @@ class _GsaRouteWebViewState extends GsaRouteState<GsaRouteWebView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.displayName),
+        title: Text(
+          widget.title,
+        ),
       ),
-      body: GsaWidgetWebContent(widget.url),
+      body: GsaWidgetWebContent(
+        widget.url,
+      ),
     );
   }
 }

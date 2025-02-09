@@ -21,7 +21,11 @@ class GsaModelPerson extends _Model {
 
   /// Formats and joins the [firstName] and the [lastName] properties.
   ///
-  String get formattedName => '$firstName $lastName';
+  String? get formattedName {
+    if (firstName == null && lastName == null) return null;
+    if (firstName != null && lastName != null) return '$firstName $lastName';
+    return firstName ?? lastName;
+  }
 
   /// Given gender for the person.
   ///

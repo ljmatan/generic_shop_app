@@ -9,10 +9,11 @@ import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 part 'widgets/widget_banner.dart';
-part 'widgets/widget_header.dart';
 part 'widgets/widget_categories.dart';
 part 'widgets/widget_customer_notice.dart';
 part 'widgets/widget_drawer.dart';
+part 'widgets/widget_header.dart';
+part 'widgets/widget_profile.dart';
 part 'widgets/widget_promo_carousel.dart';
 part 'widgets/widget_search_results.dart';
 part 'widgets/widget_search_suggestions.dart';
@@ -160,6 +161,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                               controller: _scrollController,
                               padding: const EdgeInsets.symmetric(vertical: 26),
                               children: [
+                                if (GsaDataUser.instance.authenticated) const _WidgetProfile(),
                                 const _WidgetPromoCarousel(),
                                 if (1 == 2 && GsaDataMerchant.instance.merchant != null)
                                   Padding(

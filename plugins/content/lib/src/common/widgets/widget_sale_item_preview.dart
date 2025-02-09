@@ -95,10 +95,10 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                     fontSize: 8,
                                     shadows: [
                                       for (final offset in <Offset>{
-                                        Offset(-.5, -.5),
-                                        Offset(.5, -.5),
-                                        Offset(.5, .5),
-                                        Offset(-.5, .5),
+                                        const Offset(-.5, -.5),
+                                        const Offset(.5, -.5),
+                                        const Offset(.5, .5),
+                                        const Offset(-.5, .5),
                                       })
                                         Shadow(
                                           offset: offset,
