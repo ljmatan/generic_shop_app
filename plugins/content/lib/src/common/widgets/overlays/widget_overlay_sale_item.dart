@@ -105,17 +105,119 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   widget.saleItem.description!,
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: TextButton(
-                  child: const GsaWidgetText(
-                    'Additional Info',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
+            if (widget.saleItem.price != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: TextButton(
+                    child: const GsaWidgetText(
+                      'Additional Info',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      (switch (GsaConfig.provider) {
+                        GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
+                        _ => GsaRouteSaleItemDetails(widget.saleItem),
+                      })
+                          .push();
+                    },
+                  ),
+                ),
+              ),
+            if (widget.saleItem.price != null)
+              Row(
+                children: [
+                  if (_cartCount > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: OutlinedButton(
+                        child: const Icon(
+                          Icons.remove_circle,
+                          size: 18,
+                        ),
+                        onPressed: () {
+                          // Set checkout data.
+                          GsaDataCheckout.instance.decreaseItemCount(widget.saleItem);
+                          // Update the overlay state.
+                          setState(() => _cartCount--);
+                          // If the cart is empty and cart page is visible,
+                          // pop all previously pushed routes.
+                          if (GsaDataCheckout.instance.totalItemCount == 0 && widget.displayedFromCart) {
+                            Navigator.popUntil(context, (route) => route.isFirst);
+                          }
+                        },
+                      ),
+                    ),
+                  Expanded(
+                    child: OutlinedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const GsaWidgetText(
+                            'Add to Cart',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          if (_cartCount > 0)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: GsaWidgetText(
+                                    '$_cartCount',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      onPressed: () {
+                        GsaDataCheckout.instance.addItem(widget.saleItem);
+                        setState(() => _cartCount++);
+                      },
                     ),
                   ),
+                  if (_cartCount > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: OutlinedButton(
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          size: 18,
+                        ),
+                        onPressed: () {
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                          if (!widget.displayedFromCart) {
+                            Navigator.popUntil(context, (route) => route.isFirst);
+                            Navigator.pushNamed(context, 'cart');
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        },
+                      ),
+                    ),
+                ],
+              )
+            else
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: OutlinedButton(
+                  child: const Text('See Available Options'),
                   onPressed: () {
                     Navigator.pop(context);
                     (switch (GsaConfig.provider) {
@@ -126,91 +228,6 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   },
                 ),
               ),
-            ),
-            Row(
-              children: [
-                if (_cartCount > 0)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: OutlinedButton(
-                      child: const Icon(
-                        Icons.remove_circle,
-                        size: 18,
-                      ),
-                      onPressed: () {
-                        // Set checkout data.
-                        GsaDataCheckout.instance.decreaseItemCount(widget.saleItem);
-                        // Update the overlay state.
-                        setState(() => _cartCount--);
-                        // If the cart is empty and cart page is visible,
-                        // pop all previously pushed routes.
-                        if (GsaDataCheckout.instance.totalItemCount == 0 && widget.displayedFromCart) {
-                          Navigator.popUntil(context, (route) => route.isFirst);
-                        }
-                      },
-                    ),
-                  ),
-                Expanded(
-                  child: OutlinedButton(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const GsaWidgetText(
-                          'Add to Cart',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        if (_cartCount > 0)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: GsaWidgetText(
-                                  '$_cartCount',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                    onPressed: () {
-                      GsaDataCheckout.instance.addItem(widget.saleItem);
-                      setState(() => _cartCount++);
-                    },
-                  ),
-                ),
-                if (_cartCount > 0)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: OutlinedButton(
-                      child: const Icon(
-                        Icons.shopping_cart,
-                        size: 18,
-                      ),
-                      onPressed: () {
-                        Navigator.popUntil(context, (route) => route.isFirst);
-                        if (!widget.displayedFromCart) {
-                          Navigator.popUntil(context, (route) => route.isFirst);
-                          Navigator.pushNamed(context, 'cart');
-                        } else {
-                          Navigator.pop(context);
-                        }
-                      },
-                    ),
-                  ),
-              ],
-            ),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             ),

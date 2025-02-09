@@ -56,7 +56,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
             child: SizedBox(
               width: MediaQuery.of(context).size.width / 2 > 400 ? 400 : MediaQuery.of(context).size.width / 2,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 16, 10, 8),
+                padding: const EdgeInsets.fromLTRB(12, 16, 12, 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -164,15 +164,48 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                             [
                               const GsaWidgetTextSpan(
                                 'From ',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
                               ),
                               GsaWidgetTextSpan(
-                                (widget.saleItem.options!
+                                (List.from(widget.saleItem.options!)
                                       ..sort(
-                                          (a, b) => (a.price?.centum ?? double.infinity).compareTo(b.price?.centum ?? double.infinity)))[0]
+                                        (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                                          b.price?.centum ?? double.infinity,
+                                        ),
+                                      ))[0]
                                     .price!
                                     .formatted()!,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ],
+                          ),
+                        if (GsaConfig.provider == GsaConfigProvider.ivancica && widget.saleItem.options?.isNotEmpty == true)
+                          Builder(
+                            builder: (context) {
+                              final sortedOptions = widget.saleItem.options!
+                                ..sort(
+                                  (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                                    b.price?.centum ?? double.infinity,
+                                  ),
+                                );
+                              sortedOptions.removeWhere(
+                                (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
+                              );
+                              if (sortedOptions.isEmpty) return const SizedBox();
+                              return Text(
+                                'Sizes: ' +
+                                    (sortedOptions.length > 1
+                                        ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
+                                        : sortedOptions[0].name!),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                              );
+                            },
                           ),
                       ],
                     ),
@@ -223,8 +256,16 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                 ),
                         ),
                         onPressed: () async {
-                          GsaDataCheckout.instance.addItem(widget.saleItem);
-                          GsaWidgetOverlaySaleItem.open(context, widget.saleItem);
+                          if (widget.saleItem.price != null) {
+                            GsaDataCheckout.instance.addItem(widget.saleItem);
+                            GsaWidgetOverlaySaleItem.open(context, widget.saleItem);
+                          } else {
+                            (switch (GsaConfig.provider) {
+                              GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
+                              _ => GsaRouteSaleItemDetails(widget.saleItem),
+                            })
+                                .push();
+                          }
                         },
                       ),
                     ),

@@ -90,7 +90,25 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                     _ => GsaServiceInputValidation.instance.password,
                   },
                 ),
-                const SizedBox(height: 24),
+                TextButton(
+                  style: const ButtonStyle(
+                    padding: WidgetStatePropertyAll(
+                      EdgeInsets.zero,
+                    ),
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Forgot password?',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        decorationColor: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+                const SizedBox(height: 10),
                 StatefulBuilder(
                   builder: (context, setState) {
                     return GsaWidgetSwitch(
