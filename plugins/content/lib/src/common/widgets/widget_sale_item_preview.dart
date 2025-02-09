@@ -160,13 +160,19 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                             ),
                           )
                         else if (widget.saleItem.options?.any((saleItemOption) => saleItemOption.price?.centum != null) == true)
-                          GsaWidgetText(
-                            'From ' +
+                          GsaWidgetText.rich(
+                            [
+                              const GsaWidgetTextSpan(
+                                'From ',
+                              ),
+                              GsaWidgetTextSpan(
                                 (widget.saleItem.options!
                                       ..sort(
                                           (a, b) => (a.price?.centum ?? double.infinity).compareTo(b.price?.centum ?? double.infinity)))[0]
                                     .price!
                                     .formatted()!,
+                              ),
+                            ],
                           ),
                       ],
                     ),
