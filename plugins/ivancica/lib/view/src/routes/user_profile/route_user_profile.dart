@@ -21,9 +21,10 @@ class GivRouteUserProfile extends GivRoute {
 }
 
 class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
+  final _originData = GsaDataUser.instance.user?.originData as GivModelUser?;
+
   @override
   Widget build(BuildContext context) {
-    final originData = GsaDataUser.instance.user?.originData as GivModelUser?;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -57,8 +58,13 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                       color: Colors.grey,
                     ),
                   ),
-                if (originData?.loyaltyCard != null) ...[
-                  const SizedBox(height: 20),
+                if (GsaDataUser.instance.user!.personalDetails?.formattedName != null || GsaDataUser.instance.user!.contact?.email != null)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 14),
+                    child: Divider(height: 0),
+                  ),
+                if (_originData?.loyaltyCard != null) ...[
+                  const SizedBox(height: 16),
                   Text(
                     'Froddo Club Card',
                     style: TextStyle(
@@ -106,7 +112,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                       ),
                       child: GsaWidgetImage.string(
                         GsaServiceBarcodeGenerator.instance.generateCode128Svg(
-                          originData!.loyaltyCard!.substring(0, 12),
+                          _originData!.loyaltyCard!.substring(0, 12),
                         ),
                         width: MediaQuery.of(context).size.width,
                       ),
@@ -116,20 +122,20 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                   for (final info in <({String label, String description})>{
                     (
                       label: 'Card number',
-                      description: originData.loyaltyCard!,
+                      description: _originData.loyaltyCard!,
                     ),
-                    if (originData.loyaltyPoints != null)
+                    if (_originData.loyaltyPoints != null)
                       (
                         label: 'Froddo Points',
-                        description: originData.loyaltyPoints.toString(),
+                        description: _originData.loyaltyPoints.toString(),
                       ),
-                    if (double.tryParse(originData.loyaltyValue?.replaceAll(',', '.') ?? '') != null)
+                    if (double.tryParse(_originData.loyaltyValue?.replaceAll(',', '.') ?? '') != null)
                       (
                         label: 'Discount Value',
                         description: GsaModelPrice(
-                              centum: (double.parse(originData.loyaltyValue!.replaceAll(',', '.')) * 100).round(),
+                              centum: (double.parse(_originData.loyaltyValue!.replaceAll(',', '.')) * 100).round(),
                               currencyType: GsaModelPriceCurrencyType.values.firstWhereOrNull(
-                                (currency) => currency.symbol == originData.currency,
+                                (currency) => currency.symbol == _originData.currency,
                               ),
                             ).formatted() ??
                             'N/A',
@@ -155,6 +161,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                         ),
                       ),
                     ),
+                  const Divider(height: 32),
                 ],
               ],
             ),
