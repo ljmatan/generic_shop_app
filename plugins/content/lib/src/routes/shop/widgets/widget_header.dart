@@ -82,22 +82,23 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
                                   constraints: const BoxConstraints(maxWidth: 36, maxHeight: 36),
                                   onPressed: () => _openDrawer(),
                                 ),
-                                IconButton(
-                                  icon: Stack(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Icon(
-                                          Icons.shopping_cart,
-                                          color: Theme.of(context).primaryColor,
+                                if (GsaConfig.cartEnabled)
+                                  IconButton(
+                                    icon: Stack(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Icon(
+                                            Icons.shopping_cart,
+                                            color: Theme.of(context).primaryColor,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(maxWidth: 36, maxHeight: 36),
+                                    onPressed: () => _openCartPage(),
                                   ),
-                                  padding: EdgeInsets.zero,
-                                  constraints: const BoxConstraints(maxWidth: 36, maxHeight: 36),
-                                  onPressed: () => _openCartPage(),
-                                ),
                               ],
                             ),
                             Positioned(
@@ -172,29 +173,31 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 16),
-                                IconButton.outlined(
-                                  icon: const Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 8),
-                                    child: Row(
-                                      children: [
-                                        GsaWidgetText(
-                                          'Cart',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
+                                if (GsaConfig.cartEnabled) ...[
+                                  const SizedBox(width: 16),
+                                  IconButton.outlined(
+                                    icon: const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 8),
+                                      child: Row(
+                                        children: [
+                                          GsaWidgetText(
+                                            'Cart',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        Icon(
-                                          Icons.shopping_cart,
-                                          color: Colors.white,
-                                        ),
-                                      ],
+                                          SizedBox(width: 10),
+                                          Icon(
+                                            Icons.shopping_cart,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
                                     ),
+                                    onPressed: () => _openCartPage,
                                   ),
-                                  onPressed: () => _openCartPage,
-                                ),
+                                ],
                                 const SizedBox(width: 16),
                                 IconButton.outlined(
                                   icon: const Icon(

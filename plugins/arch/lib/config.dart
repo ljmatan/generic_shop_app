@@ -30,21 +30,29 @@ class GsaConfig {
   ///
   /// Certain features are enabled only when this value is true.
   ///
-  static bool qaBuild = kDebugMode || const String.fromEnvironment('gsaDebugBuild') == 'true';
+  static bool qaBuild = kDebugMode || const String.fromEnvironment('gsaDebugBuild').toLowerCase() == 'true';
 
   /// If below value is true, data will be mocked instead of fetched from server.
   ///
-  static bool mockBuild = const String.fromEnvironment('gsaMockBuild') == 'true';
+  static bool mockBuild = const String.fromEnvironment('gsaMockBuild').toLowerCase() == 'true';
 
   /// Defines whether the app edit mode is enabled.
   ///
   /// With app edit mode, content editing is possible.
   ///
-  static bool editMode = const String.fromEnvironment('gsaEditMode') == 'true';
+  static bool editMode = const String.fromEnvironment('gsaEditMode').toLowerCase() == 'true';
 
   /// Whether the client access to the application requires login or registration.
   ///
-  static bool requiresAuthentication = const String.fromEnvironment('gsaRequiresAuthentication') == 'true';
+  static bool requiresAuthentication = const String.fromEnvironment('gsaRequiresAuthentication').toLowerCase() == 'true';
+
+  /// Whether cart and shopping options are enabled.
+  ///
+  /// A client may opt-in simply for catalog and favourite / bookmark display, for example.
+  ///
+  /// To disable the cart feature, a value equaling `false` must be provided during the compile time.
+  ///
+  static bool cartEnabled = const String.fromEnvironment('gsaCartEnabled').toLowerCase() != 'false';
 
   static const _gitBranch = String.fromEnvironment('gsaGitBranch');
 

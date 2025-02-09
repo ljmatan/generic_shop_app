@@ -105,7 +105,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   widget.saleItem.description!,
                 ),
               ),
-            if (widget.saleItem.price != null)
+            if (GsaConfig.cartEnabled && widget.saleItem.price != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: SizedBox(
@@ -128,7 +128,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   ),
                 ),
               ),
-            if (widget.saleItem.price != null)
+            if (GsaConfig.cartEnabled && widget.saleItem.price != null)
               Row(
                 children: [
                   if (_cartCount > 0)

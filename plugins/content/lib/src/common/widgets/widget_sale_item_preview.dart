@@ -8,7 +8,8 @@ import 'package:generic_shop_app_services/services.dart';
 /// Visual element specified for product details preview.
 ///
 class GsaWidgetSaleItemPreview extends StatefulWidget {
-  // ignore: public_member_api_docs
+  /// Default, unnamed widget constructor.
+  ///
   const GsaWidgetSaleItemPreview(
     this.saleItem, {
     super.key,
@@ -20,7 +21,7 @@ class GsaWidgetSaleItemPreview extends StatefulWidget {
 
   /// Specified widget preview height.
   ///
-  static const previewHeight = 270.0;
+  static final previewHeight = 270.0 - (GsaConfig.cartEnabled ? 80 : 0);
 
   @override
   State<GsaWidgetSaleItemPreview> createState() => _GsaWidgetSaleItemPreviewState();
@@ -150,7 +151,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(),
                         ),
-                        if (widget.saleItem.price?.centum != null)
+                        if (GsaConfig.cartEnabled && widget.saleItem.price?.centum != null)
                           GsaWidgetText(
                             '${widget.saleItem.price!.formatted()}' +
                                 (widget.saleItem.price?.discount?.centum != null ? ' ${widget.saleItem.price!.discount!.formatted()}' : ''),
@@ -159,7 +160,8 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               fontWeight: FontWeight.w700,
                             ),
                           )
-                        else if (widget.saleItem.options?.any((saleItemOption) => saleItemOption.price?.centum != null) == true)
+                        else if (GsaConfig.cartEnabled &&
+                            widget.saleItem.options?.any((saleItemOption) => saleItemOption.price?.centum != null) == true)
                           GsaWidgetText.rich(
                             [
                               const GsaWidgetTextSpan(
