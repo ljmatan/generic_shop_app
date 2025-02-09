@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
@@ -18,20 +16,20 @@ class GivRouteSaleItemDetails extends GivRoute {
 
   /// The sale item specified for viewing.
   ///
-  final GsaaModelSaleItem saleItem;
+  final GsaModelSaleItem saleItem;
 
   @override
   State<GivRouteSaleItemDetails> createState() => _GivRouteSaleItemDetailsState();
 }
 
-class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetails> {
+class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetails> {
   /// Controller handling the selection of the sale item image.
   ///
   late ValueNotifier<String?> _imageUrlSelectionNotifier;
 
   /// Used for the sale item option (e.g., shoe size) selection.
   ///
-  late ValueNotifier<GsaaModelSaleItem?> _optionSelectionNotifier;
+  late ValueNotifier<GsaModelSaleItem?> _optionSelectionNotifier;
 
   @override
   void initState() {
@@ -99,7 +97,7 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
               child: SizedBox(
                 height: 80,
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
                   scrollDirection: Axis.horizontal,
                   children: [
                     for (final imageUrl in widget.saleItem.imageUrls!.indexed)
@@ -119,7 +117,7 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
                               width: 80,
                               height: 80,
                               child: Padding(
-                                padding: const EdgeInsets.all(1),
+                                padding: const EdgeInsets.all(2),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(4),
                                   child: Image.network(
@@ -272,7 +270,7 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
                             ),
                             if (_optionSelectionNotifier.value?.name != null && num.tryParse(_optionSelectionNotifier.value!.name!) != null)
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
+                                padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
                                 child: Text(
                                   'Length: ' + (num.parse(_optionSelectionNotifier.value!.name!) * 2 / 3).toStringAsFixed(1) + 'cm',
                                   style: TextStyle(
@@ -284,37 +282,39 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
                         );
                       },
                     ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: FilledButton.tonalIcon(
-                        icon: Icon(
-                          Icons.shopping_bag,
-                          color: Theme.of(context).primaryColor,
+                  if (widget.saleItem.options?.isNotEmpty == true) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: FilledButton.tonalIcon(
+                          icon: Icon(
+                            Icons.shopping_bag,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          label: Text(
+                            'Add to Cart',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () {},
                         ),
-                        label: Text(
-                          'Add to Cart',
+                      ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Text(
+                          'or',
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                            fontSize: 10,
                           ),
                         ),
-                        onPressed: () {},
                       ),
                     ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: Text(
-                        'or',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ),
-                  ),
+                  ],
                   Center(
                     child: TextButton(
                       child: Text('Add to Favorites'),
@@ -325,6 +325,61 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
               ),
             ),
           ),
+          if (widget.saleItem.attributeIconUrls?.isNotEmpty == true)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 14),
+                  child: Text(
+                    'Characteristics',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    children: [
+                      for (final icon in widget.saleItem.attributeIconUrls!.indexed)
+                        Padding(
+                          padding: icon.$1 == 0 ? EdgeInsets.zero : const EdgeInsets.only(left: 10),
+                          child: Image.network(
+                            icon.$2,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                if (widget.saleItem.informationList?.isNotEmpty == true)
+                  for (final information in widget.saleItem.informationList!.indexed)
+                    Padding(
+                      padding: information.$1 == 0 ? const EdgeInsets.fromLTRB(20, 14, 20, 0) : const EdgeInsets.fromLTRB(20, 6, 20, 0),
+                      child: Text.rich(
+                        TextSpan(
+                          text: '${information.$2.label}: ',
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: information.$2.description,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+              ],
+            ),
           if (widget.saleItem.description?.isNotEmpty == true)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
@@ -350,84 +405,75 @@ class _GivRouteSaleItemDetailsState extends GsarRouteState<GivRouteSaleItemDetai
                 ],
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 14),
-                  child: Text(
-                    'Availability',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontSize: 15,
+          if (widget.saleItem.options
+                  ?.where(
+                    (option) =>
+                        option.availability?.any(
+                          (availability) => availability.locationId != null,
+                        ) ==
+                        true,
+                  )
+                  .isNotEmpty ==
+              true)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: Text(
+                      'Availability',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                ),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 10,
-                  children: [
-                    for (final storeLocation in <String>{
-                      'Pula Max City',
-                      'ZG Maksimirska',
-                      'ZG Ilica',
-                      'Varaždin',
-                      'West Gate',
-                      'Začretje Roses Outlet',
-                      'Centralno skladište',
-                      'Požega',
-                      'Rijeka Tower Center',
-                      'ZG CC One East',
-                      'ZG Avenue Mall',
-                      'Čakovec Galerija Sjever',
-                      'Koprivnica',
-                      'Bjelovar',
-                      'Virovitica',
-                      'Osijek Portanova',
-                      'Vinkovci',
-                      'Sisak',
-                      'Slavonski Brod',
-                      'Karlovac',
-                      'ZG Arena',
-                      'Dubrovnik',
-                      'Split Mall Of Split',
-                      'Šibenik Dalmare',
-                      'Zadar City Park',
-                      'ZG CC One West',
-                    })
-                      Builder(
-                        builder: (context) {
-                          // TODO
-                          final productAvailable = Random().nextBool() && Random().nextBool();
-                          return Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                productAvailable ? Icons.check : Icons.close,
-                                color: productAvailable ? Theme.of(context).primaryColor : Colors.grey,
-                                size: 13,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Text(
-                                  storeLocation,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: productAvailable ? Theme.of(context).primaryColor : Colors.grey,
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 10,
+                    children: [
+                      for (final storeLocation in <String>{
+                        for (final option in widget.saleItem.options!)
+                          if (option.availability?.isNotEmpty == true)
+                            for (final availabilityOption in option.availability!)
+                              if (availabilityOption.locationId != null) availabilityOption.locationId!,
+                      })
+                        Builder(
+                          builder: (context) {
+                            final productAvailable = _optionSelectionNotifier.value?.availability
+                                    ?.any((availabilityInfo) => availabilityInfo.locationId == storeLocation) ==
+                                true;
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  productAvailable ? Icons.check : Icons.close,
+                                  color: productAvailable ? Theme.of(context).primaryColor : Colors.grey,
+                                  size: 13,
+                                ),
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: Text(
+                                      storeLocation,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: productAvailable ? Theme.of(context).primaryColor : Colors.grey,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                  ],
-                ),
-              ],
+                              ],
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
           SizedBox(
             height: MediaQuery.of(context).padding.bottom,
           ),

@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 /// This abstract class defines a globally-accessible service with various Flutter APIs
 /// such as currency conversion, caching, logging, user authentication, and internationalization.
 ///
-abstract class GsarService {
-  /// Default [GsaaService] constructor, recording this instance to the list of [_observables].
+abstract class GsaService {
+  /// Default [GsaService] constructor, recording this instance to the list of [_observables].
   ///
-  GsarService() {
+  GsaService() {
     _observables.add(this);
     if (!enabled) debugPrint('Service $runtimeType is disabled.');
   }
@@ -14,7 +14,7 @@ abstract class GsarService {
   /// To allow an subclass instance to be called like a function,
   /// the [call](https://dart.dev/language/callable-objects) method is implemented.
   ///
-  GsarService call() {
+  GsaService call() {
     if (!enabled) throw 'Service $runtimeType not enabled.';
     return this;
   }
@@ -31,7 +31,7 @@ abstract class GsarService {
   ///
   bool get manualInit => false;
 
-  /// The error message applied in case of a disabled [GsarService].
+  /// The error message applied in case of a disabled [GsaService].
   ///
   String get _disabledErrorMessage => 'Service $runtimeType not enabled.';
 
@@ -52,7 +52,7 @@ abstract class GsarService {
               final errorMessage = 'Critical service error: $e';
               if (e != observer._disabledErrorMessage) {
                 // TODO
-                // GsaaServiceLogging.logError(errorMessage);
+                // GsaServiceLogging.logError(errorMessage);
               }
               if (observer.critical) throw errorMessage;
             },
@@ -97,5 +97,5 @@ abstract class GsarService {
 
   /// List of active subclassed instances.
   ///
-  static final _observables = <GsarService>[];
+  static final _observables = <GsaService>[];
 }

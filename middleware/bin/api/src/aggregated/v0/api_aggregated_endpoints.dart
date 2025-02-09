@@ -1,11 +1,11 @@
 part of '../../../api.dart';
 
-extension GsaaEndpointsAggregatedExt on GsaaEndpointsAggregated {
+extension GsaEndpointsAggregatedExt on GsaEndpointsAggregated {
   Future<shelf.Response> Function(shelf.Request) get handler {
     switch (this) {
-      case GsaaEndpointsAggregated.getDataVersion:
+      case GsaEndpointsAggregated.getDataVersion:
         return GsamApiAggregated0.instance.getDataVersion;
-      case GsaaEndpointsAggregated.getMobileAppData:
+      case GsaEndpointsAggregated.getMobileAppData:
         return GsamApiAggregated0.instance.getMobileAppData;
     }
   }

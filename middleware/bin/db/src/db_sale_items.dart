@@ -38,7 +38,7 @@ class GsamDatabaseSaleItems extends GsamDatabase {
   /// otherwise it defaults to the [GsamConfig.client] name.
   ///
   Future<String> register({
-    required GsaaModelSaleItem saleItem,
+    required GsaModelSaleItem saleItem,
   }) async {
     final saleItemId = await _instance._insertOne(
       collectionId: _GsamDatabaseSaleItemsCollections.products.name,
@@ -49,12 +49,12 @@ class GsamDatabaseSaleItems extends GsamDatabase {
 
   /// Retrieves a full list of sale items with the given [collectionId].
   ///
-  Future<List<GsaaModelSaleItem>?> getAllItems() async {
+  Future<List<GsaModelSaleItem>?> getAllItems() async {
     final saleItems = await _instance._findMany(
       collectionId: _GsamDatabaseSaleItemsCollections.products.name,
     );
     try {
-      return saleItems?.map((saleItemJson) => GsaaModelSaleItem.fromJson(saleItemJson)).toList();
+      return saleItems?.map((saleItemJson) => GsaModelSaleItem.fromJson(saleItemJson)).toList();
     } catch (e) {
       // TODO: Log error
       return null;
@@ -63,12 +63,12 @@ class GsamDatabaseSaleItems extends GsamDatabase {
 
   /// Retrieves a full list of item categories.
   ///
-  Future<List<GsaaModelCategory>?> getItemCategories() async {
+  Future<List<GsaModelCategory>?> getItemCategories() async {
     final categories = await _instance._findMany(
       collectionId: _GsamDatabaseSaleItemsCollections.categories.name,
     );
     try {
-      return categories?.map((saleItemJson) => GsaaModelCategory.fromJson(saleItemJson)).toList();
+      return categories?.map((saleItemJson) => GsaModelCategory.fromJson(saleItemJson)).toList();
     } catch (e) {
       // TODO: Log error
       return null;
@@ -77,7 +77,7 @@ class GsamDatabaseSaleItems extends GsamDatabase {
 
   /// Retrieves a list of sale items specified as featured.
   ///
-  Future<List<GsaaModelSaleItem>?> getFeaturedItems() async {
+  Future<List<GsaModelSaleItem>?> getFeaturedItems() async {
     final saleItems = await _instance._findMany(
       collectionId: _GsamDatabaseSaleItemsCollections.products.name,
       selectors: [
@@ -85,7 +85,7 @@ class GsamDatabaseSaleItems extends GsamDatabase {
       ],
     );
     try {
-      return saleItems?.map((saleItemJson) => GsaaModelSaleItem.fromJson(saleItemJson)).toList();
+      return saleItems?.map((saleItemJson) => GsaModelSaleItem.fromJson(saleItemJson)).toList();
     } catch (e) {
       // TODO: Log error
       return null;
@@ -94,12 +94,12 @@ class GsamDatabaseSaleItems extends GsamDatabase {
 
   /// Retrieves a list of sale items matching the specified search criteria.
   ///
-  Future<List<GsaaModelSaleItem>?> searchItems() async {
+  Future<List<GsaModelSaleItem>?> searchItems() async {
     final saleItems = await _instance._findMany(
       collectionId: _GsamDatabaseSaleItemsCollections.products.name,
     );
     try {
-      return saleItems?.map((saleItemJson) => GsaaModelSaleItem.fromJson(saleItemJson)).toList();
+      return saleItems?.map((saleItemJson) => GsaModelSaleItem.fromJson(saleItemJson)).toList();
     } catch (e) {
       // TODO: Log error
       return null;

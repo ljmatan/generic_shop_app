@@ -14,7 +14,7 @@ dependencies:
   generic_shop_app_architecture:
     path: ../arch
   generic_shop_app_api:
-    path: ../../api
+    path: ../api
   workmanager: ^0.5.2
 
 dev_dependencies:

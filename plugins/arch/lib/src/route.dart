@@ -6,12 +6,12 @@ import 'package:flutter/services.dart';
 
 import 'package:universal_html/html.dart' as html;
 
-/// Type identifier for the [GsarRoute] objects.
+/// Type identifier for the [GsaRoute] objects.
 ///
 /// The class can be implemented with [Enum] types so that route structure is always valid:
 ///
 /// ```dart
-/// enum ExampleRouteEnum implements GsarRouteType {
+/// enum ExampleRouteEnum implements GsaRouteType {
 ///   example;
 ///
 ///   @override
@@ -40,7 +40,7 @@ import 'package:universal_html/html.dart' as html;
 /// }
 /// ```
 ///
-abstract class GsarRouteType {
+abstract class GsaRouteType {
   /// Specified route for this type.
   ///
   Type get routeRuntimeType;
@@ -56,14 +56,14 @@ abstract class GsarRouteType {
 
 /// Interface for the application navigation targets implemented with [MaterialPageRoute].
 ///
-abstract class GsarRoute extends StatefulWidget {
+abstract class GsaRoute extends StatefulWidget {
   /// Default widget constructor with [key] parameter definition.
   ///
-  const GsarRoute({super.key});
+  const GsaRoute({super.key});
 
   /// The defined type of any subclass instance.
   ///
-  GsarRouteType get routeType;
+  GsaRouteType get routeType;
 
   /// Route identifier used with named routes, URL path identifiers, etc.
   ///
@@ -81,11 +81,11 @@ abstract class GsarRoute extends StatefulWidget {
   ///
   bool get enabled => true;
 
-  /// Collection of [GsarRouteState] subclass instances or [State] object references.
+  /// Collection of [GsaRouteState] subclass instances or [State] object references.
   ///
-  static final _observables = <GsarRouteState>[];
+  static final _observables = <GsaRouteState>[];
 
-  /// Invokes the [setState] method in all of the [GsarRouteState] subclass instances.
+  /// Invokes the [setState] method in all of the [GsaRouteState] subclass instances.
   ///
   static void rebuildAll() {
     for (final observer in _observables) {
@@ -134,14 +134,14 @@ abstract class GsarRoute extends StatefulWidget {
 /// (1) can be read synchronously when the widget is built and
 /// (2) might change during the lifetime of the widget.
 ///
-abstract class GsarRouteState<T extends GsarRoute> extends State<T> with RouteAware, WidgetsBindingObserver {
+abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAware, WidgetsBindingObserver {
   /// Currently visible route state instance.
   ///
-  Type get presentingRoute => GsarRoute.presenting;
+  Type get presentingRoute => GsaRoute.presenting;
 
-  /// Invokes the [setState] method in all of the [GsarRouteState] subclass instances.
+  /// Invokes the [setState] method in all of the [GsaRouteState] subclass instances.
   ///
-  void rebuildAllRoutes() => GsarRoute.rebuildAll();
+  void rebuildAllRoutes() => GsaRoute.rebuildAll();
 
   /// Avoids the @protected annotation on the [setState] method with public method access.
   ///
@@ -209,10 +209,10 @@ abstract class GsarRouteState<T extends GsarRoute> extends State<T> with RouteAw
   @mustCallSuper
   void initState() {
     super.initState();
-    GsarRoute._observables.add(this);
+    GsaRoute._observables.add(this);
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      GsarRoute.navigatorObserver.subscribe(this, ModalRoute.of(context)!);
+      GsaRoute.navigatorObserver.subscribe(this, ModalRoute.of(context)!);
       _visible = true;
       const duration = Duration(seconds: 1);
       _timeViewedTimer = Timer.periodic(duration, (_) {
@@ -226,9 +226,9 @@ abstract class GsarRouteState<T extends GsarRoute> extends State<T> with RouteAw
   void dispose() {
     _timeViewedTimer.cancel();
     mainScrollController.dispose();
-    GsarRoute.navigatorObserver.unsubscribe(this);
+    GsaRoute.navigatorObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
-    GsarRoute._observables.remove(this);
+    GsaRoute._observables.remove(this);
     super.dispose();
   }
 
@@ -281,14 +281,14 @@ abstract class GsarRouteState<T extends GsarRoute> extends State<T> with RouteAw
   }
 }
 
-/// [GsarRoute] extension methods applied to [BuildContext] objects.
+/// [GsaRoute] extension methods applied to [BuildContext] objects.
 ///
-extension GsarRouteBuildContextExt on BuildContext {
-  /// Traverse the build context to find an instance of ancestor of type [GsarRouteState].
+extension GsaRouteBuildContextExt on BuildContext {
+  /// Traverse the build context to find an instance of ancestor of type [GsaRouteState].
   ///
-  /// This method can be used to avoid forwarding properties to [GsarRouteState] child widgets.
+  /// This method can be used to avoid forwarding properties to [GsaRouteState] child widgets.
   ///
-  GsarRouteState? get routeState {
-    return findAncestorStateOfType<GsarRouteState>();
+  GsaRouteState? get routeState {
+    return findAncestorStateOfType<GsaRouteState>();
   }
 }

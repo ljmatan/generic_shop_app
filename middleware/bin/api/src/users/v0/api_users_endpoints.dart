@@ -1,23 +1,23 @@
 part of '../../../api.dart';
 
-extension GsaaEndpointsUsersExt on GsaaEndpointsUsers {
+extension GsaEndpointsUsersExt on GsaEndpointsUsers {
   Future<shelf.Response> Function(shelf.Request) get handler {
     switch (this) {
-      case GsaaEndpointsUsers.register:
+      case GsaEndpointsUsers.register:
         return GsamApiUsers0.instance.register;
-      case GsaaEndpointsUsers.login:
+      case GsaEndpointsUsers.login:
         return GsamApiUsers0.instance.login;
-      case GsaaEndpointsUsers.loginPassword:
+      case GsaEndpointsUsers.loginPassword:
         return GsamApiUsers0.instance.loginPassword;
-      case GsaaEndpointsUsers.getUserDetails:
+      case GsaEndpointsUsers.getUserDetails:
         return GsamApiUsers0.instance.getUserDetails;
-      case GsaaEndpointsUsers.editUserDetails:
+      case GsaEndpointsUsers.editUserDetails:
         return GsamApiUsers0.instance.editUserDetails;
-      case GsaaEndpointsUsers.requestDeletion:
+      case GsaEndpointsUsers.requestDeletion:
         return GsamApiUsers0.instance.requestDeletion;
-      case GsaaEndpointsUsers.deleteAll:
+      case GsaEndpointsUsers.deleteAll:
         return GsamApiUsers0.instance.delete;
-      case GsaaEndpointsUsers.deleteSoft:
+      case GsaEndpointsUsers.deleteSoft:
         return GsamApiUsers0.instance.softDelete;
     }
   }

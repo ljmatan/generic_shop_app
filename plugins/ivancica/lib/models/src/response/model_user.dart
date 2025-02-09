@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 class GivModelUser {
@@ -53,12 +51,12 @@ class GivModelUser {
         'surname': surname,
       };
 
-  GsaaModelUser toSupportedType() {
-    return GsaaModelUser(
+  GsaModelUser toSupportedType() {
+    return GsaModelUser(
       id: userId.toString(),
       originId: loyaltyCard,
       username: email,
-      personalDetails: GsaaModelPerson(
+      personalDetails: GsaModelPerson(
         firstName: name,
         lastName: surname,
       ),

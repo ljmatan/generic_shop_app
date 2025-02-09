@@ -30,7 +30,7 @@ class GsamDatabaseMerchants extends GsamDatabase {
   /// Returns the newly-created merchant ID.
   ///
   Future<String> register({
-    required GsaaModelMerchant merchant,
+    required GsaModelMerchant merchant,
     required String password,
   }) async {
     final merchantId = await _instance._insertOne(
@@ -45,7 +45,7 @@ class GsamDatabaseMerchants extends GsamDatabase {
   /// Optional [collectionId] property can be provided to further specify the user collection,
   /// otherwise it defaults to the [GsamConfig.client] name.
   ///
-  Future<GsaaModelMerchant?> findById({
+  Future<GsaModelMerchant?> findById({
     required String merchantId,
   }) async {
     final result = await _instance._findOne(
@@ -54,7 +54,7 @@ class GsamDatabaseMerchants extends GsamDatabase {
     );
     if (result == null) return null;
     try {
-      final serializedResult = GsaaModelMerchant.fromJson(result);
+      final serializedResult = GsaModelMerchant.fromJson(result);
       return serializedResult;
     } catch (e) {
       // TODO: Log etc.
@@ -67,7 +67,7 @@ class GsamDatabaseMerchants extends GsamDatabase {
   /// Optional [collectionId] property can be provided to further specify the user collection,
   /// otherwise it defaults to the [GsamConfig.client] name.
   ///
-  Future<GsaaModelMerchant?> findByName({
+  Future<GsaModelMerchant?> findByName({
     required String username,
   }) async {
     final result = await _instance._findOne(
@@ -76,7 +76,7 @@ class GsamDatabaseMerchants extends GsamDatabase {
     );
     if (result == null) return null;
     try {
-      final serializedResult = GsaaModelMerchant.fromJson(result);
+      final serializedResult = GsaModelMerchant.fromJson(result);
       return serializedResult;
     } catch (e) {
       // TODO: Log etc.
@@ -125,7 +125,7 @@ class GsamDatabaseMerchants extends GsamDatabase {
     );
   }
 
-  Future<List<GsaaModelMerchant>?> getAllMerchants({
+  Future<List<GsaModelMerchant>?> getAllMerchants({
     List<(String, String)>? selectors,
   }) async {
     final results = await _instance._findMany(
@@ -134,7 +134,7 @@ class GsamDatabaseMerchants extends GsamDatabase {
     );
     if (results == null) return null;
     try {
-      return results.map((merchantJson) => GsaaModelMerchant.fromJson(merchantJson)).toList();
+      return results.map((merchantJson) => GsaModelMerchant.fromJson(merchantJson)).toList();
     } catch (e) {
       // TODO: Log etc.
       return null;

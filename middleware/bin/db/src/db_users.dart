@@ -36,7 +36,7 @@ class GsamDatabaseUsers extends GsamDatabase {
   /// Returns the newly-created user ID.
   ///
   Future<String> register({
-    required GsaaModelUser user,
+    required GsaModelUser user,
     required String password,
   }) async {
     if (user.username == null) {
@@ -71,7 +71,7 @@ class GsamDatabaseUsers extends GsamDatabase {
   /// Optional [collectionId] property can be provided to further specify the user collection,
   /// otherwise it defaults to the [GsamConfig.client] name.
   ///
-  Future<GsaaModelUser?> findById({
+  Future<GsaModelUser?> findById({
     required String userId,
   }) async {
     final result = await _instance._findOne(
@@ -80,7 +80,7 @@ class GsamDatabaseUsers extends GsamDatabase {
     );
     if (result == null) return null;
     try {
-      final serializedResult = GsaaModelUser.fromJson(result);
+      final serializedResult = GsaModelUser.fromJson(result);
       return serializedResult;
     } catch (e) {
       // TODO: Log etc.
@@ -93,7 +93,7 @@ class GsamDatabaseUsers extends GsamDatabase {
   /// Optional [collectionId] property can be provided to further specify the user collection,
   /// otherwise it defaults to the [GsamConfig.client] name.
   ///
-  Future<GsaaModelUser?> findByUsername({
+  Future<GsaModelUser?> findByUsername({
     required String username,
   }) async {
     final result = await _instance._findOne(
@@ -102,7 +102,7 @@ class GsamDatabaseUsers extends GsamDatabase {
     );
     if (result == null) return null;
     try {
-      final serializedResult = GsaaModelUser.fromJson(result);
+      final serializedResult = GsaModelUser.fromJson(result);
       return serializedResult;
     } catch (e) {
       // TODO: Log etc.

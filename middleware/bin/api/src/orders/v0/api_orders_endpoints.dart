@@ -1,17 +1,17 @@
 part of '../../../api.dart';
 
-extension GsaaEndpointsOrdersExt on GsaaEndpointsOrders {
+extension GsaEndpointsOrdersExt on GsaEndpointsOrders {
   Future<shelf.Response> Function(shelf.Request) get handler {
     switch (this) {
-      case GsaaEndpointsOrders.register:
+      case GsaEndpointsOrders.register:
         return GsamApiOrders0.instance.register;
-      case GsaaEndpointsOrders.deleteAll:
+      case GsaEndpointsOrders.deleteAll:
         return GsamApiOrders0.instance.delete;
-      case GsaaEndpointsOrders.deleteSoft:
+      case GsaEndpointsOrders.deleteSoft:
         return GsamApiOrders0.instance.softDelete;
-      case GsaaEndpointsOrders.createOrUpdateDraft:
+      case GsaEndpointsOrders.createOrUpdateDraft:
         return GsamApiOrders0.instance.createOrUpdateDraft;
-      case GsaaEndpointsOrders.confirmDraft:
+      case GsaEndpointsOrders.confirmDraft:
         return GsamApiOrders0.instance.confirmDraft;
     }
   }

@@ -15,11 +15,11 @@ class GsamApiMerchants0 extends GsamApi {
   List<
       ({
         String path,
-        GsarApiEndpointMethodType method,
+        GsaApiEndpointMethodType method,
         Future<shelf.Response> Function(shelf.Request) handler,
       })> get endpoints {
     return [
-      for (final endpoint in GsaaEndpointsMerchants.values)
+      for (final endpoint in GsaEndpointsMerchants.values)
         (
           path: endpoint.path,
           method: endpoint.method,
@@ -32,7 +32,7 @@ class GsamApiMerchants0 extends GsamApi {
     return await _parseRequest(
       request,
       (requestHeaders, requestBody, userId) async {
-        final user = GsaaModelUser.fromJson(requestBody!);
+        final user = GsaModelUser.fromJson(requestBody!);
         final existingUser = await GsamDatabaseUsers.instance(request).findByUsername(
           username: user.username!,
         );

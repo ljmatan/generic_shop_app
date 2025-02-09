@@ -1,3 +1,5 @@
+library;
+
 export 'src/api.dart';
 export 'src/data.dart';
 export 'src/model.dart';

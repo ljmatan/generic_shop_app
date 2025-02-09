@@ -34,7 +34,7 @@ class GsamDatabaseOrders extends GsamDatabase {
   /// otherwise it defaults to the [GsamConfig.client] name.
   ///
   Future<String> register({
-    required GsaaModelOrderDraft order,
+    required GsaModelOrderDraft order,
     required String password,
   }) async {
     final orderId = await _instance._insertOne(
@@ -49,7 +49,7 @@ class GsamDatabaseOrders extends GsamDatabase {
   /// Optional [collectionId] property can be provided to further specify the user collection,
   /// otherwise it defaults to the [GsamConfig.client] name.
   ///
-  Future<GsaaModelOrderDraft?> findActiveById({
+  Future<GsaModelOrderDraft?> findActiveById({
     required String userId,
   }) async {
     final result = await _instance._findOne(
@@ -58,7 +58,7 @@ class GsamDatabaseOrders extends GsamDatabase {
     );
     if (result == null) return null;
     try {
-      final serializedResult = GsaaModelOrderDraft.fromJson(result);
+      final serializedResult = GsaModelOrderDraft.fromJson(result);
       return serializedResult;
     } catch (e) {
       // TODO: Log etc.
@@ -71,7 +71,7 @@ class GsamDatabaseOrders extends GsamDatabase {
   /// Optional [collectionId] property can be provided to further specify the user collection,
   /// otherwise it defaults to the [GsamConfig.client] name.
   ///
-  Future<GsaaModelOrderDraft?> findCompleteById({
+  Future<GsaModelOrderDraft?> findCompleteById({
     required String userId,
   }) async {
     final result = await _instance._findOne(
@@ -80,7 +80,7 @@ class GsamDatabaseOrders extends GsamDatabase {
     );
     if (result == null) return null;
     try {
-      final serializedResult = GsaaModelOrderDraft.fromJson(result);
+      final serializedResult = GsaModelOrderDraft.fromJson(result);
       return serializedResult;
     } catch (e) {
       // TODO: Log etc.

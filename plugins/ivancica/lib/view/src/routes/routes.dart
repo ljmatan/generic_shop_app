@@ -5,7 +5,7 @@ import 'package:generic_shop_app_ivancica/view/src/routes/product_details/route_
 
 /// Collection of Route objects implemented by the "Generic Shop App" project.
 ///
-enum GivRoutes implements GsarRouteType {
+enum GivRoutes implements GsaRouteType {
   productDetails;
 
   @override
@@ -44,15 +44,15 @@ enum GivRoutes implements GsarRouteType {
   }
 }
 
-/// A base Route class implementing the [GsarRoute] interface.
+/// A base Route class implementing the [GsaRoute] interface.
 ///
-abstract class GivRoute extends GsarRoute {
+abstract class GivRoute extends GsaRoute {
   /// Default, unnamed widget constructor.
   ///
   const GivRoute({super.key});
 
   @override
-  GsarRouteType get routeType {
+  GsaRouteType get routeType {
     return GivRoutes.values.firstWhere(
       (route) => route.routeRuntimeType == runtimeType,
     );

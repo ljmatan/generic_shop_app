@@ -2,7 +2,7 @@ import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// API endpoints implemented for product operations.
 ///
-enum GivEndpointsProducts with GsarApiEndpoints {
+enum GivEndpointsProducts with GsaApiEndpoints {
   /// Retrieves a list of products according to the specified parameters.
   ///
   getProductList;
@@ -16,10 +16,10 @@ enum GivEndpointsProducts with GsarApiEndpoints {
   }
 
   @override
-  GsarApiEndpointMethodType get method {
+  GsaApiEndpointMethodType get method {
     switch (this) {
       case GivEndpointsProducts.getProductList:
-        return GsarApiEndpointMethodType.httpPost;
+        return GsaApiEndpointMethodType.httpPost;
     }
   }
 }

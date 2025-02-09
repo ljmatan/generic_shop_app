@@ -5,7 +5,7 @@ import 'package:generic_shop_app_ivancica/models/src/response/model_user.dart';
 
 /// Methods related to the user APIs provided by the `api.ivancica.hr` service.
 ///
-class GivApiUser extends GsarApi {
+class GivApiUser extends GsaApi {
   const GivApiUser._();
 
   /// Globally-accessible singleton class instance.
@@ -20,7 +20,7 @@ class GivApiUser extends GsarApi {
 
   /// Retrieves a list of sale items.
   ///
-  Future<GsaaModelUser> login({
+  Future<GsaModelUser> login({
     required String email,
     required String password,
   }) async {

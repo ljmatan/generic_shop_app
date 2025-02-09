@@ -1,25 +1,25 @@
 part of '../../../api.dart';
 
-extension GsaaEndpointsSaleItemsExt on GsaaEndpointsSaleItems {
+extension GsaEndpointsSaleItemsExt on GsaEndpointsSaleItems {
   Future<shelf.Response> Function(shelf.Request) get handler {
     switch (this) {
-      case GsaaEndpointsSaleItems.register:
+      case GsaEndpointsSaleItems.register:
         return GsamApiSaleItems0.instance.register;
-      case GsaaEndpointsSaleItems.getItemDetails:
+      case GsaEndpointsSaleItems.getItemDetails:
         return GsamApiSaleItems0.instance.getItemDetails;
-      case GsaaEndpointsSaleItems.editItemDetails:
+      case GsaEndpointsSaleItems.editItemDetails:
         return GsamApiSaleItems0.instance.editItemDetails;
-      case GsaaEndpointsSaleItems.deleteAll:
+      case GsaEndpointsSaleItems.deleteAll:
         return GsamApiSaleItems0.instance.delete;
-      case GsaaEndpointsSaleItems.deleteSoft:
+      case GsaEndpointsSaleItems.deleteSoft:
         return GsamApiSaleItems0.instance.softDelete;
-      case GsaaEndpointsSaleItems.getAllItems:
+      case GsaEndpointsSaleItems.getAllItems:
         return GsamApiSaleItems0.instance.getAllItems;
-      case GsaaEndpointsSaleItems.getItemCategories:
+      case GsaEndpointsSaleItems.getItemCategories:
         return GsamApiSaleItems0.instance.getItemCategories;
-      case GsaaEndpointsSaleItems.getFeaturedItems:
+      case GsaEndpointsSaleItems.getFeaturedItems:
         return GsamApiSaleItems0.instance.getFeaturedItems;
-      case GsaaEndpointsSaleItems.searchItems:
+      case GsaEndpointsSaleItems.searchItems:
         return GsamApiSaleItems0.instance.searchItems;
     }
   }

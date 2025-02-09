@@ -4,17 +4,17 @@ import 'package:flutter/foundation.dart';
 
 /// Interface for the globally-accessible application data.
 ///
-abstract class GsarData {
+abstract class GsaData {
   /// Default object constructor,
   /// implementing the observable mechanism on the instance after the object initialisation.
   ///
-  GsarData() {
+  GsaData() {
     _observables.add(this);
   }
 
   /// Active allocated runtime instances.
   ///
-  static final _observables = <GsarData>[];
+  static final _observables = <GsaData>[];
 
   /// Allocate the instance resources.
   ///

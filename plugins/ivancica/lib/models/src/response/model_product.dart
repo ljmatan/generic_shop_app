@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 class GivModelProduct {
@@ -105,44 +104,56 @@ class GivModelProduct {
         'attributes': attributes == null ? [] : List<dynamic>.from(attributes!.map((x) => x.toJson())),
       };
 
-  /// Encodes the class to the [GsaaModelSaleItem] type, supported by the GSA project.
+  /// Encodes the class to the [GsaModelSaleItem] type, supported by the GSA project.
   ///
-  GsaaModelSaleItem toSupportedType() {
-    return GsaaModelSaleItem(
+  GsaModelSaleItem toSupportedType() {
+    return GsaModelSaleItem(
       id: proId?.toString(),
       productCode: productCode,
       name: productName,
-      description: productDescription?.isNotEmpty == true
-          ? productDescription
-          // TODO: Remove
-          : kDebugMode
-              ? 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
-                  'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, '
-                  'when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
-              : null,
+      description: productDescription?.isNotEmpty == true ? productDescription : null,
       imageUrls: images == null
           ? null
           : List<String>.from(
               images!.map((image) => image.link).where((imageUrl) => imageUrl != null),
             ),
-      thumbnailUrls: icons,
+      attributeIconUrls: icons,
       options: prices != null
           ? [
               for (final option in prices!)
-                GsaaModelSaleItem(
+                GsaModelSaleItem(
                   name: option.size,
-                  availableCount: stocks?.firstWhereOrNull((stock) => stock.size == option.size)?.available,
-                  price: GsaaModelPrice(
-                    currencyType: GsaaModelPriceCurrencyType.eur,
+                  availability: [
+                    (
+                      locationId: stocks?.firstWhereOrNull((stock) => stock.size == option.size)?.shop,
+                      count: stocks?.firstWhereOrNull((stock) => stock.size == option.size)?.available,
+                    ),
+                  ]..removeWhere(
+                      (availabilityInfo) => availabilityInfo.locationId == null && availabilityInfo.count == null,
+                    ),
+                  price: GsaModelPrice(
+                    currencyType: GsaModelPriceCurrencyType.eur,
                     centum: option.oldPrice != null && option.oldPrice != 0 ? option.oldPrice : option.price,
                     discount: option.oldPrice != null && option.oldPrice != 0 && option.price != null
-                        ? GsaaModelDiscount(centum: option.price! - option.oldPrice!)
+                        ? GsaModelDiscount(centum: option.price! - option.oldPrice!)
                         : null,
                   ),
                 ),
             ]
           : null,
       tags: tags,
+      informationList: attributes != null
+          ? [
+              for (final attribute in attributes!)
+                if (attribute.attribute != null && attribute.values?.isNotEmpty == true)
+                  for (final attributeValue in attribute.values!)
+                    if (attributeValue.value != null)
+                      (
+                        label: attribute.attribute!,
+                        description: attributeValue.value!,
+                      ),
+            ]
+          : null,
     );
   }
 }

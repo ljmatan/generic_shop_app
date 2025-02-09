@@ -15,7 +15,7 @@ class GsamApiAggregated0 extends GsamApi {
   List<
       ({
         Future<shelf.Response> Function(shelf.Request p1) handler,
-        GsarApiEndpointMethodType method,
+        GsaApiEndpointMethodType method,
         String path,
       })> get endpoints {
     return [];

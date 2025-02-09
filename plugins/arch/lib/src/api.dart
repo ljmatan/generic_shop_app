@@ -4,10 +4,10 @@ import 'package:http/http.dart' as http;
 
 /// A base class for the HTTP client services.
 ///
-abstract class GsarApi {
+abstract class GsaApi {
   /// Constant constructor definition implementation.
   ///
-  const GsarApi();
+  const GsaApi();
 
   /// Network request protocol.
   ///
@@ -84,7 +84,7 @@ abstract class GsarApi {
 
   /// Logs recorded during the application runtime.
   ///
-  static final logs = <GsarApiModelLog>[];
+  static final logs = <GsaApiModelLog>[];
 
   /// Whether the logging functionality is enabled for an API subclass instance.
   ///
@@ -92,7 +92,7 @@ abstract class GsarApi {
 
   /// Creates a new log entry from the provided data.
   ///
-  Future<void> _log(GsarApiModelLog log) async {
+  Future<void> _log(GsaApiModelLog log) async {
     if (!loggingEnabled) return;
     logs.add(log);
   }
@@ -102,7 +102,7 @@ abstract class GsarApi {
   /// The method will return a result if any errors are detected.
   ///
   List<String>? validateFields({
-    GsarApiEndpointsFields? fieldValidators,
+    GsaApiEndpointsFields? fieldValidators,
     List<
             ({
               String key,
@@ -192,7 +192,7 @@ abstract class GsarApi {
       }
       try {
         _log(
-          GsarApiModelLog(
+          GsaApiModelLog(
             statusCode: response.statusCode,
             requestTime: requestTime,
             responseTime: DateTime.now(),
@@ -299,7 +299,7 @@ abstract class GsarApi {
 
 /// Supported types of HTTP network requests.
 ///
-enum GsarApiEndpointMethodType {
+enum GsaApiEndpointMethodType {
   /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET
   ///
   httpGet,
@@ -326,7 +326,7 @@ enum GsarApiEndpointMethodType {
 /// The object can be used as in below example:
 ///
 /// ```dart
-/// enum ExampleEnum implements GsarApiEndpoints {
+/// enum ExampleEnum implements GsaApiEndpoints {
 ///   example;
 ///
 ///   @override
@@ -338,10 +338,10 @@ enum GsarApiEndpointMethodType {
 ///   }
 ///
 ///   @override
-///   GsarApiEndpointMethodType get method {
+///   GsaApiEndpointMethodType get method {
 ///     switch (this) {
 ///       case ExampleEnum.example:
-///         return GsarApiEndpointMethodType.httpGet;
+///         return GsaApiEndpointMethodType.httpGet;
 ///     }
 ///   }
 /// }
@@ -349,45 +349,45 @@ enum GsarApiEndpointMethodType {
 ///
 /// In the above example, endpoint properties are defined by inheritance.
 ///
-abstract mixin class GsarApiEndpoints {
+abstract mixin class GsaApiEndpoints {
   /// URL path of the network resource.
   ///
   String get path;
 
   /// Method type defined for the specified endpoint.
   ///
-  GsarApiEndpointMethodType get method;
+  GsaApiEndpointMethodType get method;
 
   /// Network request defined for this endpoint.
   ///
   Future<dynamic> request(
-    GsarApi client, {
+    GsaApi client, {
     Map<String, dynamic> body = const {},
     bool decodedResponse = true,
   }) {
     switch (method) {
-      case GsarApiEndpointMethodType.httpGet:
+      case GsaApiEndpointMethodType.httpGet:
         return client.get(
           path,
           decodedResponse: decodedResponse,
         );
-      case GsarApiEndpointMethodType.httpPost:
-      case GsarApiEndpointMethodType.httpPatch:
-      case GsarApiEndpointMethodType.httpPut:
+      case GsaApiEndpointMethodType.httpPost:
+      case GsaApiEndpointMethodType.httpPatch:
+      case GsaApiEndpointMethodType.httpPut:
         switch (method) {
-          case GsarApiEndpointMethodType.httpPost:
+          case GsaApiEndpointMethodType.httpPost:
             return client.post(
               path,
               body,
               decodedResponse: decodedResponse,
             );
-          case GsarApiEndpointMethodType.httpPatch:
+          case GsaApiEndpointMethodType.httpPatch:
             return client.patch(
               path,
               body,
               decodedResponse: decodedResponse,
             );
-          case GsarApiEndpointMethodType.httpPut:
+          case GsaApiEndpointMethodType.httpPut:
             return client.post(
               path,
               body,
@@ -396,7 +396,7 @@ abstract mixin class GsarApiEndpoints {
           default:
             throw 'HTTP method not implemented.';
         }
-      case GsarApiEndpointMethodType.httpDelete:
+      case GsaApiEndpointMethodType.httpDelete:
         return client.delete(
           path,
           body: body,
@@ -411,7 +411,7 @@ abstract mixin class GsarApiEndpoints {
 /// Such object can be implemented in order to provide detailed endpoint information:
 ///
 /// ```dart
-/// enum ExampleEnum implements GsarApiEndpointsFields {
+/// enum ExampleEnum implements GsaApiEndpointsFields {
 ///   exampleGet, examplePost;
 ///
 ///   List<({String key, Type type, bool isRequired})>? get fields {
@@ -429,7 +429,7 @@ abstract mixin class GsarApiEndpoints {
 ///
 /// This information can both be used for field validation and for documentation generation.
 ///
-abstract class GsarApiEndpointsFields {
+abstract class GsaApiEndpointsFields {
   /// Specified list of fields and their associated runtime types,
   /// referenced during the validation process.
   ///
@@ -452,10 +452,10 @@ abstract class GsarApiEndpointsFields {
 
 /// Model class defining the network log data structure.
 ///
-class GsarApiModelLog {
+class GsaApiModelLog {
   /// Default unnamed class constructor.
   ///
-  const GsarApiModelLog({
+  const GsaApiModelLog({
     required this.statusCode,
     required this.requestTime,
     required this.responseTime,
@@ -537,8 +537,8 @@ class GsarApiModelLog {
   final String method;
 
   // ignore: public_member_api_docs
-  factory GsarApiModelLog.fromJson(Map<String, dynamic> json) {
-    return GsarApiModelLog(
+  factory GsaApiModelLog.fromJson(Map<String, dynamic> json) {
+    return GsaApiModelLog(
       statusCode: json['statusCode'] ?? -1,
       requestTime: DateTime.tryParse(json['requestTime']) ?? DateTime.now(),
       responseTime: DateTime.tryParse(json['responseTime']) ?? DateTime.now(),
@@ -552,9 +552,9 @@ class GsarApiModelLog {
   }
 
   // ignore: public_member_api_docs
-  factory GsarApiModelLog.fromEncodedJson(String encodedJson) {
+  factory GsaApiModelLog.fromEncodedJson(String encodedJson) {
     final Map<String, dynamic> json = dart_convert.jsonDecode(encodedJson);
-    return GsarApiModelLog(
+    return GsaApiModelLog(
       statusCode: json['statusCode'] ?? -1,
       requestTime: DateTime.tryParse(json['requestTime']) ?? DateTime.now(),
       responseTime: DateTime.tryParse(json['responseTime']) ?? DateTime.now(),

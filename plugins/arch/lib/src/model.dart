@@ -1,7 +1,7 @@
 part 'model.g.dart';
 
-abstract mixin class GsarModel {
-  const GsarModel();
+abstract mixin class GsaModel {
+  const GsaModel();
 
   Map<String, dynamic> toJson();
 

@@ -1,19 +1,19 @@
 part of '../../../api.dart';
 
-extension GsaaEndpointsMerchantsExt on GsaaEndpointsMerchants {
+extension GsaEndpointsMerchantsExt on GsaEndpointsMerchants {
   Future<shelf.Response> Function(shelf.Request) get handler {
     switch (this) {
-      case GsaaEndpointsMerchants.register:
+      case GsaEndpointsMerchants.register:
         return GsamApiMerchants0.instance.register;
-      case GsaaEndpointsMerchants.getMerchantDetails:
+      case GsaEndpointsMerchants.getMerchantDetails:
         return GsamApiMerchants0.instance.getMerchantDetails;
-      case GsaaEndpointsMerchants.editMerchantDetails:
+      case GsaEndpointsMerchants.editMerchantDetails:
         return GsamApiMerchants0.instance.editMerchantDetails;
-      case GsaaEndpointsMerchants.deleteAll:
+      case GsaEndpointsMerchants.deleteAll:
         return GsamApiMerchants0.instance.delete;
-      case GsaaEndpointsMerchants.deleteSoft:
+      case GsaEndpointsMerchants.deleteSoft:
         return GsamApiMerchants0.instance.softDelete;
-      case GsaaEndpointsMerchants.getAllMerchants:
+      case GsaEndpointsMerchants.getAllMerchants:
         return GsamApiMerchants0.instance.getAllMerchants;
     }
   }

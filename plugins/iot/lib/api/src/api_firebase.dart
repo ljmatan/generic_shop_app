@@ -5,7 +5,7 @@ import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 /// Firebase REST API services based on the
 /// [Realtime Database](https://firebase.google.com/docs/database).
 ///
-class GiotApiFirebase extends GsarApi {
+class GiotApiFirebase extends GsaApi {
   GiotApiFirebase._();
 
   /// Globally-accessible class instance.

@@ -50,7 +50,7 @@ abstract class GsamApi {
   List<
       ({
         String path,
-        GsarApiEndpointMethodType method,
+        GsaApiEndpointMethodType method,
         Future<shelf.Response> Function(shelf.Request) handler,
       })> get endpoints;
 
@@ -61,19 +61,19 @@ abstract class GsamApi {
     GsamRouterType.api.router.mount('/api/v$majorVersion/$identifier/v$version', router.call);
     for (final endpoint in endpoints) {
       switch (endpoint.method) {
-        case GsarApiEndpointMethodType.httpGet:
+        case GsaApiEndpointMethodType.httpGet:
           router.get('/${endpoint.path}', endpoint.handler);
           break;
-        case GsarApiEndpointMethodType.httpPost:
+        case GsaApiEndpointMethodType.httpPost:
           router.post('/${endpoint.path}', endpoint.handler);
           break;
-        case GsarApiEndpointMethodType.httpPut:
+        case GsaApiEndpointMethodType.httpPut:
           router.put('/${endpoint.path}', endpoint.handler);
           break;
-        case GsarApiEndpointMethodType.httpPatch:
+        case GsaApiEndpointMethodType.httpPatch:
           router.patch('/${endpoint.path}', endpoint.handler);
           break;
-        case GsarApiEndpointMethodType.httpDelete:
+        case GsaApiEndpointMethodType.httpDelete:
           router.delete('/${endpoint.path}', endpoint.handler);
           break;
       }

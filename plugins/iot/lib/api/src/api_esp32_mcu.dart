@@ -6,7 +6,7 @@ import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 /// API interface implementation for communication with an ESP32 device
 /// controlling the automated system.
 ///
-class GiotApiEsp32Mcu extends GsarApi {
+class GiotApiEsp32Mcu extends GsaApi {
   const GiotApiEsp32Mcu._();
 
   /// Globally-accessible class instance.
