@@ -13,7 +13,6 @@ export 'src/cache/service_cache.dart';
 export 'src/calendar/service_calendar.dart';
 export 'src/compress/service_compress.dart';
 export 'src/consent/service_consent.dart';
-export 'src/coordinates/service_coordinates.dart';
 export 'src/debug/service_debug.dart';
 export 'src/encryption/service_encryption.dart';
 export 'src/i18n/service_i18n.dart';
