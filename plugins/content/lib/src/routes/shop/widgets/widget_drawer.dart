@@ -46,7 +46,13 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.of(context).pushNamed(GsaDataUser.instance.authenticated ? 'profile' : 'auth');
+                    (GsaDataUser.instance.authenticated
+                            ? switch (GsaConfig.provider) {
+                                GsaConfigProvider.ivancica => const GivRouteUserProfile(),
+                                _ => const GsaRouteUserProfile(),
+                              }
+                            : const GsaRouteAuth())
+                        .push();
                   },
                 ),
                 const SizedBox(height: 30),
