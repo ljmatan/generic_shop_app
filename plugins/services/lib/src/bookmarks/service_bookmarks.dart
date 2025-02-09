@@ -31,12 +31,15 @@ class GsaServiceBookmarks extends GsaService {
     notifierBookmarkCount = ValueNotifier<int>(bookmarks.length);
   }
 
+  final controllerUpdate = StreamController.broadcast();
+
   /// Adds a unique bookmark ID to the cached list of bookmarks.
   ///
   Future<void> addBookmark(String saleItemId) async {
     bookmarks.add(saleItemId);
     await GsaServiceCacheId.bookmarks.setValue(bookmarks.toList());
     notifierBookmarkCount.value = bookmarks.length;
+    controllerUpdate.add(saleItemId);
   }
 
   /// Removes the bookmark ID from the cached list of bookmarks.
@@ -45,6 +48,7 @@ class GsaServiceBookmarks extends GsaService {
     bookmarks.add(saleItemId);
     await GsaServiceCacheId.bookmarks.setValue(bookmarks.toList());
     notifierBookmarkCount.value = bookmarks.length;
+    controllerUpdate.add(saleItemId);
   }
 
   /// Determines whether the given ID is cached to the device as a bookmark.

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
@@ -18,14 +20,16 @@ class GsaRouteBookmarks extends GsacRoute {
 }
 
 class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
-  void _onBookmarksUpdate() {
-    setState(() {});
-  }
+  late StreamSubscription _subscriptionBookmarkUpdates;
 
   @override
   void initState() {
     super.initState();
-    GsaServiceBookmarks.instance.notifierBookmarkCount.addListener(_onBookmarksUpdate);
+    _subscriptionBookmarkUpdates = GsaServiceBookmarks.instance.controllerUpdate.stream.listen(
+      (_) {
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -218,7 +222,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
 
   @override
   void dispose() {
-    GsaServiceBookmarks.instance.notifierBookmarkCount.removeListener(_onBookmarksUpdate);
+    _subscriptionBookmarkUpdates.cancel();
     super.dispose();
   }
 }
