@@ -20,7 +20,7 @@ class __RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),
@@ -32,14 +32,14 @@ class __RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
         children: [
           Row(
             children: [
-              Text(
+              GsaWidgetText(
                 widget.log.statusCode.toString() + ' ',
                 style: TextStyle(
                   color: widget.log.statusCode ~/ 2 != 100 ? Colors.red : Colors.green,
                   fontSize: 10,
                 ),
               ),
-              Text(
+              GsaWidgetText(
                 widget.log.uri.host,
                 style: TextStyle(
                   fontSize: 10,
@@ -49,7 +49,7 @@ class __RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
             ],
           ),
           const SizedBox(height: 5),
-          Text(
+          GsaWidgetText(
             widget.log.uri.path,
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -75,7 +75,7 @@ class __RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
               value: widget.log.responseBodyFormatted,
             ),
           }) ...[
-            Text(
+            GsaWidgetText(
               httpInformation.label,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
@@ -89,7 +89,7 @@ class __RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                child: Text(
+                child: GsaWidgetText(
                   httpInformation.value,
                   style: TextStyle(
                     fontSize: 12,

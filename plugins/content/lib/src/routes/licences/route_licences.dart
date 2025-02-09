@@ -18,7 +18,7 @@ class _GsaRouteLicencesState extends GsaRouteState<GsaRouteLicences> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),

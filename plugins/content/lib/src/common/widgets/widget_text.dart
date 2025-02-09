@@ -87,7 +87,7 @@ class _GsaWidgetTextState extends State<GsaWidgetText> {
             maxLines: widget.maxLines,
             overflow: widget.overflow ?? TextOverflow.ellipsis,
           )
-        : Text(
+        : GsaWidgetText(
             widget.label.translated(context),
             style: widget.style,
             textAlign: widget.textAlign ?? TextAlign.start,

@@ -28,7 +28,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),
@@ -173,7 +173,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: OutlinedButton(
-                          child: const Text(
+                          child: const GsaWidgetText(
                             'Register',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,

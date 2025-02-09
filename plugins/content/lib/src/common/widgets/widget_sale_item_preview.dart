@@ -117,7 +117,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               child: Card(
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                  child: Text(
+                                  child: GsaWidgetText(
                                     '${widget.saleItem.price!.discount!.formatted()} EUR',
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.secondary,
@@ -144,37 +144,36 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               ),
                             ],
                           ),
-                        Row(
-                          children: [
-                            if (widget.saleItem.price?.centum != null)
-                              Expanded(
-                                child: Text(
-                                  '${widget.saleItem.price!.formatted()} ${GsaConfig.currency.code}' +
-                                      (widget.saleItem.price?.discount?.centum != null
-                                          ? ' ${widget.saleItem.price!.discount!.formatted()}'
-                                          : ''),
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                        Text(
+                        GsaWidgetText(
                           widget.saleItem.name ?? 'N/A',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
+                          style: const TextStyle(),
                         ),
+                        if (widget.saleItem.price?.centum != null)
+                          GsaWidgetText(
+                            '${widget.saleItem.price!.formatted()}' +
+                                (widget.saleItem.price?.discount?.centum != null ? ' ${widget.saleItem.price!.discount!.formatted()}' : ''),
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        else if (widget.saleItem.options?.any((saleItemOption) => saleItemOption.price?.centum != null) == true)
+                          GsaWidgetText(
+                            'From ' +
+                                (widget.saleItem.options!
+                                      ..sort(
+                                          (a, b) => (a.price?.centum ?? double.infinity).compareTo(b.price?.centum ?? double.infinity)))[0]
+                                    .price!
+                                    .formatted()!,
+                          ),
                       ],
                     ),
                     Center(
                       child: OutlinedButton(
                         style: ButtonStyle(
-                          side: MaterialStatePropertyAll(
+                          side: WidgetStatePropertyAll(
                             BorderSide(
                               color: Theme.of(context).primaryColor,
                             ),
@@ -182,7 +181,8 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                         ),
                         child: SizedBox(
                           width: 60,
-                          child: widget.saleItem.price == null
+                          child: widget.saleItem.price == null &&
+                                  widget.saleItem.options?.where((saleItemOption) => saleItemOption.price != null).isNotEmpty != true
                               ? const GsaWidgetText(
                                   'INQUIRE',
                                   style: TextStyle(
@@ -203,7 +203,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Text(
+                                            child: GsaWidgetText(
                                               '$_cartCount',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w700,

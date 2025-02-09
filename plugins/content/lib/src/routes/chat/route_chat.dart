@@ -18,7 +18,7 @@ class _GsaRouteChatState extends GsaRouteState<GsaRouteChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),

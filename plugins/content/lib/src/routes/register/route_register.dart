@@ -95,7 +95,7 @@ class _GsaRouteRegisterState extends GsaRouteState<GsaRouteRegister> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: FilledButton(
-                child: Text('Continue'),
+                child: GsaWidgetText('Continue'),
                 onPressed: () async {},
               ),
             ),

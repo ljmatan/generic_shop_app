@@ -50,7 +50,7 @@ class _GsaRouteGuestInfoState extends GsaRouteState<GsaRouteGuestInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),
@@ -69,7 +69,7 @@ class _GsaRouteGuestInfoState extends GsaRouteState<GsaRouteGuestInfo> {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
+            const GsaWidgetText(
               'Personal Details',
               style: TextStyle(
                 fontWeight: FontWeight.w700,
@@ -90,7 +90,7 @@ class _GsaRouteGuestInfoState extends GsaRouteState<GsaRouteGuestInfo> {
                 validator: GsaServiceInputValidation.instance.firstName,
               ),
             ),
-            const Text(
+            const GsaWidgetText(
               'Contact Details',
               style: TextStyle(
                 fontWeight: FontWeight.w700,

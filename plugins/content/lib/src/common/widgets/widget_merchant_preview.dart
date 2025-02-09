@@ -36,7 +36,7 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (merchant.name != null)
-                        Text(
+                        GsaWidgetText(
                           merchant.name!,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
@@ -44,7 +44,7 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                           ),
                         ),
                       if (merchant.address?.city != null)
-                        Text(
+                        GsaWidgetText(
                           merchant.address!.city! + (merchant.address!.country != null ? ', ${merchant.address!.country}' : ''),
                           style: const TextStyle(fontSize: 12),
                         ),

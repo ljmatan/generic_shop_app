@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 class GsaWidgetSwitch extends StatefulWidget {
   const GsaWidgetSwitch({
@@ -76,7 +77,7 @@ class GsaWidgetSwitchState extends State<GsaWidgetSwitch> {
         if (_error)
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Text(
+            child: GsaWidgetText(
               'The terms must be accepted.',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.error,

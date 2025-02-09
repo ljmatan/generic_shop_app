@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// An overlay widget presented to user with a message.
 ///
@@ -39,13 +40,13 @@ class _GsaWidgetOverlayAlertState extends State<GsaWidgetOverlayAlert> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 26),
-                  Text(
+                  GsaWidgetText(
                     widget.message ?? 'An error has occurred.',
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 12),
                   TextButton(
-                    child: const Text('OK'),
+                    child: const GsaWidgetText('OK'),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],

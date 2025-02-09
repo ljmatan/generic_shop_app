@@ -20,7 +20,7 @@ class _WidgetProfile extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        GsaWidgetText(
                           GsaDataUser.instance.user?.personalDetails?.firstName != null
                               ? 'Hello, ${GsaDataUser.instance.user!.personalDetails!.firstName!}!'
                               : 'Hey you!',
@@ -29,7 +29,7 @@ class _WidgetProfile extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 5),
-                        Text(
+                        GsaWidgetText(
                           'Update your details, adjust your preferences, and manage your account all in one place.',
                           style: TextStyle(
                             fontSize: 11,

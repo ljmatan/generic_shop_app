@@ -23,7 +23,7 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),

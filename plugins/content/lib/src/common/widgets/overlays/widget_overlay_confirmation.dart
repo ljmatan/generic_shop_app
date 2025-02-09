@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// An overlay widget presented to user to confirm an interaction.
 ///
@@ -43,7 +44,7 @@ class _GsaWidgetOverlayConfirmationState extends State<GsaWidgetOverlayConfirmat
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(height: 26),
-                    Text(
+                    GsaWidgetText(
                       widget.message ?? 'Confirm?',
                       style: const TextStyle(fontSize: 16),
                     ),
@@ -52,12 +53,12 @@ class _GsaWidgetOverlayConfirmationState extends State<GsaWidgetOverlayConfirmat
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
-                          child: const Text('NO'),
+                          child: const GsaWidgetText('NO'),
                           onPressed: () => Navigator.pop(context, false),
                         ),
                         const SizedBox(width: 8),
                         OutlinedButton(
-                          child: const Text('YES'),
+                          child: const GsaWidgetText('YES'),
                           onPressed: () => Navigator.pop(context, true),
                         ),
                       ],

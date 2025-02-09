@@ -14,7 +14,7 @@ class _WidgetHttpLogDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              GsaWidgetText(
                 'Request start at ' +
                     log.requestTimeFormatted() +
                     ', finished in ${log.responseTime.difference(log.requestTime).inMilliseconds}ms',
@@ -25,14 +25,14 @@ class _WidgetHttpLogDetails extends StatelessWidget {
               const SizedBox(height: 5),
               Row(
                 children: [
-                  Text(
+                  GsaWidgetText(
                     log.statusCode.toString() + ' ',
                     style: TextStyle(
                       color: log.statusCode ~/ 2 != 100 ? Colors.red : Colors.green,
                       fontSize: 10,
                     ),
                   ),
-                  Text(
+                  GsaWidgetText(
                     log.uri.host,
                     style: TextStyle(
                       fontSize: 10,
@@ -42,7 +42,7 @@ class _WidgetHttpLogDetails extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 5),
-              Text(
+              GsaWidgetText(
                 log.uri.path,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -65,7 +65,7 @@ class _WidgetHttpLogDetails extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: Text(
+                    child: GsaWidgetText(
                       log.responseBodyFormatted.length > 200
                           ? '${log.responseBodyFormatted.substring(0, 200)}...'
                           : log.responseBodyFormatted,

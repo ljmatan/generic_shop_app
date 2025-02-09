@@ -251,7 +251,7 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: FilledButton(
-                      child: const Text('Checkout', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white)),
+                      child: const GsaWidgetText('Checkout', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white)),
                       onPressed: () async {
                         if (_scrollController.position.pixels < _scrollController.position.maxScrollExtent - 20) {
                           await _scrollController.animateTo(

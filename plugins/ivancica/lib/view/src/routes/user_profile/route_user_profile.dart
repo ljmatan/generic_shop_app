@@ -29,7 +29,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),
@@ -50,7 +50,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (GsaDataUser.instance.user!.personalDetails?.formattedName != null)
-                            Text(
+                            GsaWidgetText(
                               GsaDataUser.instance.user!.personalDetails!.formattedName!,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -59,7 +59,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                               ),
                             ),
                           if (GsaDataUser.instance.user!.contact?.email != null)
-                            Text(
+                            GsaWidgetText(
                               GsaDataUser.instance.user!.contact!.email!,
                               style: TextStyle(
                                 fontSize: 11,
@@ -81,14 +81,14 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                 ),
                 if (_originData?.loyaltyCard != null) ...[
                   const SizedBox(height: 20),
-                  Text(
+                  GsaWidgetText(
                     'Froddo Club Card',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 6),
-                  Text(
+                  GsaWidgetText(
                     'Earn points every time you shop and turn them into discounts! '
                     'Simply scan below code at checkout and watch your rewards grow.',
                     style: TextStyle(
@@ -101,7 +101,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                         top: 10,
                         bottom: 12,
                       ),
-                      child: Text(
+                      child: GsaWidgetText(
                         'Terms and Conditions apply.',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -244,7 +244,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  GsaWidgetText(
                                     action.$2.label,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -253,7 +253,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  Text(
+                                  GsaWidgetText(
                                     action.$2.description,
                                     style: TextStyle(
                                       color: Colors.white,

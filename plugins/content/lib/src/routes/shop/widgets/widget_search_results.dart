@@ -148,7 +148,7 @@ class __WidgetSearchResultsState extends State<_WidgetSearchResults> {
           child: FloatingActionButton.extended(
             heroTag: null,
             label: const Icon(Icons.tune),
-            icon: const Text('Filters'),
+            icon: const GsaWidgetText('Filters'),
             onPressed: () {
               FocusManager.instance.primaryFocus?.unfocus();
               FocusScope.of(context).unfocus();
@@ -164,7 +164,7 @@ class __WidgetSearchResultsState extends State<_WidgetSearchResults> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Flexible(
-                          child: Text(
+                          child: GsaWidgetText(
                             'Filters',
                             style: TextStyle(
                               fontWeight: FontWeight.w800,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 import 'package:iot/api/src/api_esp32_mcu.dart';
 import 'package:iot/api/src/api_firebase.dart';
 
@@ -42,7 +43,7 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Center(
-                child: Text(
+                child: GsaWidgetText(
                   snapshot.error.toString(),
                   textAlign: TextAlign.center,
                 ),
@@ -85,7 +86,7 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                                 padding: const EdgeInsets.symmetric(vertical: 16),
                                 child: Column(
                                   children: [
-                                    Text(
+                                    GsaWidgetText(
                                       '${airStat.$2.value}${airStat.$2.measure}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -94,7 +95,7 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                                       ),
                                     ),
                                     const SizedBox(height: 4),
-                                    Text(
+                                    GsaWidgetText(
                                       airStat.$2.label,
                                       style: TextStyle(
                                         color: Colors.white,
@@ -123,7 +124,7 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                               child: CircularProgressIndicator(),
                             )
                           : OutlinedButton.icon(
-                              label: Text(
+                              label: GsaWidgetText(
                                 'REFRESH',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,

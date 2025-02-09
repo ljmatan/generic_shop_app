@@ -24,7 +24,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text(widget.displayName),
+        title: GsaWidgetText(widget.displayName),
       ),
       body: Column(
         children: [
@@ -40,7 +40,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                 }.indexed)
                   Expanded(
                     child: TextButton(
-                      child: Text(
+                      child: GsaWidgetText(
                         buttonLabel.$2,
                         style: TextStyle(
                           color: _tabNotifier.value == buttonLabel.$1 ? null : Colors.grey,

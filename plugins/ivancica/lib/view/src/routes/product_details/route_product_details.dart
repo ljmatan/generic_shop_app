@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
-import 'package:generic_shop_app_ivancica/view/src/routes/routes.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// Screen displaying product details and other relevant functionalities and content.
 ///
@@ -46,7 +46,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.displayName),
+        title: GsaWidgetText(widget.displayName),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -180,12 +180,12 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                         if (value?.price == null) {
                           return FilledButton.icon(
                             onPressed: () {},
-                            label: Text(
+                            label: GsaWidgetText(
                               'Inquire',
                             ),
                           );
                         }
-                        return Text(
+                        return GsaWidgetText(
                           value!.price!.formatted()!,
                           style: TextStyle(
                             fontSize: 16,
@@ -220,7 +220,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                       ),
                                     ),
                                   ),
-                                  Text(
+                                  GsaWidgetText(
                                     'Select your shoe size:',
                                     style: TextStyle(
                                       fontSize: 10,
@@ -250,7 +250,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                             width: 40,
                                             height: 48,
                                             child: Center(
-                                              child: Text(
+                                              child: GsaWidgetText(
                                                 option.$2.name ?? 'N/A',
                                                 style: TextStyle(
                                                   fontWeight: _optionSelectionNotifier.value == option.$2 ? FontWeight.bold : null,
@@ -271,7 +271,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                             if (_optionSelectionNotifier.value?.name != null && num.tryParse(_optionSelectionNotifier.value!.name!) != null)
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
-                                child: Text(
+                                child: GsaWidgetText(
                                   'Length: ' + (num.parse(_optionSelectionNotifier.value!.name!) * 2 / 3).toStringAsFixed(1) + 'cm',
                                   style: TextStyle(
                                     fontSize: 12,
@@ -292,7 +292,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                             Icons.shopping_bag,
                             color: Theme.of(context).primaryColor,
                           ),
-                          label: Text(
+                          label: GsaWidgetText(
                             'Add to Cart',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -305,7 +305,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 12),
-                        child: Text(
+                        child: GsaWidgetText(
                           'or',
                           style: TextStyle(
                             color: Colors.grey,
@@ -317,7 +317,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                   ],
                   Center(
                     child: TextButton(
-                      child: Text('Add to Favorites'),
+                      child: GsaWidgetText('Add to Favorites'),
                       onPressed: () {},
                     ),
                   ),
@@ -331,7 +331,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 14),
-                  child: Text(
+                  child: GsaWidgetText(
                     'Characteristics',
                     style: TextStyle(
                       decoration: TextDecoration.underline,
@@ -388,7 +388,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14),
-                    child: Text(
+                    child: GsaWidgetText(
                       'Description',
                       style: TextStyle(
                         decoration: TextDecoration.underline,
@@ -396,7 +396,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                       ),
                     ),
                   ),
-                  Text(
+                  GsaWidgetText(
                     widget.saleItem.description!,
                     style: TextStyle(
                       fontSize: 13,
@@ -422,7 +422,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14),
-                    child: Text(
+                    child: GsaWidgetText(
                       'Availability',
                       style: TextStyle(
                         decoration: TextDecoration.underline,
@@ -456,7 +456,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 5),
-                                    child: Text(
+                                    child: GsaWidgetText(
                                       storeLocation,
                                       style: TextStyle(
                                         fontSize: 13,

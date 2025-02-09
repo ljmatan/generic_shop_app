@@ -18,7 +18,7 @@ class _GsaRouteSettingsState extends GsaRouteState<GsaRouteSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),

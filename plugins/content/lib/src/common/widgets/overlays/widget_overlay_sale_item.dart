@@ -68,7 +68,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
-              child: Text(
+              child: GsaWidgetText(
                 widget.saleItem.name ?? 'saleItem Details',
                 style: const TextStyle(
                   fontWeight: FontWeight.w800,
@@ -101,7 +101,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
             if (widget.saleItem.description != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 14),
-                child: Text(
+                child: GsaWidgetText(
                   widget.saleItem.description!,
                 ),
               ),
@@ -110,7 +110,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: TextButton(
-                  child: const Text(
+                  child: const GsaWidgetText(
                     'Additional Info',
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
@@ -171,7 +171,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8),
-                                child: Text(
+                                child: GsaWidgetText(
                                   '$_cartCount',
                                   style: const TextStyle(
                                     fontSize: 16,

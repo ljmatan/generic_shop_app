@@ -149,7 +149,7 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
         ),
         const SizedBox(height: 16),
         FilledButton(
-          child: const Text(
+          child: const GsaWidgetText(
             'Confirm Order',
             style: TextStyle(
               fontWeight: FontWeight.w600,

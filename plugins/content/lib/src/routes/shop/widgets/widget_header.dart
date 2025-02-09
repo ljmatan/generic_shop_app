@@ -117,7 +117,7 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(6),
-                                      child: Text(
+                                      child: GsaWidgetText(
                                         '$cartItemCount',
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.secondary,
@@ -230,7 +230,7 @@ class _WidgetHeaderOverlayEmptyCart extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Flexible(
-            child: Text(
+            child: GsaWidgetText(
               'No items added to the cart.',
               style: TextStyle(
                 fontWeight: FontWeight.w800,
@@ -239,7 +239,7 @@ class _WidgetHeaderOverlayEmptyCart extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Text(
+          GsaWidgetText(
             'Your cart is looking a bit empty right now. Take your time browsing through our selection '
             'and when you find something you love, just click "Add to Cart" to bring a little joy '
             'into your shopping experience!',
@@ -253,7 +253,7 @@ class _WidgetHeaderOverlayEmptyCart extends StatelessWidget {
             child: OutlinedButton(
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text('OK'),
+                child: GsaWidgetText('OK'),
               ),
               onPressed: () => Navigator.pop(context),
             ),

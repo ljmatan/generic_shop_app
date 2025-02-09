@@ -18,7 +18,7 @@ class _GsaRouteUserProfileState extends GsaRouteState<GsaRouteUserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),

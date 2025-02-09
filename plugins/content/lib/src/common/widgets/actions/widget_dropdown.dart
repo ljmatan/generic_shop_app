@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 class GsaWidgetDropdown extends StatefulWidget {
   const GsaWidgetDropdown({
@@ -122,7 +123,7 @@ class GsaWidgetDropdownState extends State<GsaWidgetDropdown> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Text(
+                          child: GsaWidgetText(
                             _selected ?? widget.label ?? 'ERROR',
                             style: (widget.labelStyle ?? const TextStyle(fontSize: 11)),
                           ),
@@ -198,7 +199,7 @@ class GsaWidgetDropdownState extends State<GsaWidgetDropdown> {
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Flexible(
-                                                          child: Text(
+                                                          child: GsaWidgetText(
                                                             item.label,
                                                             maxLines: 1,
                                                             overflow: TextOverflow.ellipsis,
@@ -241,7 +242,7 @@ class GsaWidgetDropdownState extends State<GsaWidgetDropdown> {
                   decoration: const BoxDecoration(color: Colors.white),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Text(
+                    child: GsaWidgetText(
                       widget.label!,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 10),
                     ),
@@ -264,7 +265,7 @@ class GsaWidgetDropdownState extends State<GsaWidgetDropdown> {
         if (_error)
           const Padding(
             padding: EdgeInsets.fromLTRB(20, 8, 20, 0),
-            child: Text(
+            child: GsaWidgetText(
               'Bitte auswählen',
               style: TextStyle(
                 color: Color(0xffDE1E36),

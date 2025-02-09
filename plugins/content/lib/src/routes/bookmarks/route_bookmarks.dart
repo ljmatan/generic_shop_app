@@ -18,7 +18,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: GsaWidgetText(
           widget.displayName,
         ),
       ),
