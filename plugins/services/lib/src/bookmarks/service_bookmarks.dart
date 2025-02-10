@@ -33,7 +33,7 @@ class GsaServiceBookmarks extends GsaService {
 
   /// Controller object used for updating [Stream] subscriber state on bookmark updates.
   ///
-  final controllerUpdate = StreamController.broadcast();
+  final controllerUpdate = StreamController<String>.broadcast();
 
   /// Adds a unique bookmark ID to the cached list of bookmarks.
   ///
@@ -47,7 +47,7 @@ class GsaServiceBookmarks extends GsaService {
   /// Removes the bookmark ID from the cached list of bookmarks.
   ///
   Future<void> removeBookmark(String saleItemId) async {
-    bookmarks.add(saleItemId);
+    bookmarks.remove(saleItemId);
     await GsaServiceCacheId.bookmarks.setValue(bookmarks.toList());
     notifierBookmarkCount.value = bookmarks.length;
     controllerUpdate.add(saleItemId);
