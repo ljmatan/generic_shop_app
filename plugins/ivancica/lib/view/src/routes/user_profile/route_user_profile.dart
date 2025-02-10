@@ -102,7 +102,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                         bottom: 12,
                       ),
                       child: GsaWidgetText(
-                        'Terms and Conditions apply.',
+                        'Terms and Conditions apply. Read more.',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 11,
@@ -213,7 +213,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                     padding: action.$1 == 0 ? const EdgeInsets.only(top: 20) : const EdgeInsets.only(top: 12),
                     child: GestureDetector(
                       child: Card(
-                        color: action.$1 % 2 == 0 ? Theme.of(context).colorScheme.secondary : Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.secondary,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 14,
