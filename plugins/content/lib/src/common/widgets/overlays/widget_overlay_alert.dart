@@ -40,14 +40,26 @@ class _GsaWidgetOverlayAlertState extends State<GsaWidgetOverlayAlert> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 26),
+                  const GsaWidgetText(
+                    'Error',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   GsaWidgetText(
                     widget.message ?? 'An error has occurred.',
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(height: 12),
-                  TextButton(
-                    child: const GsaWidgetText('OK'),
-                    onPressed: () => Navigator.pop(context),
+                  Center(
+                    child: TextButton(
+                      child: const GsaWidgetText('OK'),
+                      onPressed: () => Navigator.pop(context),
+                    ),
                   ),
                 ],
               ),

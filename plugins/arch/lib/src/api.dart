@@ -207,6 +207,9 @@ abstract class GsaApi {
       } catch (e) {
         // Do nothing.
       }
+      if (response.statusCode != 200) {
+        throw 'Network error: ${decodedResponseBody['error'] ?? decodedResponseBody['message'] ?? response.body}';
+      }
       return decodedResponse ? dart_convert.jsonDecode(response.body) : response;
     } catch (e) {
       rethrow;
@@ -372,30 +375,23 @@ abstract mixin class GsaApiEndpoints {
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpPost:
+        return client.post(
+          path,
+          body,
+          decodedResponse: decodedResponse,
+        );
       case GsaApiEndpointMethodType.httpPatch:
+        return client.patch(
+          path,
+          body,
+          decodedResponse: decodedResponse,
+        );
       case GsaApiEndpointMethodType.httpPut:
-        switch (method) {
-          case GsaApiEndpointMethodType.httpPost:
-            return client.post(
-              path,
-              body,
-              decodedResponse: decodedResponse,
-            );
-          case GsaApiEndpointMethodType.httpPatch:
-            return client.patch(
-              path,
-              body,
-              decodedResponse: decodedResponse,
-            );
-          case GsaApiEndpointMethodType.httpPut:
-            return client.post(
-              path,
-              body,
-              decodedResponse: decodedResponse,
-            );
-          default:
-            throw 'HTTP method not implemented.';
-        }
+        return client.put(
+          path,
+          body,
+          decodedResponse: decodedResponse,
+        );
       case GsaApiEndpointMethodType.httpDelete:
         return client.delete(
           path,
@@ -490,7 +486,7 @@ class GsaApiModelLog {
           '${time.second < 10 ? '0${time.second}' : time.second}:'
           '${time.millisecond < 10 ? '0${time.millisecond}' : time.millisecond}';
     } else {
-      throw UnimplementedError();
+      throw time.toIso8601String().substring(0, 10);
     }
   }
 

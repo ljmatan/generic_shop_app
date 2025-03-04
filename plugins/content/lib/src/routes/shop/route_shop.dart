@@ -127,6 +127,16 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
     return Scaffold(
       body: Column(
         children: [
+          TextButton(
+            child: const Text('Open WebView'),
+            onPressed: () {
+              const GsaRouteWebView(
+                url: 'https://sbetroisdorf.bitbucket.io/',
+                urlPath: 'placeholder',
+                title: 'Placeholder',
+              );
+            },
+          ),
           _WidgetHeader(
             searchTermController: _searchTermController,
             searchTermFocusNode: _searchTermFocusNode,

@@ -65,9 +65,7 @@ class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
             }
           },
         ),
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
+        title: GsaWidgetText(widget.displayName),
       ),
       body: PageView(
         controller: _pageController,
@@ -100,7 +98,12 @@ class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
           if (GsaDataMerchant.instance.merchant == null)
             _WidgetMerchantMapFinder(
               notice: GsaModelTranslated(
-                values: [(languageId: 'en', value: 'Reach out to a nearby independent Herbalife distributor to complete your purchase.')],
+                values: [
+                  (
+                    languageId: 'en',
+                    value: 'Reach out to a nearby independent Herbalife distributor to complete your purchase.',
+                  ),
+                ],
               ),
               goToNextStep: _goToNextStep,
             ),

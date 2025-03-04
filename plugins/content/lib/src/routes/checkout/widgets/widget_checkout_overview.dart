@@ -71,10 +71,7 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
         const GsaWidgetText(
           'Cart item prices may deviate from actual costs due to factors like promotions, taxes, and occasional errors. '
           'For precise totals, verify the information with the merchant.',
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 12,
-          ),
+          style: TextStyle(color: Colors.grey, fontSize: 12),
         ),
         const SizedBox(height: 16),
         for (final product in GsaDataCheckout.instance.orderDraft.items.indexed)
@@ -151,9 +148,7 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
         FilledButton(
           child: const GsaWidgetText(
             'Confirm Order',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w600),
           ),
           onPressed: _termsAccepted
               ? () async {
