@@ -225,7 +225,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState?.validate() == true) {
-                              GsaWidgetOverlayContentBlocking.open();
+                              const GsaWidgetOverlayContentBlocking().openDialog(context);
                               try {
                                 switch (GsaConfig.provider) {
                                   case GsaConfigProvider.ivancica:

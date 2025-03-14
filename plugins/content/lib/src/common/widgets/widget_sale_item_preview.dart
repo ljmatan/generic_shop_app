@@ -258,7 +258,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           onPressed: () async {
                             if (widget.saleItem.price != null) {
                               GsaDataCheckout.instance.addItem(widget.saleItem);
-                              GsaWidgetOverlaySaleItem.open(context, widget.saleItem);
+                              GsaWidgetOverlaySaleItem(widget.saleItem).openBottomSheet(context);
                             } else {
                               (switch (GsaConfig.provider) {
                                 GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
@@ -283,7 +283,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
         ],
       ),
       onTap: () async {
-        await GsaWidgetOverlaySaleItem.open(context, widget.saleItem);
+        await GsaWidgetOverlaySaleItem(widget.saleItem).openBottomSheet(context);
       },
     );
   }

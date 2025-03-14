@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 
 /// An overlay widget presented to user to confirm an interaction.
 ///
-class GsaWidgetOverlayConfirmation extends StatefulWidget {
-  const GsaWidgetOverlayConfirmation._(this.message);
+class GsaWidgetOverlayConfirmation extends GsaWidgetOverlay {
+  /// Default, unnamed widget constructor.
+  ///
+  const GsaWidgetOverlayConfirmation(
+    this.message, {
+    super.key,
+  });
 
   /// User-facing message clarifying the confirmation request.
   ///
   final String? message;
-
-  /// Displays the [GsaWidgetOverlayConfirmation] widget,
-  /// returning true on exit if the user had confirmed the available selection.
-  ///
-  static Future<bool> open(BuildContext context, String? message) async {
-    return await showDialog(
-          context: context,
-          builder: (context) {
-            return GsaWidgetOverlayConfirmation._(message);
-          },
-        ) ==
-        true;
-  }
 
   @override
   State<GsaWidgetOverlayConfirmation> createState() => _GsaWidgetOverlayConfirmationState();

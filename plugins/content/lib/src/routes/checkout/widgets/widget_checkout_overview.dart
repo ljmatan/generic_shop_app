@@ -152,7 +152,7 @@ class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
           ),
           onPressed: _termsAccepted
               ? () async {
-                  GsaWidgetOverlayContentBlocking.open(context);
+                  GsaWidgetOverlayContentBlocking().openDialog(context);
                   await Future.delayed(const Duration(seconds: 2));
                   GsaDataCheckout.instance.clear();
                   Navigator.popUntil(context, (route) => route.isFirst);

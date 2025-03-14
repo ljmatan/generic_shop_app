@@ -128,7 +128,7 @@ class __WidgetSearchResultsState extends State<_WidgetSearchResults> {
                           ),
                           onPressed: () {
                             GsaDataCheckout.instance.addItem(saleItem);
-                            GsaWidgetOverlaySaleItem.open(context, saleItem);
+                            GsaWidgetOverlaySaleItem(saleItem).openBottomSheet(context);
                           },
                         ),
                       ),
@@ -136,7 +136,7 @@ class __WidgetSearchResultsState extends State<_WidgetSearchResults> {
                   ),
                 ),
                 onTap: () {
-                  GsaWidgetOverlaySaleItem.open(context, saleItem);
+                  GsaWidgetOverlaySaleItem(saleItem).openBottomSheet(context);
                 },
               ),
             );

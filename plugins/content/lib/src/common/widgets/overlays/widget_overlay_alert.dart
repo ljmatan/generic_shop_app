@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 
 /// An overlay widget presented to user with a message.
 ///
-class GsaWidgetOverlayAlert extends StatefulWidget {
-  const GsaWidgetOverlayAlert._(this.message);
+class GsaWidgetOverlayAlert extends GsaWidgetOverlay {
+  /// Default, unnamed widget constructor.
+  ///
+  const GsaWidgetOverlayAlert({
+    super.key,
+    this.title,
+    required this.message,
+  });
+
+  /// The title for the dialog.
+  ///
+  final String? title;
 
   /// User-facing alert message.
   ///
-  final String? message;
-
-  /// Displays the [GsaWidgetOverlayAlert] widget as an overlay.
-  ///
-  static Future<void> open(BuildContext context, String? message) async {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return GsaWidgetOverlayAlert._(message);
-      },
-    );
-  }
+  final String message;
 
   @override
   State<GsaWidgetOverlayAlert> createState() => _GsaWidgetOverlayAlertState();
@@ -40,16 +40,18 @@ class _GsaWidgetOverlayAlertState extends State<GsaWidgetOverlayAlert> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 26),
-                  const GsaWidgetText(
-                    'Error',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
+                  if (widget.title != null) ...[
+                    GsaWidgetText(
+                      widget.title!,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
+                    const SizedBox(height: 16),
+                  ],
                   GsaWidgetText(
-                    widget.message ?? 'An error has occurred.',
+                    widget.message,
                     style: const TextStyle(
                       fontSize: 16,
                     ),

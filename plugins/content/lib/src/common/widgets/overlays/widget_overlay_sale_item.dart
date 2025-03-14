@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
 /// Overlay view displaying sale item details and containing associated cart functionalities.
 ///
-class GsaWidgetOverlaySaleItem extends StatefulWidget {
-  const GsaWidgetOverlaySaleItem._(
+class GsaWidgetOverlaySaleItem extends GsaWidgetOverlay {
+  /// Default, unnamed widget constructor.
+  ///
+  const GsaWidgetOverlaySaleItem(
     this.saleItem, {
+    super.key,
     this.displayedFromCart = false,
   });
 
@@ -22,25 +26,11 @@ class GsaWidgetOverlaySaleItem extends StatefulWidget {
   ///
   final bool displayedFromCart;
 
-  /// Displays the [GsaWidgetOverlaySaleItem] widget by using the Material [showModalBottomSheet] method.
-  ///
-  static Future<void> open(
-    BuildContext context,
-    GsaModelSaleItem saleItem, {
-    bool displayedFromCart = false,
-  }) async {
-    return await showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      builder: (context) {
-        return GsaWidgetOverlaySaleItem._(
-          saleItem,
-          displayedFromCart: displayedFromCart,
-        );
-      },
-    );
-  }
+  @override
+  bool get isScrollControlled => true;
+
+  @override
+  bool get showDragHandle => true;
 
   @override
   State<GsaWidgetOverlaySaleItem> createState() => _GsaWidgetOverlaySaleItemState();

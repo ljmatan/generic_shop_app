@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Widget overlay displaying user privacy policy and terms and conditions consent content.
 ///
-class GsaWidgetOverlayConsent extends StatefulWidget {
-  const GsaWidgetOverlayConsent._();
+class GsaWidgetOverlayConsent extends GsaWidgetOverlay {
+  /// Default, unnamed widget constructor.
+  ///
+  const GsaWidgetOverlayConsent({
+    super.key,
+  });
 
-  /// Displays the consent widget to the user using the Flutter SDK [showDialog] method.
-  ///
-  /// The [context] property can optionally be provided, otherwise the top-most BuildContext object is used.
-  ///
-  static Future<void> open([BuildContext? context]) async {
-    context ??= GsaRoute.navigatorKey.currentContext;
-    if (context != null) {
-      return await showDialog(
-        context: context,
-        barrierDismissible: GsaServiceConsent.instance.hasMandatoryConsent,
-        builder: (context) {
-          return const GsaWidgetOverlayConsent._();
-        },
-      );
-    }
-  }
+  @override
+  bool get barrierDismissible => GsaServiceConsent.instance.hasMandatoryConsent;
 
   @override
   State<GsaWidgetOverlayConsent> createState() => _GsaWidgetOverlayConsentState();
