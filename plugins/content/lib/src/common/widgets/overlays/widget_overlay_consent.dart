@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 import 'package:generic_shop_app_services/services.dart';

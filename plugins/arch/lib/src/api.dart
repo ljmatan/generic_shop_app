@@ -207,8 +207,12 @@ abstract class GsaApi {
       } catch (e) {
         // Do nothing.
       }
-      if (response.statusCode != 200) {
-        throw 'Network error: ${decodedResponseBody['error'] ?? decodedResponseBody['message'] ?? response.body}';
+      if (response.statusCode ~/ 2 != 100) {
+        throw decodedResponseBody['message'] ??
+            decodedResponseBody['error'] ??
+            decodedResponseBody['msg'] ??
+            decodedResponseBody['reason'] ??
+            response.body;
       }
       return decodedResponse ? dart_convert.jsonDecode(response.body) : response;
     } catch (e) {
