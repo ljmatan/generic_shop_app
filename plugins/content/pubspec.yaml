@@ -21,6 +21,8 @@ dependencies:
     path: ../data
   generic_shop_app_ivancica:
     path: ../ivancica
+  generic_shop_app_gligora:
+    path: ../gligora
   flutter_svg: ^2.0.17
   webview_flutter: ^4.10.0
   flutter_map: ^7.0.2

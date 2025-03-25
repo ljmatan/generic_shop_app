@@ -261,7 +261,7 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                           );
                         } else {
                           Navigator.popUntil(context, (route) => route.isFirst);
-                          Navigator.of(context).pushNamed('checkout');
+                          const GsaRouteCheckout().push(context: context);
                         }
                       },
                     ),

@@ -4,6 +4,7 @@ import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
+import 'package:generic_shop_app_gligora/api/api.dart';
 import 'package:generic_shop_app_ivancica/api/api.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -92,16 +93,19 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
         future: _initialiser,
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
           if (snapshot.hasError) {
-            return GsaWidgetError(
-              snapshot.error.toString(),
-              retry: () {
-                setState(() => _initialiser = _initialise());
-              },
+            return Center(
+              child: GsaWidgetError(
+                snapshot.error.toString(),
+                retry: () {
+                  _initialiser = _initialise();
+                  setState(() {});
+                },
+              ),
             );
           }
 

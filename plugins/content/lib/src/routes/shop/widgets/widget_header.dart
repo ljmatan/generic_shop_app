@@ -49,7 +49,7 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
           color: Theme.of(context).colorScheme.surface,
           border: Border(
             bottom: BorderSide(
-              color: Colors.grey.shade100,
+              color: Colors.grey.shade900,
             ),
           ),
         ),

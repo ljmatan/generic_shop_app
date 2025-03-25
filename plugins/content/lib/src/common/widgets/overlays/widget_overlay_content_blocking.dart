@@ -11,6 +11,9 @@ class GsaWidgetOverlayContentBlocking extends GsaWidgetOverlay {
   });
 
   @override
+  bool get customBuilder => true;
+
+  @override
   bool get useSafeArea => false;
 
   @override

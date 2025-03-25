@@ -11,7 +11,7 @@ class GsaTheme {
   /// The setting indicating the current brightness mode of the host platform.
   /// If the platform has no preference, [platformBrightness] defaults to [Brightness.light].
   ///
-  static Brightness platformBrightness = PlatformDispatcher.instance.platformBrightness;
+  static Brightness platformBrightness = Brightness.light; // PlatformDispatcher.instance.platformBrightness;
 
   static Color get _primaryColor {
     if (GsaConfig.provider.themeProperties?.primary != null) return GsaConfig.provider.themeProperties!.primary!;

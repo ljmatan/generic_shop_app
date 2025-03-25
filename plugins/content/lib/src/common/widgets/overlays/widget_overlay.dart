@@ -8,6 +8,10 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
   ///
   const GsaWidgetOverlay({super.key});
 
+  /// Whether a custom (non-standard) builder function is specified for this widget.
+  ///
+  bool get customBuilder => false;
+
   /// Specifies whether the sheet will avoid system intrusions on the screen sides.
   ///
   bool get useSafeArea => true;
@@ -31,7 +35,27 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
         barrierColor: barrierColor,
         useSafeArea: useSafeArea,
         builder: (context) {
-          return this;
+          return customBuilder
+              ? this
+              : Center(
+                  child: Card(
+                    margin: MediaQuery.of(context).size.width < 1000
+                        ? const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 26,
+                          )
+                        : EdgeInsets.zero,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(18, 26, 18, 16),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width < 1000 ? MediaQuery.of(context).size.width : 800,
+                        ),
+                        child: this,
+                      ),
+                    ),
+                  ),
+                );
         },
       );
     }
@@ -57,7 +81,7 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
         barrierColor: barrierColor,
         useSafeArea: useSafeArea,
         builder: (context) {
-          return this;
+          return customBuilder ? this : this;
         },
       );
     }

@@ -15,38 +15,40 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
       String url,
     })? linkedContent,
   })>[
-    (
-      imageUrl: 'https://www.froddo.com/demo-2/img/7X-OKO-ZEMLJE.webp',
-      linkedContent: null,
-    ),
-    (
-      imageUrl: 'https://www.froddo.com/demo-2/img/ee8addfa5aa6fae16399af560656b758.jpg',
-      linkedContent: (
-        title: 'Froddo Barefoot shoes',
-        url: 'https://www.froddo.com/barefoot',
+    if (GsaConfig.provider == GsaConfigProvider.ivancica) ...[
+      (
+        imageUrl: 'https://www.froddo.com/demo-2/img/7X-OKO-ZEMLJE.webp',
+        linkedContent: null,
       ),
-    ),
-    (
-      imageUrl: 'https://img.freepik.com/free-photo/girls-with-father_1098-15657.jpg',
-      linkedContent: (
-        title: 'Stress-Free Routines to Help Kids Thrive Throughout the Day',
-        url: 'https://www.froddo.com/stress-free-routines-to-help-kids-thrive-throughout-the-day',
+      (
+        imageUrl: 'https://www.froddo.com/demo-2/img/ee8addfa5aa6fae16399af560656b758.jpg',
+        linkedContent: (
+          title: 'Froddo Barefoot shoes',
+          url: 'https://www.froddo.com/barefoot',
+        ),
       ),
-    ),
-    (
-      imageUrl: 'https://img.freepik.com/free-photo/flat-lay-nutritious-cute-children-s-menu_23-2149522900.jpg',
-      linkedContent: (
-        title: 'Lunch Box Magic: Creative & Healthy Ideas to Keep Your Child Excited for Lunchtime',
-        url: 'https://www.froddo.com/lunch-box-magic-creative-healthy-ideas-to-keep-your-child-excited-for-lunchtime',
+      (
+        imageUrl: 'https://img.freepik.com/free-photo/girls-with-father_1098-15657.jpg',
+        linkedContent: (
+          title: 'Stress-Free Routines to Help Kids Thrive Throughout the Day',
+          url: 'https://www.froddo.com/stress-free-routines-to-help-kids-thrive-throughout-the-day',
+        ),
       ),
-    ),
-    (
-      imageUrl: 'https://www.froddo.com/demo-2/img/ivancicadd.jpg',
-      linkedContent: (
-        title: 'Our Commitment to a Sustainable Future: Setting Science-Based Targets for Emission Reduction',
-        url: 'https://www.froddo.com/our-commitment-to-a-sustainable-future-setting-science-based-targets-for-emission-reduction',
+      (
+        imageUrl: 'https://img.freepik.com/free-photo/flat-lay-nutritious-cute-children-s-menu_23-2149522900.jpg',
+        linkedContent: (
+          title: 'Lunch Box Magic: Creative & Healthy Ideas to Keep Your Child Excited for Lunchtime',
+          url: 'https://www.froddo.com/lunch-box-magic-creative-healthy-ideas-to-keep-your-child-excited-for-lunchtime',
+        ),
       ),
-    ),
+      (
+        imageUrl: 'https://www.froddo.com/demo-2/img/ivancicadd.jpg',
+        linkedContent: (
+          title: 'Our Commitment to a Sustainable Future: Setting Science-Based Targets for Emission Reduction',
+          url: 'https://www.froddo.com/our-commitment-to-a-sustainable-future-setting-science-based-targets-for-emission-reduction',
+        ),
+      ),
+    ],
   ];
 
   int _carouselItemIndex = 0;
@@ -102,7 +104,8 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
                                 GsaWidgetImage.network(
                                   carouselItemUrl.$2.imageUrl,
                                   width: MediaQuery.of(context).size.width,
-                                  fit: BoxFit.fitWidth,
+                                  height: MediaQuery.of(context).size.height,
+                                  fit: BoxFit.cover,
                                 ),
                                 if (carouselItemUrl.$2.linkedContent?.url != null)
                                   const Positioned(

@@ -92,7 +92,9 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 14),
                 child: GsaWidgetText(
-                  widget.saleItem.description!,
+                  widget.saleItem.description!.length > 500
+                      ? widget.saleItem.description!.substring(0, 500) + '...'
+                      : widget.saleItem.description!,
                 ),
               ),
             if (GsaConfig.cartEnabled && widget.saleItem.price != null)
@@ -194,7 +196,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                           Navigator.popUntil(context, (route) => route.isFirst);
                           if (!widget.displayedFromCart) {
                             Navigator.popUntil(context, (route) => route.isFirst);
-                            Navigator.pushNamed(context, 'cart');
+                            const GsaRouteCart().push(context: context);
                           } else {
                             Navigator.pop(context);
                           }

@@ -63,6 +63,11 @@ class __WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                 ),
               ),
             ),
+            onTap: () {
+              const GsaRouteBookmarks().push(
+                context: context,
+              );
+            },
           ),
         ),
         if (GsaDataSaleItems.instance.categories.isNotEmpty)

@@ -28,49 +28,34 @@ class GsaWidgetOverlayAlert extends GsaWidgetOverlay {
 class _GsaWidgetOverlayAlertState extends State<GsaWidgetOverlayAlert> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      child: Center(
-        child: GestureDetector(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(26, 0, 26, 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 26),
-                  if (widget.title != null) ...[
-                    GsaWidgetText(
-                      widget.title!,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                  GsaWidgetText(
-                    widget.message,
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Center(
-                    child: TextButton(
-                      child: const GsaWidgetText('OK'),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ),
-                ],
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (widget.title != null) ...[
+          GsaWidgetText(
+            widget.title!,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
             ),
           ),
-          onTap: () {},
+          const SizedBox(height: 16),
+        ],
+        GsaWidgetText(
+          widget.message,
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
-      ),
-      onTap: () => Navigator.pop(context, false),
+        const SizedBox(height: 12),
+        Center(
+          child: TextButton(
+            child: const GsaWidgetText('OK'),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+      ],
     );
   }
 }
