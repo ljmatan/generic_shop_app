@@ -1,0 +1,31 @@
+name: generic_shop_app_gligora
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  generic_shop_app_architecture:
+    path: ../arch
+  generic_shop_app_api:
+    path: ../api
+  generic_shop_app_data:
+    path: ../data
+  generic_shop_app_services:
+    path: ../services
+  generic_shop_app_content:
+    path: ../content
+  collection: ^1.19.0
+  flutter_svg: ^2.0.17
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

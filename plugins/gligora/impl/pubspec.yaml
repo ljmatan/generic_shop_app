@@ -1,0 +1,39 @@
+name: generic_shop_app
+description: "https://webshop.gligora.com"
+publish_to: "none"
+version: 2025.03.24+1
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  generic_shop_app_gligora:
+    path: ../
+  generic_shop_app_api:
+    path: ../../api
+  generic_shop_app_architecture:
+    path: ../../arch
+  generic_shop_app_data:
+    path: ../../data
+  generic_shop_app_services:
+    path: ../../services
+  generic_shop_app_content:
+    path: ../../content
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  dartdoc: ^8.1.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/gligora/
+    - assets/gligora/svg/
+
+  fonts:
+    - family: Open Sans
+      fonts:
+        - asset: assets/gligora/fonts/OpenSans-VariableFont_wdth,wght.ttf
