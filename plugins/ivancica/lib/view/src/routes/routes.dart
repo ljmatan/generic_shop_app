@@ -46,13 +46,17 @@ enum GivRoutes implements GsaRouteType {
   }
 
   @override
+  String? get routeIdPrefix => 'giv';
+
+  @override
   String get routeId {
     switch (this) {
       default:
-        return name.replaceAllMapped(
-          RegExp(r'([a-z0-9])([A-Z])'),
-          (Match m) => '${m[1]}-${m[2]!.toLowerCase()}',
-        );
+        return '$routeIdPrefix-' +
+            name.replaceAllMapped(
+              RegExp(r'([a-z0-9])([A-Z])'),
+              (Match m) => '${m[1]}-${m[2]!.toLowerCase()}',
+            );
     }
   }
 

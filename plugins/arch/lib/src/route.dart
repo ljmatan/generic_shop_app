@@ -49,6 +49,10 @@ abstract class GsaRouteType {
   ///
   Type get routeRuntimeType;
 
+  /// Route prefix used with [routeId].
+  ///
+  String? get routeIdPrefix;
+
   /// Route identifier used with named routes, URL path identifiers, etc.
   ///
   String get routeId;

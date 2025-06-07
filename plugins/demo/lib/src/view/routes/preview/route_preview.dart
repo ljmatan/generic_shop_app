@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
 import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_demo/src/view/routes/_routes.dart';
 
 class GsdRoutePreview extends GsdRoute {
@@ -19,7 +20,16 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   late GsaConfigProvider _provider;
 
-  late List<GsaRouteType> _routes;
+  late List<GsaRouteType> _providerRoutes;
+
+  List<GsaRouteType> get _routes {
+    return [
+      ...GsaRoutes.values,
+      ..._providerRoutes,
+    ]..removeWhere(
+        (route) => route.routeId == 'splash',
+      );
+  }
 
   final _navigatorKey = GlobalKey<NavigatorState>();
 
@@ -28,7 +38,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     super.initState();
     GsaRoute.navigatorKey = _navigatorKey;
     _provider = _providers.elementAt(0);
-    _routes = _provider.plugin.routes;
+    _providerRoutes = _provider.plugin.routes;
   }
 
   int _routeIndex = 0;
@@ -137,7 +147,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       }
                       setState(() {
                         _provider = _providers.elementAt(value);
-                        _routes = _provider.plugin.routes;
+                        _providerRoutes = _provider.plugin.routes;
                         _routeIndex = 0;
                         _routeDropdownKey = UniqueKey();
                       });

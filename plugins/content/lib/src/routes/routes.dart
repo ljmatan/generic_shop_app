@@ -199,6 +199,9 @@ enum GsaRoutes implements GsaRouteType {
   }
 
   @override
+  String? get routeIdPrefix => null;
+
+  @override
   String get routeId {
     switch (this) {
       default:

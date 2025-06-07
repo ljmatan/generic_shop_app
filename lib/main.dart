@@ -33,7 +33,21 @@ class _GsaState extends State<Gsa> {
       home: GsaRouteSplash(),
       theme: GsaTheme.data,
       onGenerateRoute: (settings) {
-        final primary = settings.name?.split('/')[0];
+        return MaterialPageRoute(
+          builder: (_) {
+            late GsaRouteType route;
+            try {
+              route = GsaConfig.provider.plugin.routes.firstWhere(
+                (route) => route.routeId == settings.name,
+              );
+            } catch (e) {
+              route = GsaRoutes.values.firstWhere(
+                (route) => route.routeId == settings.name,
+              );
+            }
+            return route.widget();
+          },
+        );
       },
     );
   }

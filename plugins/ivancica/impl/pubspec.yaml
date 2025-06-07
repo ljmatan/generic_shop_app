@@ -15,12 +15,12 @@ dependencies:
     path: ../../api
   generic_shop_app_architecture:
     path: ../../arch
+  generic_shop_app_content:
+    path: ../../content
   generic_shop_app_data:
     path: ../../data
   generic_shop_app_services:
     path: ../../services
-  generic_shop_app_content:
-    path: ../../content
 
 dev_dependencies:
   flutter_lints: ^5.0.0

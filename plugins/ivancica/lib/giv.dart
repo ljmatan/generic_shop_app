@@ -35,7 +35,7 @@ class GivPlugin implements GsaPlugin {
   }
 
   @override
-  List<GsaRouteType> get routes => GsaRoutes.values;
+  List<GsaRouteType> get routes => GivRoutes.values;
 
   @override
   ({
