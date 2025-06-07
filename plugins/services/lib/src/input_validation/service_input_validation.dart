@@ -15,10 +15,10 @@ class GsaServiceInputValidation extends GsaService {
   /// Requires at least 2 characters, and max 20 characters. Numbers are not allowed.
   ///
   String? personalName(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'Personal name input is empty.';
     final trimmed = input.trim();
     if (trimmed.length < 2 || trimmed.length > 20 || RegExp(r'\d').hasMatch(trimmed)) {
-      return 'Bitte Namen eintragen';
+      return 'Please verify your name input.';
     }
     return null;
   }
@@ -44,14 +44,14 @@ class GsaServiceInputValidation extends GsaService {
   /// The given value must be a proper email address.
   ///
   String? email(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'Email input is empty.';
     final trimmed = input.trim();
     if (trimmed.length < 2 ||
         trimmed.length > 50 ||
         !RegExp(
           r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
         ).hasMatch(trimmed)) {
-      return 'Bitte E-Mail-Adresse eintragen';
+      return 'Please verify your email input.';
     }
     return null;
   }
@@ -61,14 +61,16 @@ class GsaServiceInputValidation extends GsaService {
   /// Must be at least 8 characters long, and must include an uppercase letter, lowercase letter, and a number.
   ///
   String? password(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'Password input is empty.';
     final trimmed = input.trim();
     if (trimmed.length < 8 ||
         !RegExp(r'[A-Z]').hasMatch(trimmed) ||
         !RegExp(r'[0-9]').hasMatch(trimmed) ||
         !RegExp(r'[a-z]').hasMatch(trimmed)) {
-      return 'Das Passwort muss mindestens 8 Zeichen lang sein und 1 '
-          'Großbuchstaben, 1 Kleinbuchstaben und 1 Zahl enthalten.';
+      return 'The password must be 8 letters in length, '
+          'with at least one uppercase symbol, '
+          'with at least one lowercase symbol, '
+          'and with at least one number.';
     }
     return null;
   }
@@ -78,12 +80,12 @@ class GsaServiceInputValidation extends GsaService {
   /// Accepts the international phone number standard.
   ///
   String? phoneNumber(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'Phone number input is empty.';
     final trimmed = input.trim();
     if (!RegExp(
       r'((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))',
     ).hasMatch(trimmed)) {
-      return 'Please check your input.';
+      return 'Please verify your phone number input.';
     }
     return null;
   }
@@ -93,10 +95,10 @@ class GsaServiceInputValidation extends GsaService {
   /// The given value must be at least 4 characters in length.
   ///
   String? street(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'Street name input is empty.';
     final trimmed = input.trim();
     if (trimmed.length < 4) {
-      return 'Bitte überprüfen Sie Ihre Eingaben';
+      return 'Please verify your street name input.';
     }
     return null;
   }
@@ -106,10 +108,10 @@ class GsaServiceInputValidation extends GsaService {
   /// The given value must not be empty i.e., the value may contain both numbers and letters.
   ///
   String? houseNumber(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'House number input is empty.';
     final trimmed = input.trim();
     if (trimmed.isEmpty) {
-      return 'Bitte überprüfen Sie Ihre Eingaben';
+      return 'Please verify your house number input.';
     }
     return null;
   }
@@ -119,10 +121,10 @@ class GsaServiceInputValidation extends GsaService {
   /// The given value must not be empty.
   ///
   String? postCode(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'Postcode input is empty.';
     final trimmed = input.trim();
     if (trimmed.isEmpty) {
-      return 'Bitte überprüfen Sie Ihre Eingaben';
+      return 'Please verify your postcode input.';
     }
     return null;
   }
@@ -140,10 +142,10 @@ class GsaServiceInputValidation extends GsaService {
   /// The given value must not be empty, and may contain both letters and numbers.
   ///
   String? city(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'City name input is empty.';
     final trimmed = input.trim();
     if (trimmed.isEmpty) {
-      return 'Bitte überprüfen Sie Ihre Eingaben';
+      return 'Please verify your city name input.';
     }
     return null;
   }
@@ -153,10 +155,10 @@ class GsaServiceInputValidation extends GsaService {
   /// The given value must not be empty, and may contain both letters and numbers.
   ///
   String? state(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'State name input is empty.';
     final trimmed = input.trim();
     if (trimmed.isEmpty) {
-      return 'Bitte überprüfen Sie Ihre Eingaben';
+      return 'Please verify your state name input.';
     }
     return null;
   }
@@ -166,10 +168,10 @@ class GsaServiceInputValidation extends GsaService {
   /// The given value must not be empty, and may contain both letters and numbers.
   ///
   String? country(String? input) {
-    if (input == null) throw 'Input empty.';
+    if (input == null) return 'Country name input is empty.';
     final trimmed = input.trim();
     if (trimmed.isEmpty) {
-      return 'Bitte überprüfen Sie Ihre Eingaben';
+      return 'Please verify your country name input.';
     }
     return null;
   }

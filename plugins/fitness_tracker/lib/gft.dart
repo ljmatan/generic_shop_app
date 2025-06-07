@@ -6,12 +6,12 @@ export 'src/view/_view.dart';
 
 /// Generic Shop App Fitness Tracker.
 ///
-class Gft implements GsaPlugin {
-  const Gft._();
+class GftPlugin implements GsaPlugin {
+  const GftPlugin._();
 
   /// Globally-accessible class instance.
   ///
-  static const instance = Gft._();
+  static const instance = GftPlugin._();
 
   @override
   Future<void> init() async {
@@ -38,4 +38,14 @@ class Gft implements GsaPlugin {
         secondary: const Color(0xff303945),
         tertiary: const Color(0xffF6F9FC),
       );
+
+  @override
+  ({
+    String? cookieNotice,
+    String? helpAndFaq,
+    String? privacyPolicy,
+    String? termsAndConditions,
+  })? get documentUrls {
+    return null;
+  }
 }

@@ -9,12 +9,12 @@ export 'src/view/_view.dart';
 ///
 /// The class implementes resources required for the plugin to function.
 ///
-class Gsd implements GsaPlugin {
-  const Gsd._();
+class GsdPlugin implements GsaPlugin {
+  const GsdPlugin._();
 
   /// Globally-accessible class instance.
   ///
-  static const instance = Gsd._();
+  static const instance = GsdPlugin._();
 
   @override
   Future<void> init() async {
@@ -36,4 +36,14 @@ class Gsd implements GsaPlugin {
     Color? secondary,
     Color? tertiary,
   })? get themeProperties => null;
+
+  @override
+  ({
+    String? cookieNotice,
+    String? helpAndFaq,
+    String? privacyPolicy,
+    String? termsAndConditions,
+  })? get documentUrls {
+    return null;
+  }
 }

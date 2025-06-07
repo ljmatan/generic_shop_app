@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_demo/gsd.dart';
 import 'package:generic_shop_app_fitness_tracker/gft.dart';
@@ -147,6 +146,15 @@ abstract mixin class GsaPlugin {
     Color? secondary,
     Color? tertiary,
   })? get themeProperties;
+
+  /// Curated collection of provider document network resource URLs.
+  ///
+  ({
+    String? termsAndConditions,
+    String? privacyPolicy,
+    String? cookieNotice,
+    String? helpAndFaq,
+  })? get documentUrls;
 }
 
 /// App client / checkout process provider.
@@ -169,41 +177,11 @@ enum GsaConfigProvider {
   GsaPlugin get plugin {
     switch (this) {
       case GsaConfigProvider.demo:
-        return Gsd.instance;
+        return GsdPlugin.instance;
       case GsaConfigProvider.ivancica:
-        return Giv.instance;
+        return GivPlugin.instance;
       case GsaConfigProvider.fitnessTracker:
-        return Gft.instance;
+        return GftPlugin.instance;
     }
   }
-
-  /// Curated collection of provider document network resource URLs.
-  ///
-  ({
-    String? termsAndConditions,
-    String? privacyPolicy,
-    String? cookieNotice,
-    String? helpAndFaq,
-  }) get documentUrls => (
-        termsAndConditions: switch (this) {
-          GsaConfigProvider.ivancica => 'https://www.froddo.com/hr/politika-privatnosti-1',
-          GsaConfigProvider.demo => null,
-          GsaConfigProvider.fitnessTracker => null,
-        },
-        privacyPolicy: switch (this) {
-          GsaConfigProvider.ivancica => null,
-          GsaConfigProvider.demo => null,
-          GsaConfigProvider.fitnessTracker => null,
-        },
-        cookieNotice: switch (this) {
-          GsaConfigProvider.ivancica => null,
-          GsaConfigProvider.demo => null,
-          GsaConfigProvider.fitnessTracker => null,
-        },
-        helpAndFaq: switch (this) {
-          GsaConfigProvider.ivancica => 'https://shop.ivancica.hr/pitanja-i-odgovori',
-          GsaConfigProvider.demo => null,
-          GsaConfigProvider.fitnessTracker => null,
-        }
-      );
 }

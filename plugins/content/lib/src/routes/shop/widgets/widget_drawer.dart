@@ -127,7 +127,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           Navigator.pushNamed(context, 'contact');
                         },
                       ),
-                    if (GsaConfig.provider.documentUrls.helpAndFaq != null)
+                    if (GsaConfig.provider.plugin.documentUrls?.helpAndFaq != null)
                       (
                         label: 'Help & FAQ',
                         onTap: () {
@@ -149,7 +149,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         Navigator.pushNamed(context, 'licences');
                       },
                     ),
-                    if (GsaConfig.provider.documentUrls.termsAndConditions != null)
+                    if (GsaConfig.provider.plugin.documentUrls?.termsAndConditions != null)
                       (
                         label: 'Terms and Conditions',
                         onTap: () {
@@ -157,7 +157,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           Navigator.pushNamed(context, 'privacy-policy');
                         },
                       ),
-                    if (GsaConfig.provider.documentUrls.privacyPolicy != null)
+                    if (GsaConfig.provider.plugin.documentUrls?.privacyPolicy != null)
                       (
                         label: 'Privacy Policy',
                         onTap: () {

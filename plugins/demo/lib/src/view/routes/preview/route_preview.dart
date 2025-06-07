@@ -21,16 +21,19 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   late List<GsaRouteType> _routes;
 
-  int _routeIndex = 0;
-
-  Key _routeDropdownKey = UniqueKey();
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
     super.initState();
+    GsaRoute.navigatorKey = _navigatorKey;
     _provider = _providers.elementAt(0);
     _routes = _provider.plugin.routes;
   }
+
+  int _routeIndex = 0;
+
+  Key _routeDropdownKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +47,25 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
                     child: MediaQuery(
+                      key: Key(_routeIndex.toString()),
                       data: MediaQueryData(
                         size: _device.screenSize,
                         devicePixelRatio: _device.pixelRatio,
                       ),
                       child: device_frame.DeviceFrame(
                         device: _device,
-                        screen: _routes[_routeIndex].widget(),
+                        screen: Navigator(
+                          initialRoute: _routes[_routeIndex].routeId,
+                          onGenerateRoute: (settings) {
+                            return MaterialPageRoute(
+                              builder: (_) => _routes
+                                  .firstWhere(
+                                    (route) => route.routeId == settings.name,
+                                  )
+                                  .widget(),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

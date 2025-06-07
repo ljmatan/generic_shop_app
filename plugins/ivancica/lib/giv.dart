@@ -7,12 +7,12 @@ import 'package:generic_shop_app_ivancica/api/api.dart';
 
 /// Generic Shop App Ivancica.
 ///
-class Giv implements GsaPlugin {
-  const Giv._();
+class GivPlugin implements GsaPlugin {
+  const GivPlugin._();
 
   /// Globally-accessible class instance.
   ///
-  static const instance = Giv._();
+  static const instance = GivPlugin._();
 
   @override
   Future<void> init() async {
@@ -49,4 +49,14 @@ class Giv implements GsaPlugin {
         secondary: const Color(0xff303945),
         tertiary: const Color(0xffF6F9FC),
       );
+
+  @override
+  ({
+    String? cookieNotice,
+    String? helpAndFaq,
+    String? privacyPolicy,
+    String? termsAndConditions,
+  })? get documentUrls {
+    return null;
+  }
 }
