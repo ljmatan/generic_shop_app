@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_ivancica/api/api.dart';
@@ -119,65 +118,67 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           fontSize: 12,
                         ),
                       ),
-                      child: GsaWidgetText.rich([
-                        const GsaWidgetTextSpan(
-                          'I understand and agree to the ',
-                          style: TextStyle(
-                            fontSize: 12,
+                      child: GsaWidgetText.rich(
+                        [
+                          const GsaWidgetTextSpan(
+                            'I understand and agree to the ',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        GsaWidgetTextSpan(
-                          'terms and conditions',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            decoration: TextDecoration.underline,
-                            fontSize: 12,
+                          GsaWidgetTextSpan(
+                            'terms and conditions',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              decoration: TextDecoration.underline,
+                              fontSize: 12,
+                            ),
+                            onTap: () {
+                              Navigator.of(context).pushNamed('terms-and-conditions');
+                            },
                           ),
-                          onTap: () {
-                            Navigator.of(context).pushNamed('terms-and-conditions');
-                          },
-                        ),
-                        const GsaWidgetTextSpan(
-                          ', ',
-                          style: TextStyle(
-                            fontSize: 12,
+                          const GsaWidgetTextSpan(
+                            ', ',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        GsaWidgetTextSpan(
-                          'cookie policy',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            decoration: TextDecoration.underline,
-                            fontSize: 12,
+                          GsaWidgetTextSpan(
+                            'cookie policy',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              decoration: TextDecoration.underline,
+                              fontSize: 12,
+                            ),
+                            onTap: () {
+                              Navigator.of(context).pushNamed('privacy-policy');
+                            },
                           ),
-                          onTap: () {
-                            Navigator.of(context).pushNamed('privacy-policy');
-                          },
-                        ),
-                        const GsaWidgetTextSpan(
-                          ', and ',
-                          style: TextStyle(
-                            fontSize: 12,
+                          const GsaWidgetTextSpan(
+                            ', and ',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        GsaWidgetTextSpan(
-                          'privacy policy',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            decoration: TextDecoration.underline,
-                            fontSize: 12,
+                          GsaWidgetTextSpan(
+                            'privacy policy',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              decoration: TextDecoration.underline,
+                              fontSize: 12,
+                            ),
+                            onTap: () {
+                              Navigator.of(context).pushNamed('cookie-policy');
+                            },
                           ),
-                          onTap: () {
-                            Navigator.of(context).pushNamed('cookie-policy');
-                          },
-                        ),
-                        const GsaWidgetTextSpan(
-                          '.',
-                          style: TextStyle(
-                            fontSize: 12,
+                          const GsaWidgetTextSpan(
+                            '.',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                      ]),
+                        ],
+                      ),
                       value: _userAgreementAccepted,
                       onTap: (value) => setState(() => _userAgreementAccepted = value),
                     );
@@ -236,18 +237,25 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                     GsaDataUser.instance.user = user;
                                     break;
                                   default:
-                                    throw UnimplementedError();
+                                    throw UnimplementedError(
+                                      'Login method for ${GsaConfig.provider} not implemented.',
+                                    );
                                 }
                                 Navigator.pop(context);
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute<void>(
-                                    builder: (BuildContext context) => const GsaRouteShop(),
+                                    builder: (BuildContext context) {
+                                      return GsaConfig.provider.plugin.initialRoute();
+                                    },
                                   ),
                                   (route) => false,
                                 );
                               } catch (e) {
                                 debugPrint('Error logging in: $e');
                                 Navigator.pop(context);
+                                GsaWidgetOverlayAlert(
+                                  message: '$e',
+                                );
                               }
                             }
                           },

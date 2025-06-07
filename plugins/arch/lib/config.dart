@@ -1,9 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
+import 'package:generic_shop_app_demo/gsd.dart';
+import 'package:generic_shop_app_fitness_tracker/gft.dart';
+import 'package:generic_shop_app_ivancica/giv.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Project-level configuration methods and properties.
@@ -14,6 +18,12 @@ class GsaConfig {
   /// Defines the host client provider.
   ///
   /// App handling, such as the initialisation or content display, is based on this value.
+  ///
+  /// Example implementation:
+  ///
+  /// ```dart
+  /// flutter run --dart-define gsaProvider=demo
+  /// ```
   ///
   static GsaConfigProvider provider = GsaConfigProvider.values.firstWhereOrNull(
         (provider) => provider.name.toLowerCase() == const String.fromEnvironment('gsaProvider').toLowerCase(),
@@ -111,6 +121,34 @@ class GsaConfig {
   }
 }
 
+/// The application client implementations base service definitions.
+///
+/// These definitions are required to be implemented in order to comply with the
+/// application architecture, which may be based off of various client integrations.
+///
+abstract mixin class GsaPlugin {
+  /// Method implemented for managing and initialisationv of the application resources.
+  ///
+  Future<void> init();
+
+  /// App screen specified for display after the splash and user consent screens.
+  ///
+  Widget Function() get initialRoute;
+
+  /// A collection of routes specific to the plugin implementation.
+  ///
+  List<GsaRouteType> get routes;
+
+  /// Theme properties applied to the plugin.
+  ///
+  ({
+    String? fontFamily,
+    Color? primary,
+    Color? secondary,
+    Color? tertiary,
+  })? get themeProperties;
+}
+
 /// App client / checkout process provider.
 ///
 enum GsaConfigProvider {
@@ -118,36 +156,24 @@ enum GsaConfigProvider {
   ///
   demo,
 
-  /// Generic WooCommerce client provider identifier.
-  ///
-  woocommerce,
-
   /// Shoe sales client with a custom API system implementation.
   ///
   ivancica,
-}
 
-/// Extension methods and properties for the [GsaConfigProvider] object.
-///
-extension GsaConfigProviderExt on GsaConfigProvider {
-  /// Theme properties associated with a provider.
+  /// Health and fitness tracker client.
   ///
-  ({
-    String? fontFamily,
-    Color? primary,
-    Color? secondary,
-    Color? tertiary,
-  })? get themeProperties {
+  fitnessTracker;
+
+  /// Plugin implementation for a specified application client.
+  ///
+  GsaPlugin get plugin {
     switch (this) {
+      case GsaConfigProvider.demo:
+        return Gsd.instance;
       case GsaConfigProvider.ivancica:
-        return (
-          fontFamily: 'Merriweather Sans',
-          primary: const Color(0xff8DC63F),
-          secondary: const Color(0xff303945),
-          tertiary: const Color(0xffF6F9FC),
-        );
-      default:
-        return null;
+        return Giv.instance;
+      case GsaConfigProvider.fitnessTracker:
+        return Gft.instance;
     }
   }
 
@@ -162,22 +188,22 @@ extension GsaConfigProviderExt on GsaConfigProvider {
         termsAndConditions: switch (this) {
           GsaConfigProvider.ivancica => 'https://www.froddo.com/hr/politika-privatnosti-1',
           GsaConfigProvider.demo => null,
-          GsaConfigProvider.woocommerce => null,
+          GsaConfigProvider.fitnessTracker => null,
         },
         privacyPolicy: switch (this) {
           GsaConfigProvider.ivancica => null,
           GsaConfigProvider.demo => null,
-          GsaConfigProvider.woocommerce => null,
+          GsaConfigProvider.fitnessTracker => null,
         },
         cookieNotice: switch (this) {
           GsaConfigProvider.ivancica => null,
           GsaConfigProvider.demo => null,
-          GsaConfigProvider.woocommerce => null,
+          GsaConfigProvider.fitnessTracker => null,
         },
         helpAndFaq: switch (this) {
           GsaConfigProvider.ivancica => 'https://shop.ivancica.hr/pitanja-i-odgovori',
           GsaConfigProvider.demo => null,
-          GsaConfigProvider.woocommerce => null,
+          GsaConfigProvider.fitnessTracker => null,
         }
       );
 }

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_gligora/api/api.dart';
-import 'package:generic_shop_app_ivancica/api/api.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Route dislaying all of the logged information, implemented for debugging purposes.
@@ -24,37 +19,20 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
   ///
   bool _readyToInitialise = GsaServiceConsent.instance.hasMandatoryConsent;
 
-  /// Function implemented for application runtime memory setup.
+  /// Function implemented for application runtime setup.
   ///
   Future<void> _initialise() async {
-    switch (GsaConfig.provider) {
-      case GsaConfigProvider.demo:
-        throw UnimplementedError();
-      case GsaConfigProvider.woocommerce:
-        throw UnimplementedError();
-      case GsaConfigProvider.ivancica:
-        GsaDataMerchant.instance.merchant = GsaModelMerchant(
-          name: 'froddo',
-          logoImageUrl: 'assets/ivancica/logo.png',
-          contact: GsaModelContact(
-            email: 'web.shop@ivancica.hr',
-            phoneCountryCode: '+385',
-            phoneNumber: '42 402 271',
-          ),
-        );
-        final products = await GivApiProducts.instance.getProducts();
-        GsaDataSaleItems.instance.products.addAll(products);
-    }
+    await GsaConfig.provider.plugin.init();
     Future.delayed(
       Duration.zero,
       () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute<void>(
             builder: (BuildContext context) {
-              return GsaConfig.requiresAuthentication && !GsaDataUser.instance.authenticated ? const GsaRouteLogin() : const GsaRouteShop();
+              return GsaConfig.provider.plugin.initialRoute();
             },
           ),
+          (route) => false,
         );
       },
     );

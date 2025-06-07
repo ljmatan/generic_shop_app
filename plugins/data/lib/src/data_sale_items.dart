@@ -25,14 +25,9 @@ class GsaDataSaleItems extends GsaData {
   ///
   List<GsaModelSaleItem> paymentOptions = [];
 
-  /// A list of featured products.
-  ///
-  List<GsaModelSaleItem>? featured;
-
   @override
   void clear() {
     products.clear();
-    featured?.clear();
     categories.clear();
   }
 

@@ -14,16 +14,28 @@ class GsaTheme {
   static Brightness platformBrightness = Brightness.light; // PlatformDispatcher.instance.platformBrightness;
 
   static Color get _primaryColor {
-    if (GsaConfig.provider.themeProperties?.primary != null) return GsaConfig.provider.themeProperties!.primary!;
-    return platformBrightness == Brightness.light ? const Color(0xff67bc2a) : const Color(0xff63183f);
+    if (GsaConfig.provider.plugin.themeProperties?.primary != null) {
+      return GsaConfig.provider.plugin.themeProperties!.primary!;
+    }
+    if (platformBrightness == Brightness.light) {
+      return const Color(0xff67bc2a);
+    } else {
+      return const Color(0xff63183f);
+    }
   }
 
   static Color get _secondaryColor {
-    if (GsaConfig.provider.themeProperties?.secondary != null) return GsaConfig.provider.themeProperties!.secondary!;
-    return platformBrightness == Brightness.light ? const Color(0xff63183f) : const Color(0xffB7C9E2);
+    if (GsaConfig.provider.plugin.themeProperties?.secondary != null) {
+      return GsaConfig.provider.plugin.themeProperties!.secondary!;
+    }
+    if (platformBrightness == Brightness.light) {
+      return const Color(0xff63183f);
+    } else {
+      return const Color(0xffB7C9E2);
+    }
   }
 
-  static final _fontFamily = GsaConfig.provider.themeProperties?.fontFamily ?? 'Quicksand';
+  static final _fontFamily = GsaConfig.provider.plugin.themeProperties?.fontFamily ?? 'Quicksand';
 
   /// Getter method for the [ThemeData] implementation, specified according to the [platformBrightness] value.
   ///
@@ -35,14 +47,32 @@ class GsaTheme {
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       textTheme: platformBrightness == Brightness.light
-          ? Typography.blackRedwoodCity.copyWith(
-              bodyMedium: const TextStyle(
-                decorationColor: Colors.grey,
+          ? TextTheme(
+              bodySmall: TextStyle(
+                color: Colors.grey.shade600,
+              ),
+              titleLarge: TextStyle(
+                color: _primaryColor,
+              ),
+              titleMedium: TextStyle(
+                color: _primaryColor,
+              ),
+              titleSmall: TextStyle(
+                color: _primaryColor,
               ),
             )
-          : Typography.whiteRedwoodCity.copyWith(
-              bodyMedium: const TextStyle(
-                decorationColor: Colors.grey,
+          : TextTheme(
+              bodySmall: const TextStyle(
+                color: Colors.grey,
+              ),
+              titleLarge: TextStyle(
+                color: _primaryColor,
+              ),
+              titleMedium: TextStyle(
+                color: _primaryColor,
+              ),
+              titleSmall: TextStyle(
+                color: _primaryColor,
               ),
             ),
       dividerColor: Colors.grey.shade200,
@@ -55,7 +85,7 @@ class GsaTheme {
               onPrimary: Colors.white,
               secondary: _secondaryColor,
               onSecondary: Colors.white,
-              tertiary: GsaConfig.provider.themeProperties?.tertiary,
+              tertiary: GsaConfig.provider.plugin.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: Colors.white,
@@ -70,7 +100,7 @@ class GsaTheme {
               onPrimary: Colors.grey,
               secondary: _secondaryColor,
               onSecondary: Colors.grey,
-              tertiary: GsaConfig.provider.themeProperties?.tertiary,
+              tertiary: GsaConfig.provider.plugin.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: const Color(0xff333333),
@@ -99,7 +129,7 @@ class GsaTheme {
         ),
       ),
       cardTheme: platformBrightness == Brightness.light
-          ? CardTheme(
+          ? CardThemeData(
               elevation: 0,
               color: Colors.white,
               margin: EdgeInsets.zero,
@@ -110,7 +140,7 @@ class GsaTheme {
                 ),
               ),
             )
-          : CardTheme(
+          : CardThemeData(
               elevation: 0,
               color: const Color(0xff212121),
               margin: EdgeInsets.zero,

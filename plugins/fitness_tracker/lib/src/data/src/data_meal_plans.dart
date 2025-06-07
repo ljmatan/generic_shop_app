@@ -1,0 +1,3 @@
+class GftModelMealPlan {
+  GftModelMealPlan();
+}

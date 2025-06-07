@@ -41,6 +41,10 @@ import 'package:universal_html/html.dart' as html;
 /// ```
 ///
 abstract class GsaRouteType {
+  /// Instantiable route widget representation.
+  ///
+  Widget Function([dynamic args]) get widget;
+
   /// Specified route for this type.
   ///
   Type get routeRuntimeType;

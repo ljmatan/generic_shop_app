@@ -1,8 +1,12 @@
 // ignore_for_file: public_member_api_docs
 
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_ivancica/view/src/routes/product_details/route_product_details.dart';
 import 'package:generic_shop_app_ivancica/view/src/routes/user_profile/route_user_profile.dart';
+
+export 'package:generic_shop_app_architecture/gsar.dart';
 
 export 'product_details/route_product_details.dart';
 export 'user_profile/route_user_profile.dart';
@@ -12,6 +16,24 @@ export 'user_profile/route_user_profile.dart';
 enum GivRoutes implements GsaRouteType {
   productDetails,
   userProfile;
+
+  @override
+  Widget Function([dynamic args]) get widget {
+    switch (this) {
+      case GivRoutes.productDetails:
+        return ([args]) {
+          if (args is GsaModelSaleItem) {
+            return GivRouteSaleItemDetails(args);
+          } else {
+            throw Exception(
+              'Provided type ${args.runtimeType} is not of type GsaModelSaleItem.',
+            );
+          }
+        };
+      case GivRoutes.userProfile:
+        return ([args]) => const GivRouteUserProfile();
+    }
+  }
 
   @override
   Type get routeRuntimeType {

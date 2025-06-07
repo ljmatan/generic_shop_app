@@ -4,31 +4,13 @@
 
 library;
 
-import 'package:generic_shop_app_content/src/routes/bookmarks/route_bookmarks.dart';
-import 'package:generic_shop_app_content/src/routes/cart/route_cart.dart';
-import 'package:generic_shop_app_content/src/routes/chat/route_chat.dart';
-import 'package:generic_shop_app_content/src/routes/checkout/route_checkout.dart';
-import 'package:generic_shop_app_content/src/routes/contact/route_merchant_contact.dart';
-import 'package:generic_shop_app_content/src/routes/debug/route_debug.dart';
-import 'package:generic_shop_app_content/src/routes/guest_info/route_guest_info.dart';
-import 'package:generic_shop_app_content/src/routes/help/route_help.dart';
-import 'package:generic_shop_app_content/src/routes/licences/route_licences.dart';
-import 'package:generic_shop_app_content/src/routes/login/route_login.dart';
-import 'package:generic_shop_app_content/src/routes/merchant/route_merchant.dart';
-import 'package:generic_shop_app_content/src/routes/onboarding/route_onboarding.dart';
-import 'package:generic_shop_app_content/src/routes/order_status/route_order_status.dart';
-import 'package:generic_shop_app_content/src/routes/payment_status/route_payment_status.dart';
-import 'package:generic_shop_app_content/src/routes/register/route_register.dart';
-import 'package:generic_shop_app_content/src/routes/sale_item_details/route_sale_item_details.dart';
-import 'package:generic_shop_app_content/src/routes/settings/route_settings.dart';
-import 'package:generic_shop_app_content/src/routes/shop/route_shop.dart';
-import 'package:generic_shop_app_content/src/routes/splash/route_splash.dart';
-import 'package:generic_shop_app_content/src/routes/user_profile/route_user_profile.dart';
-import 'package:generic_shop_app_content/src/routes/webview/route_webview.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
-import 'package:generic_shop_app_content/src/routes/auth/route_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 export 'auth/route_auth.dart';
+export 'bookmarks/route_bookmarks.dart';
+export 'camera/route_camera.dart';
 export 'cart/route_cart.dart';
 export 'chat/route_chat.dart';
 export 'checkout/route_checkout.dart';
@@ -36,11 +18,13 @@ export 'contact/route_merchant_contact.dart';
 export 'debug/route_debug.dart';
 export 'guest_info/route_guest_info.dart';
 export 'help/route_help.dart';
+export 'legal_consent/route_legal_consent.dart';
 export 'licences/route_licences.dart';
 export 'login/route_login.dart';
 export 'merchant/route_merchant.dart';
 export 'onboarding/route_onboarding.dart';
 export 'order_status/route_order_status.dart';
+export 'payment_status/route_payment_status.dart';
 export 'register/route_register.dart';
 export 'sale_item_details/route_sale_item_details.dart';
 export 'settings/route_settings.dart';
@@ -54,6 +38,7 @@ export 'webview/route_webview.dart';
 enum GsaRoutes implements GsaRouteType {
   auth,
   bookmarks,
+  camera,
   cart,
   chat,
   checkout,
@@ -61,6 +46,7 @@ enum GsaRoutes implements GsaRouteType {
   debug,
   guestInfo,
   help,
+  legalConsent,
   licences,
   login,
   merchant,
@@ -76,12 +62,97 @@ enum GsaRoutes implements GsaRouteType {
   webView;
 
   @override
+  Widget Function([dynamic args]) get widget {
+    switch (this) {
+      case GsaRoutes.auth:
+        return ([args]) => const GsaRouteAuth();
+      case GsaRoutes.bookmarks:
+        return ([args]) => const GsaRouteBookmarks();
+      case GsaRoutes.camera:
+        return ([args]) => const GsaRouteCamera();
+      case GsaRoutes.cart:
+        return ([args]) => const GsaRouteCart();
+      case GsaRoutes.chat:
+        return ([args]) => const GsaRouteChat();
+      case GsaRoutes.checkout:
+        return ([args]) => const GsaRouteCheckout();
+      case GsaRoutes.contact:
+        return ([args]) => const GsaRouteMerchantContact();
+      case GsaRoutes.debug:
+        return ([args]) => const GsaRouteDebug();
+      case GsaRoutes.guestInfo:
+        return ([args]) => const GsaRouteGuestInfo();
+      case GsaRoutes.help:
+        return ([args]) => const GsaRouteHelp();
+      case GsaRoutes.legalConsent:
+        return ([args]) => const GsaRouteLegalConsent();
+      case GsaRoutes.licences:
+        return ([args]) => const GsaRouteLicences();
+      case GsaRoutes.login:
+        return ([args]) => const GsaRouteLogin();
+      case GsaRoutes.merchant:
+        return ([args]) => const GsaRouteMerchant();
+      case GsaRoutes.onboarding:
+        return ([args]) => const GsaRouteOnboarding();
+      case GsaRoutes.orderStatus:
+        return ([args]) => const GsaRouteOrderStatus();
+      case GsaRoutes.paymentStatus:
+        return ([args]) => const GsaRoutePaymentStatus();
+      case GsaRoutes.register:
+        return ([args]) => const GsaRouteRegister();
+      case GsaRoutes.saleItemDetails:
+        return ([args]) {
+          if (args is GsaModelSaleItem) {
+            return GsaRouteSaleItemDetails(args);
+          } else {
+            throw Exception(
+              'Provided type ${args.runtimeType} is not of type GsaModelSaleItem.',
+            );
+          }
+        };
+      case GsaRoutes.settings:
+        return ([args]) => const GsaRouteSettings();
+      case GsaRoutes.shop:
+        return ([args]) => const GsaRouteShop();
+      case GsaRoutes.splash:
+        return ([args]) => const GsaRouteSplash();
+      case GsaRoutes.userProfile:
+        return ([args]) => const GsaRouteUserProfile();
+      case GsaRoutes.webView:
+        return ([args]) {
+          if (args['url'] is! String) {
+            throw Exception(
+              'Provided type ${args['url']} is not of type String.',
+            );
+          }
+          if (args['urlPath'] is! String) {
+            throw Exception(
+              'Provided type ${args['urlPath']} is not of type String.',
+            );
+          }
+          if (args['title'] is! String) {
+            throw Exception(
+              'Provided type ${args['title']} is not of type String.',
+            );
+          }
+          return GsaRouteWebView(
+            url: args['url'],
+            urlPath: args['urlPath'],
+            title: args['title'],
+          );
+        };
+    }
+  }
+
+  @override
   Type get routeRuntimeType {
     switch (this) {
       case GsaRoutes.auth:
         return GsaRouteAuth;
       case GsaRoutes.bookmarks:
         return GsaRouteBookmarks;
+      case GsaRoutes.camera:
+        return GsaRouteCamera;
       case GsaRoutes.cart:
         return GsaRouteCart;
       case GsaRoutes.chat:
@@ -96,6 +167,8 @@ enum GsaRoutes implements GsaRouteType {
         return GsaRouteGuestInfo;
       case GsaRoutes.help:
         return GsaRouteHelp;
+      case GsaRoutes.legalConsent:
+        return GsaRouteLegalConsent;
       case GsaRoutes.licences:
         return GsaRouteLicences;
       case GsaRoutes.login:

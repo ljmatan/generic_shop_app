@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 @pragma('vm:entry-point')
@@ -10,7 +9,8 @@ void main() async {
   runApp(const Gsa());
 }
 
-/// The default application builder, class name name standing for "**G**eneric **S**hop **A**pp".
+/// The default application builder,
+/// class name name standing for "**G**eneric **S**hop **A**pp".
 ///
 class Gsa extends StatefulWidget {
   /// Entrypoint to the Flutter SDK application services,

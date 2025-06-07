@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 /// Authentication options screen, used for displaying user authentication options.
