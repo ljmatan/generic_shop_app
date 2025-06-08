@@ -47,7 +47,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: GsaTheme.systemUiOverlayStyle,
+      value: GsaTheme.instance.systemUiOverlayStyle,
       child: MediaQuery(
         data: MediaQuery.of(context).copyWith(
           textScaler: TextScaler.linear(
@@ -71,7 +71,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
                   _recordedNumberOfTaps++;
                   if (_recordedNumberOfTaps == 10) {
                     _recordedNumberOfTaps = 0;
-                    GsaRouteDebug().push();
+                    const GsaRouteDebug().push();
                   } else {
                     Future.delayed(
                       const Duration(seconds: 3),

@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'dart:ui' as dart_ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
@@ -6,16 +7,37 @@ import 'package:generic_shop_app_architecture/config.dart';
 /// The default theme configuration for the application project.
 ///
 class GsaTheme {
-  const GsaTheme._();
+  /// Default, unnamed constructor.
+  ///
+  /// Can be used for specifying a custom [plugin] definition,
+  /// and otherwise, the global [instance] property may be accessed.
+  ///
+  GsaTheme({
+    this.plugin,
+  }) : _plugin = plugin ?? GsaConfig.provider.plugin;
+
+  /// Optional client definition of the specified plugin integration.
+  ///
+  final GsaPlugin? plugin;
+
+  /// Specified client plugin integration,
+  /// optionally derived from the [plugin] property,
+  /// defaulting to [GsaConfig.provider.plugin].
+  ///
+  final GsaPlugin _plugin;
+
+  /// Globally-accessible class instance.
+  ///
+  static final instance = GsaTheme();
 
   /// The setting indicating the current brightness mode of the host platform.
   /// If the platform has no preference, [platformBrightness] defaults to [Brightness.light].
   ///
-  static Brightness platformBrightness = Brightness.light; // PlatformDispatcher.instance.platformBrightness;
+  static Brightness platformBrightness = dart_ui.PlatformDispatcher.instance.platformBrightness;
 
-  static Color get _primaryColor {
-    if (GsaConfig.provider.plugin.themeProperties?.primary != null) {
-      return GsaConfig.provider.plugin.themeProperties!.primary!;
+  Color get _primaryColor {
+    if (_plugin.themeProperties?.primary != null) {
+      return _plugin.themeProperties!.primary!;
     }
     if (platformBrightness == Brightness.light) {
       return const Color(0xff67bc2a);
@@ -24,9 +46,9 @@ class GsaTheme {
     }
   }
 
-  static Color get _secondaryColor {
-    if (GsaConfig.provider.plugin.themeProperties?.secondary != null) {
-      return GsaConfig.provider.plugin.themeProperties!.secondary!;
+  Color get _secondaryColor {
+    if (_plugin.themeProperties?.secondary != null) {
+      return _plugin.themeProperties!.secondary!;
     }
     if (platformBrightness == Brightness.light) {
       return const Color(0xff63183f);
@@ -35,11 +57,11 @@ class GsaTheme {
     }
   }
 
-  static final _fontFamily = GsaConfig.provider.plugin.themeProperties?.fontFamily ?? 'Quicksand';
+  String get _fontFamily => _plugin.themeProperties?.fontFamily ?? 'Quicksand';
 
   /// Getter method for the [ThemeData] implementation, specified according to the [platformBrightness] value.
   ///
-  static ThemeData get data {
+  ThemeData get data {
     return ThemeData(
       primaryColor: _primaryColor,
       fontFamily: _fontFamily,
@@ -85,7 +107,7 @@ class GsaTheme {
               onPrimary: Colors.white,
               secondary: _secondaryColor,
               onSecondary: Colors.white,
-              tertiary: GsaConfig.provider.plugin.themeProperties?.tertiary,
+              tertiary: _plugin.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: Colors.white,
@@ -100,7 +122,7 @@ class GsaTheme {
               onPrimary: Colors.grey,
               secondary: _secondaryColor,
               onSecondary: Colors.grey,
-              tertiary: GsaConfig.provider.plugin.themeProperties?.tertiary,
+              tertiary: _plugin.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: const Color(0xff333333),
@@ -176,7 +198,7 @@ class GsaTheme {
 
   /// Specifies a preference for the style of the system overlays.
   ///
-  static SystemUiOverlayStyle get systemUiOverlayStyle {
+  SystemUiOverlayStyle get systemUiOverlayStyle {
     return platformBrightness == Brightness.light
         ? const SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,

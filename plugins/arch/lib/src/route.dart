@@ -103,7 +103,7 @@ abstract class GsaRoute extends StatefulWidget {
 
   /// Currently visible route state instance.
   ///
-  static Type get presenting => _observables.last.runtimeType;
+  static GsaRouteState<GsaRoute> get presenting => _observables.last;
 
   /// Object holding the state of the [Navigator] widget.
   ///
@@ -145,7 +145,7 @@ abstract class GsaRoute extends StatefulWidget {
 abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAware, WidgetsBindingObserver {
   /// Currently visible route state instance.
   ///
-  Type get presentingRoute => GsaRoute.presenting;
+  GsaRouteState<GsaRoute> get presentingRoute => GsaRoute.presenting;
 
   /// Invokes the [setState] method in all of the [GsaRouteState] subclass instances.
   ///

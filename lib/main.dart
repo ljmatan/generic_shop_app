@@ -31,7 +31,7 @@ class _GsaState extends State<Gsa> {
       builder: (context, child) => GsaViewBuilder(child!),
       navigatorObservers: [GsaRoute.navigatorObserver],
       home: GsaRouteSplash(),
-      theme: GsaTheme.data,
+      theme: GsaTheme.instance.data,
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
           builder: (_) {
