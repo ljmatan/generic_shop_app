@@ -49,11 +49,10 @@ class GsaWidgetSwitchState extends State<GsaWidgetSwitch> {
               const SizedBox(height: 14),
             ],
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   width: 48,
-                  height: 36,
+                  height: 48,
                   child: Switch(
                     value: widget.value,
                     onChanged: widget.enabled
@@ -65,7 +64,7 @@ class GsaWidgetSwitchState extends State<GsaWidgetSwitch> {
                   ),
                 ),
                 if (widget.child != null) ...[
-                  const SizedBox(width: 9),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: widget.child!,
                   ),

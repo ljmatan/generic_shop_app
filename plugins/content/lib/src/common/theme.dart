@@ -106,7 +106,47 @@ class GsaTheme {
     }
   }
 
-  String get _fontFamily => _plugin.themeProperties?.fontFamily ?? 'Quicksand';
+  String get _fontFamily {
+    return _plugin.themeProperties?.fontFamily ?? 'Quicksand';
+  }
+
+  InputDecorationTheme get _inputDecorationTheme {
+    return InputDecorationTheme(
+      contentPadding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+      isDense: true,
+      filled: true,
+      fillColor: _brightness == Brightness.light ? const Color(0xffF0F3F5) : const Color(0xffb3b3b3),
+      labelStyle: const TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 12,
+      ),
+      errorStyle: const TextStyle(
+        color: Color(0xffDE1E36),
+        fontSize: 10,
+      ),
+      errorMaxLines: 1000,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(
+          color: _primaryColor,
+        ),
+      ),
+      errorBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(0xffDE1E36),
+        ),
+      ),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(0xffDE1E36),
+        ),
+      ),
+    );
+  }
 
   /// Getter method for the [ThemeData] implementation.
   ///
@@ -118,6 +158,10 @@ class GsaTheme {
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
+      dropdownMenuTheme: DropdownMenuThemeData(
+        inputDecorationTheme: _inputDecorationTheme,
+      ),
+      inputDecorationTheme: _inputDecorationTheme,
       textTheme: _brightness == Brightness.light
           ? TextTheme(
               bodySmall: TextStyle(

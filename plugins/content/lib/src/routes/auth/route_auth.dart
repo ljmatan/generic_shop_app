@@ -35,7 +35,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Theme.of(context).primaryColor.withValues(alpha: .1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Padding(
@@ -64,7 +64,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                         }) ...[
                           GsaWidgetTextSpan(
                             info.$1,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -72,11 +72,11 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                             ' - ${info.$2}\n',
                           ),
                         ],
-                        GsaWidgetTextSpan(
+                        const GsaWidgetTextSpan(
                           '\nYour journey starts now!',
                         ),
                       ],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                       ),
                     ),
@@ -99,7 +99,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                         ),
                         onPressed: () {
                           Navigator.popUntil(context, (route) => route.isFirst);
-                          GsaRouteRegister().push();
+                          const GsaRouteRegister().push();
                         },
                       ),
                     ),
@@ -125,7 +125,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                         ),
                         onPressed: () {
                           Navigator.popUntil(context, (route) => route.isFirst);
-                          GsaRouteLogin().push();
+                          const GsaRouteLogin().push();
                         },
                       ),
                     ),
@@ -142,7 +142,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                 ),
                 onPressed: () {
                   Navigator.of(context).popUntil((route) => route.isFirst);
-                  GsaRouteShop().push(replacement: true);
+                  const GsaRouteShop().push(replacement: true);
                 },
               ),
             ],

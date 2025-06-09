@@ -173,7 +173,6 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
                                     controller: widget.searchTermController,
                                     focusNode: widget.searchTermFocusNode,
                                     hintText: 'Search'.translated(context),
-                                    circularCorners: true,
                                     prefixIcon: Icon(
                                       Icons.search,
                                       color: Theme.of(context).primaryColor,

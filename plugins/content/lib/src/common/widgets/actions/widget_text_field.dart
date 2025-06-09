@@ -22,18 +22,13 @@ class GsaWidgetTextField extends StatefulWidget {
     this.maxLines = 1,
     this.onSubmitted,
     this.validator,
-    this.padding,
     this.displayDeleteButton = true,
     this.onFocusChange,
     this.onControllerChanged,
     this.onControllerCleared,
     this.onTap,
     this.fontSize,
-    this.highlightColor,
-    this.backgroundColor,
     this.textInputAction,
-    this.errorStyle,
-    this.circularCorners = false,
   }) : assert(
           obscureText == null || obscureText && suffixIcon == null,
           prefix == null || suffixIcon == null,
@@ -83,10 +78,6 @@ class GsaWidgetTextField extends StatefulWidget {
   ///
   final String? Function(String?)? validator;
 
-  /// Padding surrounding the visual elements.
-  ///
-  final EdgeInsets? padding;
-
   /// Whether to automatically display the delete "x" button.
   ///
   final bool displayDeleteButton;
@@ -107,21 +98,9 @@ class GsaWidgetTextField extends StatefulWidget {
   ///
   final double? fontSize;
 
-  /// Input field decoration colors.
-  ///
-  final Color? highlightColor, backgroundColor;
-
   /// An action the user has requested the text input control to perform.
   ///
   final TextInputAction? textInputAction;
-
-  /// [TextStyle] applied to the validator error message text.
-  ///
-  final TextStyle? errorStyle;
-
-  /// Whether the text input field is displayed with circular corners.
-  ///
-  final bool circularCorners;
 
   @override
   State<GsaWidgetTextField> createState() => _GsaWidgetTextFieldState();
@@ -142,8 +121,6 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
 
   late bool _obscureText;
 
-  late BorderRadius _borderRadius;
-
   @override
   void initState() {
     super.initState();
@@ -151,7 +128,6 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusNodeUpdate);
     _obscureText = widget.obscureText ?? false;
-    _borderRadius = BorderRadius.circular(widget.circularCorners ? 100 : 12);
   }
 
   @override
@@ -169,54 +145,26 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         filled: true,
-        fillColor: widget.backgroundColor ??
-            (_focusNode.hasFocus || widget.controller != null && widget.controller!.text.isNotEmpty
-                ? Theme.of(context).brightness == Brightness.light
-                    ? Colors.white
-                    : const Color(0xff404040)
-                : Theme.of(context).brightness == Brightness.light
-                    ? const Color(0xffF0F3F5)
-                    : const Color(0xffb3b3b3)),
-        isDense: true,
-        contentPadding: widget.padding ?? const EdgeInsets.fromLTRB(20, 16, 20, 16),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: _borderRadius,
-          borderSide: BorderSide(
-            color: widget.highlightColor ?? Theme.of(context).primaryColor,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: _borderRadius,
-          borderSide: widget.highlightColor != null
-              ? BorderSide(color: widget.highlightColor!)
-              : _focusNode.hasFocus || widget.controller != null && widget.controller!.text.isNotEmpty
+        fillColor: _focusNode.hasFocus || widget.controller != null && widget.controller!.text.isNotEmpty
+            ? Theme.of(context).brightness == Brightness.light
+                ? Colors.white
+                : const Color(0xff404040)
+            : Theme.of(context).inputDecorationTheme.fillColor,
+        enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder?.copyWith(
+              borderSide: _focusNode.hasFocus || widget.controller != null && widget.controller!.text.isNotEmpty
                   ? const BorderSide(
                       color: Color(0xffE2E5EB),
                     )
                   : BorderSide.none,
-        ),
+            ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: _borderRadius,
-          borderSide: widget.highlightColor != null
-              ? BorderSide(color: widget.highlightColor!)
-              : widget.controller == null || widget.controller!.text.isEmpty
-                  ? BorderSide.none
-                  : const BorderSide(
-                      color: Color(0xffADBDC6),
-                    ),
+          borderSide: widget.controller == null || widget.controller!.text.isEmpty
+              ? BorderSide.none
+              : const BorderSide(
+                  color: Color(0xffADBDC6),
+                ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: _borderRadius,
-          borderSide: const BorderSide(
-            color: Color(0xffDE1E36),
-          ),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: _borderRadius,
-          borderSide: const BorderSide(
-            color: Color(0xffDE1E36),
-          ),
-        ),
+        prefix: widget.prefix,
         prefixIcon: widget.prefixIcon != null
             ? SizedBox(
                 width: 48,
@@ -227,12 +175,19 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
               )
             : null,
         suffix: widget.suffix,
-        suffixIcon:
-            widget.obscureText == true || _focusNode.hasFocus && widget.controller?.text.isNotEmpty == true && widget.displayDeleteButton
+        suffixIcon: widget.suffixIcon != null
+            ? SizedBox(
+                width: 48,
+                height: 48,
+                child: Center(
+                  child: widget.suffixIcon!,
+                ),
+              )
+            : widget.obscureText == true || _focusNode.hasFocus && widget.controller?.text.isNotEmpty == true && widget.displayDeleteButton
                 ? IconButton(
                     icon: Icon(
                       widget.obscureText == true ? Icons.visibility : Icons.close,
-                      color: widget.highlightColor ?? (_obscureText ? const Color(0xff63747E) : Theme.of(context).primaryColor),
+                      color: _obscureText ? const Color(0xff63747E) : Theme.of(context).primaryColor,
                     ),
                     iconSize: 18,
                     onPressed: widget.obscureText == true
@@ -244,27 +199,9 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
                             setState(() => widget.controller!.clear());
                           },
                   )
-                : widget.suffixIcon != null
-                    ? SizedBox(
-                        width: 48,
-                        height: 48,
-                        child: Center(
-                          child: widget.suffixIcon!,
-                        ),
-                      )
-                    : null,
+                : null,
         hintText: widget.hintText,
         labelText: widget.labelText,
-        labelStyle: TextStyle(
-          fontWeight: _focusNode.hasFocus || widget.controller?.text.isNotEmpty == true ? FontWeight.w600 : FontWeight.w400,
-          color: _focusNode.hasFocus || widget.controller?.text.isNotEmpty == true ? const Color(0xff283033) : const Color(0xff63747E),
-        ),
-        errorStyle: widget.errorStyle ??
-            const TextStyle(
-              color: Color(0xffDE1E36),
-              fontSize: 10,
-            ),
-        errorMaxLines: 2,
         helperStyle: const TextStyle(
           color: Color(0xff63747E),
           fontSize: 10,

@@ -68,6 +68,18 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   late _NavigatorObserver _navigatorObserver;
 
+  String? _toHexRGB(Color? color) {
+    if (color == null) return null;
+    return '${(color.r * 255).round().toRadixString(16).padLeft(2, '0')}'
+            '${(color.g * 255).round().toRadixString(16).padLeft(2, '0')}'
+            '${(color.b * 255).round().toRadixString(16).padLeft(2, '0')}'
+        .toUpperCase();
+  }
+
+  late TextEditingController _primaryColorTextController, _secondaryColorTextController;
+
+  bool _darkTheme = false;
+
   @override
   void initState() {
     super.initState();
@@ -77,9 +89,13 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
+    _primaryColorTextController = TextEditingController(
+      text: _toHexRGB(_provider.plugin.themeProperties?.primary),
+    );
+    _secondaryColorTextController = TextEditingController(
+      text: _toHexRGB(_provider.plugin.themeProperties?.secondary),
+    );
   }
-
-  bool _darkTheme = false;
 
   @override
   Widget build(BuildContext context) {
@@ -291,17 +307,51 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Theme',
+                    'Route',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Divider(height: 20),
                   const SizedBox(height: 16),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Theme',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Divider(height: 20),
                   GsaWidgetSwitch(
                     value: _darkTheme,
                     child: Text('Dark Theme'),
                     onTap: (value) {
                       setState(() => _darkTheme = value);
                     },
+                  ),
+                  const SizedBox(height: 20),
+                  GsaWidgetTextField(
+                    controller: _primaryColorTextController,
+                    labelText: 'Primary Color',
+                    prefix: Text(
+                      '#',
+                    ),
+                    suffixIcon: Icon(
+                      Icons.circle,
+                      color: Color(
+                        int.tryParse('0xff${_primaryColorTextController.text}') ?? 0,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  GsaWidgetTextField(
+                    controller: _secondaryColorTextController,
+                    labelText: 'Secondary Color',
+                    prefix: Text(
+                      '#',
+                    ),
+                    suffixIcon: Icon(
+                      Icons.circle,
+                      color: Color(
+                        int.tryParse('0xff${_secondaryColorTextController.text}') ?? 0,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -310,6 +360,13 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _primaryColorTextController.dispose();
+    _secondaryColorTextController.dispose();
+    super.dispose();
   }
 }
 
