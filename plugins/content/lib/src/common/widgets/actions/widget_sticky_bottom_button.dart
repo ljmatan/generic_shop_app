@@ -14,17 +14,26 @@ class GsaWidgetStickyBottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Colors.black.withValues(alpha: .05),
+        ),
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(8),
           topRight: Radius.circular(8),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+        padding: EdgeInsets.fromLTRB(
+          16,
+          16,
+          16,
+          16 + MediaQuery.of(context).padding.bottom,
+        ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: OutlinedButton(
+          child: FilledButton(
             child: Text(
               label,
             ),

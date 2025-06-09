@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route displaying the sale item details, also providing related checkout / cart mechanisms.
 ///
@@ -25,18 +24,22 @@ class _GsaRouteSaleItemDetailsState extends GsaRouteState<GsaRouteSaleItemDetail
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+          Expanded(
+            child: widget.saleItem?.originUrl != null
+                ? GsaWidgetWebContent(
+                    widget.saleItem!.originUrl!,
+                  )
+                : ListView(
+                    children: [],
+                  ),
+          ),
+        ],
       ),
-      body: widget.saleItem?.originUrl != null
-          ? GsaWidgetWebContent(
-              widget.saleItem!.originUrl!,
-            )
-          : ListView(
-              children: [],
-            ),
     );
   }
 }

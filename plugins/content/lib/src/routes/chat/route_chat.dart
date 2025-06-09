@@ -16,10 +16,12 @@ class _GsaRouteChatState extends GsaRouteState<GsaRouteChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+        ],
       ),
     );
   }

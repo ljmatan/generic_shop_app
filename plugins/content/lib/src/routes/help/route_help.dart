@@ -16,13 +16,17 @@ class _GsaRouteHelpState extends GsaRouteState<GsaRouteHelp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
-      ),
-      body: const GsaWidgetWebContent(
-        'https://example.org',
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+          const Expanded(
+            child: GsaWidgetWebContent(
+              'https://example.org',
+            ),
+          ),
+        ],
       ),
     );
   }

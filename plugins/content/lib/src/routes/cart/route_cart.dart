@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/src/common/widgets/actions/widget_sticky_bottom_button.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -35,13 +35,11 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
-      ),
       body: Column(
         children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
           Expanded(
             child: ListView(
               controller: _scrollController,
@@ -53,21 +51,26 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                     return Row(
                       children: [
                         Expanded(
-                          child: GsaWidgetText.rich([
-                            const GsaWidgetTextSpan(
-                              'Cart Items ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey,
+                          child: GsaWidgetText.rich(
+                            [
+                              const GsaWidgetTextSpan(
+                                'Cart Items ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey,
+                                ),
                               ),
-                            ),
-                            GsaWidgetTextSpan(
-                              '($cartItemCount)',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
+                              GsaWidgetTextSpan(
+                                '($cartItemCount)',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
+                            ],
+                            style: const TextStyle(
+                              fontSize: 16,
                             ),
-                          ], style: const TextStyle(fontSize: 16)),
+                          ),
                         ),
                         Tooltip(
                           message: 'The total price of your cart is an estimate based on the available display price of items added to it. '
@@ -138,8 +141,13 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                                 '${category.$2.name} '
                                 '( TODO )',
                                 style: _filteredCategoryIds.contains(category.$2.id)
-                                    ? const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)
-                                    : const TextStyle(color: Colors.grey),
+                                    ? const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      )
+                                    : const TextStyle(
+                                        color: Colors.grey,
+                                      ),
                               ),
                               onPressed: () {
                                 if (category.$2.id != null) {
@@ -158,21 +166,35 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                 const SizedBox(height: 26),
                 for (final item in _filteredCategoryIds.isEmpty
                     ? GsaDataCheckout.instance.orderDraft.items
-                    : GsaDataCheckout.instance.orderDraft.items.where((saleItem) {
-                        return _filteredCategoryIds.contains(saleItem.categoryId);
-                      }))
-                  Padding(padding: const EdgeInsets.only(bottom: 20), child: _WidgetCartItem(item, key: UniqueKey())),
+                    : GsaDataCheckout.instance.orderDraft.items.where(
+                        (saleItem) {
+                          return _filteredCategoryIds.contains(saleItem.categoryId);
+                        },
+                      ))
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: _WidgetCartItem(
+                      item,
+                      key: UniqueKey(),
+                    ),
+                  ),
                 const SizedBox(height: 12),
                 const GsaWidgetText(
                   'The items in your cart are subject to verification and adjustment at the time of checkout. '
                   'We reserve the right to modify or cancel orders based on the availability and pricing.',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
                 ),
                 const SizedBox(height: 30),
                 const GsaWidgetHeadline('Promo Code'),
                 const GsaWidgetText(
                   'Enter your promo code here for exclusive discounts and special offers.',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -180,10 +202,20 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                     Expanded(
                       child: GsaWidgetTextField(
                         labelText: 'Coupon Code',
-                        prefixIcon: Icon(Icons.redeem, color: Theme.of(context).primaryColor),
+                        prefixIcon: Icon(
+                          Icons.redeem,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
-                    IconButton(icon: Icon(Icons.add, color: Theme.of(context).primaryColor), iconSize: 30, onPressed: () {}),
+                    IconButton(
+                      icon: Icon(
+                        Icons.add,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      iconSize: 30,
+                      onPressed: () {},
+                    ),
                   ],
                 ),
                 Align(
@@ -192,8 +224,16 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                     padding: const EdgeInsets.only(top: 14),
                     child: InkWell(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
-                        child: GsaWidgetText('Add a New Coupon', style: TextStyle(color: Theme.of(context).primaryColor)),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 3,
+                        ),
+                        child: GsaWidgetText(
+                          'Add a New Coupon',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
                       ),
                       onTap: () {},
                     ),
@@ -205,71 +245,66 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                 Card(
                   color: Colors.grey[100],
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: GsaWidgetText.rich([
-                      const GsaWidgetTextSpan('By proceeding with checkout, you acknowledge and accept our '),
-                      GsaWidgetTextSpan(
-                        'Terms of Service',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColor,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    child: GsaWidgetText.rich(
+                      [
+                        const GsaWidgetTextSpan(
+                          'By proceeding with checkout, you acknowledge and accept our ',
                         ),
-                        onTap: () {
-                          Navigator.of(context).pushNamed('terms-and-conditions');
-                        },
-                      ),
-                      const GsaWidgetTextSpan(' and '),
-                      GsaWidgetTextSpan(
-                        'Privacy Policy',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColor,
+                        GsaWidgetTextSpan(
+                          'Terms of Service',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onTap: () {
+                            Navigator.of(context).pushNamed('terms-and-conditions');
+                          },
                         ),
-                        onTap: () {
-                          Navigator.of(context).pushNamed('privacy-policy');
-                        },
+                        const GsaWidgetTextSpan(
+                          ' and ',
+                        ),
+                        GsaWidgetTextSpan(
+                          'Privacy Policy',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onTap: () {
+                            Navigator.of(context).pushNamed('privacy-policy');
+                          },
+                        ),
+                        const GsaWidgetTextSpan('.'),
+                      ],
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
                       ),
-                      const GsaWidgetTextSpan('.'),
-                    ], style: const TextStyle(color: Colors.black, fontSize: 12)),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.black.withOpacity(0.05)),
-              borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 10),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: FilledButton(
-                      child: const GsaWidgetText('Checkout', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white)),
-                      onPressed: () async {
-                        if (_scrollController.position.pixels < _scrollController.position.maxScrollExtent - 20) {
-                          await _scrollController.animateTo(
-                            _scrollController.position.maxScrollExtent + 20,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.fastOutSlowIn,
-                          );
-                        } else {
-                          Navigator.popUntil(context, (route) => route.isFirst);
-                          const GsaRouteCheckout().push(context: context);
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).padding.bottom),
-                ],
-              ),
-            ),
+          GsaWidgetStickyBottomButton(
+            label: 'Checkout',
+            onTap: () async {
+              if (_scrollController.position.pixels < _scrollController.position.maxScrollExtent - 20) {
+                await _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent + 20,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.fastOutSlowIn,
+                );
+              } else {
+                Navigator.popUntil(context, (route) => route.isFirst);
+                const GsaRouteCheckout().push(context: context);
+              }
+            },
           ),
         ],
       ),

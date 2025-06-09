@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route designed for displaying of the cookie policy and related consent mechanisms.
 ///
@@ -34,13 +33,17 @@ class _GsaRouteWebViewState extends GsaRouteState<GsaRouteWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.title,
-        ),
-      ),
-      body: GsaWidgetWebContent(
-        widget.url,
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+          Expanded(
+            child: GsaWidgetWebContent(
+              widget.url,
+            ),
+          ),
+        ],
       ),
     );
   }

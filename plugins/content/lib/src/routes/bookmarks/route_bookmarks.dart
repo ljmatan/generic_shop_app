@@ -34,186 +34,190 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 24,
-        ),
+      body: Column(
         children: [
-          GsaWidgetText(
-            'Your Wishlist',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
+          GsaWidgetAppBar(
+            label: widget.displayName,
           ),
-          const Divider(height: 32),
-          const GsaWidgetText(
-            'A selection of your hand-picked favorites, waiting for the perfect moment. '
-            'Keep track of what inspires you, and be the first to know about restocks, exclusive offers, and price drops.',
-            style: TextStyle(
-              fontSize: 12,
-            ),
-          ),
-          const Divider(height: 32),
-          if (GsaServiceBookmarks.instance.bookmarks.isEmpty)
-            const Text(
-              'No items found.',
-              style: TextStyle(
-                color: Colors.grey,
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 24,
               ),
-            )
-          else
-            for (final bookmarkId in GsaServiceBookmarks.instance.bookmarks)
-              Builder(
-                builder: (context) {
-                  final item = GsaDataSaleItems.instance.products.firstWhereOrNull((saleItem) => saleItem.id == bookmarkId);
-                  if (item == null) return const SizedBox();
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: InkWell(
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 18,
-                          ),
-                          child: Stack(
-                            children: [
-                              Row(
-                                children: [
-                                  if (item.imageUrls?.isNotEmpty == true)
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
-                                          border: Border.all(
-                                            width: 2,
-                                            color: Theme.of(context).colorScheme.tertiary,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(2),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(12),
-                                            child: GsaWidgetImage.network(
-                                              item.imageUrls![0],
-                                              width: 80,
-                                              height: 80,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GsaWidgetText(
+                  'Your Wishlist',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const Divider(height: 32),
+                const GsaWidgetText(
+                  'A selection of your hand-picked favorites, waiting for the perfect moment. '
+                  'Keep track of what inspires you, and be the first to know about restocks, exclusive offers, and price drops.',
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+                const Divider(height: 32),
+                if (GsaServiceBookmarks.instance.bookmarks.isEmpty)
+                  const Text(
+                    'No items found.',
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  )
+                else
+                  for (final bookmarkId in GsaServiceBookmarks.instance.bookmarks)
+                    Builder(
+                      builder: (context) {
+                        final item = GsaDataSaleItems.instance.products.firstWhereOrNull((saleItem) => saleItem.id == bookmarkId);
+                        if (item == null) return const SizedBox();
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: InkWell(
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 18,
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Row(
                                       children: [
-                                        if (item.name != null)
+                                        if (item.imageUrls?.isNotEmpty == true)
                                           Padding(
-                                            padding: const EdgeInsets.only(bottom: 4),
-                                            child: Text(
-                                              item.name!,
-                                              style: const TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
+                                            padding: const EdgeInsets.only(right: 10),
+                                            child: DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(12),
+                                                border: Border.all(
+                                                  width: 2,
+                                                  color: Theme.of(context).colorScheme.tertiary,
+                                                ),
                                               ),
-                                            ),
-                                          ),
-                                        if (GsaConfig.provider == GsaConfigProvider.ivancica && item.options?.isNotEmpty == true)
-                                          Padding(
-                                            padding: const EdgeInsets.only(bottom: 2),
-                                            child: Builder(
-                                              builder: (context) {
-                                                final sortedOptions = List.from(item.options!)
-                                                  ..sort(
-                                                    (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                                                      b.price?.centum ?? double.infinity,
-                                                    ),
-                                                  );
-                                                sortedOptions.removeWhere(
-                                                  (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
-                                                );
-                                                if (sortedOptions.isEmpty) return const SizedBox();
-                                                return Text(
-                                                  'Sizes: ' +
-                                                      (sortedOptions.length > 1
-                                                          ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
-                                                          : sortedOptions[0].name!),
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(2),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  child: GsaWidgetImage.network(
+                                                    item.imageUrls![0],
+                                                    width: 80,
+                                                    height: 80,
                                                   ),
-                                                );
-                                              },
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        if (item.price?.centum != null)
-                                          GsaWidgetText(
-                                            '${item.price!.formatted()}' +
-                                                (item.price?.discount?.centum != null ? ' ${item.price!.discount!.formatted()}' : ''),
-                                            maxLines: 1,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          )
-                                        else if (item.options?.any((saleItemOption) => saleItemOption.price?.centum != null) == true)
-                                          GsaWidgetText.rich(
-                                            [
-                                              const GsaWidgetTextSpan(
-                                                'From ',
-                                                style: TextStyle(
-                                                  fontSize: 12,
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              if (item.name != null)
+                                                Padding(
+                                                  padding: const EdgeInsets.only(bottom: 4),
+                                                  child: Text(
+                                                    item.name!,
+                                                    style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                              GsaWidgetTextSpan(
-                                                (List.from(item.options!)
-                                                      ..sort(
-                                                        (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                                                          b.price?.centum ?? double.infinity,
+                                              if (GsaConfig.provider == GsaConfigProvider.ivancica && item.options?.isNotEmpty == true)
+                                                Padding(
+                                                  padding: const EdgeInsets.only(bottom: 2),
+                                                  child: Builder(
+                                                    builder: (context) {
+                                                      final sortedOptions = List.from(item.options!)
+                                                        ..sort(
+                                                          (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                                                            b.price?.centum ?? double.infinity,
+                                                          ),
+                                                        );
+                                                      sortedOptions.removeWhere(
+                                                        (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
+                                                      );
+                                                      if (sortedOptions.isEmpty) return const SizedBox();
+                                                      return Text(
+                                                        'Sizes: ' +
+                                                            (sortedOptions.length > 1
+                                                                ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
+                                                                : sortedOptions[0].name!),
+                                                        style: const TextStyle(
+                                                          fontSize: 12,
                                                         ),
-                                                      ))[0]
-                                                    .price!
-                                                    .formatted()!,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
+                                              if (item.price?.centum != null)
+                                                GsaWidgetText(
+                                                  '${item.price!.formatted()}' +
+                                                      (item.price?.discount?.centum != null ? ' ${item.price!.discount!.formatted()}' : ''),
+                                                  maxLines: 1,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                )
+                                              else if (item.options?.any((saleItemOption) => saleItemOption.price?.centum != null) == true)
+                                                GsaWidgetText.rich(
+                                                  [
+                                                    const GsaWidgetTextSpan(
+                                                      'From ',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                    GsaWidgetTextSpan(
+                                                      (List.from(item.options!)
+                                                            ..sort(
+                                                              (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                                                                b.price?.centum ?? double.infinity,
+                                                              ),
+                                                            ))[0]
+                                                          .price!
+                                                          .formatted()!,
+                                                      style: const TextStyle(
+                                                        fontWeight: FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                             ],
                                           ),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Positioned(
-                                right: 0,
-                                child: Icon(
-                                  Icons.info_outline,
-                                  color: Theme.of(context).primaryColor,
+                                    Positioned(
+                                      right: 0,
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
+                            onTap: () {
+                              (switch (GsaConfig.provider) {
+                                GsaConfigProvider.ivancica => GivRouteSaleItemDetails(item),
+                                _ => GsaRouteSaleItemDetails(item),
+                              })
+                                  .push();
+                            },
                           ),
-                        ),
-                      ),
-                      onTap: () {
-                        (switch (GsaConfig.provider) {
-                          GsaConfigProvider.ivancica => GivRouteSaleItemDetails(item),
-                          _ => GsaRouteSaleItemDetails(item),
-                        })
-                            .push();
+                        );
                       },
-                    ),
-                  );
-                },
-              )
+                    )
+              ],
+            ),
+          ),
         ],
       ),
     );

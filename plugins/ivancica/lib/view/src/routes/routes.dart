@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_ivancica/view/src/routes/product_details/route_product_details.dart';

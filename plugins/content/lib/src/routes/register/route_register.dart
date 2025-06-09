@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -34,73 +33,81 @@ class _GsaRouteRegisterState extends GsaRouteState<GsaRouteRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: GsaWidgetText(widget.displayName)),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            const GsaWidgetText(
-              'Register an Account',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+          Expanded(
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  const GsaWidgetText(
+                    'Register an Account',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const GsaWidgetText(
+                    'Registering an account grants you access to exclusive benefits and features.',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: GsaWidgetText(
+                      'Account Details',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  GsaWidgetTextField(
+                    controller: _usernameTextController,
+                    labelText: 'Username',
+                    validator: GsaServiceInputValidation.instance.email,
+                  ),
+                  const SizedBox(height: 12),
+                  GsaWidgetTextField(
+                    controller: _passwordTextController,
+                    labelText: 'Password',
+                    validator: GsaServiceInputValidation.instance.password,
+                  ),
+                  const SizedBox(height: 12),
+                  GsaWidgetTextField(
+                    controller: _confirmPasswordTextController,
+                    labelText: 'Confirm Password',
+                    validator: GsaServiceInputValidation.instance.email,
+                  ),
+                  const SizedBox(height: 20),
+                  GsaWidgetTermsConfirmation(
+                    value: _termsAccepted,
+                    onValueChanged: (value) {
+                      _termsAccepted = value;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: FilledButton(
+                      child: const GsaWidgetText('Continue'),
+                      onPressed: () async {},
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            const GsaWidgetText(
-              'Registering an account grants you access to exclusive benefits and features.',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: GsaWidgetText(
-                'Account Details',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                ),
-              ),
-            ),
-            const SizedBox(height: 18),
-            GsaWidgetTextField(
-              controller: _usernameTextController,
-              labelText: 'Username',
-              validator: GsaServiceInputValidation.instance.email,
-            ),
-            const SizedBox(height: 12),
-            GsaWidgetTextField(
-              controller: _passwordTextController,
-              labelText: 'Password',
-              validator: GsaServiceInputValidation.instance.password,
-            ),
-            const SizedBox(height: 12),
-            GsaWidgetTextField(
-              controller: _confirmPasswordTextController,
-              labelText: 'Confirm Password',
-              validator: GsaServiceInputValidation.instance.email,
-            ),
-            const SizedBox(height: 20),
-            GsaWidgetTermsConfirmation(
-              value: _termsAccepted,
-              onValueChanged: (value) {
-                _termsAccepted = value;
-              },
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: FilledButton(
-                child: GsaWidgetText('Continue'),
-                onPressed: () async {},
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

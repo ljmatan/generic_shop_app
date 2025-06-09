@@ -64,36 +64,40 @@ class _GsaRouteCameraState extends GsaRouteState<GsaRouteCamera> with WidgetsBin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
-      ),
-      body: FutureBuilder(
-        key: _cameraInitFutureKey,
-        future: _initialiseCameraController(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+          Expanded(
+            child: FutureBuilder(
+              key: _cameraInitFutureKey,
+              future: _initialiseCameraController(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-          if (snapshot.hasError) {
-            return Center(
-              child: GsaWidgetError(
-                snapshot.error.toString(),
-                retry: () {
-                  setState(() => _cameraInitFutureKey = UniqueKey());
-                },
-              ),
-            );
-          }
+                if (snapshot.hasError) {
+                  return Center(
+                    child: GsaWidgetError(
+                      snapshot.error.toString(),
+                      retry: () {
+                        setState(() => _cameraInitFutureKey = UniqueKey());
+                      },
+                    ),
+                  );
+                }
 
-          return Column(
-            children: [],
-          );
-        },
+                return Column(
+                  children: [],
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// Route displaying the application onboarding guide and other relevant information.
 ///
@@ -16,6 +15,14 @@ class GsaRouteOnboarding extends GsacRoute {
 class _GsaRouteOnboardingState extends GsaRouteState<GsaRouteOnboarding> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: GsaWidgetText(widget.displayName)));
+    return Scaffold(
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+        ],
+      ),
+    );
   }
 }

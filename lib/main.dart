@@ -37,13 +37,9 @@ class _GsaState extends State<Gsa> {
           builder: (_) {
             late GsaRouteType route;
             try {
-              route = GsaConfig.provider.plugin.routes.firstWhere(
-                (route) => route.routeId == settings.name,
-              );
+              route = GsaConfig.provider.plugin.routes.firstWhere((route) => route.routeId == settings.name);
             } catch (e) {
-              route = GsaRoutes.values.firstWhere(
-                (route) => route.routeId == settings.name,
-              );
+              route = GsaRoutes.values.firstWhere((route) => route.routeId == settings.name);
             }
             return route.widget();
           },

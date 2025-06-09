@@ -6,7 +6,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
@@ -46,68 +45,72 @@ class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const BackButtonIcon(),
-          onPressed: () async {
-            if ((_pageController.page ?? 0) > .5) {
-              if ((_pageController.page ?? 0) > 1 && _pageController.page! < 2) {
-                GsaDataCheckout.instance.orderDraft.paymentType = null;
-                GsaDataCheckout.instance.onCartUpdate();
-              }
-              await _pageController.animateToPage(
-                (_pageController.page! - 1 > 0 ? _pageController.page! - 1 : 0).toInt(),
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.ease,
-              );
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        title: GsaWidgetText(widget.displayName),
-      ),
-      body: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
+      body: Column(
         children: [
-          if (GsaDataSaleItems.instance.deliveryOptions.isNotEmpty && GsaDataCheckout.instance.orderDraft.deliverable)
-            _WidgetCheckoutOption(
-              type: _WidgetCheckoutOptionType.delivery,
-              options: GsaDataSaleItems.instance.deliveryOptions,
-              title: 'Delivery Options',
-              subtitle: 'Delivery options are specified and can be configured below.',
-              inputFieldsTitle: 'Delivery Info',
-              inputFieldsNotice: 'Below information is specified as the item delivery address. '
-                  'This information is shared with the vendor and courier companies for the purposes of order fullfilment.',
-              onCartSettingsUpdate: () => setState(() {}),
-              goToNextStep: _goToNextStep,
-            ),
-          if (GsaDataSaleItems.instance.paymentOptions.isNotEmpty && GsaDataCheckout.instance.orderDraft.payable)
-            _WidgetCheckoutOption(
-              type: _WidgetCheckoutOptionType.payment,
-              options: GsaDataSaleItems.instance.paymentOptions,
-              title: 'Payment Options',
-              subtitle: 'Payment options are specified and can be configured below.',
-              inputFieldsTitle: 'Invoice Address',
-              inputFieldsNotice: 'Below information is specified as your legal address or the address where you receive correspondence. '
-                  'This information is shared with the vendor and courier companies for the purposes of order fullfilment.',
-              onCartSettingsUpdate: () => setState(() {}),
-              goToNextStep: _goToNextStep,
-            ),
-          if (GsaDataMerchant.instance.merchant == null)
-            _WidgetMerchantMapFinder(
-              notice: GsaModelTranslated(
-                values: [
-                  (
-                    languageId: 'en',
-                    value: 'Reach out to a nearby independent Herbalife distributor to complete your purchase.',
+          GsaWidgetAppBar(
+            label: widget.displayName,
+            onBackPressed: () async {
+              if ((_pageController.page ?? 0) > .5) {
+                if ((_pageController.page ?? 0) > 1 && _pageController.page! < 2) {
+                  GsaDataCheckout.instance.orderDraft.paymentType = null;
+                  GsaDataCheckout.instance.onCartUpdate();
+                }
+                await _pageController.animateToPage(
+                  (_pageController.page! - 1 > 0 ? _pageController.page! - 1 : 0).toInt(),
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.ease,
+                );
+              } else {
+                Navigator.pop(context);
+              }
+            },
+          ),
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                if (GsaDataSaleItems.instance.deliveryOptions.isNotEmpty && GsaDataCheckout.instance.orderDraft.deliverable)
+                  _WidgetCheckoutOption(
+                    type: _WidgetCheckoutOptionType.delivery,
+                    options: GsaDataSaleItems.instance.deliveryOptions,
+                    title: 'Delivery Options',
+                    subtitle: 'Delivery options are specified and can be configured below.',
+                    inputFieldsTitle: 'Delivery Info',
+                    inputFieldsNotice: 'Below information is specified as the item delivery address. '
+                        'This information is shared with the vendor and courier companies for the purposes of order fullfilment.',
+                    onCartSettingsUpdate: () => setState(() {}),
+                    goToNextStep: _goToNextStep,
                   ),
-                ],
-              ),
-              goToNextStep: _goToNextStep,
+                if (GsaDataSaleItems.instance.paymentOptions.isNotEmpty && GsaDataCheckout.instance.orderDraft.payable)
+                  _WidgetCheckoutOption(
+                    type: _WidgetCheckoutOptionType.payment,
+                    options: GsaDataSaleItems.instance.paymentOptions,
+                    title: 'Payment Options',
+                    subtitle: 'Payment options are specified and can be configured below.',
+                    inputFieldsTitle: 'Invoice Address',
+                    inputFieldsNotice:
+                        'Below information is specified as your legal address or the address where you receive correspondence. '
+                        'This information is shared with the vendor and courier companies for the purposes of order fullfilment.',
+                    onCartSettingsUpdate: () => setState(() {}),
+                    goToNextStep: _goToNextStep,
+                  ),
+                if (GsaDataMerchant.instance.merchant == null)
+                  _WidgetMerchantMapFinder(
+                    notice: GsaModelTranslated(
+                      values: [
+                        (
+                          languageId: 'en',
+                          value: 'Reach out to a nearby independent Herbalife distributor to complete your purchase.',
+                        ),
+                      ],
+                    ),
+                    goToNextStep: _goToNextStep,
+                  ),
+                const _WidgetCheckoutOverview(),
+              ],
             ),
-          const _WidgetCheckoutOverview(),
+          ),
         ],
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
@@ -49,85 +48,89 @@ class _GsaRouteGuestInfoState extends GsaRouteState<GsaRouteGuestInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
-      ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          controller: _scrollController,
-          padding: const EdgeInsets.all(20),
-          children: [
-            const GsaWidgetText(
-              'The personal data you provide in the checkout process will be processed and shared with the order provider and any '
-              'affiliated companies for the purpose of completing your transaction and delivering your order.',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 12,
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+          Expanded(
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                controller: _scrollController,
+                padding: const EdgeInsets.all(20),
+                children: [
+                  const GsaWidgetText(
+                    'The personal data you provide in the checkout process will be processed and shared with the order provider and any '
+                    'affiliated companies for the purpose of completing your transaction and delivering your order.',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const GsaWidgetText(
+                    'Personal Details',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  GsaWidgetTextField(
+                    controller: _firstNameController,
+                    labelText: 'First Name',
+                    validator: GsaServiceInputValidation.instance.firstName,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 24),
+                    child: GsaWidgetTextField(
+                      controller: _lastNameController,
+                      labelText: 'Last Name',
+                      validator: GsaServiceInputValidation.instance.firstName,
+                    ),
+                  ),
+                  const GsaWidgetText(
+                    'Contact Details',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: GsaWidgetTextField(
+                      controller: _emailController,
+                      labelText: 'E-Mail',
+                      keyboardType: TextInputType.emailAddress,
+                      validator: GsaServiceInputValidation.instance.email,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: GsaWidgetPhoneNumberInput(
+                      prefix: () => _prefix,
+                      setPrefix: (value) => _prefix = value,
+                      phoneNumberController: _phoneNumberController,
+                    ),
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: _termsAcceptedValueNotifier,
+                    builder: (context, value, child) {
+                      return GsaWidgetTermsConfirmation(
+                        key: UniqueKey(),
+                        checkboxKey: _termsCheckboxKey,
+                        value: _termsAcceptedValueNotifier.value,
+                        onValueChanged: (value) => _termsAcceptedValueNotifier.value = value,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 60),
+                ],
               ),
             ),
-            const SizedBox(height: 20),
-            const GsaWidgetText(
-              'Personal Details',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-              ),
-            ),
-            const SizedBox(height: 16),
-            GsaWidgetTextField(
-              controller: _firstNameController,
-              labelText: 'First Name',
-              validator: GsaServiceInputValidation.instance.firstName,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 24),
-              child: GsaWidgetTextField(
-                controller: _lastNameController,
-                labelText: 'Last Name',
-                validator: GsaServiceInputValidation.instance.firstName,
-              ),
-            ),
-            const GsaWidgetText(
-              'Contact Details',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: GsaWidgetTextField(
-                controller: _emailController,
-                labelText: 'E-Mail',
-                keyboardType: TextInputType.emailAddress,
-                validator: GsaServiceInputValidation.instance.email,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: GsaWidgetPhoneNumberInput(
-                prefix: () => _prefix,
-                setPrefix: (value) => _prefix = value,
-                phoneNumberController: _phoneNumberController,
-              ),
-            ),
-            ValueListenableBuilder(
-              valueListenable: _termsAcceptedValueNotifier,
-              builder: (context, value, child) {
-                return GsaWidgetTermsConfirmation(
-                  key: UniqueKey(),
-                  checkboxKey: _termsCheckboxKey,
-                  value: _termsAcceptedValueNotifier.value,
-                  onValueChanged: (value) => _termsAcceptedValueNotifier.value = value,
-                );
-              },
-            ),
-            const SizedBox(height: 60),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: null,

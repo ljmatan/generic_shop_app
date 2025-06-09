@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 part 'widgets/widget_http_log_details.dart';
@@ -23,13 +22,13 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        title: GsaWidgetText(widget.displayName),
-      ),
       body: Column(
         children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
           DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Row(
