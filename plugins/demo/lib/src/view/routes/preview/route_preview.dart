@@ -1,12 +1,12 @@
 import 'dart:ui' as dart_ui;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' as colorpicker;
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_demo/gsd.dart';
-import 'package:generic_shop_app_demo/src/view/routes/_routes.dart';
 
 part 'misc/misc_navigator_observer.dart';
 part 'misc/misc_scroll_behaviour.dart';
@@ -263,6 +263,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           _primaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
                           _secondaryColor =
                               GsaConfig.provider.plugin.themeProperties?.secondary ?? GsaTheme.instance.data.colorScheme.secondary;
+                          _fontFamily = GsaConfig.provider.plugin.fontFamily ?? _fontFamily;
                         },
                       );
                     },
@@ -426,7 +427,20 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               await provider.plugin.init();
                             }
                             Navigator.pop(context);
-                            setState(() {});
+                            setState(() {
+                              _routeIndex = 0;
+                              _routes = [
+                                ...GsaRoutes.values,
+                                if (GsaConfig.provider.plugin.routes != null) ...GsaConfig.provider.plugin.routes!,
+                              ];
+                              _navigatorKey = GlobalKey<NavigatorState>();
+                              GsaRoute.navigatorKey = _navigatorKey;
+                              _routeDropdownKey = UniqueKey();
+                              _primaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
+                              _secondaryColor =
+                                  GsaConfig.provider.plugin.themeProperties?.secondary ?? GsaTheme.instance.data.colorScheme.secondary;
+                              _fontFamily = GsaConfig.provider.plugin.fontFamily ?? _fontFamily;
+                            });
                           } catch (e) {
                             Navigator.pop(context);
                             GsaWidgetOverlayAlert(

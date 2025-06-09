@@ -81,7 +81,7 @@ class GsaTheme {
       return GsaConfig.provider.plugin.themeProperties!.primary!;
     }
     if (_brightness == Brightness.light) {
-      return const Color(0xff67bc2a);
+      return const Color(0xffDAB1DA);
     } else {
       return const Color(0xff63183f);
     }
