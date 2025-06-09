@@ -2,6 +2,7 @@ import 'dart:ui' as dart_ui;
 
 import 'package:flutter/material.dart';
 import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
+import 'package:flutter_colorpicker/flutter_colorpicker.dart' as colorpicker;
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_demo/src/view/routes/_routes.dart';
@@ -51,34 +52,30 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
   void _onNavigatorChange() {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        final routeIndex = _routes.indexWhere(
-          (route) {
-            return route.routeRuntimeType == GsaRoute.presenting.widget.runtimeType;
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) {
+            final routeIndex = _routes.indexWhere(
+              (route) {
+                return route.routeRuntimeType == GsaRoute.presenting.widget.runtimeType;
+              },
+            );
+            if (routeIndex != -1 && _routeIndex != routeIndex) {
+              setState(() {
+                _routeIndex = routeIndex;
+                _routeDropdownKey = UniqueKey();
+              });
+            }
           },
         );
-        if (routeIndex != -1 && _routeIndex != routeIndex) {
-          setState(() {
-            _routeIndex = routeIndex;
-            _routeDropdownKey = UniqueKey();
-          });
-        }
       },
     );
   }
 
   late _NavigatorObserver _navigatorObserver;
 
-  String? _toHexRGB(Color? color) {
-    if (color == null) return null;
-    return '${(color.r * 255).round().toRadixString(16).padLeft(2, '0')}'
-            '${(color.g * 255).round().toRadixString(16).padLeft(2, '0')}'
-            '${(color.b * 255).round().toRadixString(16).padLeft(2, '0')}'
-        .toUpperCase();
-  }
-
-  late TextEditingController _primaryColorTextController, _secondaryColorTextController;
-
   bool _darkTheme = false;
+
+  late Color _primaryColor, _secondaryColor;
 
   @override
   void initState() {
@@ -89,12 +86,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
-    _primaryColorTextController = TextEditingController(
-      text: _toHexRGB(_provider.plugin.themeProperties?.primary),
-    );
-    _secondaryColorTextController = TextEditingController(
-      text: _toHexRGB(_provider.plugin.themeProperties?.secondary),
-    );
+    _primaryColor = _provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
+    _secondaryColor = _provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.colorScheme.secondary;
   }
 
   @override
@@ -122,6 +115,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         plugin: _provider.plugin,
                         platform: _platform,
                         brightness: _darkTheme ? Brightness.dark : Brightness.light,
+                        primaryColor: _primaryColor,
+                        secondaryColor: _secondaryColor,
                       ).data,
                       child: ScrollConfiguration(
                         behavior: const _TouchScrollBehavior(),
@@ -187,7 +182,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         ),
                     ],
                     initialSelection: _platform,
-                    // width: MediaQuery.of(context).size.width * .2 - 40,
+                    width: MediaQuery.of(context).size.width * .2 - 40,
                     onSelected: (value) {
                       if (value == null) {
                         throw Exception(
@@ -221,7 +216,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         ),
                     ],
                     initialSelection: _device,
-                    // width: MediaQuery.of(context).size.width * .2 - 40,
+                    width: MediaQuery.of(context).size.width * .2 - 40,
                     onSelected: (value) {
                       if (value == null) {
                         throw Exception(
@@ -244,14 +239,10 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     labelText: 'Provider',
                     enableFilter: false,
                     enableSearch: false,
-                    initialSelection: 0,
-                    // width: MediaQuery.of(context).size.width * .2 - 40,
+                    initialSelection: _provider,
+                    width: MediaQuery.of(context).size.width * .2 - 40,
                     dropdownMenuEntries: [
-                      for (final provider in _providers.indexed)
-                        DropdownMenuEntry(
-                          label: provider.$2.name,
-                          value: provider.$1,
-                        ),
+                      for (final provider in _providers) DropdownMenuEntry(label: provider.name, value: provider),
                     ],
                     onSelected: (value) {
                       if (value == null) {
@@ -259,14 +250,18 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           'The specified provider value must not be null.',
                         );
                       }
-                      setState(() {
-                        _provider = _providers.elementAt(value);
-                        _providerRoutes = _provider.plugin.routes;
-                        _routeIndex = 0;
-                        _navigatorKey = GlobalKey<NavigatorState>();
-                        GsaRoute.navigatorKey = _navigatorKey;
-                        _routeDropdownKey = UniqueKey();
-                      });
+                      setState(
+                        () {
+                          _provider = value;
+                          _providerRoutes = _provider.plugin.routes;
+                          _routeIndex = 0;
+                          _navigatorKey = GlobalKey<NavigatorState>();
+                          GsaRoute.navigatorKey = _navigatorKey;
+                          _routeDropdownKey = UniqueKey();
+                          _primaryColor = _provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
+                          _secondaryColor = _provider.plugin.themeProperties?.secondary ?? GsaTheme.instance.data.colorScheme.secondary;
+                        },
+                      );
                     },
                   ),
                   const SizedBox(height: 20),
@@ -276,7 +271,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     enableFilter: false,
                     enableSearch: false,
                     initialSelection: _routeIndex,
-                    // width: MediaQuery.of(context).size.width * .2 - 40,
+                    width: MediaQuery.of(context).size.width * .2 - 40,
                     dropdownMenuEntries: [
                       for (final route in _routes.indexed)
                         DropdownMenuEntry(
@@ -310,34 +305,82 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       setState(() => _darkTheme = value);
                     },
                   ),
-                  const SizedBox(height: 20),
-                  GsaWidgetTextField(
-                    controller: _primaryColorTextController,
-                    labelText: 'Primary Color',
-                    prefix: Text(
-                      '#',
+                  for (final colorInput in {
+                    (
+                      label: 'Primary Color',
+                      color: _primaryColor,
+                      onColorChanged: (Color value) => _primaryColor = value,
                     ),
-                    suffixIcon: Icon(
-                      Icons.circle,
-                      color: Color(
-                        int.tryParse('0xff${_primaryColorTextController.text}') ?? 0,
+                    (
+                      label: 'Secondary Color',
+                      color: _secondaryColor,
+                      onColorChanged: (Color value) => _secondaryColor = value,
+                    ),
+                  }) ...[
+                    const SizedBox(height: 20),
+                    InkWell(
+                      child: GsaWidgetTextField(
+                        labelText: colorInput.label,
+                        enabled: false,
+                        prefix: Text(
+                          '#',
+                        ),
+                        suffixIcon: Icon(
+                          Icons.circle,
+                          color: colorInput.color,
+                        ),
                       ),
+                      onTap: () async {
+                        final result = await showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text(
+                              colorInput.label,
+                            ),
+                            content: SingleChildScrollView(
+                              child: colorpicker.ColorPicker(
+                                pickerColor: colorInput.color,
+                                onColorChanged: colorInput.onColorChanged,
+                              ),
+                              // Use Material color picker:
+                              //
+                              // child: MaterialPicker(
+                              //   pickerColor: pickerColor,
+                              //   onColorChanged: changeColor,
+                              //   showLabel: true, // only on portrait mode
+                              // ),
+                              //
+                              // Use Block color picker:
+                              //
+                              // child: BlockPicker(
+                              //   pickerColor: currentColor,
+                              //   onColorChanged: changeColor,
+                              // ),
+                              //
+                              // child: MultipleChoiceBlockPicker(
+                              //   pickerColors: currentColors,
+                              //   onColorsChanged: changeColors,
+                              // ),
+                            ),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                child: const Text('CONFIRM'),
+                                onPressed: () => Navigator.pop(
+                                  context,
+                                  colorInput.color,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                        if (result == null) {
+                          colorInput.onColorChanged(colorInput.color);
+                        } else {
+                          setState(() {});
+                        }
+                      },
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  GsaWidgetTextField(
-                    controller: _secondaryColorTextController,
-                    labelText: 'Secondary Color',
-                    prefix: Text(
-                      '#',
-                    ),
-                    suffixIcon: Icon(
-                      Icons.circle,
-                      color: Color(
-                        int.tryParse('0xff${_secondaryColorTextController.text}') ?? 0,
-                      ),
-                    ),
-                  ),
+                  ],
                   const SizedBox(height: 20),
                   Text(
                     'Data',
@@ -352,13 +395,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _primaryColorTextController.dispose();
-    _secondaryColorTextController.dispose();
-    super.dispose();
   }
 }
 

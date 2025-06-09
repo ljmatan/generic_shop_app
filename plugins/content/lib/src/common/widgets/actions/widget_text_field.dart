@@ -28,7 +28,6 @@ class GsaWidgetTextField extends StatefulWidget {
     this.onControllerChanged,
     this.onControllerCleared,
     this.onTap,
-    this.fontSize,
     this.textInputAction,
   });
 
@@ -91,10 +90,6 @@ class GsaWidgetTextField extends StatefulWidget {
   /// Event triggered on text input field tap.
   ///
   final Function? onTap;
-
-  /// Font size applied to the input field.
-  ///
-  final double? fontSize;
 
   /// An action the user has requested the text input control to perform.
   ///
@@ -196,6 +191,12 @@ class GsaWidgetTextField extends StatefulWidget {
         color: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
             ? const Color(0xff283033)
             : const Color(0xff63747E),
+      );
+    },
+    textStyle: () {
+      return const TextStyle(
+        color: Color(0xff63747E),
+        fontSize: 12,
       );
     },
   );
@@ -306,10 +307,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
           widget.controller,
         ),
       ),
-      style: TextStyle(
-        color: const Color(0xff63747E),
-        fontSize: widget.fontSize ?? 12,
-      ),
+      style: GsaWidgetTextField.themeProperties.textStyle(),
       autocorrect: false,
       enableSuggestions: false,
       validator: widget.validator,

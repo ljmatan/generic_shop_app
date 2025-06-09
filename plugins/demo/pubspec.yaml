@@ -26,6 +26,7 @@ dependencies:
   generic_shop_app_fitness_tracker:
     path: ../fitness_tracker
   device_frame_plus: ^1.5.0
+  flutter_colorpicker: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -12,6 +12,7 @@ class GsaWidgetDropdownMenu extends StatefulWidget {
     this.initialSelection,
     this.enableFilter = true,
     this.enableSearch = true,
+    this.width,
     this.textController,
     this.focusNode,
     this.enabled = true,
@@ -39,6 +40,10 @@ class GsaWidgetDropdownMenu extends StatefulWidget {
   /// If the property is set to `true`, dropdown result search is enabled.
   ///
   final bool enableSearch;
+
+  /// Size in width specified for a dropdown menu instance.
+  ///
+  final double? width;
 
   /// The default controller for this dropdown menu.
   ///
@@ -72,54 +77,71 @@ class _GsaWidgetDropdownMenuState extends State<GsaWidgetDropdownMenu> {
   @override
   void initState() {
     super.initState();
-    _textController = widget.textController ?? TextEditingController();
+    _textController = widget.textController ??
+        TextEditingController(
+          text: widget.initialSelection != null
+              ? widget.dropdownMenuEntries.firstWhere((entry) => entry.value == widget.initialSelection).label
+              : null,
+        );
     _focusNode = widget.focusNode ?? FocusNode();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: DropdownMenu(
-        dropdownMenuEntries: widget.dropdownMenuEntries,
-        enableFilter: widget.enableFilter,
-        enableSearch: widget.enableSearch,
-        controller: _textController,
-        focusNode: _focusNode,
-        enabled: widget.enabled,
-        label: widget.labelText == null ? null : Text(widget.labelText!),
-        hintText: widget.hintText,
-        width: MediaQuery.of(context).size.width,
-        initialSelection: widget.initialSelection,
-        inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
-              fillColor: GsaWidgetTextField.themeProperties.fillColor(
-                Theme.of(context).brightness,
-                _focusNode,
-                _textController,
-              ),
-              border: GsaWidgetTextField.themeProperties.border(
-                _focusNode,
-                _textController,
-              ),
-              focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
-                Theme.of(context).primaryColor,
-              ),
-              enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
-                _focusNode,
-                _textController,
-              ),
-              disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
-                _textController,
-              ),
-              errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
-              focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
-              labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
-                _focusNode,
-                _textController,
+    return DropdownMenu(
+      dropdownMenuEntries: widget.dropdownMenuEntries,
+      enableFilter: widget.enableFilter,
+      enableSearch: widget.enableSearch,
+      controller: _textController,
+      focusNode: _focusNode,
+      enabled: widget.enabled,
+      label: widget.labelText == null ? null : Text(widget.labelText!),
+      hintText: widget.hintText,
+      width: widget.width,
+      initialSelection: widget.initialSelection,
+      textStyle: GsaWidgetTextField.themeProperties.textStyle(),
+      menuStyle: Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(
+            minimumSize: WidgetStatePropertyAll(
+              Size(
+                0,
+                widget.width ?? 0,
               ),
             ),
-        onSelected: widget.onSelected,
-      ),
+            maximumSize: WidgetStatePropertyAll(
+              Size(
+                MediaQuery.of(context).size.height,
+                widget.width ?? MediaQuery.of(context).size.width,
+              ),
+            ),
+          ),
+      inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
+            fillColor: GsaWidgetTextField.themeProperties.fillColor(
+              Theme.of(context).brightness,
+              _focusNode,
+              _textController,
+            ),
+            border: GsaWidgetTextField.themeProperties.border(
+              _focusNode,
+              _textController,
+            ),
+            focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
+              Theme.of(context).primaryColor,
+            ),
+            enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
+              _focusNode,
+              _textController,
+            ),
+            disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
+              _textController,
+            ),
+            errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
+            focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
+            labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
+              _focusNode,
+              _textController,
+            ),
+          ),
+      onSelected: widget.onSelected,
     );
   }
 
