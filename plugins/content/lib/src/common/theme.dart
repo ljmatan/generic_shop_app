@@ -3,6 +3,7 @@ import 'dart:ui' as dart_ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_content/src/common/widgets/actions/widget_text_field.dart';
 
 /// The default theme configuration for the application project.
 ///
@@ -116,6 +117,9 @@ class GsaTheme {
       isDense: true,
       filled: true,
       fillColor: _brightness == Brightness.light ? const Color(0xffF0F3F5) : const Color(0xffb3b3b3),
+      border: OutlineInputBorder(
+        borderRadius: GsaWidgetTextField.borderRadius,
+      ),
       labelStyle: const TextStyle(
         fontWeight: FontWeight.w600,
         fontSize: 12,
@@ -125,25 +129,12 @@ class GsaTheme {
         fontSize: 10,
       ),
       errorMaxLines: 1000,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
+      helperStyle: const TextStyle(
+        color: Color(0xff63747E),
+        fontSize: 10,
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(
-          color: _primaryColor,
-        ),
-      ),
-      errorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color(0xffDE1E36),
-        ),
-      ),
-      focusedErrorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color(0xffDE1E36),
-        ),
+      hintStyle: const TextStyle(
+        color: Color(0xff63747E),
       ),
     );
   }
@@ -160,6 +151,13 @@ class GsaTheme {
       highlightColor: Colors.transparent,
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: _inputDecorationTheme,
+        menuStyle: MenuStyle(
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: GsaWidgetTextField.borderRadius,
+            ),
+          ),
+        ),
       ),
       inputDecorationTheme: _inputDecorationTheme,
       textTheme: _brightness == Brightness.light

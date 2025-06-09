@@ -115,15 +115,15 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       _device.screenSize.width,
                     ),
                   ),
-                  child: Theme(
-                    data: GsaTheme(
-                      plugin: _provider.plugin,
-                      platform: _platform,
-                      brightness: _darkTheme ? Brightness.dark : Brightness.light,
-                    ).data,
-                    child: device_frame.DeviceFrame(
-                      device: _device,
-                      screen: ScrollConfiguration(
+                  child: device_frame.DeviceFrame(
+                    device: _device,
+                    screen: Theme(
+                      data: GsaTheme(
+                        plugin: _provider.plugin,
+                        platform: _platform,
+                        brightness: _darkTheme ? Brightness.dark : Brightness.light,
+                      ).data,
+                      child: ScrollConfiguration(
                         behavior: const _TouchScrollBehavior(),
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,
@@ -175,10 +175,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   ),
                   const Divider(height: 20),
                   const SizedBox(height: 16),
-                  DropdownMenu(
-                    label: Text(
-                      'Platform',
-                    ),
+                  GsaWidgetDropdownMenu(
+                    labelText: 'Platform',
                     enableFilter: false,
                     enableSearch: false,
                     dropdownMenuEntries: [
@@ -189,7 +187,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         ),
                     ],
                     initialSelection: _platform,
-                    width: MediaQuery.of(context).size.width * .2 - 40,
+                    // width: MediaQuery.of(context).size.width * .2 - 40,
                     onSelected: (value) {
                       if (value == null) {
                         throw Exception(
@@ -207,10 +205,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  DropdownMenu(
-                    label: Text(
-                      'Model',
-                    ),
+                  GsaWidgetDropdownMenu(
+                    labelText: 'Model',
                     enableFilter: false,
                     enableSearch: false,
                     dropdownMenuEntries: [
@@ -225,7 +221,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         ),
                     ],
                     initialSelection: _device,
-                    width: MediaQuery.of(context).size.width * .2 - 40,
+                    // width: MediaQuery.of(context).size.width * .2 - 40,
                     onSelected: (value) {
                       if (value == null) {
                         throw Exception(
@@ -244,14 +240,12 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   ),
                   const Divider(height: 20),
                   const SizedBox(height: 16),
-                  DropdownMenu(
-                    label: Text(
-                      'Provider',
-                    ),
+                  GsaWidgetDropdownMenu(
+                    labelText: 'Provider',
                     enableFilter: false,
                     enableSearch: false,
                     initialSelection: 0,
-                    width: MediaQuery.of(context).size.width * .2 - 40,
+                    // width: MediaQuery.of(context).size.width * .2 - 40,
                     dropdownMenuEntries: [
                       for (final provider in _providers.indexed)
                         DropdownMenuEntry(
@@ -276,15 +270,13 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  DropdownMenu(
+                  GsaWidgetDropdownMenu(
                     key: _routeDropdownKey,
-                    label: Text(
-                      'Route',
-                    ),
+                    labelText: 'Route',
                     enableFilter: false,
                     enableSearch: false,
                     initialSelection: _routeIndex,
-                    width: MediaQuery.of(context).size.width * .2 - 40,
+                    // width: MediaQuery.of(context).size.width * .2 - 40,
                     dropdownMenuEntries: [
                       for (final route in _routes.indexed)
                         DropdownMenuEntry(
@@ -305,13 +297,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       });
                     },
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Route',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const Divider(height: 20),
-                  const SizedBox(height: 16),
                   const SizedBox(height: 20),
                   Text(
                     'Theme',
@@ -353,6 +338,13 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Data',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Divider(height: 20),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),

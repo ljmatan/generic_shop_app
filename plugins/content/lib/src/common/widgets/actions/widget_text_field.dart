@@ -3,21 +3,22 @@ import 'package:flutter/material.dart';
 /// A general text input field display widget with input validation.
 ///
 class GsaWidgetTextField extends StatefulWidget {
-  // ignore: public_member_api_docs
+  /// Default, unnamed widget constructor.
+  ///
   const GsaWidgetTextField({
     super.key,
     this.controller,
     this.focusNode,
-    this.enabled,
-    this.autofocus,
-    this.obscureText,
+    this.enabled = true,
+    this.autofocus = false,
+    this.obscureText = false,
     this.keyboardType,
     this.prefix,
     this.suffix,
     this.prefixIcon,
     this.suffixIcon,
-    this.hintText,
     this.labelText,
+    this.hintText,
     this.minLines = 1,
     this.maxLines = 1,
     this.onSubmitted,
@@ -29,10 +30,7 @@ class GsaWidgetTextField extends StatefulWidget {
     this.onTap,
     this.fontSize,
     this.textInputAction,
-  }) : assert(
-          obscureText == null || obscureText && suffixIcon == null,
-          prefix == null || suffixIcon == null,
-        );
+  });
 
   /// The default controller for this text field.
   ///
@@ -44,15 +42,15 @@ class GsaWidgetTextField extends StatefulWidget {
 
   /// Whether input editing is enabled.
   ///
-  final bool? enabled;
+  final bool enabled;
 
   /// If set to true, the text field will be automatically focused upon initialization.
   ///
-  final bool? autofocus;
+  final bool autofocus;
 
   /// Should the text input be visually obscured.
   ///
-  final bool? obscureText;
+  final bool obscureText;
 
   /// The type of text field input.
   ///
@@ -64,7 +62,7 @@ class GsaWidgetTextField extends StatefulWidget {
 
   /// User-facing description labels.
   ///
-  final String? hintText, labelText;
+  final String? labelText, hintText;
 
   /// Min and max lines this field is allowed to expand to.
   ///
@@ -102,6 +100,106 @@ class GsaWidgetTextField extends StatefulWidget {
   ///
   final TextInputAction? textInputAction;
 
+  /// The border / corner radius applied to this visual element style.
+  ///
+  static final borderRadius = BorderRadius.circular(12);
+
+  /// Theme properties applied to the text input field.
+  ///
+  /// The reason for the property being stored with global-level access
+  /// is due to it's reuse with the [DropdownMenu] widget.
+  ///
+  static final themeProperties = (
+    fillColor: (
+      Brightness brightness,
+      FocusNode? focusNode,
+      TextEditingController? textEditingController,
+    ) {
+      return focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
+          ? brightness == Brightness.light
+              ? Colors.white
+              : const Color(0xff404040)
+          : brightness == Brightness.light
+              ? const Color(0xffF0F3F5)
+              : const Color(0xffb3b3b3);
+    },
+    border: (
+      FocusNode? focusNode,
+      TextEditingController? textEditingController,
+    ) {
+      return OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
+            ? const BorderSide(
+                color: Color(0xffE2E5EB),
+              )
+            : BorderSide.none,
+      );
+    },
+    focusedBorder: (
+      Color primaryColor,
+    ) {
+      return OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(
+          color: primaryColor,
+        ),
+      );
+    },
+    enabledBorder: (
+      FocusNode? focusNode,
+      TextEditingController? textEditingController,
+    ) {
+      return OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
+            ? const BorderSide(
+                color: Color(0xffE2E5EB),
+              )
+            : BorderSide.none,
+      );
+    },
+    disabledBorder: (
+      TextEditingController? textEditingController,
+    ) {
+      return OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: textEditingController?.text.isNotEmpty != true
+            ? BorderSide.none
+            : const BorderSide(
+                color: Color(0xffADBDC6),
+              ),
+      );
+    },
+    errorBorder: () {
+      return OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: const BorderSide(
+          color: Color(0xffDE1E36),
+        ),
+      );
+    },
+    focusedErrorBorder: () {
+      return OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: const BorderSide(
+          color: Color(0xffDE1E36),
+        ),
+      );
+    },
+    labelStyle: (
+      FocusNode? focusNode,
+      TextEditingController? textEditingController,
+    ) {
+      return TextStyle(
+        fontWeight: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true ? FontWeight.w600 : FontWeight.w400,
+        color: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
+            ? const Color(0xff283033)
+            : const Color(0xff63747E),
+      );
+    },
+  );
+
   @override
   State<GsaWidgetTextField> createState() => _GsaWidgetTextFieldState();
 }
@@ -127,7 +225,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
     widget.controller?.addListener(_onTextControllerUpdate);
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusNodeUpdate);
-    _obscureText = widget.obscureText ?? false;
+    _obscureText = widget.obscureText;
   }
 
   @override
@@ -136,7 +234,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
       controller: widget.controller,
       focusNode: _focusNode,
       enabled: widget.enabled,
-      autofocus: widget.autofocus ?? false,
+      autofocus: widget.autofocus,
       obscureText: _obscureText,
       keyboardType: widget.keyboardType,
       minLines: widget.minLines,
@@ -144,27 +242,27 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
       textInputAction: widget.textInputAction,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
-        filled: true,
-        fillColor: _focusNode.hasFocus || widget.controller != null && widget.controller!.text.isNotEmpty
-            ? Theme.of(context).brightness == Brightness.light
-                ? Colors.white
-                : const Color(0xff404040)
-            : Theme.of(context).inputDecorationTheme.fillColor,
-        enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder?.copyWith(
-              borderSide: _focusNode.hasFocus || widget.controller != null && widget.controller!.text.isNotEmpty
-                  ? const BorderSide(
-                      color: Color(0xffE2E5EB),
-                    )
-                  : BorderSide.none,
-            ),
-        disabledBorder: OutlineInputBorder(
-          borderSide: widget.controller == null || widget.controller!.text.isEmpty
-              ? BorderSide.none
-              : const BorderSide(
-                  color: Color(0xffADBDC6),
-                ),
+        fillColor: GsaWidgetTextField.themeProperties.fillColor(
+          Theme.of(context).brightness,
+          _focusNode,
+          widget.controller,
         ),
-        prefix: widget.prefix,
+        border: GsaWidgetTextField.themeProperties.border(
+          _focusNode,
+          widget.controller,
+        ),
+        focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
+          Theme.of(context).primaryColor,
+        ),
+        enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
+          _focusNode,
+          widget.controller,
+        ),
+        disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
+          widget.controller,
+        ),
+        errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
+        focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
         prefixIcon: widget.prefixIcon != null
             ? SizedBox(
                 width: 48,
@@ -175,15 +273,8 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
               )
             : null,
         suffix: widget.suffix,
-        suffixIcon: widget.suffixIcon != null
-            ? SizedBox(
-                width: 48,
-                height: 48,
-                child: Center(
-                  child: widget.suffixIcon!,
-                ),
-              )
-            : widget.obscureText == true || _focusNode.hasFocus && widget.controller?.text.isNotEmpty == true && widget.displayDeleteButton
+        suffixIcon:
+            widget.obscureText == true || _focusNode.hasFocus && widget.controller?.text.isNotEmpty == true && widget.displayDeleteButton
                 ? IconButton(
                     icon: Icon(
                       widget.obscureText == true ? Icons.visibility : Icons.close,
@@ -199,15 +290,20 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
                             setState(() => widget.controller!.clear());
                           },
                   )
-                : null,
+                : widget.suffixIcon != null
+                    ? SizedBox(
+                        width: 48,
+                        height: 48,
+                        child: Center(
+                          child: widget.suffixIcon!,
+                        ),
+                      )
+                    : null,
         hintText: widget.hintText,
         labelText: widget.labelText,
-        helperStyle: const TextStyle(
-          color: Color(0xff63747E),
-          fontSize: 10,
-        ),
-        hintStyle: const TextStyle(
-          color: Color(0xff63747E),
+        labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
+          _focusNode,
+          widget.controller,
         ),
       ),
       style: TextStyle(

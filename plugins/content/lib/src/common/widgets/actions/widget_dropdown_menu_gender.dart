@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 class GsaWidgetDropdownGender extends StatefulWidget {
-  final Function(String) onChanged;
-  final GlobalKey<GsaWidgetDropdownState> dropdownKey;
-  final String? initialValue;
-
   const GsaWidgetDropdownGender({
     super.key,
     required this.onChanged,
     required this.dropdownKey,
     this.initialValue,
   });
+
+  final Function(String) onChanged;
+
+  final GlobalKey<GsaWidgetDropdownState> dropdownKey;
+
+  final String? initialValue;
 
   @override
   State createState() => _GsaWidgetDropdownGenderState();
