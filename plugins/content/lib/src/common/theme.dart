@@ -14,6 +14,10 @@ class GsaTheme {
   ///
   GsaTheme({
     this.plugin,
+    this.platform,
+    this.brightness,
+    this.primaryColor,
+    this.secondaryColor,
   }) : _plugin = plugin ?? GsaConfig.provider.plugin;
 
   /// Optional client definition of the specified plugin integration.
@@ -26,20 +30,62 @@ class GsaTheme {
   ///
   final GsaPlugin _plugin;
 
+  /// The platform that user interaction should adapt to target.
+  ///
+  final TargetPlatform? platform;
+
+  /// Custom-defined theme [Brightness], describes the contrast of a theme or color palette.
+  ///
+  final Brightness? brightness;
+
+  /// Color definition for overriding the set defaults.
+  ///
+  final Color? primaryColor, secondaryColor;
+
   /// Globally-accessible class instance.
   ///
   static final instance = GsaTheme();
 
   /// The setting indicating the current brightness mode of the host platform.
-  /// If the platform has no preference, [platformBrightness] defaults to [Brightness.light].
   ///
-  static Brightness platformBrightness = dart_ui.PlatformDispatcher.instance.platformBrightness;
+  /// If the platform has no preference, the value defaults to [Brightness.light].
+  ///
+  Brightness platformBrightness = dart_ui.PlatformDispatcher.instance.platformBrightness;
+
+  /// Used to scale the incoming font size by multiplying it with the given text scale factor.
+  ///
+  TextScaler textScaler(
+    BuildContext context, [
+    double? screenWidth,
+  ]) {
+    screenWidth ??= MediaQuery.of(context).size.width;
+    return TextScaler.linear(
+      screenWidth < 400
+          ? 1
+          : screenWidth < 600
+              ? 1.1
+              : screenWidth < 800
+                  ? 1.2
+                  : screenWidth < 1000
+                      ? 1.3
+                      : screenWidth < 1400
+                          ? 1.4
+                          : 1.6,
+    );
+  }
+
+  Brightness get _brightness {
+    return brightness ?? platformBrightness;
+  }
 
   Color get _primaryColor {
+    if (primaryColor != null) {
+      return primaryColor!;
+    }
     if (_plugin.themeProperties?.primary != null) {
       return _plugin.themeProperties!.primary!;
     }
-    if (platformBrightness == Brightness.light) {
+    if (_brightness == Brightness.light) {
       return const Color(0xff67bc2a);
     } else {
       return const Color(0xff63183f);
@@ -47,10 +93,13 @@ class GsaTheme {
   }
 
   Color get _secondaryColor {
+    if (secondaryColor != null) {
+      return secondaryColor!;
+    }
     if (_plugin.themeProperties?.secondary != null) {
       return _plugin.themeProperties!.secondary!;
     }
-    if (platformBrightness == Brightness.light) {
+    if (_brightness == Brightness.light) {
       return const Color(0xff63183f);
     } else {
       return const Color(0xffB7C9E2);
@@ -59,16 +108,17 @@ class GsaTheme {
 
   String get _fontFamily => _plugin.themeProperties?.fontFamily ?? 'Quicksand';
 
-  /// Getter method for the [ThemeData] implementation, specified according to the [platformBrightness] value.
+  /// Getter method for the [ThemeData] implementation.
   ///
   ThemeData get data {
     return ThemeData(
+      platform: platform,
       primaryColor: _primaryColor,
       fontFamily: _fontFamily,
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
-      textTheme: platformBrightness == Brightness.light
+      textTheme: _brightness == Brightness.light
           ? TextTheme(
               bodySmall: TextStyle(
                 color: Colors.grey.shade600,
@@ -99,10 +149,10 @@ class GsaTheme {
             ),
       dividerColor: Colors.grey.shade200,
       dividerTheme: const DividerThemeData(thickness: .5),
-      scaffoldBackgroundColor: platformBrightness == Brightness.light ? Colors.white : const Color(0xff121212),
-      colorScheme: platformBrightness == Brightness.light
+      scaffoldBackgroundColor: _brightness == Brightness.light ? Colors.white : const Color(0xff121212),
+      colorScheme: _brightness == Brightness.light
           ? ColorScheme(
-              brightness: platformBrightness,
+              brightness: _brightness,
               primary: _primaryColor,
               onPrimary: Colors.white,
               secondary: _secondaryColor,
@@ -117,7 +167,7 @@ class GsaTheme {
               surfaceTint: Colors.white,
             )
           : ColorScheme(
-              brightness: platformBrightness,
+              brightness: _brightness,
               primary: _primaryColor,
               onPrimary: Colors.grey,
               secondary: _secondaryColor,
@@ -150,7 +200,7 @@ class GsaTheme {
           fontSize: 18,
         ),
       ),
-      cardTheme: platformBrightness == Brightness.light
+      cardTheme: _brightness == Brightness.light
           ? CardThemeData(
               elevation: 0,
               color: Colors.white,
@@ -158,7 +208,7 @@ class GsaTheme {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
                 side: BorderSide(
-                  color: Colors.grey.withOpacity(.2),
+                  color: Colors.grey.withValues(alpha: .2),
                 ),
               ),
             )
@@ -169,14 +219,14 @@ class GsaTheme {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
                 side: BorderSide(
-                  color: Colors.grey.withOpacity(.2),
+                  color: Colors.grey.withValues(alpha: .2),
                 ),
               ),
             ),
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.all(_primaryColor),
-        trackColor: MaterialStateProperty.resolveWith(
-          (states) => states.contains(MaterialState.selected) ? _primaryColor.withOpacity(.6) : null,
+        thumbColor: WidgetStatePropertyAll(_primaryColor),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected) ? _primaryColor.withValues(alpha: .6) : null,
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -199,7 +249,7 @@ class GsaTheme {
   /// Specifies a preference for the style of the system overlays.
   ///
   SystemUiOverlayStyle get systemUiOverlayStyle {
-    return platformBrightness == Brightness.light
+    return _brightness == Brightness.light
         ? const SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             statusBarBrightness: Brightness.light,

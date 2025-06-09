@@ -44,33 +44,33 @@ class GsaWidgetSwitchState extends State<GsaWidgetSwitch> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.label != null) widget.label!,
-            Padding(
-              padding: const EdgeInsets.only(top: 14),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 48,
-                    height: 36,
-                    child: Switch(
-                      value: widget.value,
-                      onChanged: widget.enabled
-                          ? (value) {
-                              if (widget.rebuild) setState(() {});
-                              widget.onTap(value);
-                            }
-                          : null,
-                    ),
+            if (widget.label != null) ...[
+              widget.label!,
+              const SizedBox(height: 14),
+            ],
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 48,
+                  height: 36,
+                  child: Switch(
+                    value: widget.value,
+                    onChanged: widget.enabled
+                        ? (value) {
+                            if (widget.rebuild) setState(() {});
+                            widget.onTap(value);
+                          }
+                        : null,
                   ),
+                ),
+                if (widget.child != null) ...[
+                  const SizedBox(width: 9),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 9),
-                      child: widget.child,
-                    ),
+                    child: widget.child!,
                   ),
                 ],
-              ),
+              ],
             ),
           ],
         ),

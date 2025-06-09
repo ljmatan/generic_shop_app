@@ -33,8 +33,8 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
     super.didChangeDependencies();
     // Handle platform theme brightness changes.
     final systemBrightness = MediaQuery.of(context).platformBrightness;
-    if (systemBrightness != GsaTheme.platformBrightness) {
-      setState(() => GsaTheme.platformBrightness = systemBrightness);
+    if (systemBrightness != GsaTheme.instance.platformBrightness) {
+      setState(() => GsaTheme.instance.platformBrightness = systemBrightness);
     }
   }
 
@@ -50,19 +50,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
       value: GsaTheme.instance.systemUiOverlayStyle,
       child: MediaQuery(
         data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(
-            MediaQuery.of(context).size.width < 400
-                ? 1
-                : MediaQuery.of(context).size.width < 600
-                    ? 1.1
-                    : MediaQuery.of(context).size.width < 800
-                        ? 1.2
-                        : MediaQuery.of(context).size.width < 1000
-                            ? 1.3
-                            : MediaQuery.of(context).size.width < 1400
-                                ? 1.4
-                                : 1.6,
-          ),
+          textScaler: GsaTheme.instance.textScaler(context),
         ),
         child: Listener(
           child: widget.child,

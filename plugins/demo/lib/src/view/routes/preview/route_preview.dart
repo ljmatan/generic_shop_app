@@ -14,12 +14,14 @@ class GsdRoutePreview extends GsdRoute {
 }
 
 class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
-  final _devicePlatforms = TargetPlatform.values.toList()
+  /// Device platforms supported for the project preview.
+  ///
+  final _platforms = TargetPlatform.values.toList()
     ..removeWhere(
       (platform) => platform == TargetPlatform.fuchsia,
     );
 
-  TargetPlatform _devicePlatform = TargetPlatform.iOS;
+  TargetPlatform _platform = TargetPlatform.iOS;
 
   device_frame.DeviceInfo _device = device_frame.Devices.ios.iPhone12;
 
@@ -77,6 +79,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     );
   }
 
+  bool _darkTheme = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,9 +94,17 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   data: MediaQueryData(
                     size: _device.screenSize,
                     devicePixelRatio: _device.pixelRatio,
+                    textScaler: GsaTheme.instance.textScaler(
+                      context,
+                      _device.screenSize.width,
+                    ),
                   ),
                   child: Theme(
-                    data: GsaTheme(plugin: _provider.plugin).data,
+                    data: GsaTheme(
+                      plugin: _provider.plugin,
+                      platform: _platform,
+                      brightness: _darkTheme ? Brightness.dark : Brightness.light,
+                    ).data,
                     child: device_frame.DeviceFrame(
                       device: _device,
                       screen: ScrollConfiguration(
@@ -145,7 +157,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     'Device',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Divider(height: 32),
+                  const Divider(height: 20),
                   const SizedBox(height: 16),
                   DropdownMenu(
                     label: Text(
@@ -154,13 +166,13 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     enableFilter: false,
                     enableSearch: false,
                     dropdownMenuEntries: [
-                      for (final platform in _devicePlatforms)
+                      for (final platform in _platforms)
                         DropdownMenuEntry(
                           label: platform.name,
                           value: platform,
                         ),
                     ],
-                    initialSelection: _devicePlatform,
+                    initialSelection: _platform,
                     width: MediaQuery.of(context).size.width * .2 - 40,
                     onSelected: (value) {
                       if (value == null) {
@@ -169,7 +181,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         );
                       }
                       setState(() {
-                        _devicePlatform = value;
+                        _platform = value;
                         _device = device_frame.Devices.all.firstWhere(
                           (device) {
                             return device.identifier.platform == value;
@@ -188,7 +200,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     dropdownMenuEntries: [
                       for (final device in device_frame.Devices.all.where(
                         (device) {
-                          return device.identifier.platform == _devicePlatform;
+                          return device.identifier.platform == _platform;
                         },
                       ))
                         DropdownMenuEntry(
@@ -214,7 +226,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     'Client',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Divider(height: 32),
+                  const Divider(height: 20),
                   const SizedBox(height: 16),
                   DropdownMenu(
                     label: Text(
@@ -282,8 +294,15 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     'Theme',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Divider(height: 32),
+                  const Divider(height: 20),
                   const SizedBox(height: 16),
+                  GsaWidgetSwitch(
+                    value: _darkTheme,
+                    child: Text('Dark Theme'),
+                    onTap: (value) {
+                      setState(() => _darkTheme = value);
+                    },
+                  ),
                 ],
               ),
             ),
