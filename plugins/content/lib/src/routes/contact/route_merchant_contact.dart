@@ -30,6 +30,7 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: SizedBox(
+                width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).padding.vertical -
                     MediaQuery.of(context).viewInsets.bottom -
@@ -43,7 +44,9 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
                         child: GsaWidgetText(
                           'We may share your message and email with our partner companies to help us field your questions and offer support.\n\n'
                           'Your details are used to respond to your inquiries or assist you with the products and services.',
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                       Column(
@@ -72,9 +75,14 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
                           const SizedBox(height: 8),
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            child: OutlinedButton(child: const GsaWidgetText('Send'), onPressed: () async {}),
+                            child: OutlinedButton(
+                              child: const GsaWidgetText('Send'),
+                              onPressed: () async {},
+                            ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).padding.bottom),
+                          SizedBox(
+                            height: MediaQuery.of(context).padding.bottom,
+                          ),
                         ],
                       ),
                     ],

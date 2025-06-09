@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_demo/gsd.dart';
 
 export 'src/services/_services.dart';
@@ -18,7 +19,7 @@ class GsdPlugin implements GsaPlugin {
 
   @override
   Future<void> init() async {
-    await GsdServiceMock.instance.init();
+    // Do nothing.
   }
 
   @override
@@ -27,10 +28,11 @@ class GsdPlugin implements GsaPlugin {
   }
 
   @override
-  List<GsaRouteType> get routes => GsdRoutes.values;
+  List<GsaRouteType> get routes => GsaRoutes.values;
 
   @override
   ({
+    String? logoImagePath,
     String? fontFamily,
     Color? primary,
     Color? secondary,

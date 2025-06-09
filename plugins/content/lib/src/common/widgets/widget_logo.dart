@@ -23,8 +23,8 @@ class GsaWidgetLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (GsaDataMerchant.instance.merchant?.logoImageUrl != null) {
-      return (GsaDataMerchant.instance.merchant!.logoImageUrl!.startsWith(
+    if (GsaConfig.provider.plugin.themeProperties?.logoImagePath != null) {
+      return (GsaConfig.provider.plugin.themeProperties!.logoImagePath!.startsWith(
         'assets',
       )
           ? GsaWidgetImage.asset

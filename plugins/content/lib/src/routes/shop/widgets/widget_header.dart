@@ -50,84 +50,81 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
           child: Column(
             children: MediaQuery.of(context).size.width < 1000
                 ? [
-                    SizedBox(
-                      height: kToolbarHeight,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          GsaWidgetLogo(
-                            width: MediaQuery.of(context).size.width / 2,
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton.filled(
-                                icon: Icon(
-                                  Icons.menu,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                style: const ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    Colors.white,
-                                  ),
-                                ),
-                                onPressed: () => _openDrawer(),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        GsaWidgetLogo(
+                          width: MediaQuery.of(context).size.width / 2,
+                          height: 40,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton.filled(
+                              icon: Icon(
+                                Icons.menu,
+                                color: Theme.of(context).primaryColor,
                               ),
-                              IconButton.filled(
-                                icon: Icon(
-                                  GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
-                                  color: Theme.of(context).primaryColor,
+                              style: const ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  Colors.white,
                                 ),
-                                style: const ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    Colors.white,
-                                  ),
-                                ),
-                                onPressed: GsaConfig.cartEnabled
-                                    ? () {
-                                        _openCartPage();
-                                      }
-                                    : () {
-                                        const GsaRouteBookmarks().push();
-                                      },
                               ),
-                            ],
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: ValueListenableBuilder(
-                              valueListenable: GsaConfig.cartEnabled
-                                  ? GsaDataCheckout.instance.notifierCartUpdate
-                                  : GsaServiceBookmarks.instance.notifierBookmarkCount,
-                              builder: (context, cartItemCount, child) {
-                                if (cartItemCount == 0) return const SizedBox();
-                                return DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6),
-                                    child: GsaWidgetText(
-                                      '$cartItemCount',
-                                      style: TextStyle(
-                                        color: Theme.of(context).colorScheme.secondary,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 11,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
+                              onPressed: () => _openDrawer(),
                             ),
+                            IconButton.filled(
+                              icon: Icon(
+                                GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              style: const ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  Colors.white,
+                                ),
+                              ),
+                              onPressed: GsaConfig.cartEnabled
+                                  ? () {
+                                      _openCartPage();
+                                    }
+                                  : () {
+                                      const GsaRouteBookmarks().push();
+                                    },
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: ValueListenableBuilder(
+                            valueListenable: GsaConfig.cartEnabled
+                                ? GsaDataCheckout.instance.notifierCartUpdate
+                                : GsaServiceBookmarks.instance.notifierBookmarkCount,
+                            builder: (context, cartItemCount, child) {
+                              if (cartItemCount == 0) return const SizedBox();
+                              return DecoratedBox(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6),
+                                  child: GsaWidgetText(
+                                    '$cartItemCount',
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.secondary,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 14),
@@ -145,68 +142,71 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
                 : [
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.grey,
-                          ),
-                          const Spacer(),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 4,
-                                child: GsaWidgetTextField(
-                                  controller: widget.searchTermController,
-                                  focusNode: widget.searchTermFocusNode,
-                                  hintText: 'Search'.translated(context),
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color: Theme.of(context).primaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.grey,
+                            ),
+                            const Spacer(),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  child: GsaWidgetTextField(
+                                    controller: widget.searchTermController,
+                                    focusNode: widget.searchTermFocusNode,
+                                    hintText: 'Search'.translated(context),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(width: 16),
-                              IconButton.filled(
-                                icon: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                                  child: Row(
-                                    children: [
-                                      const GsaWidgetText(
-                                        'Cart',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
+                                const SizedBox(width: 16),
+                                IconButton.filled(
+                                  icon: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                                    child: Row(
+                                      children: [
+                                        const GsaWidgetText(
+                                          'Cart',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Icon(
-                                        GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
-                                        color: Colors.white,
-                                      ),
-                                    ],
+                                        const SizedBox(width: 10),
+                                        Icon(
+                                          GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
+                                          color: Colors.white,
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  onPressed: GsaConfig.cartEnabled
+                                      ? () {
+                                          _openCartPage();
+                                        }
+                                      : () {
+                                          const GsaRouteBookmarks().push();
+                                        },
                                 ),
-                                onPressed: GsaConfig.cartEnabled
-                                    ? () {
-                                        _openCartPage();
-                                      }
-                                    : () {
-                                        const GsaRouteBookmarks().push();
-                                      },
-                              ),
-                              const SizedBox(width: 16),
-                              IconButton.filled(
-                                icon: const Icon(
-                                  Icons.menu,
-                                  color: Colors.white,
+                                const SizedBox(width: 16),
+                                IconButton.filled(
+                                  icon: const Icon(
+                                    Icons.menu,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () => _openDrawer(),
                                 ),
-                                onPressed: () => _openDrawer(),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

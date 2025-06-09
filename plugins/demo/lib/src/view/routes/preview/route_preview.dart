@@ -7,7 +7,12 @@ import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_demo/src/view/routes/_routes.dart';
 
+part 'misc/misc_navigator_observer.dart';
+part 'misc/misc_scroll_behaviour.dart';
+
 class GsdRoutePreview extends GsdRoute {
+  /// Default, unnamed widget constructor.
+  ///
   const GsdRoutePreview({super.key});
 
   @override
@@ -26,9 +31,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   device_frame.DeviceInfo _device = device_frame.Devices.ios.iPhone12;
 
-  final _providers = GsaConfigProvider.values.toList().where(
-        (provider) => provider != GsaConfigProvider.demo,
-      );
+  final _providers = GsaConfigProvider.values;
 
   late GsaConfigProvider _provider;
 
@@ -36,7 +39,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   List<GsaRouteType> get _routes {
     return [
-      ...GsaRoutes.values,
       ..._providerRoutes,
     ]..removeWhere(
         (route) => route.routeId == 'splash',
@@ -52,21 +54,17 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
   void _onNavigatorChange() {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        WidgetsBinding.instance.addPostFrameCallback(
-          (_) {
-            final routeIndex = _routes.indexWhere(
-              (route) {
-                return route.routeRuntimeType == GsaRoute.presenting.widget.runtimeType;
-              },
-            );
-            if (routeIndex != -1 && _routeIndex != routeIndex) {
-              setState(() {
-                _routeIndex = routeIndex;
-                _routeDropdownKey = UniqueKey();
-              });
-            }
+        final routeIndex = _routes.indexWhere(
+          (route) {
+            return route.routeRuntimeType == GsaRoute.presenting.widget.runtimeType;
           },
         );
+        if (routeIndex != -1 && _routeIndex != routeIndex) {
+          setState(() {
+            _routeIndex = routeIndex;
+            _routeDropdownKey = UniqueKey();
+          });
+        }
       },
     );
   }
@@ -396,60 +394,4 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
       ),
     );
   }
-}
-
-class _NavigatorObserver implements NavigatorObserver {
-  const _NavigatorObserver(
-    this.onNavigatorChange,
-  );
-
-  final void Function() onNavigatorChange;
-
-  @override
-  void didChangeTop(Route topRoute, Route? previousTopRoute) {
-    onNavigatorChange();
-  }
-
-  @override
-  void didPop(Route route, Route? previousRoute) {
-    onNavigatorChange();
-  }
-
-  @override
-  void didPush(Route route, Route? previousRoute) {
-    onNavigatorChange();
-  }
-
-  @override
-  void didRemove(Route route, Route? previousRoute) {
-    onNavigatorChange();
-  }
-
-  @override
-  void didReplace({Route? newRoute, Route? oldRoute}) {
-    onNavigatorChange();
-  }
-
-  @override
-  void didStartUserGesture(Route route, Route? previousRoute) {
-    onNavigatorChange();
-  }
-
-  @override
-  void didStopUserGesture() {
-    // Do nothing.
-  }
-
-  @override
-  NavigatorState? get navigator => null;
-}
-
-class _TouchScrollBehavior extends MaterialScrollBehavior {
-  const _TouchScrollBehavior();
-
-  @override
-  Set<dart_ui.PointerDeviceKind> get dragDevices => {
-        dart_ui.PointerDeviceKind.touch,
-        dart_ui.PointerDeviceKind.mouse,
-      };
 }

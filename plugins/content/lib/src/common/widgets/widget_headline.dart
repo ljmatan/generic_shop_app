@@ -12,7 +12,10 @@ class GsaWidgetHeadline extends StatelessWidget {
 
   final String message;
 
-  final ({String label, VoidCallback onTap})? action;
+  final ({
+    String label,
+    VoidCallback onTap,
+  })? action;
 
   final Color? textColor;
 

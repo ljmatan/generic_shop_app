@@ -141,6 +141,7 @@ abstract mixin class GsaPlugin {
   /// Theme properties applied to the plugin.
   ///
   ({
+    String? logoImagePath,
     String? fontFamily,
     Color? primary,
     Color? secondary,

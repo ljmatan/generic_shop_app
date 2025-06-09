@@ -28,11 +28,13 @@ class GftPlugin implements GsaPlugin {
 
   @override
   ({
+    String? logoImagePath,
     String? fontFamily,
     Color? primary,
     Color? secondary,
     Color? tertiary,
   })? get themeProperties => (
+        logoImagePath: null,
         fontFamily: 'Open Sans',
         primary: const Color(0xff10467c),
         secondary: const Color(0xff303945),

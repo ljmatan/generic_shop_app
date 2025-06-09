@@ -18,7 +18,6 @@ class GivPlugin implements GsaPlugin {
   Future<void> init() async {
     GsaDataMerchant.instance.merchant = GsaModelMerchant(
       name: 'froddo',
-      logoImageUrl: 'assets/ivancica/logo.png',
       contact: GsaModelContact(
         email: 'web.shop@ivancica.hr',
         phoneCountryCode: '+385',
@@ -39,11 +38,13 @@ class GivPlugin implements GsaPlugin {
 
   @override
   ({
+    String? logoImagePath,
     String? fontFamily,
     Color? primary,
     Color? secondary,
     Color? tertiary,
   })? get themeProperties => (
+        logoImagePath: 'assets/ivancica/logo.png',
         fontFamily: 'Merriweather Sans',
         primary: const Color(0xff8DC63F),
         secondary: const Color(0xff303945),
