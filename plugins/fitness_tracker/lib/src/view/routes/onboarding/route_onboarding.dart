@@ -4,13 +4,12 @@ import 'package:generic_shop_app_content/gsac.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-part 'elements/element_header.dart';
-part 'elements/inputs/element_input_age.dart';
-part 'elements/inputs/element_input_gender.dart';
-part 'elements/inputs/element_input_goals.dart';
-part 'elements/inputs/element_input_height.dart';
-part 'elements/inputs/element_input_weight.dart';
-part 'elements/inputs/element_inputs_confirmation.dart';
+part 'widgets/inputs/widget_input_age.dart';
+part 'widgets/inputs/widget_input_gender.dart';
+part 'widgets/inputs/widget_input_goals.dart';
+part 'widgets/inputs/widget_input_height.dart';
+part 'widgets/inputs/widget_input_weight.dart';
+part 'widgets/inputs/widget_inputs_confirmation.dart';
 
 /// Collection of screen pages on which the users are presented with several data inputs
 /// relating to their health and physique.
@@ -62,27 +61,27 @@ class _GftRouteOnboardingState extends GsaRouteState<GftRouteOnboarding> {
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                _ElementInputGoals(
+                _WidgetInputGoals(
                   _trainee,
                   onGoalSpecified: () => setState(() {}),
                 ),
-                _ElementInputGender(
+                _WidgetInputGender(
                   _trainee,
                   onGenderSpecified: () => setState(() {}),
                 ),
-                _ElementInputAge(
+                _WidgetInputAge(
                   _trainee,
                   onBirthYearSpecified: () => setState(() {}),
                 ),
-                _ElementInputHeight(
+                _WidgetInputHeight(
                   _trainee,
                   onHeightSpecified: () => setState(() {}),
                 ),
-                _ElementInputWeight(
+                _WidgetInputWeight(
                   _trainee,
                   onWeightSpecified: () => setState(() {}),
                 ),
-                _ElementInputsConfirmation(
+                _WidgetInputsConfirmation(
                   _trainee,
                 ),
               ],
@@ -110,42 +109,40 @@ class _GftRouteOnboardingState extends GsaRouteState<GftRouteOnboarding> {
                             0 || 1 || 2 || 3 || 4 => 'Next Step',
                             5 => 'Finish',
                             int() => throw UnimplementedError(
-                              'Onboarding screen index $value not implemented.',
-                            ),
+                                'Onboarding screen index $value not implemented.',
+                              ),
                           },
                         ),
                         onPressed: switch (value) {
-                          0 =>
-                            _trainee.goal == null
-                                ? null
-                                : () {
-                                    _pageController.animateToPage(
-                                      1,
-                                      duration: const Duration(milliseconds: 400),
-                                      curve: Curves.ease,
-                                    );
-                                  },
-                          1 =>
-                            _trainee.gender == null
-                                ? null
-                                : () {
-                                    _pageController.animateToPage(
-                                      2,
-                                      duration: const Duration(milliseconds: 400),
-                                      curve: Curves.ease,
-                                    );
-                                  },
+                          0 => _trainee.goal == null
+                              ? null
+                              : () {
+                                  _pageController.animateToPage(
+                                    1,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.ease,
+                                  );
+                                },
+                          1 => _trainee.gender == null
+                              ? null
+                              : () {
+                                  _pageController.animateToPage(
+                                    2,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.ease,
+                                  );
+                                },
                           2 || 3 || 4 => () {
-                            _pageController.animateToPage(
-                              value + 1,
-                              duration: const Duration(milliseconds: 400),
-                              curve: Curves.ease,
-                            );
-                          },
+                              _pageController.animateToPage(
+                                value + 1,
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.ease,
+                              );
+                            },
                           5 => () {},
                           int() => throw UnimplementedError(
-                            'Onboarding screen data handler index $value not implemented.',
-                          ),
+                              'Onboarding screen data handler index $value not implemented.',
+                            ),
                         },
                       ),
                     ),

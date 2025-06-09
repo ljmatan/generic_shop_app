@@ -1,7 +1,7 @@
 part of '../../route_onboarding.dart';
 
-class _ElementInputGender extends StatefulWidget {
-  const _ElementInputGender(
+class _WidgetInputGender extends StatefulWidget {
+  const _WidgetInputGender(
     this.trainee, {
     required this.onGenderSpecified,
   });
@@ -11,17 +11,17 @@ class _ElementInputGender extends StatefulWidget {
   final Function() onGenderSpecified;
 
   @override
-  State<_ElementInputGender> createState() => __ElementInputGenderState();
+  State<_WidgetInputGender> createState() => __WidgetInputGenderState();
 }
 
-class __ElementInputGenderState extends State<_ElementInputGender> {
+class __WidgetInputGenderState extends State<_WidgetInputGender> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _ElementHeader(
-          'Personalize your journey based on your body type',
+        const GsaWidgetAppBar(
+          label: 'Personalize your journey based on your body type',
         ),
         Expanded(
           child: ListView(
@@ -87,8 +87,7 @@ class __ElementInputGenderState extends State<_ElementInputGender> {
               for (final infoPoint in <({String title, String description})>{
                 (
                   title: 'Why We Ask For This',
-                  description:
-                      'Your gender influences your body\'s metabolism, muscle composition, and recommended calorie intake. '
+                  description: 'Your gender influences your body\'s metabolism, muscle composition, and recommended calorie intake. '
                       'By knowing this, we can provide more precise health and fitness guidance tailored to your physiology.',
                 ),
                 (
@@ -99,14 +98,12 @@ class __ElementInputGenderState extends State<_ElementInputGender> {
                 ),
                 (
                   title: 'Your Data, Your Control',
-                  description:
-                      'Providing gender helps us fine-tune your plan, but it\'s completely optional. '
+                  description: 'Providing gender helps us fine-tune your plan, but it\'s completely optional. '
                       'You can omit this information or update your choices later in settings. We never share or sell your data.',
                 ),
                 (
                   title: 'What Happens With This Info',
-                  description:
-                      'This data is stored securely and used only to personalize your experience. '
+                  description: 'This data is stored securely and used only to personalize your experience. '
                       'It helps us adjust calculations for weight goals, workouts, and nutrition recommendations to better suit your body type.',
                 ),
               }.indexed) ...[

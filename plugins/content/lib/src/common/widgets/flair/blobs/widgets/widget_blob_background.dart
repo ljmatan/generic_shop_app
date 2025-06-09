@@ -1,7 +1,7 @@
 part of '../widget_blobs.dart';
 
-class _ElementBlobBackground extends StatelessWidget {
-  const _ElementBlobBackground({
+class _WidgetBlobBackground extends StatelessWidget {
+  const _WidgetBlobBackground({
     required this.color,
     required this.count,
     required this.centerOverlay,
@@ -89,7 +89,7 @@ class _ElementBlobBackground extends StatelessWidget {
               child: SizedBox(
                 width: blobSize,
                 height: blobSize,
-                child: _ElementAnimatedBlob(
+                child: _WidgetAnimatedBlob(
                   color: blobColors[i % blobColors.length].withOpacity(
                     0.25 + rand.nextDouble() * 0.3,
                   ),
@@ -120,7 +120,7 @@ class _ElementBlobBackground extends StatelessWidget {
               child: SizedBox(
                 width: blobSize,
                 height: blobSize,
-                child: _ElementAnimatedBlob(
+                child: _WidgetAnimatedBlob(
                   color: color,
                   pointCount: 16 + rand.nextInt(6),
                   baseRadius: blobSize / 2.1,

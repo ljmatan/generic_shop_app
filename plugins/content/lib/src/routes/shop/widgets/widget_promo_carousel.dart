@@ -76,6 +76,7 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    if (_carouselItems.isEmpty) return const SizedBox();
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
       child: SizedBox(

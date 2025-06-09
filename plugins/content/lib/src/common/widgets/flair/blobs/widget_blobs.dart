@@ -2,8 +2,8 @@ import 'dart:math' as dart_math;
 
 import 'package:flutter/material.dart';
 
-part 'elements/element_animated_blob.dart';
-part 'elements/element_blob_background.dart';
+part 'widgets/widget_animated_blob.dart';
+part 'widgets/widget_blob_background.dart';
 part 'models/model_blob_point.dart';
 part 'painters/painter_blob.dart';
 
@@ -40,13 +40,13 @@ class GsaWidgetFlairBlobBackground extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        _ElementBlobBackground(
+        _WidgetBlobBackground(
           color: color,
           count: count,
           centerOverlay: centerOverlay,
         ),
         if (centerOverlay)
-          _ElementAnimatedBlob(
+          _WidgetAnimatedBlob(
             color: Colors.white,
             pointCount: 50,
             baseRadius: (MediaQuery.of(context).size.width < MediaQuery.of(context).size.height

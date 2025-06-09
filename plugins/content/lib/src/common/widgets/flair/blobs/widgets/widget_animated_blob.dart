@@ -1,7 +1,7 @@
 part of '../widget_blobs.dart';
 
-class _ElementAnimatedBlob extends StatefulWidget {
-  const _ElementAnimatedBlob({
+class _WidgetAnimatedBlob extends StatefulWidget {
+  const _WidgetAnimatedBlob({
     required this.color,
     required this.pointCount,
     required this.baseRadius,
@@ -17,12 +17,12 @@ class _ElementAnimatedBlob extends StatefulWidget {
   final Duration duration;
 
   @override
-  State<_ElementAnimatedBlob> createState() {
-    return _ElementAnimatedBlobState();
+  State<_WidgetAnimatedBlob> createState() {
+    return _WidgetAnimatedBlobState();
   }
 }
 
-class _ElementAnimatedBlobState extends State<_ElementAnimatedBlob> with SingleTickerProviderStateMixin {
+class _WidgetAnimatedBlobState extends State<_WidgetAnimatedBlob> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late List<_ModelBlobPoint> _points;
 

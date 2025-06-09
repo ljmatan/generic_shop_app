@@ -50,7 +50,6 @@ class __WidgetHeaderState extends State<_WidgetHeader> {
           child: Column(
             children: MediaQuery.of(context).size.width < 1000
                 ? [
-                    SizedBox(height: MediaQuery.of(context).padding.top),
                     SizedBox(
                       height: kToolbarHeight,
                       child: Stack(

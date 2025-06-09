@@ -22,7 +22,7 @@ class __WidgetCategoriesState extends State<_WidgetCategories> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const GsaWidgetHeadline('Offers'),
+          const GsaWidgetHeadline('Categories'),
           const SizedBox(height: 6),
           const GsaWidgetText(
             'Shop with ease by exploring our organized category list, tailored to your interests.',

@@ -1,7 +1,7 @@
 part of '../../route_onboarding.dart';
 
-class _ElementInputHeight extends StatefulWidget {
-  const _ElementInputHeight(
+class _WidgetInputHeight extends StatefulWidget {
+  const _WidgetInputHeight(
     this.trainee, {
     required this.onHeightSpecified,
   });
@@ -11,10 +11,10 @@ class _ElementInputHeight extends StatefulWidget {
   final Function() onHeightSpecified;
 
   @override
-  State<_ElementInputHeight> createState() => __ElementInputHeightState();
+  State<_WidgetInputHeight> createState() => __WidgetInputHeightState();
 }
 
-class __ElementInputHeightState extends State<_ElementInputHeight> {
+class __WidgetInputHeightState extends State<_WidgetInputHeight> {
   final _pickerController = FixedExtentScrollController(
     initialItem: 50,
   );
@@ -29,8 +29,8 @@ class __ElementInputHeightState extends State<_ElementInputHeight> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _ElementHeader(
-          'Adjust workout scaling based on your structure',
+        const GsaWidgetAppBar(
+          label: 'Adjust workout scaling based on your structure',
         ),
         Expanded(
           child: ListView(
@@ -123,27 +123,23 @@ class __ElementInputHeightState extends State<_ElementInputHeight> {
               for (final infoPoint in <({String title, String description})>{
                 (
                   title: 'Height Supports Key Health Calculations',
-                  description:
-                      'We use your height to assess your body metrics accurately, like BMI '
+                  description: 'We use your height to assess your body metrics accurately, like BMI '
                       'and ideal weight range. This helps us make your plan more '
                       'personalized and safe.',
                 ),
                 (
                   title: 'Helps Align with Your Physical Goals',
-                  description:
-                      'By understanding your height, we can estimate ideal weight ranges '
+                  description: 'By understanding your height, we can estimate ideal weight ranges '
                       'and better personalize your fitness or nutrition plan.',
                 ),
                 (
                   title: 'For a Plan That Fits You',
-                  description:
-                      'Your height helps us understand your body structure and tailor daily '
+                  description: 'Your height helps us understand your body structure and tailor daily '
                       'calorie goals, workout intensity, and long-term progress benchmarks.',
                 ),
                 (
                   title: 'Used Only For Personalization',
-                  description:
-                      'Your height is stored securely and used strictly to improve your plan. '
+                  description: 'Your height is stored securely and used strictly to improve your plan. '
                       'We never share your data and you can update it anytime.',
                 ),
               }.indexed) ...[

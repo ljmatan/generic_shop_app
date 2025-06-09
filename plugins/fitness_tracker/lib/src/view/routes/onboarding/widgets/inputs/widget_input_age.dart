@@ -1,7 +1,7 @@
 part of '../../route_onboarding.dart';
 
-class _ElementInputAge extends StatefulWidget {
-  const _ElementInputAge(
+class _WidgetInputAge extends StatefulWidget {
+  const _WidgetInputAge(
     this.trainee, {
     required this.onBirthYearSpecified,
   });
@@ -11,10 +11,10 @@ class _ElementInputAge extends StatefulWidget {
   final Function() onBirthYearSpecified;
 
   @override
-  State<_ElementInputAge> createState() => __ElementInputAgeState();
+  State<_WidgetInputAge> createState() => __WidgetInputAgeState();
 }
 
-class __ElementInputAgeState extends State<_ElementInputAge> {
+class __WidgetInputAgeState extends State<_WidgetInputAge> {
   final _pickerController = FixedExtentScrollController(
     initialItem: 60,
   );
@@ -29,8 +29,8 @@ class __ElementInputAgeState extends State<_ElementInputAge> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _ElementHeader(
-          'Adjusting for your life stage',
+        const GsaWidgetAppBar(
+          label: 'Adjusting for your life stage',
         ),
         Expanded(
           child: ListView(
@@ -100,28 +100,24 @@ class __ElementInputAgeState extends State<_ElementInputAge> {
               for (final infoPoint in <({String title, String description})>{
                 (
                   title: 'Your Age Affects Your Fitness Profile',
-                  description:
-                      'Age influences your metabolism, recovery speed, and optimal workout '
+                  description: 'Age influences your metabolism, recovery speed, and optimal workout '
                       'intensity. Knowing your age helps us make smarter, safer '
                       'recommendations tailored to you.',
                 ),
                 (
                   title: 'Tailored For Every Life Stage',
-                  description:
-                      'Whether you\'re just starting out or maintaining lifelong wellness, '
+                  description: 'Whether you\'re just starting out or maintaining lifelong wellness, '
                       'your age helps guide the type of nutrition, exercise, and recovery '
                       'support you need.',
                 ),
                 (
                   title: 'We Respect Your Data',
-                  description:
-                      'Your age helps improve accuracy but is stored securely and used only '
+                  description: 'Your age helps improve accuracy but is stored securely and used only '
                       'for personalization. You can update it at any time.',
                 ),
                 (
                   title: 'Better Insights Through Age-Aware Planning',
-                  description:
-                      'Fitness and health change as you age. We use this information to '
+                  description: 'Fitness and health change as you age. We use this information to '
                       'optimize everything from calorie calculations to rest cycles for '
                       'better results.',
                 ),

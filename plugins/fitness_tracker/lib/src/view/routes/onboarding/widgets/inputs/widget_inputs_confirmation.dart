@@ -1,25 +1,25 @@
 part of '../../route_onboarding.dart';
 
-class _ElementInputsConfirmation extends StatefulWidget {
-  const _ElementInputsConfirmation(
+class _WidgetInputsConfirmation extends StatefulWidget {
+  const _WidgetInputsConfirmation(
     this.trainee,
   );
 
   final GftModelTrainee trainee;
 
   @override
-  State<_ElementInputsConfirmation> createState() => __ElementInputsConfirmationState();
+  State<_WidgetInputsConfirmation> createState() => __WidgetInputsConfirmationState();
 }
 
-class __ElementInputsConfirmationState extends State<_ElementInputsConfirmation> {
+class __WidgetInputsConfirmationState extends State<_WidgetInputsConfirmation> {
   @override
   Widget build(BuildContext context) {
     widget.trainee.ensureDataExists();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _ElementHeader(
-          'Your Fitness Starting Point',
+        const GsaWidgetAppBar(
+          label: 'Your Fitness Starting Point',
         ),
         Expanded(
           child: ListView(
@@ -37,36 +37,31 @@ class __ElementInputsConfirmationState extends State<_ElementInputsConfirmation>
                 (
                   label: 'Goal',
                   data: widget.trainee.goal!.label,
-                  description:
-                      'Your selected fitness focus helps us shape your plan, '
+                  description: 'Your selected fitness focus helps us shape your plan, '
                       'whether it\'s weight loss, muscle gain, or healthy habits.',
                 ),
                 (
                   label: 'Gender',
                   data: widget.trainee.gender!.label,
-                  description:
-                      'Used to estimate body composition and tailor exercise '
+                  description: 'Used to estimate body composition and tailor exercise '
                       'and nutrition strategies to suit your physiology.',
                 ),
                 (
                   label: 'Age',
                   data: '${widget.trainee.ageYears} years',
-                  description:
-                      'Age affects metabolism, recovery, and training needs. '
+                  description: 'Age affects metabolism, recovery, and training needs. '
                       'This helps personalize intensity and nutrition.',
                 ),
                 (
                   label: 'Height',
                   data: widget.trainee.heightLabelMetric!,
-                  description:
-                      'Essential for calculating your BMI, ideal weight ranges, '
+                  description: 'Essential for calculating your BMI, ideal weight ranges, '
                       'and customizing your calorie needs.',
                 ),
                 (
                   label: 'Weight',
                   data: widget.trainee.weightLabelMetric!,
-                  description:
-                      'Your current weight is used to measure progress, calculate '
+                  description: 'Your current weight is used to measure progress, calculate '
                       'goals, and balance your meal and workout plans.',
                 ),
               }.indexed) ...[

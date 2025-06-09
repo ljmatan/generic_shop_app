@@ -1,7 +1,7 @@
 part of '../../route_onboarding.dart';
 
-class _ElementInputWeight extends StatefulWidget {
-  const _ElementInputWeight(
+class _WidgetInputWeight extends StatefulWidget {
+  const _WidgetInputWeight(
     this.trainee, {
     required this.onWeightSpecified,
   });
@@ -11,10 +11,10 @@ class _ElementInputWeight extends StatefulWidget {
   final Function() onWeightSpecified;
 
   @override
-  State<_ElementInputWeight> createState() => __ElementInputWeightState();
+  State<_WidgetInputWeight> createState() => __WidgetInputWeightState();
 }
 
-class __ElementInputWeightState extends State<_ElementInputWeight> {
+class __WidgetInputWeightState extends State<_WidgetInputWeight> {
   @override
   Widget build(BuildContext context) {
     if (widget.trainee.weightKilograms == null) {
@@ -25,8 +25,8 @@ class __ElementInputWeightState extends State<_ElementInputWeight> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _ElementHeader(
-          'Record starting weight for progress tracking',
+        const GsaWidgetAppBar(
+          label: 'Record starting weight for progress tracking',
         ),
         Expanded(
           child: ListView(
@@ -118,29 +118,25 @@ class __ElementInputWeightState extends State<_ElementInputWeight> {
               for (final infoPoint in <({String title, String description})>{
                 (
                   title: 'A Smarter Health Plan',
-                  description:
-                      'Your weight affects calorie needs, metabolic rate, and '
+                  description: 'Your weight affects calorie needs, metabolic rate, and '
                       'workout intensity. We use this info to tailor your fitness '
                       'and nutrition recommendations safely and effectively.',
                 ),
                 (
                   title: 'Private And Secure',
-                  description:
-                      'We use your weight only to personalize your experience. '
+                  description: 'We use your weight only to personalize your experience. '
                       'It\'s stored securely, visible only to you, and can be '
                       'updated anytime.',
                 ),
                 (
                   title: 'How This Ties To Your Goal',
-                  description:
-                      'Your weight helps define the path toward your selected goal. '
+                  description: 'Your weight helps define the path toward your selected goal. '
                       'For example, a weight loss target will guide meal plans and '
                       'exercise routines optimized for fat burning.',
                 ),
                 (
                   title: 'Set A Target, Or Skip For Now',
-                  description:
-                      'Entering a target weight helps us shape your long-term plan. '
+                  description: 'Entering a target weight helps us shape your long-term plan. '
                       'Not ready? No problem—you can set or change your goal at any '
                       'time in settings.',
                 ),

@@ -1,7 +1,7 @@
 part of '../../route_onboarding.dart';
 
-class _ElementInputGoals extends StatefulWidget {
-  const _ElementInputGoals(
+class _WidgetInputGoals extends StatefulWidget {
+  const _WidgetInputGoals(
     this.trainee, {
     required this.onGoalSpecified,
   });
@@ -11,17 +11,17 @@ class _ElementInputGoals extends StatefulWidget {
   final Function() onGoalSpecified;
 
   @override
-  State<_ElementInputGoals> createState() => __ElementInputGoalsState();
+  State<_WidgetInputGoals> createState() => __WidgetInputGoalsState();
 }
 
-class __ElementInputGoalsState extends State<_ElementInputGoals> {
+class __WidgetInputGoalsState extends State<_WidgetInputGoals> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _ElementHeader(
-          'Set a primary focus to personalize your fitness plan',
+        const GsaWidgetAppBar(
+          label: 'Set a primary focus to personalize your fitness plan',
         ),
         Expanded(
           child: ListView(
@@ -79,8 +79,8 @@ class __ElementInputGoalsState extends State<_ElementInputGoals> {
                             Text(
                               goalOption.description,
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: widget.trainee.goal == goalOption ? Colors.white : null,
-                              ),
+                                    color: widget.trainee.goal == goalOption ? Colors.white : null,
+                                  ),
                             ),
                           ],
                         ),
