@@ -33,23 +33,13 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   final _providers = GsaConfigProvider.values;
 
-  late GsaConfigProvider _provider;
-
-  late List<GsaRouteType> _providerRoutes;
-
-  List<GsaRouteType> get _routes {
-    return [
-      ..._providerRoutes,
-    ]..removeWhere(
-        (route) => route.routeId == 'splash',
-      );
-  }
-
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   int _routeIndex = 0;
 
   Key _routeDropdownKey = UniqueKey();
+
+  late List<GsaRouteType> _routes;
 
   void _onNavigatorChange() {
     WidgetsBinding.instance.addPostFrameCallback(
@@ -75,17 +65,21 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   late Color _primaryColor, _secondaryColor;
 
+  String _fontFamily = 'Quicksand';
+
   @override
   void initState() {
     super.initState();
+    _routes = [
+      ...GsaRoutes.values,
+      if (GsaConfig.provider.plugin.routes != null) ...GsaConfig.provider.plugin.routes!,
+    ];
     GsaRoute.navigatorKey = _navigatorKey;
-    _provider = _providers.elementAt(0);
-    _providerRoutes = _provider.plugin.routes;
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
-    _primaryColor = _provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
-    _secondaryColor = _provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.colorScheme.secondary;
+    _primaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
+    _secondaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.colorScheme.secondary;
   }
 
   @override
@@ -110,11 +104,11 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     device: _device,
                     screen: Theme(
                       data: GsaTheme(
-                        plugin: _provider.plugin,
                         platform: _platform,
                         brightness: _darkTheme ? Brightness.dark : Brightness.light,
                         primaryColor: _primaryColor,
                         secondaryColor: _secondaryColor,
+                        fontFamily: _fontFamily,
                       ).data,
                       child: ScrollConfiguration(
                         behavior: const _TouchScrollBehavior(),
@@ -152,10 +146,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   color: Theme.of(context).dividerColor,
                 ),
               ),
-              boxShadow: kElevationToShadow[16],
             ),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * .2,
+              width: MediaQuery.of(context).size.width * .25,
               child: ListView(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -180,7 +173,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         ),
                     ],
                     initialSelection: _platform,
-                    width: MediaQuery.of(context).size.width * .2 - 40,
+                    width: MediaQuery.of(context).size.width * .25 - 40,
                     onSelected: (value) {
                       if (value == null) {
                         throw Exception(
@@ -214,7 +207,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         ),
                     ],
                     initialSelection: _device,
-                    width: MediaQuery.of(context).size.width * .2 - 40,
+                    width: MediaQuery.of(context).size.width * .25 - 40,
                     onSelected: (value) {
                       if (value == null) {
                         throw Exception(
@@ -237,10 +230,14 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     labelText: 'Provider',
                     enableFilter: false,
                     enableSearch: false,
-                    initialSelection: _provider,
-                    width: MediaQuery.of(context).size.width * .2 - 40,
+                    initialSelection: GsaConfig.provider,
+                    width: MediaQuery.of(context).size.width * .25 - 40,
                     dropdownMenuEntries: [
-                      for (final provider in _providers) DropdownMenuEntry(label: provider.name, value: provider),
+                      for (final provider in _providers)
+                        DropdownMenuEntry(
+                          label: provider.name,
+                          value: provider,
+                        ),
                     ],
                     onSelected: (value) {
                       if (value == null) {
@@ -250,14 +247,18 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       }
                       setState(
                         () {
-                          _provider = value;
-                          _providerRoutes = _provider.plugin.routes;
+                          GsaConfig.provider = value;
                           _routeIndex = 0;
+                          _routes = [
+                            ...GsaRoutes.values,
+                            if (GsaConfig.provider.plugin.routes != null) ...GsaConfig.provider.plugin.routes!,
+                          ];
                           _navigatorKey = GlobalKey<NavigatorState>();
                           GsaRoute.navigatorKey = _navigatorKey;
                           _routeDropdownKey = UniqueKey();
-                          _primaryColor = _provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
-                          _secondaryColor = _provider.plugin.themeProperties?.secondary ?? GsaTheme.instance.data.colorScheme.secondary;
+                          _primaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
+                          _secondaryColor =
+                              GsaConfig.provider.plugin.themeProperties?.secondary ?? GsaTheme.instance.data.colorScheme.secondary;
                         },
                       );
                     },
@@ -269,7 +270,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     enableFilter: false,
                     enableSearch: false,
                     initialSelection: _routeIndex,
-                    width: MediaQuery.of(context).size.width * .2 - 40,
+                    width: MediaQuery.of(context).size.width * .25 - 40,
                     dropdownMenuEntries: [
                       for (final route in _routes.indexed)
                         DropdownMenuEntry(
@@ -292,10 +293,44 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   ),
                   const SizedBox(height: 20),
                   Text(
+                    'Options',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Divider(height: 20),
+                  GsaWidgetSwitch(
+                    value: GsaConfig.cartEnabled,
+                    child: Text('Checkout'),
+                    onTap: (value) {
+                      setState(() => GsaConfig.cartEnabled = value);
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
                     'Theme',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Divider(height: 20),
+                  const SizedBox(height: 16),
+                  GsaWidgetDropdownMenu(
+                    labelText: 'Font Family',
+                    width: MediaQuery.of(context).size.width * .25 - 40,
+                    initialSelection: _fontFamily,
+                    dropdownMenuEntries: [
+                      for (final fontId in <String>{
+                        'Quicksand',
+                        'Merriweather Sans',
+                        'Open Sans',
+                      })
+                        DropdownMenuEntry(
+                          label: fontId,
+                          value: fontId,
+                        ),
+                    ],
+                    onSelected: (value) {
+                      setState(() => _fontFamily = value);
+                    },
+                  ),
+                  const SizedBox(height: 16),
                   GsaWidgetSwitch(
                     value: _darkTheme,
                     child: Text('Dark Theme'),
@@ -339,26 +374,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               child: colorpicker.ColorPicker(
                                 pickerColor: colorInput.color,
                                 onColorChanged: colorInput.onColorChanged,
+                                enableAlpha: false,
+                                hexInputBar: true,
                               ),
-                              // Use Material color picker:
-                              //
-                              // child: MaterialPicker(
-                              //   pickerColor: pickerColor,
-                              //   onColorChanged: changeColor,
-                              //   showLabel: true, // only on portrait mode
-                              // ),
-                              //
-                              // Use Block color picker:
-                              //
-                              // child: BlockPicker(
-                              //   pickerColor: currentColor,
-                              //   onColorChanged: changeColor,
-                              // ),
-                              //
-                              // child: MultipleChoiceBlockPicker(
-                              //   pickerColors: currentColors,
-                              //   onColorsChanged: changeColors,
-                              // ),
                             ),
                             actions: <Widget>[
                               ElevatedButton(
@@ -385,7 +403,31 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Divider(height: 20),
-                  const SizedBox(height: 16),
+                  for (final provider in _providers) ...[
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: OutlinedButton(
+                        child: Text(
+                          'INIT ${provider.name.toUpperCase()}',
+                        ),
+                        onPressed: () async {
+                          const GsaWidgetOverlayContentBlocking().openDialog(context);
+                          try {
+                            GsaData.clearAll();
+                            await provider.plugin.init();
+                            Navigator.pop(context);
+                            setState(() {});
+                          } catch (e) {
+                            Navigator.pop(context);
+                            GsaWidgetOverlayAlert(
+                              message: '$e',
+                            ).openDialog(context);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

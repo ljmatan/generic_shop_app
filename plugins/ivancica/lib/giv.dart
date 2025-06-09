@@ -34,18 +34,23 @@ class GivPlugin implements GsaPlugin {
   }
 
   @override
-  List<GsaRouteType> get routes => GivRoutes.values;
+  List<GsaRouteType>? get routes {
+    return GivRoutes.values;
+  }
+
+  @override
+  String? get fontFamily {
+    return 'Merriweather Sans';
+  }
 
   @override
   ({
     String? logoImagePath,
-    String? fontFamily,
     Color? primary,
     Color? secondary,
     Color? tertiary,
   })? get themeProperties => (
-        logoImagePath: 'assets/ivancica/logo.png',
-        fontFamily: 'Merriweather Sans',
+        logoImagePath: 'packages/generic_shop_app_demo/assets/ivancica/logo.png',
         primary: const Color(0xff8DC63F),
         secondary: const Color(0xff303945),
         tertiary: const Color(0xffF6F9FC),

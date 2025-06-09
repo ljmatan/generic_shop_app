@@ -27,15 +27,18 @@ class GftPlugin implements GsaPlugin {
   List<GsaRouteType> get routes => GftRoutes.values;
 
   @override
+  String? get fontFamily {
+    return 'Open Sans';
+  }
+
+  @override
   ({
     String? logoImagePath,
-    String? fontFamily,
     Color? primary,
     Color? secondary,
     Color? tertiary,
   })? get themeProperties => (
         logoImagePath: null,
-        fontFamily: 'Open Sans',
         primary: const Color(0xff10467c),
         secondary: const Color(0xff303945),
         tertiary: const Color(0xffF6F9FC),

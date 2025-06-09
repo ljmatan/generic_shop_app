@@ -136,13 +136,16 @@ abstract mixin class GsaPlugin {
 
   /// A collection of routes specific to the plugin implementation.
   ///
-  List<GsaRouteType> get routes;
+  List<GsaRouteType>? get routes;
+
+  /// The specified plugin display font family.
+  ///
+  String? get fontFamily;
 
   /// Theme properties applied to the plugin.
   ///
   ({
     String? logoImagePath,
-    String? fontFamily,
     Color? primary,
     Color? secondary,
     Color? tertiary,

@@ -256,7 +256,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                       Navigator.pop(context);
                                       GsaWidgetOverlayAlert(
                                         message: '$e',
-                                      );
+                                      ).openDialog(context);
                                     }
                                   }
                                 },

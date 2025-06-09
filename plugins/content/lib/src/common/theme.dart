@@ -14,34 +14,28 @@ class GsaTheme {
   /// and otherwise, the global [instance] property may be accessed.
   ///
   GsaTheme({
-    this.plugin,
     this.platform,
     this.brightness,
     this.primaryColor,
     this.secondaryColor,
-  }) : _plugin = plugin ?? GsaConfig.provider.plugin;
-
-  /// Optional client definition of the specified plugin integration.
-  ///
-  final GsaPlugin? plugin;
-
-  /// Specified client plugin integration,
-  /// optionally derived from the [plugin] property,
-  /// defaulting to [GsaConfig.provider.plugin].
-  ///
-  final GsaPlugin _plugin;
+    this.fontFamily,
+  });
 
   /// The platform that user interaction should adapt to target.
   ///
-  final TargetPlatform? platform;
+  TargetPlatform? platform;
 
   /// Custom-defined theme [Brightness], describes the contrast of a theme or color palette.
   ///
-  final Brightness? brightness;
+  Brightness? brightness;
 
   /// Color definition for overriding the set defaults.
   ///
-  final Color? primaryColor, secondaryColor;
+  Color? primaryColor, secondaryColor;
+
+  /// Specified display font family.
+  ///
+  String? fontFamily;
 
   /// Globally-accessible class instance.
   ///
@@ -83,8 +77,8 @@ class GsaTheme {
     if (primaryColor != null) {
       return primaryColor!;
     }
-    if (_plugin.themeProperties?.primary != null) {
-      return _plugin.themeProperties!.primary!;
+    if (GsaConfig.provider.plugin.themeProperties?.primary != null) {
+      return GsaConfig.provider.plugin.themeProperties!.primary!;
     }
     if (_brightness == Brightness.light) {
       return const Color(0xff67bc2a);
@@ -97,8 +91,8 @@ class GsaTheme {
     if (secondaryColor != null) {
       return secondaryColor!;
     }
-    if (_plugin.themeProperties?.secondary != null) {
-      return _plugin.themeProperties!.secondary!;
+    if (GsaConfig.provider.plugin.themeProperties?.secondary != null) {
+      return GsaConfig.provider.plugin.themeProperties!.secondary!;
     }
     if (_brightness == Brightness.light) {
       return const Color(0xff63183f);
@@ -107,8 +101,8 @@ class GsaTheme {
     }
   }
 
-  String get _fontFamily {
-    return _plugin.themeProperties?.fontFamily ?? 'Quicksand';
+  String? get _fontFamily {
+    return fontFamily ?? GsaConfig.provider.plugin.fontFamily;
   }
 
   InputDecorationTheme get _inputDecorationTheme {
@@ -202,7 +196,7 @@ class GsaTheme {
               onPrimary: Colors.white,
               secondary: _secondaryColor,
               onSecondary: Colors.white,
-              tertiary: _plugin.themeProperties?.tertiary,
+              tertiary: GsaConfig.provider.plugin.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: Colors.white,
@@ -217,7 +211,7 @@ class GsaTheme {
               onPrimary: Colors.grey,
               secondary: _secondaryColor,
               onSecondary: Colors.grey,
-              tertiary: _plugin.themeProperties?.tertiary,
+              tertiary: GsaConfig.provider.plugin.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: const Color(0xff333333),

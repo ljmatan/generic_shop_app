@@ -23,13 +23,10 @@ class GsaWidgetLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (GsaConfig.provider.plugin.themeProperties?.logoImagePath != null) {
-      return (GsaConfig.provider.plugin.themeProperties!.logoImagePath!.startsWith(
-        'assets',
-      )
-          ? GsaWidgetImage.asset
-          : GsaWidgetImage.network)(
-        GsaDataMerchant.instance.merchant!.logoImageUrl!,
+    final logoImagePath = GsaConfig.provider.plugin.themeProperties?.logoImagePath;
+    if (logoImagePath != null) {
+      return (logoImagePath.startsWith('assets') || logoImagePath.startsWith('packages') ? GsaWidgetImage.asset : GsaWidgetImage.network)(
+        logoImagePath,
         width: width,
         height: height,
       );
