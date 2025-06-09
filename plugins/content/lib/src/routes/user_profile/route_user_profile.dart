@@ -17,10 +17,12 @@ class _GsaRouteUserProfileState extends GsaRouteState<GsaRouteUserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GsaWidgetText(
-          widget.displayName,
-        ),
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+        ],
       ),
     );
   }

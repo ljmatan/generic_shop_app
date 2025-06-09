@@ -1,6 +1,7 @@
 export 'actions/_actions.dart';
 export 'flair/_flair.dart';
 export 'overlays/_overlays.dart';
+export 'widget_app_bar.dart';
 export 'widget_error.dart';
 export 'widget_headline.dart';
 export 'widget_image.dart';

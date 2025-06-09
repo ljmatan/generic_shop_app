@@ -189,8 +189,11 @@ class GsaTheme {
                 color: _primaryColor,
               ),
             ),
-      dividerColor: Colors.grey.shade100,
-      dividerTheme: const DividerThemeData(thickness: .1),
+      dividerColor: _brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
+      dividerTheme: const DividerThemeData(
+        thickness: .4,
+        space: .4,
+      ),
       scaffoldBackgroundColor: _brightness == Brightness.light ? Colors.white : const Color(0xff121212),
       colorScheme: _brightness == Brightness.light
           ? ColorScheme(
