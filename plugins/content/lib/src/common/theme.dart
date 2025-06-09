@@ -139,7 +139,7 @@ class GsaTheme {
     return ThemeData(
       platform: platform,
       primaryColor: _primaryColor,
-      fontFamily: _fontFamily,
+      fontFamily: _fontFamily != null ? 'packages/generic_shop_app_demo/$_fontFamily' : null,
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,

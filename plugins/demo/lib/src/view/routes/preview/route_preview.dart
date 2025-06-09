@@ -5,6 +5,7 @@ import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' as colorpicker;
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_demo/gsd.dart';
 import 'package:generic_shop_app_demo/src/view/routes/_routes.dart';
 
 part 'misc/misc_navigator_observer.dart';
@@ -120,6 +121,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               _navigatorObserver,
                             ],
                             initialRoute: _routes[_routeIndex].routeId,
+                            onDidRemovePage: (page) {
+                              _onNavigatorChange();
+                            },
                             onGenerateRoute: (settings) {
                               return MaterialPageRoute(
                                 builder: (_) => _routes
@@ -317,6 +321,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     initialSelection: _fontFamily,
                     dropdownMenuEntries: [
                       for (final fontId in <String>{
+                        'Comic Neue',
                         'Quicksand',
                         'Merriweather Sans',
                         'Open Sans',
@@ -415,7 +420,11 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           const GsaWidgetOverlayContentBlocking().openDialog(context);
                           try {
                             GsaData.clearAll();
-                            await provider.plugin.init();
+                            if (provider == GsaConfigProvider.demo) {
+                              await GsdServiceMock.instance.init();
+                            } else {
+                              await provider.plugin.init();
+                            }
                             Navigator.pop(context);
                             setState(() {});
                           } catch (e) {
