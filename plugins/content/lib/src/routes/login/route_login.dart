@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
+import 'package:generic_shop_app_froddo_b2b/gfb.dart';
 import 'package:generic_shop_app_ivancica/api/api.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -232,6 +233,13 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                       switch (GsaConfig.provider) {
                                         case GsaConfigProvider.ivancica:
                                           final user = await GivApiUser.instance.login(
+                                            email: _emailTextController.text,
+                                            password: _passwordTextController.text,
+                                          );
+                                          GsaDataUser.instance.user = user;
+                                          break;
+                                        case GsaConfigProvider.froddoB2b:
+                                          final user = await GfbApiUser.instance.login(
                                             email: _emailTextController.text,
                                             password: _passwordTextController.text,
                                           );

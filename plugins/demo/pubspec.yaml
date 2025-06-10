@@ -25,6 +25,8 @@ dependencies:
     path: ../ivancica
   generic_shop_app_fitness_tracker:
     path: ../fitness_tracker
+  generic_shop_app_froddo_b2b:
+    path: ../froddo_b2b
   device_frame_plus: ^1.5.0
   flutter_colorpicker: ^1.1.0
 
@@ -67,50 +69,50 @@ flutter:
     - assets/ivancica/svg/
     - assets/svg/
     
-  fonts:
-    - family: Comic Neue
-      fonts:
-        - asset: assets/fonts/ComicNeue-Light.ttf
-          weight: 100
-        - asset: assets/fonts/ComicNeue-Light.ttf
-          weight: 200
-        - asset: assets/fonts/ComicNeue-Regular.ttf
-          weight: 300
-        - asset: assets/fonts/ComicNeue-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/ComicNeue-Regular.ttf
-          weight: 500
-        - asset: assets/fonts/ComicNeue-Regular.ttf
-          weight: 600
-        - asset: assets/fonts/ComicNeue-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/ComicNeue-Bold.ttf
-          weight: 800
-        - asset: assets/fonts/ComicNeue-Bold.ttf
-          weight: 900
-    - family: Quicksand
-      fonts:
-        - asset: assets/fonts/Quicksand-Light.ttf
-          weight: 100
-        - asset: assets/fonts/Quicksand-Light.ttf
-          weight: 200
-        - asset: assets/fonts/Quicksand-Medium.ttf
-          weight: 300
-        - asset: assets/fonts/Quicksand-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Quicksand-Regular.ttf
-          weight: 500
-        - asset: assets/fonts/Quicksand-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Quicksand-SemiBold.ttf
-          weight: 700
-        - asset: assets/fonts/Quicksand-Bold.ttf
-          weight: 800
-        - asset: assets/fonts/Quicksand-Bold.ttf
-          weight: 900
-    - family: Merriweather Sans
-      fonts:
-        - asset: assets/ivancica/fonts/MerriweatherSans-VariableFont_wght.ttf
-    - family: Open Sans
-      fonts:
-        - asset: assets/fitness_tracker/fonts/OpenSans-VariableFont_wdth,wght.ttf
+  # fonts:
+  #   - family: Comic Neue
+  #     fonts:
+  #       - asset: assets/fonts/ComicNeue-Light.ttf
+  #         weight: 100
+  #       - asset: assets/fonts/ComicNeue-Light.ttf
+  #         weight: 200
+  #       - asset: assets/fonts/ComicNeue-Regular.ttf
+  #         weight: 300
+  #       - asset: assets/fonts/ComicNeue-Regular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/ComicNeue-Regular.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/ComicNeue-Regular.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/ComicNeue-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/ComicNeue-Bold.ttf
+  #         weight: 800
+  #       - asset: assets/fonts/ComicNeue-Bold.ttf
+  #         weight: 900
+  #   - family: Quicksand
+  #     fonts:
+  #       - asset: assets/fonts/Quicksand-Light.ttf
+  #         weight: 100
+  #       - asset: assets/fonts/Quicksand-Light.ttf
+  #         weight: 200
+  #       - asset: assets/fonts/Quicksand-Medium.ttf
+  #         weight: 300
+  #       - asset: assets/fonts/Quicksand-Regular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/Quicksand-Regular.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/Quicksand-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/Quicksand-SemiBold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/Quicksand-Bold.ttf
+  #         weight: 800
+  #       - asset: assets/fonts/Quicksand-Bold.ttf
+  #         weight: 900
+  #   - family: Merriweather Sans
+  #     fonts:
+  #       - asset: assets/ivancica/fonts/MerriweatherSans-VariableFont_wght.ttf
+  #   - family: Open Sans
+  #     fonts:
+  #       - asset: assets/fitness_tracker/fonts/OpenSans-VariableFont_wdth,wght.ttf

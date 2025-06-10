@@ -23,7 +23,12 @@ class GsdPlugin implements GsaPlugin {
   }
 
   @override
-  Widget Function() get initialRoute {
+  String get id {
+    return 'generic_shop_app_demo';
+  }
+
+  @override
+  GsaRoute Function() get initialRoute {
     return () => const GsdRoutePreview();
   }
 
@@ -38,12 +43,12 @@ class GsdPlugin implements GsaPlugin {
   }
 
   @override
-  ({
-    String? logoImagePath,
-    Color? primary,
-    Color? secondary,
-    Color? tertiary,
-  })? get themeProperties {
+  String? get logoImagePath {
+    return null;
+  }
+
+  @override
+  Color? get primaryColor {
     return null;
   }
 

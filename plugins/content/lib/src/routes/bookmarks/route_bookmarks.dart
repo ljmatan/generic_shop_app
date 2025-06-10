@@ -97,7 +97,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                                                 borderRadius: BorderRadius.circular(12),
                                                 border: Border.all(
                                                   width: 2,
-                                                  color: Theme.of(context).colorScheme.tertiary,
+                                                  color: Theme.of(context).primaryColor,
                                                 ),
                                               ),
                                               child: Padding(

@@ -28,12 +28,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  assets:
-    - assets/ivancica/
-    - assets/ivancica/svg/
-
-  fonts:
-    - family: Merriweather Sans
-      fonts:
-        - asset: assets/ivancica/fonts/MerriweatherSans-VariableFont_wght.ttf

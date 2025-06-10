@@ -139,7 +139,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                   ),
                 DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Theme.of(context).primaryColor,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 10),

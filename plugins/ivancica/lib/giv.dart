@@ -15,6 +15,11 @@ class GivPlugin implements GsaPlugin {
   static const instance = GivPlugin._();
 
   @override
+  String get id {
+    return 'generic_shop_app_ivancica';
+  }
+
+  @override
   Future<void> init() async {
     GsaDataMerchant.instance.merchant = GsaModelMerchant(
       name: 'froddo',
@@ -29,7 +34,7 @@ class GivPlugin implements GsaPlugin {
   }
 
   @override
-  Widget Function() get initialRoute {
+  GsaRoute Function() get initialRoute {
     return () => const GsaRouteShop();
   }
 
@@ -40,21 +45,18 @@ class GivPlugin implements GsaPlugin {
 
   @override
   String? get fontFamily {
-    return 'Merriweather Sans';
+    return 'packages/$id/Merriweather Sans';
   }
 
   @override
-  ({
-    String? logoImagePath,
-    Color? primary,
-    Color? secondary,
-    Color? tertiary,
-  })? get themeProperties => (
-        logoImagePath: 'packages/generic_shop_app_demo/assets/ivancica/logo.png',
-        primary: const Color(0xff8DC63F),
-        secondary: const Color(0xff303945),
-        tertiary: const Color(0xffF6F9FC),
-      );
+  String? get logoImagePath {
+    return 'packages/$id/assets/ivancica/svg/logo.svg';
+  }
+
+  @override
+  Color? get primaryColor {
+    return const Color(0xff8DC63F);
+  }
 
   @override
   ({

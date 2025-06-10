@@ -1,0 +1,68 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "demo",
+      "cwd": "plugins/demo/impl",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "demo (profile mode)",
+      "cwd": "plugins/demo/impl",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "demo (release mode)",
+      "cwd": "plugins/demo/impl",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "fitness_tracker",
+      "cwd": "plugins/fitness_tracker/impl",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "fitness_tracker (profile mode)",
+      "cwd": "plugins/fitness_tracker/impl",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "fitness_tracker (release mode)",
+      "cwd": "plugins/fitness_tracker/impl",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "ivancica",
+      "cwd": "plugins/ivancica/impl",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "ivancica (profile mode)",
+      "cwd": "plugins/ivancica/impl",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "ivancica (release mode)",
+      "cwd": "plugins/ivancica/impl",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ]
+}

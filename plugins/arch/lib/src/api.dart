@@ -17,18 +17,6 @@ abstract class GsaApi {
   ///
   String get host => 'localhost';
 
-  /// The major public API version defined with the server.
-  ///
-  int? get majorVersion => 0;
-
-  /// API identifier with the backend services.
-  ///
-  String? get identifier => null;
-
-  /// The version specific to this API.
-  ///
-  int? get version => null;
-
   /// Address in URL format.
   ///
   String get url {

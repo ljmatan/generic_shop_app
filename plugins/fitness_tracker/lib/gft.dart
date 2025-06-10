@@ -19,7 +19,12 @@ class GftPlugin implements GsaPlugin {
   }
 
   @override
-  Widget Function() get initialRoute {
+  String get id {
+    return 'generic_shop_app_fitness_tracker';
+  }
+
+  @override
+  GsaRoute Function() get initialRoute {
     return () => const GftRouteSplash();
   }
 
@@ -28,21 +33,18 @@ class GftPlugin implements GsaPlugin {
 
   @override
   String? get fontFamily {
-    return 'Open Sans';
+    return 'packages/$id/Open Sans';
   }
 
   @override
-  ({
-    String? logoImagePath,
-    Color? primary,
-    Color? secondary,
-    Color? tertiary,
-  })? get themeProperties => (
-        logoImagePath: null,
-        primary: const Color(0xff10467c),
-        secondary: const Color(0xff303945),
-        tertiary: const Color(0xffF6F9FC),
-      );
+  String? get logoImagePath {
+    return null;
+  }
+
+  @override
+  Color? get primaryColor {
+    return const Color(0xff10467c);
+  }
 
   @override
   ({

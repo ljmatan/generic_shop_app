@@ -117,7 +117,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                         DecoratedBox(
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Theme.of(context).colorScheme.tertiary,
+                              color: Theme.of(context).primaryColor,
                               width: 2,
                             ),
                           ),

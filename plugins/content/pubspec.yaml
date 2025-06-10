@@ -21,6 +21,8 @@ dependencies:
     path: ../data
   generic_shop_app_ivancica:
     path: ../ivancica
+  generic_shop_app_froddo_b2b:
+    path: ../froddo_b2b
   generic_shop_app_fitness_tracker:
     path: ../fitness_tracker
   flutter_svg: ^2.0.17

@@ -1,6 +1,5 @@
 import 'dart:ui' as dart_ui;
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' as colorpicker;
@@ -64,7 +63,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   bool _darkTheme = false;
 
-  late Color _primaryColor, _secondaryColor;
+  late Color _primaryColor;
 
   String _fontFamily = 'Quicksand';
 
@@ -79,8 +78,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
-    _primaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
-    _secondaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.colorScheme.secondary;
+    _primaryColor = GsaConfig.provider.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
   }
 
   @override
@@ -108,7 +106,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         platform: _platform,
                         brightness: _darkTheme ? Brightness.dark : Brightness.light,
                         primaryColor: _primaryColor,
-                        secondaryColor: _secondaryColor,
                         fontFamily: _fontFamily,
                       ).data,
                       child: ScrollConfiguration(
@@ -260,9 +257,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           _navigatorKey = GlobalKey<NavigatorState>();
                           GsaRoute.navigatorKey = _navigatorKey;
                           _routeDropdownKey = UniqueKey();
-                          _primaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
-                          _secondaryColor =
-                              GsaConfig.provider.plugin.themeProperties?.secondary ?? GsaTheme.instance.data.colorScheme.secondary;
+                          _primaryColor = GsaConfig.provider.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
                           _fontFamily = GsaConfig.provider.plugin.fontFamily ?? _fontFamily;
                         },
                       );
@@ -350,11 +345,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       color: _primaryColor,
                       onColorChanged: (Color value) => _primaryColor = value,
                     ),
-                    (
-                      label: 'Secondary Color',
-                      color: _secondaryColor,
-                      onColorChanged: (Color value) => _secondaryColor = value,
-                    ),
                   }) ...[
                     const SizedBox(height: 20),
                     InkWell(
@@ -436,9 +426,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               _navigatorKey = GlobalKey<NavigatorState>();
                               GsaRoute.navigatorKey = _navigatorKey;
                               _routeDropdownKey = UniqueKey();
-                              _primaryColor = GsaConfig.provider.plugin.themeProperties?.primary ?? GsaTheme.instance.data.primaryColor;
-                              _secondaryColor =
-                                  GsaConfig.provider.plugin.themeProperties?.secondary ?? GsaTheme.instance.data.colorScheme.secondary;
+                              _primaryColor = GsaConfig.provider.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
                               _fontFamily = GsaConfig.provider.plugin.fontFamily ?? _fontFamily;
                             });
                           } catch (e) {

@@ -6,6 +6,7 @@ import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_demo/gsd.dart';
 import 'package:generic_shop_app_fitness_tracker/gft.dart';
+import 'package:generic_shop_app_froddo_b2b/gfb.dart';
 import 'package:generic_shop_app_ivancica/giv.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -130,9 +131,13 @@ abstract mixin class GsaPlugin {
   ///
   Future<void> init();
 
+  /// The identifier for the plugin project specified in the `pubspec.yaml` file.
+  ///
+  String get id;
+
   /// App screen specified for display after the splash and user consent screens.
   ///
-  Widget Function() get initialRoute;
+  GsaRoute Function() get initialRoute;
 
   /// A collection of routes specific to the plugin implementation.
   ///
@@ -142,14 +147,13 @@ abstract mixin class GsaPlugin {
   ///
   String? get fontFamily;
 
-  /// Theme properties applied to the plugin.
+  /// Asset or network path of the plugin client logo image.
   ///
-  ({
-    String? logoImagePath,
-    Color? primary,
-    Color? secondary,
-    Color? tertiary,
-  })? get themeProperties;
+  String? get logoImagePath;
+
+  /// The background color for major parts of the app (toolbars, tab bars, etc.).
+  ///
+  Color? get primaryColor;
 
   /// Curated collection of provider document network resource URLs.
   ///
@@ -172,6 +176,12 @@ enum GsaConfigProvider {
   ///
   ivancica,
 
+  /// Shoe sales client with a custom API system implementation.
+  ///
+  /// The plugin is implemented for business-to-business sales.
+  ///
+  froddoB2b,
+
   /// Health and fitness tracker client.
   ///
   fitnessTracker;
@@ -184,6 +194,8 @@ enum GsaConfigProvider {
         return GsdPlugin.instance;
       case GsaConfigProvider.ivancica:
         return GivPlugin.instance;
+      case GsaConfigProvider.froddoB2b:
+        return GfbPlugin.instance;
       case GsaConfigProvider.fitnessTracker:
         return GftPlugin.instance;
     }

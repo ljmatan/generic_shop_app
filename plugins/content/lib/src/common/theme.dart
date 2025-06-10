@@ -17,7 +17,6 @@ class GsaTheme {
     this.platform,
     this.brightness,
     this.primaryColor,
-    this.secondaryColor,
     this.fontFamily,
   });
 
@@ -31,7 +30,7 @@ class GsaTheme {
 
   /// Color definition for overriding the set defaults.
   ///
-  Color? primaryColor, secondaryColor;
+  Color? primaryColor;
 
   /// Specified display font family.
   ///
@@ -77,8 +76,8 @@ class GsaTheme {
     if (primaryColor != null) {
       return primaryColor!;
     }
-    if (GsaConfig.provider.plugin.themeProperties?.primary != null) {
-      return GsaConfig.provider.plugin.themeProperties!.primary!;
+    if (GsaConfig.provider.plugin.primaryColor != null) {
+      return GsaConfig.provider.plugin.primaryColor!;
     }
     if (_brightness == Brightness.light) {
       return const Color(0xffDAB1DA);
@@ -88,12 +87,6 @@ class GsaTheme {
   }
 
   Color get _secondaryColor {
-    if (secondaryColor != null) {
-      return secondaryColor!;
-    }
-    if (GsaConfig.provider.plugin.themeProperties?.secondary != null) {
-      return GsaConfig.provider.plugin.themeProperties!.secondary!;
-    }
     if (_brightness == Brightness.light) {
       return const Color(0xff63183f);
     } else {
@@ -139,7 +132,7 @@ class GsaTheme {
     return ThemeData(
       platform: platform,
       primaryColor: _primaryColor,
-      fontFamily: _fontFamily != null ? 'packages/generic_shop_app_demo/$_fontFamily' : null,
+      fontFamily: _fontFamily,
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
@@ -196,7 +189,6 @@ class GsaTheme {
               onPrimary: Colors.white,
               secondary: _secondaryColor,
               onSecondary: Colors.white,
-              tertiary: GsaConfig.provider.plugin.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: Colors.white,
@@ -211,7 +203,6 @@ class GsaTheme {
               onPrimary: Colors.grey,
               secondary: _secondaryColor,
               onSecondary: Colors.grey,
-              tertiary: GsaConfig.provider.plugin.themeProperties?.tertiary,
               error: Colors.red.shade300,
               onError: Colors.white,
               background: const Color(0xff333333),
