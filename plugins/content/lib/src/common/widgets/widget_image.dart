@@ -160,7 +160,12 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                 widget.inputString!,
                 width: widget.width,
                 height: widget.height,
-                colorFilter: widget.colorFilter == null ? null : ColorFilter.mode(widget.colorFilter!, BlendMode.srcIn),
+                colorFilter: widget.colorFilter == null
+                    ? null
+                    : ColorFilter.mode(
+                        widget.colorFilter!,
+                        BlendMode.srcIn,
+                      ),
                 fit: widget.fit,
               )
         : widget.bytes.isNotEmpty == true
@@ -176,7 +181,12 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                     Uint8List.fromList(widget.bytes),
                     width: widget.width,
                     height: widget.height,
-                    colorFilter: widget.colorFilter == null ? null : ColorFilter.mode(widget.colorFilter!, BlendMode.srcIn),
+                    colorFilter: widget.colorFilter == null
+                        ? null
+                        : ColorFilter.mode(
+                            widget.colorFilter!,
+                            BlendMode.srcIn,
+                          ),
                     fit: widget.fit,
                   )
             : widget.path.endsWith('.svg')
@@ -185,7 +195,12 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                         widget.path,
                         width: widget.width,
                         height: widget.height,
-                        colorFilter: widget.colorFilter == null ? null : ColorFilter.mode(widget.colorFilter!, BlendMode.srcIn),
+                        colorFilter: widget.colorFilter == null
+                            ? null
+                            : ColorFilter.mode(
+                                widget.colorFilter!,
+                                BlendMode.srcIn,
+                              ),
                         fit: widget.fit,
                       )
                     : widget.path == GsaWidgetImage._placeholderAssetPath
@@ -204,7 +219,12 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                             widget.path,
                             width: widget.width,
                             height: widget.height,
-                            colorFilter: widget.colorFilter == null ? null : ColorFilter.mode(widget.colorFilter!, BlendMode.srcIn),
+                            colorFilter: widget.colorFilter == null
+                                ? null
+                                : ColorFilter.mode(
+                                    widget.colorFilter!,
+                                    BlendMode.srcIn,
+                                  ),
                             fit: widget.fit,
                           )
                 : widget.networkImage == true

@@ -34,6 +34,7 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
         barrierDismissible: barrierDismissible,
         barrierColor: barrierColor,
         useSafeArea: useSafeArea,
+        useRootNavigator: false,
         builder: (context) {
           return customBuilder
               ? this
@@ -80,6 +81,7 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
         showDragHandle: showDragHandle,
         barrierColor: barrierColor,
         useSafeArea: useSafeArea,
+        useRootNavigator: false,
         builder: (context) {
           return customBuilder ? this : this;
         },

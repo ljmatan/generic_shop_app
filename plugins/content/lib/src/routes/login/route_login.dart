@@ -87,7 +87,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           color: Theme.of(context).primaryColor,
                         ),
                         validator: switch (GsaConfig.provider) {
-                          GsaConfigProvider.ivancica => null,
+                          GsaConfigProvider.ivancica || GsaConfigProvider.froddoB2b => null,
                           _ => GsaServiceInputValidation.instance.password,
                         },
                       ),

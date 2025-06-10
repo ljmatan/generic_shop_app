@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_data/data.dart';
 
 /// Logo image, display visible content if an image is provided with the
 /// [GsaDataMerchant.instance.merchant.logoImageUrl] property.

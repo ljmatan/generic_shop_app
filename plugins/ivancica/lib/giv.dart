@@ -35,7 +35,9 @@ class GivPlugin implements GsaPlugin {
 
   @override
   GsaRoute Function() get initialRoute {
-    return () => const GsaRouteShop();
+    return () {
+      return const GsaRouteShop();
+    };
   }
 
   @override
