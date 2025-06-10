@@ -211,7 +211,9 @@ abstract class GsaApi {
             }
             if (error is Iterable) {
               for (final errorEntry in error) {
-                message += '$errorEntry\n';
+                if (errorEntry is String) {
+                  message += '$errorEntry\n';
+                }
               }
             }
           }
