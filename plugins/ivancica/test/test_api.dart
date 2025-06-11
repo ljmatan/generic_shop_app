@@ -1,4 +1,4 @@
-import 'package:generic_shop_app_ivancica/api/api.dart';
+import 'package:generic_shop_app_ivancica/src/api/_api.dart';
 
 void main() async {
   print(

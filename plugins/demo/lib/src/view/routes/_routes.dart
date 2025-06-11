@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:generic_shop_app_demo/src/view/routes/components/route_components.dart';
 import 'package:generic_shop_app_demo/src/view/routes/preview/route_preview.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
@@ -15,7 +14,7 @@ enum GsdRoutes implements GsaRouteType {
   preview;
 
   @override
-  Widget Function([dynamic args]) get widget {
+  GsaRoute Function([dynamic args]) get widget {
     switch (this) {
       case GsdRoutes.components:
         return ([args]) => const GsdRouteComponents();

@@ -6,7 +6,8 @@ part of 'models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GsaModelAddress _$GsaModelAddressFromJson(Map<String, dynamic> json) => GsaModelAddress(
+GsaModelAddress _$GsaModelAddressFromJson(Map<String, dynamic> json) =>
+    GsaModelAddress(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
@@ -19,17 +20,29 @@ GsaModelAddress _$GsaModelAddressFromJson(Map<String, dynamic> json) => GsaModel
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       note: json['note'] as String?,
-      personalDetails: json['personalDetails'] == null ? null : GsaModelPerson.fromJson(json['personalDetails'] as Map<String, dynamic>),
-      contactDetails: json['contactDetails'] == null ? null : GsaModelContact.fromJson(json['contactDetails'] as Map<String, dynamic>),
+      personalDetails: json['personalDetails'] == null
+          ? null
+          : GsaModelPerson.fromJson(
+              json['personalDetails'] as Map<String, dynamic>),
+      contactDetails: json['contactDetails'] == null
+          ? null
+          : GsaModelContact.fromJson(
+              json['contactDetails'] as Map<String, dynamic>),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData']
       ..displayName = json['displayName'] as String?;
 
-Map<String, dynamic> _$GsaModelAddressToJson(GsaModelAddress instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelAddressToJson(GsaModelAddress instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -38,6 +51,7 @@ Map<String, dynamic> _$GsaModelAddressToJson(GsaModelAddress instance) => <Strin
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'displayName': instance.displayName,
       'streetName': instance.streetName,
       'houseNumber': instance.houseNumber,
@@ -52,7 +66,8 @@ Map<String, dynamic> _$GsaModelAddressToJson(GsaModelAddress instance) => <Strin
       'contactDetails': instance.contactDetails?.toJson(),
     };
 
-GsaModelCategory _$GsaModelCategoryFromJson(Map<String, dynamic> json) => GsaModelCategory(
+GsaModelCategory _$GsaModelCategoryFromJson(Map<String, dynamic> json) =>
+    GsaModelCategory(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
@@ -61,12 +76,18 @@ GsaModelCategory _$GsaModelCategoryFromJson(Map<String, dynamic> json) => GsaMod
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData']
       ..description = json['description'] as String?;
 
-Map<String, dynamic> _$GsaModelCategoryToJson(GsaModelCategory instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelCategoryToJson(GsaModelCategory instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -75,33 +96,66 @@ Map<String, dynamic> _$GsaModelCategoryToJson(GsaModelCategory instance) => <Str
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'name': instance.name,
       'featured': instance.featured,
       'description': instance.description,
     };
 
-GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) => GsaModelOrderDraft(
+GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>
+    GsaModelOrderDraft(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
-      items: (json['items'] as List<dynamic>).map((e) => GsaModelSaleItem.fromJson(e as Map<String, dynamic>)).toList(),
-      personalDetails: json['personalDetails'] == null ? null : GsaModelPerson.fromJson(json['personalDetails'] as Map<String, dynamic>),
-      contactDetails: json['contactDetails'] == null ? null : GsaModelContact.fromJson(json['contactDetails'] as Map<String, dynamic>),
-      deliveryAddress: json['deliveryAddress'] == null ? null : GsaModelAddress.fromJson(json['deliveryAddress'] as Map<String, dynamic>),
-      invoiceAddress: json['invoiceAddress'] == null ? null : GsaModelAddress.fromJson(json['invoiceAddress'] as Map<String, dynamic>),
-      deliveryType: json['deliveryType'] == null ? null : GsaModelSaleItem.fromJson(json['deliveryType'] as Map<String, dynamic>),
-      paymentType: json['paymentType'] == null ? null : GsaModelSaleItem.fromJson(json['paymentType'] as Map<String, dynamic>),
+      items: (json['items'] as List<dynamic>)
+          .map((e) => GsaModelSaleItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      personalDetails: json['personalDetails'] == null
+          ? null
+          : GsaModelPerson.fromJson(
+              json['personalDetails'] as Map<String, dynamic>),
+      contactDetails: json['contactDetails'] == null
+          ? null
+          : GsaModelContact.fromJson(
+              json['contactDetails'] as Map<String, dynamic>),
+      deliveryAddress: json['deliveryAddress'] == null
+          ? null
+          : GsaModelAddress.fromJson(
+              json['deliveryAddress'] as Map<String, dynamic>),
+      invoiceAddress: json['invoiceAddress'] == null
+          ? null
+          : GsaModelAddress.fromJson(
+              json['invoiceAddress'] as Map<String, dynamic>),
+      deliveryType: json['deliveryType'] == null
+          ? null
+          : GsaModelSaleItem.fromJson(
+              json['deliveryType'] as Map<String, dynamic>),
+      paymentType: json['paymentType'] == null
+          ? null
+          : GsaModelSaleItem.fromJson(
+              json['paymentType'] as Map<String, dynamic>),
       couponCode: json['couponCode'] as String?,
-      price: json['price'] == null ? null : GsaModelPrice.fromJson(json['price'] as Map<String, dynamic>),
+      price: json['price'] == null
+          ? null
+          : GsaModelPrice.fromJson(json['price'] as Map<String, dynamic>),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
       ..categoryId = json['categoryId'] as String?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..orderProcessor = json['orderProcessor'] == null ? null : GsaModelMerchant.fromJson(json['orderProcessor'] as Map<String, dynamic>);
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData']
+      ..orderProcessor = json['orderProcessor'] == null
+          ? null
+          : GsaModelMerchant.fromJson(
+              json['orderProcessor'] as Map<String, dynamic>);
 
-Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -110,6 +164,7 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) => 
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'items': instance.items.map((e) => e.toJson()).toList(),
       'personalDetails': instance.personalDetails?.toJson(),
       'contactDetails': instance.contactDetails?.toJson(),
@@ -122,7 +177,8 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) => 
       'price': instance.price?.toJson(),
     };
 
-GsaModelConsent _$GsaModelConsentFromJson(Map<String, dynamic> json) => GsaModelConsent(
+GsaModelConsent _$GsaModelConsentFromJson(Map<String, dynamic> json) =>
+    GsaModelConsent(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       version: json['version'] as String?,
@@ -136,11 +192,17 @@ GsaModelConsent _$GsaModelConsentFromJson(Map<String, dynamic> json) => GsaModel
     )
       ..deleted = json['deleted'] as bool?
       ..categoryId = json['categoryId'] as String?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelConsentToJson(GsaModelConsent instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelConsentToJson(GsaModelConsent instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -149,6 +211,7 @@ Map<String, dynamic> _$GsaModelConsentToJson(GsaModelConsent instance) => <Strin
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'version': instance.version,
       'text': instance.text,
       'publishTimeIso8601': instance.publishTimeIso8601,
@@ -158,7 +221,8 @@ Map<String, dynamic> _$GsaModelConsentToJson(GsaModelConsent instance) => <Strin
       'requisite': instance.requisite,
     };
 
-GsaModelContact _$GsaModelContactFromJson(Map<String, dynamic> json) => GsaModelContact(
+GsaModelContact _$GsaModelContactFromJson(Map<String, dynamic> json) =>
+    GsaModelContact(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
@@ -166,16 +230,28 @@ GsaModelContact _$GsaModelContactFromJson(Map<String, dynamic> json) => GsaModel
       phoneCountryCode: json['phoneCountryCode'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
       note: json['note'] as String?,
-      personalDetails: json['personalDetails'] == null ? null : GsaModelPerson.fromJson(json['personalDetails'] as Map<String, dynamic>),
-      addressDetails: json['addressDetails'] == null ? null : GsaModelAddress.fromJson(json['addressDetails'] as Map<String, dynamic>),
+      personalDetails: json['personalDetails'] == null
+          ? null
+          : GsaModelPerson.fromJson(
+              json['personalDetails'] as Map<String, dynamic>),
+      addressDetails: json['addressDetails'] == null
+          ? null
+          : GsaModelAddress.fromJson(
+              json['addressDetails'] as Map<String, dynamic>),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelContactToJson(GsaModelContact instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelContactToJson(GsaModelContact instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -184,6 +260,7 @@ Map<String, dynamic> _$GsaModelContactToJson(GsaModelContact instance) => <Strin
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'email': instance.email,
       'phoneCountryCode': instance.phoneCountryCode,
       'phoneNumber': instance.phoneNumber,
@@ -192,20 +269,32 @@ Map<String, dynamic> _$GsaModelContactToJson(GsaModelContact instance) => <Strin
       'addressDetails': instance.addressDetails?.toJson(),
     };
 
-GsaModelLegalEntity _$GsaModelLegalEntityFromJson(Map<String, dynamic> json) => GsaModelLegalEntity(
+GsaModelLegalEntity _$GsaModelLegalEntityFromJson(Map<String, dynamic> json) =>
+    GsaModelLegalEntity(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
-      name: json['name'] == null ? null : GsaModelTranslated.fromJson(json['name'] as Map<String, dynamic>),
-      address: json['address'] == null ? null : GsaModelAddress.fromJson(json['address'] as Map<String, dynamic>),
+      name: json['name'] == null
+          ? null
+          : GsaModelTranslated.fromJson(json['name'] as Map<String, dynamic>),
+      address: json['address'] == null
+          ? null
+          : GsaModelAddress.fromJson(json['address'] as Map<String, dynamic>),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
       ..categoryId = json['categoryId'] as String?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelLegalEntityToJson(GsaModelLegalEntity instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelLegalEntityToJson(
+        GsaModelLegalEntity instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -214,28 +303,42 @@ Map<String, dynamic> _$GsaModelLegalEntityToJson(GsaModelLegalEntity instance) =
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'name': instance.name?.toJson(),
       'address': instance.address?.toJson(),
     };
 
-GsaModelMerchant _$GsaModelMerchantFromJson(Map<String, dynamic> json) => GsaModelMerchant(
+GsaModelMerchant _$GsaModelMerchantFromJson(Map<String, dynamic> json) =>
+    GsaModelMerchant(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
       name: json['name'] as String?,
-      contact: json['contact'] == null ? null : GsaModelContact.fromJson(json['contact'] as Map<String, dynamic>),
-      address: json['address'] == null ? null : GsaModelAddress.fromJson(json['address'] as Map<String, dynamic>),
+      contact: json['contact'] == null
+          ? null
+          : GsaModelContact.fromJson(json['contact'] as Map<String, dynamic>),
+      address: json['address'] == null
+          ? null
+          : GsaModelAddress.fromJson(json['address'] as Map<String, dynamic>),
       logoImageUrl: json['logoImageUrl'] as String?,
       logoImageSmallUrl: json['logoImageSmallUrl'] as String?,
-      reviews: (json['reviews'] as List<dynamic>?)?.map((e) => GsaModelReview.fromJson(e as Map<String, dynamic>)).toList(),
+      reviews: (json['reviews'] as List<dynamic>?)
+          ?.map((e) => GsaModelReview.fromJson(e as Map<String, dynamic>))
+          .toList(),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelMerchantToJson(GsaModelMerchant instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelMerchantToJson(GsaModelMerchant instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -244,6 +347,7 @@ Map<String, dynamic> _$GsaModelMerchantToJson(GsaModelMerchant instance) => <Str
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'name': instance.name,
       'contact': instance.contact?.toJson(),
       'address': instance.address?.toJson(),
@@ -252,7 +356,8 @@ Map<String, dynamic> _$GsaModelMerchantToJson(GsaModelMerchant instance) => <Str
       'reviews': instance.reviews?.map((e) => e.toJson()).toList(),
     };
 
-GsaModelPerson _$GsaModelPersonFromJson(Map<String, dynamic> json) => GsaModelPerson(
+GsaModelPerson _$GsaModelPersonFromJson(Map<String, dynamic> json) =>
+    GsaModelPerson(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
@@ -263,11 +368,17 @@ GsaModelPerson _$GsaModelPersonFromJson(Map<String, dynamic> json) => GsaModelPe
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelPersonToJson(GsaModelPerson instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelPersonToJson(GsaModelPerson instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -276,30 +387,43 @@ Map<String, dynamic> _$GsaModelPersonToJson(GsaModelPerson instance) => <String,
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'gender': instance.gender,
       'dateOfBirthIso8601': instance.dateOfBirthIso8601,
     };
 
-GsaModelPrice _$GsaModelPriceFromJson(Map<String, dynamic> json) => GsaModelPrice(
+GsaModelPrice _$GsaModelPriceFromJson(Map<String, dynamic> json) =>
+    GsaModelPrice(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
-      currencyType: $enumDecodeNullable(_$GsaModelPriceCurrencyTypeEnumMap, json['currencyType']),
+      currencyType: $enumDecodeNullable(
+          _$GsaModelPriceCurrencyTypeEnumMap, json['currencyType']),
       centum: (json['centum'] as num?)?.toInt(),
-      discount: json['discount'] == null ? null : GsaModelDiscount.fromJson(json['discount'] as Map<String, dynamic>),
+      discount: json['discount'] == null
+          ? null
+          : GsaModelDiscount.fromJson(json['discount'] as Map<String, dynamic>),
       clientVisible: json['clientVisible'] as bool?,
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
       ..categoryId = json['categoryId'] as String?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..promoDiscount =
-          json['promoDiscount'] == null ? null : GsaModelPromotionalDiscount.fromJson(json['promoDiscount'] as Map<String, dynamic>);
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData']
+      ..promoDiscount = json['promoDiscount'] == null
+          ? null
+          : GsaModelPromotionalDiscount.fromJson(
+              json['promoDiscount'] as Map<String, dynamic>);
 
-Map<String, dynamic> _$GsaModelPriceToJson(GsaModelPrice instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelPriceToJson(GsaModelPrice instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -308,6 +432,7 @@ Map<String, dynamic> _$GsaModelPriceToJson(GsaModelPrice instance) => <String, d
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'currencyType': _$GsaModelPriceCurrencyTypeEnumMap[instance.currencyType],
       'centum': instance.centum,
       'discount': instance.discount?.toJson(),
@@ -321,22 +446,30 @@ const _$GsaModelPriceCurrencyTypeEnumMap = {
   GsaModelPriceCurrencyType.jpy: 'jpy',
 };
 
-GsaModelDiscount _$GsaModelDiscountFromJson(Map<String, dynamic> json) => GsaModelDiscount(
+GsaModelDiscount _$GsaModelDiscountFromJson(Map<String, dynamic> json) =>
+    GsaModelDiscount(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
-      currencyType: $enumDecodeNullable(_$GsaModelPriceCurrencyTypeEnumMap, json['currencyType']),
+      currencyType: $enumDecodeNullable(
+          _$GsaModelPriceCurrencyTypeEnumMap, json['currencyType']),
       centum: (json['centum'] as num?)?.toInt(),
       timeStartIso8601: json['timeStartIso8601'] as String?,
       timeEndIso8601: json['timeEndIso8601'] as String?,
-      consentIds: (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      consentIds: (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelDiscountToJson(GsaModelDiscount instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelDiscountToJson(GsaModelDiscount instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -345,28 +478,38 @@ Map<String, dynamic> _$GsaModelDiscountToJson(GsaModelDiscount instance) => <Str
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'currencyType': _$GsaModelPriceCurrencyTypeEnumMap[instance.currencyType],
       'centum': instance.centum,
       'timeStartIso8601': instance.timeStartIso8601,
       'timeEndIso8601': instance.timeEndIso8601,
     };
 
-GsaModelPromotionalDiscount _$GsaModelPromotionalDiscountFromJson(Map<String, dynamic> json) => GsaModelPromotionalDiscount(
+GsaModelPromotionalDiscount _$GsaModelPromotionalDiscountFromJson(
+        Map<String, dynamic> json) =>
+    GsaModelPromotionalDiscount(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
       centum: (json['centum'] as num?)?.toInt(),
       timeStartIso8601: json['timeStartIso8601'] as String?,
       timeEndIso8601: json['timeEndIso8601'] as String?,
-      consentIds: (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      consentIds: (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData']
       ..couponCode = json['couponCode'] as String?;
 
-Map<String, dynamic> _$GsaModelPromotionalDiscountToJson(GsaModelPromotionalDiscount instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelPromotionalDiscountToJson(
+        GsaModelPromotionalDiscount instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -375,27 +518,37 @@ Map<String, dynamic> _$GsaModelPromotionalDiscountToJson(GsaModelPromotionalDisc
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'centum': instance.centum,
       'timeStartIso8601': instance.timeStartIso8601,
       'timeEndIso8601': instance.timeEndIso8601,
       'couponCode': instance.couponCode,
     };
 
-GsaModelReview _$GsaModelReviewFromJson(Map<String, dynamic> json) => GsaModelReview(
-      id: json['id'] as String?,
-      originId: json['originId'] as String?,
+GsaModelPromoBanner _$GsaModelPromoBannerFromJson(Map<String, dynamic> json) =>
+    GsaModelPromoBanner(
+      label: json['label'] as String?,
+      description: json['description'] as String?,
+      contentUrl: json['contentUrl'] as String?,
+      photoUrl: json['photoUrl'] as String?,
     )
+      ..id = json['id'] as String?
+      ..originId = json['originId'] as String?
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
       ..categoryId = json['categoryId'] as String?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..rating = (json['rating'] as num?)?.toDouble()
-      ..comment = json['comment'] as String?
-      ..timeCreatedIso8601 = json['timeCreatedIso8601'] as String?;
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelReviewToJson(GsaModelReview instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelPromoBannerToJson(
+        GsaModelPromoBanner instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -404,12 +557,51 @@ Map<String, dynamic> _$GsaModelReviewToJson(GsaModelReview instance) => <String,
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
+      'label': instance.label,
+      'description': instance.description,
+      'contentUrl': instance.contentUrl,
+      'photoUrl': instance.photoUrl,
+    };
+
+GsaModelReview _$GsaModelReviewFromJson(Map<String, dynamic> json) =>
+    GsaModelReview(
+      id: json['id'] as String?,
+      originId: json['originId'] as String?,
+    )
+      ..originUrl = json['originUrl'] as String?
+      ..deleted = json['deleted'] as bool?
+      ..categoryId = json['categoryId'] as String?
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData']
+      ..rating = (json['rating'] as num?)?.toDouble()
+      ..comment = json['comment'] as String?
+      ..timeCreatedIso8601 = json['timeCreatedIso8601'] as String?;
+
+Map<String, dynamic> _$GsaModelReviewToJson(GsaModelReview instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'originId': instance.originId,
+      'originUrl': instance.originUrl,
+      'deleted': instance.deleted,
+      'categoryId': instance.categoryId,
+      'consentIds': instance.consentIds,
+      'tags': instance.tags,
+      'logs': instance.logs,
+      'originData': instance.originData,
       'rating': instance.rating,
       'comment': instance.comment,
       'timeCreatedIso8601': instance.timeCreatedIso8601,
     };
 
-GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) => GsaModelSaleItem(
+GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) =>
+    GsaModelSaleItem(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
@@ -419,10 +611,18 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) => GsaMod
       measure: json['measure'] as String?,
       description: json['description'] as String?,
       disclaimer: json['disclaimer'] as String?,
-      imageUrls: (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      thumbnailUrls: (json['thumbnailUrls'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      attributeIconUrls: (json['attributeIconUrls'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      price: json['price'] == null ? null : GsaModelPrice.fromJson(json['price'] as Map<String, dynamic>),
+      imageUrls: (json['imageUrls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      thumbnailUrls: (json['thumbnailUrls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      attributeIconUrls: (json['attributeIconUrls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      price: json['price'] == null
+          ? null
+          : GsaModelPrice.fromJson(json['price'] as Map<String, dynamic>),
       cartCount: (json['cartCount'] as num?)?.toInt(),
       availability: (json['availability'] as List<dynamic>?)
           ?.map((e) => _$recordConvert(
@@ -438,9 +638,14 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) => GsaMod
       delivered: json['delivered'] as bool?,
       digital: json['digital'] as bool?,
       payable: json['payable'] as bool?,
-      options: (json['options'] as List<dynamic>?)?.map((e) => GsaModelSaleItem.fromJson(e as Map<String, dynamic>)).toList(),
-      reviews: (json['reviews'] as List<dynamic>?)?.map((e) => GsaModelReview.fromJson(e as Map<String, dynamic>)).toList(),
-      deliveryTimeMilliseconds: (json['deliveryTimeMilliseconds'] as num?)?.toInt(),
+      options: (json['options'] as List<dynamic>?)
+          ?.map((e) => GsaModelSaleItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      reviews: (json['reviews'] as List<dynamic>?)
+          ?.map((e) => GsaModelReview.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      deliveryTimeMilliseconds:
+          (json['deliveryTimeMilliseconds'] as num?)?.toInt(),
       informationList: (json['informationList'] as List<dynamic>?)
           ?.map((e) => _$recordConvert(
                 e,
@@ -451,14 +656,19 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) => GsaMod
               ))
           .toList(),
       originUrl: json['originUrl'] as String?,
-      consentIds: (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      consentIds: (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
     )
       ..deleted = json['deleted'] as bool?
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData']
       ..condition = json['condition'] as String?;
 
-Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -467,6 +677,7 @@ Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) => <Str
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'name': instance.name,
       'productCode': instance.productCode,
       'amount': instance.amount,
@@ -507,20 +718,31 @@ $Rec _$recordConvert<$Rec>(
 ) =>
     convert(value as Map<String, dynamic>);
 
-GsaModelSalePoint _$GsaModelSalePointFromJson(Map<String, dynamic> json) => GsaModelSalePoint(
+GsaModelSalePoint _$GsaModelSalePointFromJson(Map<String, dynamic> json) =>
+    GsaModelSalePoint(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
-      name: json['name'] == null ? null : GsaModelTranslated.fromJson(json['name'] as Map<String, dynamic>),
-      address: json['address'] == null ? null : GsaModelAddress.fromJson(json['address'] as Map<String, dynamic>),
+      name: json['name'] == null
+          ? null
+          : GsaModelTranslated.fromJson(json['name'] as Map<String, dynamic>),
+      address: json['address'] == null
+          ? null
+          : GsaModelAddress.fromJson(json['address'] as Map<String, dynamic>),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
       ..categoryId = json['categoryId'] as String?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelSalePointToJson(GsaModelSalePoint instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelSalePointToJson(GsaModelSalePoint instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -529,11 +751,13 @@ Map<String, dynamic> _$GsaModelSalePointToJson(GsaModelSalePoint instance) => <S
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'name': instance.name?.toJson(),
       'address': instance.address?.toJson(),
     };
 
-GsaModelShopSearch _$GsaModelShopSearchFromJson(Map<String, dynamic> json) => GsaModelShopSearch(
+GsaModelShopSearch _$GsaModelShopSearchFromJson(Map<String, dynamic> json) =>
+    GsaModelShopSearch(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
@@ -542,11 +766,17 @@ GsaModelShopSearch _$GsaModelShopSearchFromJson(Map<String, dynamic> json) => Gs
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelShopSearchToJson(GsaModelShopSearch instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelShopSearchToJson(GsaModelShopSearch instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -555,11 +785,13 @@ Map<String, dynamic> _$GsaModelShopSearchToJson(GsaModelShopSearch instance) => 
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'searchTerm': instance.searchTerm,
       'sortCategoryId': instance.sortCategoryId,
     };
 
-GsaModelTranslated _$GsaModelTranslatedFromJson(Map<String, dynamic> json) => GsaModelTranslated(
+GsaModelTranslated _$GsaModelTranslatedFromJson(Map<String, dynamic> json) =>
+    GsaModelTranslated(
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       values: (json['values'] as List<dynamic>)
@@ -575,11 +807,17 @@ GsaModelTranslated _$GsaModelTranslatedFromJson(Map<String, dynamic> json) => Gs
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
       ..categoryId = json['categoryId'] as String?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
 
-Map<String, dynamic> _$GsaModelTranslatedToJson(GsaModelTranslated instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelTranslatedToJson(GsaModelTranslated instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -588,6 +826,7 @@ Map<String, dynamic> _$GsaModelTranslatedToJson(GsaModelTranslated instance) => 
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'values': instance.values
           .map((e) => <String, dynamic>{
                 'languageId': e.languageId,
@@ -601,21 +840,36 @@ GsaModelUser _$GsaModelUserFromJson(Map<String, dynamic> json) => GsaModelUser(
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
       username: json['username'] as String?,
-      personalDetails: json['personalDetails'] == null ? null : GsaModelPerson.fromJson(json['personalDetails'] as Map<String, dynamic>),
-      contact: json['contact'] == null ? null : GsaModelContact.fromJson(json['contact'] as Map<String, dynamic>),
-      address: json['address'] == null ? null : GsaModelAddress.fromJson(json['address'] as Map<String, dynamic>),
-      deliveryAddresses:
-          (json['deliveryAddresses'] as List<dynamic>?)?.map((e) => GsaModelAddress.fromJson(e as Map<String, dynamic>)).toList(),
-      invoiceAddresses:
-          (json['invoiceAddresses'] as List<dynamic>?)?.map((e) => GsaModelAddress.fromJson(e as Map<String, dynamic>)).toList(),
+      personalDetails: json['personalDetails'] == null
+          ? null
+          : GsaModelPerson.fromJson(
+              json['personalDetails'] as Map<String, dynamic>),
+      contact: json['contact'] == null
+          ? null
+          : GsaModelContact.fromJson(json['contact'] as Map<String, dynamic>),
+      address: json['address'] == null
+          ? null
+          : GsaModelAddress.fromJson(json['address'] as Map<String, dynamic>),
+      deliveryAddresses: (json['deliveryAddresses'] as List<dynamic>?)
+          ?.map((e) => GsaModelAddress.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      invoiceAddresses: (json['invoiceAddresses'] as List<dynamic>?)
+          ?.map((e) => GsaModelAddress.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      originData: json['originData'],
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
-      ..consentIds = (json['consentIds'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..tags = (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..logs = (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
 
-Map<String, dynamic> _$GsaModelUserToJson(GsaModelUser instance) => <String, dynamic>{
+Map<String, dynamic> _$GsaModelUserToJson(GsaModelUser instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'originId': instance.originId,
       'originUrl': instance.originUrl,
@@ -624,10 +878,13 @@ Map<String, dynamic> _$GsaModelUserToJson(GsaModelUser instance) => <String, dyn
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
+      'originData': instance.originData,
       'username': instance.username,
       'personalDetails': instance.personalDetails?.toJson(),
       'contact': instance.contact?.toJson(),
       'address': instance.address?.toJson(),
-      'deliveryAddresses': instance.deliveryAddresses?.map((e) => e.toJson()).toList(),
-      'invoiceAddresses': instance.invoiceAddresses?.map((e) => e.toJson()).toList(),
+      'deliveryAddresses':
+          instance.deliveryAddresses?.map((e) => e.toJson()).toList(),
+      'invoiceAddresses':
+          instance.invoiceAddresses?.map((e) => e.toJson()).toList(),
     };

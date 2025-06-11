@@ -3,6 +3,7 @@ import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
+import 'package:generic_shop_app_ivancica/giv.dart';
 
 /// Visual element specified for product details preview.
 ///

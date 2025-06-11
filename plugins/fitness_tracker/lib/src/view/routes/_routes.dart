@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:generic_shop_app_fitness_tracker/src/view/routes/dashboard/route_dashboard.dart';
 import 'package:generic_shop_app_fitness_tracker/src/view/routes/onboarding/route_onboarding.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
@@ -18,7 +17,7 @@ enum GftRoutes implements GsaRouteType {
   splash;
 
   @override
-  Widget Function([dynamic args]) get widget {
+  GsaRoute Function([dynamic args]) get widget {
     switch (this) {
       case GftRoutes.onboarding:
         return ([args]) => const GftRouteOnboarding();

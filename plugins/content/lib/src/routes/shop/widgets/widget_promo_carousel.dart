@@ -8,48 +8,9 @@ class _WidgetPromoCarousel extends StatefulWidget {
 }
 
 class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
-  final _carouselItems = <({
-    String imageUrl,
-    ({
-      String? title,
-      String url,
-    })? linkedContent,
-  })>[
-    if (GsaConfig.provider == GsaConfigProvider.ivancica) ...[
-      (
-        imageUrl: 'https://www.froddo.com/demo-2/img/7X-OKO-ZEMLJE.webp',
-        linkedContent: null,
-      ),
-      (
-        imageUrl: 'https://www.froddo.com/demo-2/img/ee8addfa5aa6fae16399af560656b758.jpg',
-        linkedContent: (
-          title: 'Froddo Barefoot shoes',
-          url: 'https://www.froddo.com/barefoot',
-        ),
-      ),
-      (
-        imageUrl: 'https://img.freepik.com/free-photo/girls-with-father_1098-15657.jpg',
-        linkedContent: (
-          title: 'Stress-Free Routines to Help Kids Thrive Throughout the Day',
-          url: 'https://www.froddo.com/stress-free-routines-to-help-kids-thrive-throughout-the-day',
-        ),
-      ),
-      (
-        imageUrl: 'https://img.freepik.com/free-photo/flat-lay-nutritious-cute-children-s-menu_23-2149522900.jpg',
-        linkedContent: (
-          title: 'Lunch Box Magic: Creative & Healthy Ideas to Keep Your Child Excited for Lunchtime',
-          url: 'https://www.froddo.com/lunch-box-magic-creative-healthy-ideas-to-keep-your-child-excited-for-lunchtime',
-        ),
-      ),
-      (
-        imageUrl: 'https://www.froddo.com/demo-2/img/ivancicadd.jpg',
-        linkedContent: (
-          title: 'Our Commitment to a Sustainable Future: Setting Science-Based Targets for Emission Reduction',
-          url: 'https://www.froddo.com/our-commitment-to-a-sustainable-future-setting-science-based-targets-for-emission-reduction',
-        ),
-      ),
-    ],
-  ];
+  late Future<List<GsaModelPromoBanner>> _getBannersFuture;
+
+  final _carouselItems = <GsaModelPromoBanner>[];
 
   int _carouselItemIndex = 0;
 
@@ -58,33 +19,57 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
   @override
   void initState() {
     super.initState();
+    _getBannersFuture = Future<List<GsaModelPromoBanner>>(
+      () async {
+        return switch (GsaConfig.provider) {
+          GsaConfigProvider.froddoB2b => GfbApiPromo.instance.getBanners(),
+          _ => throw UnimplementedError(
+              'Promo carousel content endpoint not implemented for ${GsaConfig.provider}.',
+            ),
+        };
+      },
+    ).then(
+      (value) {
+        _carouselItems.addAll(value);
+        return value;
+      },
+    );
     _fadeTimer = Timer.periodic(
       const Duration(seconds: 4),
       (_) {
-        setState(
-          () {
-            if (_carouselItemIndex + 1 == _carouselItems.length) {
-              _carouselItemIndex = 0;
-            } else {
-              _carouselItemIndex++;
-            }
-          },
-        );
+        if (_carouselItems.isNotEmpty) {
+          setState(
+            () {
+              if (_carouselItemIndex + 1 == _carouselItems.length) {
+                _carouselItemIndex = 0;
+              } else {
+                _carouselItemIndex++;
+              }
+            },
+          );
+        }
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_carouselItems.isEmpty) return const SizedBox();
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height / 3,
-        child: FutureBuilder(
-          future: Future(() {}),
-          builder: (context, carouselItems) {
-            return Stack(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeIn,
+      child: FutureBuilder(
+        future: _getBannersFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done || snapshot.hasError) {
+            if (snapshot.hasError) {
+              debugPrint('${snapshot.error}');
+            }
+            return const SizedBox();
+          }
+
+          return SizedBox(
+            height: MediaQuery.of(context).size.height / 3,
+            child: Stack(
               children: [
                 for (final carouselItemUrl in _carouselItems.indexed)
                   GestureDetector(
@@ -102,13 +87,14 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
                             borderRadius: BorderRadius.circular(12),
                             child: Stack(
                               children: [
-                                GsaWidgetImage.network(
-                                  carouselItemUrl.$2.imageUrl,
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height,
-                                  fit: BoxFit.cover,
-                                ),
-                                if (carouselItemUrl.$2.linkedContent?.url != null)
+                                if (carouselItemUrl.$2.photoUrl != null)
+                                  GsaWidgetImage.network(
+                                    carouselItemUrl.$2.photoUrl!,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height,
+                                    fit: BoxFit.cover,
+                                  ),
+                                if (carouselItemUrl.$2.contentUrl != null)
                                   const Positioned(
                                     top: 8,
                                     right: 8,
@@ -117,7 +103,7 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                if (carouselItemUrl.$2.linkedContent?.title != null)
+                                if (carouselItemUrl.$2.label != null || carouselItemUrl.$2.description != null)
                                   Positioned(
                                     left: 0,
                                     right: 0,
@@ -136,11 +122,25 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
                                           horizontal: 12,
                                           vertical: 10,
                                         ),
-                                        child: GsaWidgetText(
-                                          carouselItemUrl.$2.linkedContent!.title!,
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                          ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            if (carouselItemUrl.$2.label != null)
+                                              GsaWidgetText(
+                                                carouselItemUrl.$2.label!,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            if (carouselItemUrl.$2.description != null) ...[
+                                              if (carouselItemUrl.$2.label != null) const SizedBox(height: 4),
+                                              GsaWidgetText(
+                                                carouselItemUrl.$2.description!,
+                                                style: Theme.of(context).textTheme.bodySmall,
+                                              ),
+                                            ],
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -151,20 +151,20 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
                         ),
                       ),
                     ),
-                    onTap: carouselItemUrl.$2.linkedContent?.url != null
+                    onTap: carouselItemUrl.$2.contentUrl != null
                         ? () {
                             GsaRouteWebView(
-                              url: carouselItemUrl.$2.linkedContent!.url,
-                              urlPath: Uri.parse(carouselItemUrl.$2.linkedContent!.url).path,
-                              title: carouselItemUrl.$2.linkedContent?.title ?? 'Reading',
+                              url: carouselItemUrl.$2.contentUrl!,
+                              urlPath: Uri.parse(carouselItemUrl.$2.contentUrl!).path,
+                              title: carouselItemUrl.$2.label ?? 'Reading',
                             ).push();
                           }
                         : null,
                   ),
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

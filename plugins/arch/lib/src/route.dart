@@ -44,7 +44,7 @@ import 'package:universal_html/html.dart' as html;
 abstract class GsaRouteType {
   /// Instantiable route widget representation.
   ///
-  Widget Function([dynamic args]) get widget;
+  GsaRoute Function([dynamic args]) get widget;
 
   /// Specified route for this type.
   ///
@@ -208,7 +208,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
 
   /// Tracks the amount of time the user has viewed this content.
   ///
-  late Timer _timeViewedTimer;
+  Timer? _timeViewedTimer;
 
   /// Controller aimed at integrating with the main scrollable app view for additional input support.
   ///
@@ -254,7 +254,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
   @override
   @mustCallSuper
   void dispose() {
-    _timeViewedTimer.cancel();
+    _timeViewedTimer?.cancel();
     mainScrollController.dispose();
     GsaRoute.navigatorObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);

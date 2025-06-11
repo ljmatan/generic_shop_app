@@ -4,6 +4,7 @@ import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_ivancica/giv.dart';
 
 /// Overlay view displaying sale item details and containing associated cart functionalities.
 ///

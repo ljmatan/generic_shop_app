@@ -383,35 +383,45 @@ abstract mixin class GsaApiEndpoints {
   Future<dynamic> request(
     GsaApi client, {
     Map<String, dynamic> body = const {},
+    Map<String, dynamic> queryParameters = const {},
     bool decodedResponse = true,
   }) {
+    String endpointPath = path;
+    if (queryParameters.isNotEmpty) {
+      for (final param in queryParameters.entries.indexed) {
+        endpointPath += ((param.$1 == 0 ? '?' : '&') +
+                '${param.$2.key}=' +
+                (param.$2.value is Iterable ? (param.$2.value as Iterable).join(',') : '${param.$2.value}'))
+            .replaceAll(' ', '%20');
+      }
+    }
     switch (method) {
       case GsaApiEndpointMethodType.httpGet:
         return client.get(
-          path,
+          endpointPath,
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpPost:
         return client.post(
-          path,
+          endpointPath,
           body,
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpPatch:
         return client.patch(
-          path,
+          endpointPath,
           body,
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpPut:
         return client.put(
-          path,
+          endpointPath,
           body,
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpDelete:
         return client.delete(
-          path,
+          endpointPath,
           body: body,
           decodedResponse: decodedResponse,
         );

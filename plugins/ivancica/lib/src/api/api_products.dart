@@ -1,7 +1,7 @@
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
-import 'package:generic_shop_app_ivancica/endpoints/src/endpoints_products.dart';
-import 'package:generic_shop_app_ivancica/models/src/response/model_product.dart';
+import 'package:generic_shop_app_ivancica/src/endpoints/endpoints_products.dart';
+import 'package:generic_shop_app_ivancica/src/models/response/model_product.dart';
 
 /// Methods related to the product APIs provided by the `api.ivancica.hr` service.
 ///

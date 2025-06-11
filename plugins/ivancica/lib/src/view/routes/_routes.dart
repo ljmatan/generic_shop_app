@@ -2,9 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
-import 'package:generic_shop_app_ivancica/view/src/routes/product_details/route_product_details.dart';
-import 'package:generic_shop_app_ivancica/view/src/routes/user_profile/route_user_profile.dart';
+import 'package:generic_shop_app_ivancica/giv.dart';
 
 export 'package:generic_shop_app_architecture/gsar.dart';
 
@@ -18,7 +16,7 @@ enum GivRoutes implements GsaRouteType {
   userProfile;
 
   @override
-  Widget Function([dynamic args]) get widget {
+  GsaRoute Function([dynamic args]) get widget {
     switch (this) {
       case GivRoutes.productDetails:
         return ([args]) {

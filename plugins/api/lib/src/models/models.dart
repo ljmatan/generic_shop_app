@@ -22,6 +22,7 @@ part 'src/model_legal_entity.dart';
 part 'src/model_merchant.dart';
 part 'src/model_person.dart';
 part 'src/model_price.dart';
+part 'src/model_promo_banner.dart';
 part 'src/model_review.dart';
 part 'src/model_sale_item.dart';
 part 'src/model_sale_point.dart';

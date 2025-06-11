@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_ivancica/giv.dart';
 
 /// Screen displaying product details and other relevant functionalities and content.
 ///

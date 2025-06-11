@@ -4,9 +4,10 @@
 
 library;
 
-import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+
+export 'package:generic_shop_app_architecture/gsar.dart';
 
 export 'auth/route_auth.dart';
 export 'bookmarks/route_bookmarks.dart';
@@ -62,7 +63,7 @@ enum GsaRoutes implements GsaRouteType {
   webView;
 
   @override
-  Widget Function([dynamic args]) get widget {
+  GsaRoute Function([dynamic args]) get widget {
     switch (this) {
       case GsaRoutes.auth:
         return ([args]) => const GsaRouteAuth();
