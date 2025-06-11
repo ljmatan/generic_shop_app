@@ -1,7 +1,7 @@
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_ivancica/src/endpoints/endpoints_products.dart';
-import 'package:generic_shop_app_ivancica/src/models/response/model_product.dart';
+import 'package:generic_shop_app_ivancica/src/models/response/model_sale_item.dart';
 
 /// Methods related to the product APIs provided by the `api.ivancica.hr` service.
 ///
@@ -57,7 +57,7 @@ class GivApiProducts extends GsaApi {
     );
     if (response is Iterable) {
       return [
-        for (final jsonObject in response) GivModelProduct.fromJson(jsonObject).toSupportedType(),
+        for (final jsonObject in response) GivModelSaleItem.fromJson(jsonObject).toSupportedType(),
       ];
     } else {
       throw 'Response is not of type Iterable: ${response.runtimeType}';

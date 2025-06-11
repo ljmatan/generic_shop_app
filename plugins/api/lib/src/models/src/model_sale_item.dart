@@ -33,6 +33,7 @@ class GsaModelSaleItem extends _Model {
     super.originUrl,
     super.consentIds,
     super.tags,
+    super.originData,
   });
 
   /// Item display name.

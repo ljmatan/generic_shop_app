@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 /// Route displaying the user profile details.
@@ -7,6 +8,11 @@ class GsaRouteUserProfile extends GsacRoute {
   /// Default, unnamed widget constructor.
   ///
   const GsaRouteUserProfile({super.key});
+
+  @override
+  bool get enabled {
+    return GsaConfig.authenticationEnabled;
+  }
 
   @override
   State<GsaRouteUserProfile> createState() => _GsaRouteUserProfileState();

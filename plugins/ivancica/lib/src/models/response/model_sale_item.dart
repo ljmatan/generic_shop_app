@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 
-class GivModelProduct {
+class GivModelSaleItem {
   int? proId;
   String? productCode;
   String? productName;
@@ -21,13 +21,13 @@ class GivModelProduct {
   String? woman;
   String? man;
   List<String>? tags;
-  List<GivModelProductImage>? images;
-  List<GivModelProductPrice>? prices;
-  List<GivModelProductStock>? stocks;
+  List<GivModelSaleItemImage>? images;
+  List<GivModelSaleItemPrice>? prices;
+  List<GivModelSaleItemStock>? stocks;
   List<String>? icons;
-  List<GivModelProductAttribute>? attributes;
+  List<GivModelSaleItemAttribute>? attributes;
 
-  GivModelProduct({
+  GivModelSaleItem({
     this.proId,
     this.productCode,
     this.productName,
@@ -52,7 +52,7 @@ class GivModelProduct {
     this.attributes,
   });
 
-  factory GivModelProduct.fromJson(Map<String, dynamic> json) => GivModelProduct(
+  factory GivModelSaleItem.fromJson(Map<String, dynamic> json) => GivModelSaleItem(
         proId: json['proId'],
         productCode: json['productCode'],
         productName: json['productName'],
@@ -70,13 +70,16 @@ class GivModelProduct {
         woman: json['woman'],
         man: json['man'],
         tags: json['tags'] == null ? [] : List<String>.from(json['tags']!.map((x) => x)),
-        images: json['images'] == null ? [] : List<GivModelProductImage>.from(json['images']!.map((x) => GivModelProductImage.fromJson(x))),
-        prices: json['prices'] == null ? [] : List<GivModelProductPrice>.from(json['prices']!.map((x) => GivModelProductPrice.fromJson(x))),
-        stocks: json['stocks'] == null ? [] : List<GivModelProductStock>.from(json['stocks']!.map((x) => GivModelProductStock.fromJson(x))),
+        images:
+            json['images'] == null ? [] : List<GivModelSaleItemImage>.from(json['images']!.map((x) => GivModelSaleItemImage.fromJson(x))),
+        prices:
+            json['prices'] == null ? [] : List<GivModelSaleItemPrice>.from(json['prices']!.map((x) => GivModelSaleItemPrice.fromJson(x))),
+        stocks:
+            json['stocks'] == null ? [] : List<GivModelSaleItemStock>.from(json['stocks']!.map((x) => GivModelSaleItemStock.fromJson(x))),
         icons: json['icons'] == null ? [] : List<String>.from(json['icons']!.map((x) => x)),
         attributes: json['attributes'] == null
             ? []
-            : List<GivModelProductAttribute>.from(json['attributes']!.map((x) => GivModelProductAttribute.fromJson(x))),
+            : List<GivModelSaleItemAttribute>.from(json['attributes']!.map((x) => GivModelSaleItemAttribute.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -158,26 +161,26 @@ class GivModelProduct {
   }
 }
 
-class GivModelProductAttribute {
+class GivModelSaleItemAttribute {
   String? attribute;
-  List<GivModelProductValue>? values;
+  List<GivModelSaleItemValue>? values;
 
-  GivModelProductAttribute({
+  GivModelSaleItemAttribute({
     this.attribute,
     this.values,
   });
 
-  factory GivModelProductAttribute.fromRawJson(String str) => GivModelProductAttribute.fromJson(json.decode(str));
+  factory GivModelSaleItemAttribute.fromRawJson(String str) => GivModelSaleItemAttribute.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory GivModelProductAttribute.fromJson(Map<String, dynamic> json) => GivModelProductAttribute(
+  factory GivModelSaleItemAttribute.fromJson(Map<String, dynamic> json) => GivModelSaleItemAttribute(
         attribute: json['attribute'],
         values: json['values'] == null
             ? []
-            : List<GivModelProductValue>.from(
+            : List<GivModelSaleItemValue>.from(
                 json['values']!.map(
-                  (x) => GivModelProductValue.fromJson(x),
+                  (x) => GivModelSaleItemValue.fromJson(x),
                 ),
               ),
       );
@@ -188,18 +191,18 @@ class GivModelProductAttribute {
       };
 }
 
-class GivModelProductValue {
+class GivModelSaleItemValue {
   String? value;
 
-  GivModelProductValue({
+  GivModelSaleItemValue({
     this.value,
   });
 
-  factory GivModelProductValue.fromRawJson(String str) => GivModelProductValue.fromJson(json.decode(str));
+  factory GivModelSaleItemValue.fromRawJson(String str) => GivModelSaleItemValue.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory GivModelProductValue.fromJson(Map<String, dynamic> json) => GivModelProductValue(
+  factory GivModelSaleItemValue.fromJson(Map<String, dynamic> json) => GivModelSaleItemValue(
         value: json['value'],
       );
 
@@ -208,20 +211,20 @@ class GivModelProductValue {
       };
 }
 
-class GivModelProductImage {
+class GivModelSaleItemImage {
   String? link;
   String? type;
 
-  GivModelProductImage({
+  GivModelSaleItemImage({
     this.link,
     this.type,
   });
 
-  factory GivModelProductImage.fromRawJson(String str) => GivModelProductImage.fromJson(json.decode(str));
+  factory GivModelSaleItemImage.fromRawJson(String str) => GivModelSaleItemImage.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory GivModelProductImage.fromJson(Map<String, dynamic> json) => GivModelProductImage(
+  factory GivModelSaleItemImage.fromJson(Map<String, dynamic> json) => GivModelSaleItemImage(
         link: json['link'],
         type: json['type'],
       );
@@ -232,22 +235,22 @@ class GivModelProductImage {
       };
 }
 
-class GivModelProductPrice {
+class GivModelSaleItemPrice {
   String? size;
   int? price;
   int? oldPrice;
 
-  GivModelProductPrice({
+  GivModelSaleItemPrice({
     this.size,
     this.price,
     this.oldPrice,
   });
 
-  factory GivModelProductPrice.fromRawJson(String str) => GivModelProductPrice.fromJson(json.decode(str));
+  factory GivModelSaleItemPrice.fromRawJson(String str) => GivModelSaleItemPrice.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory GivModelProductPrice.fromJson(Map<String, dynamic> json) => GivModelProductPrice(
+  factory GivModelSaleItemPrice.fromJson(Map<String, dynamic> json) => GivModelSaleItemPrice(
         size: json['size'],
         price: json['price'],
         oldPrice: json['oldPrice'],
@@ -260,22 +263,22 @@ class GivModelProductPrice {
       };
 }
 
-class GivModelProductStock {
+class GivModelSaleItemStock {
   String? size;
   int? available;
   String? shop;
 
-  GivModelProductStock({
+  GivModelSaleItemStock({
     this.size,
     this.available,
     this.shop,
   });
 
-  factory GivModelProductStock.fromRawJson(String str) => GivModelProductStock.fromJson(json.decode(str));
+  factory GivModelSaleItemStock.fromRawJson(String str) => GivModelSaleItemStock.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory GivModelProductStock.fromJson(Map<String, dynamic> json) => GivModelProductStock(
+  factory GivModelSaleItemStock.fromJson(Map<String, dynamic> json) => GivModelSaleItemStock(
         size: json['size'],
         available: json['available'],
         shop: json['shop'],

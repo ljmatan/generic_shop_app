@@ -24,9 +24,10 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
     return Scaffold(
       body: Column(
         children: [
-          GsaWidgetAppBar(
-            label: widget.displayName,
-          ),
+          if (Navigator.of(context).canPop())
+            GsaWidgetAppBar(
+              label: widget.displayName,
+            ),
           Expanded(
             child: Center(
               child: SingleChildScrollView(

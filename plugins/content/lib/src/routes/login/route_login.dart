@@ -14,6 +14,11 @@ class GsaRouteLogin extends GsacRoute {
   const GsaRouteLogin({super.key});
 
   @override
+  bool get enabled {
+    return GsaConfig.authenticationEnabled;
+  }
+
+  @override
   State<GsaRouteLogin> createState() => _GsaRouteLoginState();
 }
 

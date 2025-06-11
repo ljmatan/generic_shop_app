@@ -36,7 +36,7 @@ class _WidgetBannerState extends State<_WidgetBanner> {
                     fontSize: 12,
                   ),
                   onTap: () {
-                    GsaRouteLogin().push();
+                    const GsaRouteLogin().push();
                   },
                 ),
                 const GsaWidgetTextSpan(
@@ -68,7 +68,7 @@ class _WidgetBannerState extends State<_WidgetBanner> {
         ),
       ),
       onTap: () {
-        GsaRouteAuth().push();
+        const GsaRouteAuth().push();
       },
     );
   }

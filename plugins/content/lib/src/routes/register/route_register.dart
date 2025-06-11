@@ -20,7 +20,7 @@ class GsaRouteRegister extends GsacRoute {
 
   @override
   bool get enabled {
-    return GsaConfig.registrationEnabled;
+    return GsaConfig.authenticationEnabled && GsaConfig.registrationEnabled;
   }
 
   @override

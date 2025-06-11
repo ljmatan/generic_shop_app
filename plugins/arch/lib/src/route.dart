@@ -243,7 +243,9 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
       return Scaffold(
         body: Center(
           child: GsaWidgetError(
-            'The route is not enabled for display.',
+            'This route is not enabled for display.',
+            retry: Navigator.of(context).canPop() ? () => Navigator.pop(context) : null,
+            retryLabel: Navigator.of(context).canPop() ? 'Go Back' : null,
           ),
         ),
       );
