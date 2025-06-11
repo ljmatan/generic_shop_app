@@ -15,7 +15,7 @@ class GsaDataSaleItems extends GsaData {
 
   /// Display products fetched for the given runtime.
   ///
-  List<GsaModelSaleItem> products = [];
+  List<GsaModelSaleItem> collection = [];
 
   /// Provided item delivery options.
   ///
@@ -27,7 +27,7 @@ class GsaDataSaleItems extends GsaData {
 
   @override
   void clear() {
-    products.clear();
+    collection.clear();
     categories.clear();
   }
 
@@ -40,7 +40,7 @@ class GsaDataSaleItems extends GsaData {
   }) async {
     clear();
     if (categories != null) instance.categories.addAll(categories);
-    if (saleItems != null) instance.products.addAll(saleItems);
+    if (saleItems != null) instance.collection.addAll(saleItems);
     if (deliveryOptions != null) instance.deliveryOptions.addAll(deliveryOptions);
     if (paymentOptions != null) instance.paymentOptions.addAll(paymentOptions);
   }

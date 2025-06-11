@@ -6,10 +6,10 @@ class _RouteHttpLogDetails extends GsacRoute {
   final GsaApiModelLog log;
 
   @override
-  String get displayName => 'http-log-details';
+  String get displayName => 'HTTP Log Details';
 
   @override
-  String get routeId => 'HTTP Log Details';
+  String get routeId => 'http-log-details';
 
   @override
   GsaRouteState<_RouteHttpLogDetails> createState() => _RouteHttpLogDetailsState();
@@ -51,8 +51,8 @@ class _RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
                 ),
                 const SizedBox(height: 5),
                 GsaWidgetText(
-                  widget.log.uri.path,
-                  style: TextStyle(
+                  widget.log.uri.path + '?' + widget.log.uri.query,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 10,
                   ),
@@ -78,7 +78,7 @@ class _RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
                 }) ...[
                   GsaWidgetText(
                     httpInformation.label,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -92,7 +92,7 @@ class _RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                       child: GsaWidgetText(
                         httpInformation.value,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                         ),
                       ),
@@ -106,7 +106,7 @@ class _RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.share),
+        child: const Icon(Icons.share),
         onPressed: () async {
           // TODO
         },

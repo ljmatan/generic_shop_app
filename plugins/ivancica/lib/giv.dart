@@ -35,7 +35,7 @@ class GivPlugin implements GsaPlugin {
       ),
     );
     final products = await GivApiProducts.instance.getProducts();
-    GsaDataSaleItems.instance.products.addAll(products);
+    GsaDataSaleItems.instance.collection.addAll(products);
   }
 
   @override

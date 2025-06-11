@@ -27,7 +27,7 @@ class GsdServiceMock extends GsaService {
     GsaDataSaleItems.instance.categories = [
       for (int i = 0; i < 10; i++) GsaModelCategory.mock(),
     ];
-    GsaDataSaleItems.instance.products = [
+    GsaDataSaleItems.instance.collection = [
       for (int i = 0; i < 100; i++)
         GsaModelSaleItem.mock(
           categoryId: GsaDataSaleItems.instance.categories[Random().nextInt(10)].id,

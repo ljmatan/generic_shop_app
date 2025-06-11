@@ -75,7 +75,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                   for (final bookmarkId in GsaServiceBookmarks.instance.bookmarks)
                     Builder(
                       builder: (context) {
-                        final item = GsaDataSaleItems.instance.products.firstWhereOrNull((saleItem) => saleItem.id == bookmarkId);
+                        final item = GsaDataSaleItems.instance.collection.firstWhereOrNull((saleItem) => saleItem.id == bookmarkId);
                         if (item == null) return const SizedBox();
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 14),

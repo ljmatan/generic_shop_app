@@ -45,11 +45,15 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
     _searchFuture = Future(() async {
       final categoryResults = _filters.categoryId == null
           ? null
-          : GsaDataSaleItems.instance.products.where((product) => product.categoryId == _filters.categoryId).toList();
+          : GsaDataSaleItems.instance.collection.where(
+              (product) {
+                return product.categoryId == _filters.categoryId;
+              },
+            ).toList();
       final searchTermResults = _filters.searchTerm?.trim().isNotEmpty == true
           ? await GsaServiceSearch.instance.findByCharacters(
               searchTerm: _filters.searchTerm!,
-              comparisonValues: categoryResults ?? GsaDataSaleItems.instance.products,
+              comparisonValues: categoryResults ?? GsaDataSaleItems.instance.collection,
               comparator: (value) => (value as GsaModelSaleItem).name ?? '',
             )
           : null;
@@ -89,7 +93,12 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
       // Clear current state.
       setState(() => _searchFuture = null);
       // Set timer to run in 600ms.
-      _searchFutureUpdateTimer = Timer(const Duration(milliseconds: 600), () => _onFiltersUpdated());
+      _searchFutureUpdateTimer = Timer(
+        const Duration(milliseconds: 600),
+        () {
+          return _onFiltersUpdated();
+        },
+      );
     }
   }
 
@@ -102,7 +111,11 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
     _searchTermController.clear();
     setState(() {});
     if (_scrollController.hasClients) {
-      _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
     }
   }
 
@@ -141,7 +154,9 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                         return const _WidgetSearchSuggestions();
                       } else {
                         if (_searchFuture == null || searchResponse.connectionState != ConnectionState.done) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         }
                         if (searchResponse.hasError || searchResponse.data?.isNotEmpty != true) {
                           return GsaWidgetError(
@@ -167,14 +182,11 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: _WidgetPromoCarousel(),
                                 ),
-                                if (GsaDataMerchant.instance.merchant != null)
-                                  Padding(
-                                    padding: const EdgeInsets.all(20),
-                                    child: GsaWidgetMerchantPreview(GsaDataMerchant.instance.merchant!),
-                                  )
-                                else
-                                  const SizedBox(),
-                                GsaWidgetSaleItemCarousel(GsaDataSaleItems.instance.products, label: 'Featured', horizontalPadding: 20),
+                                GsaWidgetSaleItemCarousel(
+                                  GsaDataSaleItems.instance.collection,
+                                  label: 'Featured',
+                                  horizontalPadding: 20,
+                                ),
                                 if (GsaDataSaleItems.instance.categories.isNotEmpty)
                                   _WidgetCategories(
                                     GsaDataSaleItems.instance.categories,
@@ -192,7 +204,10 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                               bottom: MediaQuery.of(context).padding.bottom + 12,
                               child: FloatingActionButton(
                                 heroTag: null,
-                                child: const Icon(Icons.chat, color: Colors.white),
+                                child: const Icon(
+                                  Icons.chat,
+                                  color: Colors.white,
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pushNamed('contact');
                                 },

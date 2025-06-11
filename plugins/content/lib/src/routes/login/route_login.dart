@@ -261,6 +261,10 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                             password: _passwordTextController.text,
                                           );
                                           GsaDataUser.instance.user = user;
+                                          final products = await GfbApiProducts.instance.getSaleItems(
+                                            user: user.originData as GfbModelUser,
+                                          );
+                                          GsaDataSaleItems.instance.collection.addAll(products);
                                           break;
                                         default:
                                           throw UnimplementedError(

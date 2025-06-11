@@ -61,6 +61,7 @@ class GsaWidgetSaleItemCarousel extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(height: 16),
       ],
     );
   }
