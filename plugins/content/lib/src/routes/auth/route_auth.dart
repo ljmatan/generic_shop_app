@@ -11,7 +11,7 @@ class GsaRouteAuth extends GsacRoute {
 
   @override
   bool get enabled {
-    return GsaConfig.registrationEnabled && GsaConfig.authenticationEnabled;
+    return GsaConfig.authenticationEnabled;
   }
 
   @override

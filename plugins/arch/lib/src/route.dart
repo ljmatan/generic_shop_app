@@ -240,9 +240,11 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
   @protected
   Widget build(BuildContext context) {
     if (!widget.enabled) {
-      return Center(
-        child: GsaWidgetError(
-          'The route is not enabled for display.',
+      return Scaffold(
+        body: Center(
+          child: GsaWidgetError(
+            'The route is not enabled for display.',
+          ),
         ),
       );
     }

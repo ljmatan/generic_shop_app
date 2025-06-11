@@ -162,7 +162,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   ),
                   const Divider(height: 20),
                   const SizedBox(height: 16),
-                  GsaWidgetDropdownMenu(
+                  GsaWidgetDropdownMenu<TargetPlatform>(
                     labelText: 'Platform',
                     enableFilter: false,
                     enableSearch: false,
@@ -178,7 +178,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     onSelected: (value) {
                       if (value == null) {
                         throw Exception(
-                          'Device type value must not be null.',
+                          'Target platform value must not be null.',
                         );
                       }
                       setState(() {
@@ -192,7 +192,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  GsaWidgetDropdownMenu(
+                  GsaWidgetDropdownMenu<device_frame.DeviceInfo>(
                     labelText: 'Model',
                     enableFilter: false,
                     enableSearch: false,
@@ -227,7 +227,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   ),
                   const Divider(height: 20),
                   const SizedBox(height: 16),
-                  GsaWidgetDropdownMenu(
+                  GsaWidgetDropdownMenu<GsaConfigProvider>(
                     labelText: 'Provider',
                     enableFilter: false,
                     enableSearch: false,
@@ -240,27 +240,37 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           value: provider,
                         ),
                     ],
-                    onSelected: (value) {
+                    onSelected: (value) async {
                       if (value == null) {
                         throw Exception(
                           'The specified provider value must not be null.',
                         );
                       }
-                      setState(
-                        () {
-                          GsaConfig.provider = value;
-                          _routeIndex = 0;
-                          _routes = [
-                            ...GsaRoutes.values,
-                            if (GsaConfig.provider.plugin.routes != null) ...GsaConfig.provider.plugin.routes!,
-                          ];
-                          _navigatorKey = GlobalKey<NavigatorState>();
-                          GsaRoute.navigatorKey = _navigatorKey;
-                          _routeDropdownKey = UniqueKey();
-                          _primaryColor = GsaConfig.provider.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                          _fontFamily = GsaConfig.provider.plugin.fontFamily ?? _fontFamily;
-                        },
-                      );
+                      const GsaWidgetOverlayContentBlocking().openDialog(context);
+                      try {
+                        await value.plugin.init();
+                        Navigator.pop(context);
+                        setState(
+                          () {
+                            GsaConfig.provider = value;
+                            _routeIndex = 0;
+                            _routes = [
+                              ...GsaRoutes.values,
+                              if (GsaConfig.provider.plugin.routes != null) ...GsaConfig.provider.plugin.routes!,
+                            ];
+                            _navigatorKey = GlobalKey<NavigatorState>();
+                            GsaRoute.navigatorKey = _navigatorKey;
+                            _routeDropdownKey = UniqueKey();
+                            _primaryColor = GsaConfig.provider.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
+                            _fontFamily = GsaConfig.provider.plugin.fontFamily ?? _fontFamily;
+                          },
+                        );
+                      } catch (e) {
+                        Navigator.pop(context);
+                        GsaWidgetOverlayAlert(
+                          message: '$e',
+                        ).openDialog(context);
+                      }
                     },
                   ),
                   const SizedBox(height: 20),
@@ -311,7 +321,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   ),
                   const Divider(height: 20),
                   const SizedBox(height: 16),
-                  GsaWidgetDropdownMenu(
+                  GsaWidgetDropdownMenu<String>(
                     labelText: 'Font Family',
                     width: MediaQuery.of(context).size.width * .25 - 40,
                     initialSelection: _fontFamily,
@@ -328,6 +338,11 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         ),
                     ],
                     onSelected: (value) {
+                      if (value == null) {
+                        throw Exception(
+                          'The specified font family value must not be null.',
+                        );
+                      }
                       setState(() => _fontFamily = value);
                     },
                   ),

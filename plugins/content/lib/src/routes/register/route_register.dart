@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -16,6 +17,11 @@ class GsaRouteRegister extends GsacRoute {
   /// Prefilled data.
   ///
   final String? username, password;
+
+  @override
+  bool get enabled {
+    return GsaConfig.registrationEnabled;
+  }
 
   @override
   State<GsaRouteRegister> createState() => _GsaRouteRegisterState();

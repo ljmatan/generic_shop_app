@@ -3,7 +3,7 @@ import 'package:generic_shop_app_content/src/common/widgets/actions/_actions.dar
 
 /// Generic dropdown menu integration with custom theme properties.
 ///
-class GsaWidgetDropdownMenu extends StatefulWidget {
+class GsaWidgetDropdownMenu<T> extends StatefulWidget {
   /// Default, unnamed widget constructor.
   ///
   const GsaWidgetDropdownMenu({
@@ -23,11 +23,11 @@ class GsaWidgetDropdownMenu extends StatefulWidget {
 
   /// A collection of selection entries available with this menu.
   ///
-  final List<DropdownMenuEntry> dropdownMenuEntries;
+  final List<DropdownMenuEntry<T>> dropdownMenuEntries;
 
   /// The value that's initially specified as the selected dropdown menu option.
   ///
-  final dynamic initialSelection;
+  final T? initialSelection;
 
   /// Property defining dropdown result filtering behaviour.
   ///
@@ -63,13 +63,13 @@ class GsaWidgetDropdownMenu extends StatefulWidget {
 
   /// Callback invoked on dropdown menu entry selection.
   ///
-  final void Function(dynamic)? onSelected;
+  final void Function(T?)? onSelected;
 
   @override
-  State<GsaWidgetDropdownMenu> createState() => _GsaWidgetDropdownMenuState();
+  State<GsaWidgetDropdownMenu<T>> createState() => _GsaWidgetDropdownMenuState<T>();
 }
 
-class _GsaWidgetDropdownMenuState extends State<GsaWidgetDropdownMenu> {
+class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
   late TextEditingController _textController;
 
   late FocusNode _focusNode;
@@ -88,7 +88,7 @@ class _GsaWidgetDropdownMenuState extends State<GsaWidgetDropdownMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownMenu(
+    return DropdownMenu<T>(
       dropdownMenuEntries: widget.dropdownMenuEntries,
       enableFilter: widget.enableFilter,
       enableSearch: widget.enableSearch,

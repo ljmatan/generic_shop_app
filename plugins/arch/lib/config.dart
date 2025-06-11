@@ -66,6 +66,8 @@ class GsaConfig {
   /// flutter run --dart-define gsaCartEnabled=false
   /// ```
   ///
+  /// The value can alternatively be adjusted during the application runtime.
+  ///
   static bool cartEnabled = const String.fromEnvironment('gsaCartEnabled').toLowerCase() != 'false';
 
   /// Property defining whether authentication options are available with an app project.
@@ -78,6 +80,8 @@ class GsaConfig {
   /// flutter run --dart-define authenticationEnabled=false
   /// ```
   ///
+  /// The value can alternatively be adjusted during the application runtime.
+  ///
   static bool authenticationEnabled = const String.fromEnvironment('gsaAuthEnabled').toLowerCase() != 'false';
 
   /// Configuration option defining whether the register option is enabled with the application.
@@ -89,6 +93,8 @@ class GsaConfig {
   /// ```dart
   /// flutter run --dart-define gsaRegisterEnabled=false
   /// ```
+  ///
+  /// The value can alternatively be adjusted during the application runtime.
   ///
   static bool registrationEnabled = const String.fromEnvironment('gsaRegisterEnabled').toLowerCase() != 'false';
 
