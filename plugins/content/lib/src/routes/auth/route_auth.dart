@@ -55,19 +55,21 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                                 'and a seamless experience across all your devices. Whether you\'re here to explore, connect, or get things done faster, '
                                 'we\'ve got you covered.\n\n',
                               ),
-                              for (final info in const <(String, String)>{
-                                (
-                                  'Sign up',
-                                  'Enjoy special perks and a tailored experience.',
-                                ),
+                              for (final info in <(String, String)>{
+                                if (GsaConfig.registrationEnabled)
+                                  (
+                                    'Sign up',
+                                    'Enjoy special perks and a tailored experience.',
+                                  ),
                                 (
                                   'Log in',
                                   'Pick up right where you left off.',
                                 ),
-                                (
-                                  'Continue as a guest',
-                                  'No commitment, just pure access.',
-                                ),
+                                if (GsaConfig.guestLoginEnabled)
+                                  (
+                                    'Continue as a guest',
+                                    'No commitment, just pure access.',
+                                  ),
                               }) ...[
                                 GsaWidgetTextSpan(
                                   info.$1,
@@ -94,35 +96,37 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: OutlinedButton(
-                              child: const GsaWidgetText(
-                                'Register',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
+                        if (GsaConfig.registrationEnabled) ...[
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: OutlinedButton(
+                                child: const GsaWidgetText(
+                                  'Register',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
+                                onPressed: () {
+                                  Navigator.popUntil(context, (route) => route.isFirst);
+                                  const GsaRouteRegister().push();
+                                },
                               ),
-                              onPressed: () {
-                                Navigator.popUntil(context, (route) => route.isFirst);
-                                const GsaRouteRegister().push();
-                              },
                             ),
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: GsaWidgetText(
-                            'or',
-                            style: TextStyle(
-                              color: Colors.grey,
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: GsaWidgetText(
+                              'or',
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                         Expanded(
                           child: Align(
-                            alignment: Alignment.centerLeft,
+                            alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
                             child: OutlinedButton(
                               child: const GsaWidgetText(
                                 'Login',
@@ -139,19 +143,21 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
-                    TextButton(
-                      child: const GsaWidgetText(
-                        'Continue as Guest',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                    if (GsaConfig.guestLoginEnabled) ...[
+                      const SizedBox(height: 8),
+                      TextButton(
+                        child: const GsaWidgetText(
+                          'Continue as Guest',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
+                        onPressed: () {
+                          Navigator.of(context).popUntil((route) => route.isFirst);
+                          const GsaRouteShop().push(replacement: true);
+                        },
                       ),
-                      onPressed: () {
-                        Navigator.of(context).popUntil((route) => route.isFirst);
-                        const GsaRouteShop().push(replacement: true);
-                      },
-                    ),
+                    ],
                   ],
                 ),
               ),

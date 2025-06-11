@@ -314,6 +314,22 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       setState(() => GsaConfig.cartEnabled = value);
                     },
                   ),
+                  const Divider(height: 20),
+                  GsaWidgetSwitch(
+                    value: GsaConfig.registrationEnabled,
+                    child: Text('Registration'),
+                    onTap: (value) {
+                      setState(() => GsaConfig.registrationEnabled = value);
+                    },
+                  ),
+                  const Divider(height: 20),
+                  GsaWidgetSwitch(
+                    value: GsaConfig.guestLoginEnabled,
+                    child: Text('Guest Login'),
+                    onTap: (value) {
+                      setState(() => GsaConfig.guestLoginEnabled = value);
+                    },
+                  ),
                   const SizedBox(height: 20),
                   Text(
                     'Theme',

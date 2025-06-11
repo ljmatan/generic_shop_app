@@ -78,12 +78,7 @@ class GsaWidgetSwitchState extends State<GsaWidgetSwitch> {
             padding: const EdgeInsets.only(top: 8),
             child: GsaWidgetText(
               'The terms must be accepted.',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.error,
-                fontSize: 10,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).inputDecorationTheme.errorStyle,
             ),
           ),
       ],

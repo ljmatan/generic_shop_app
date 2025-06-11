@@ -22,6 +22,8 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
 
   final _emailTextController = TextEditingController(), _passwordTextController = TextEditingController();
 
+  final _termsSwitchKey = GlobalKey<GsaWidgetSwitchState>();
+
   bool _userAgreementAccepted = false;
 
   @override
@@ -87,7 +89,12 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           color: Theme.of(context).primaryColor,
                         ),
                         validator: switch (GsaConfig.provider) {
-                          GsaConfigProvider.ivancica || GsaConfigProvider.froddoB2b => null,
+                          GsaConfigProvider.ivancica || GsaConfigProvider.froddoB2b => (value) {
+                              if (value?.isNotEmpty != true) {
+                                return 'Password must not be empty.';
+                              }
+                              return null;
+                            },
                           _ => GsaServiceInputValidation.instance.password,
                         },
                       ),
@@ -113,6 +120,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                       StatefulBuilder(
                         builder: (context, setState) {
                           return GsaWidgetSwitch(
+                            key: _termsSwitchKey,
                             label: const GsaWidgetText(
                               'User Agreement',
                               style: TextStyle(
@@ -190,35 +198,37 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: OutlinedButton(
-                                child: const GsaWidgetText(
-                                  'Register',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
+                          if (GsaConfig.registrationEnabled) ...[
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: OutlinedButton(
+                                  child: const GsaWidgetText(
+                                    'Register',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
+                                  onPressed: () {
+                                    Navigator.popUntil(context, (route) => route.isFirst);
+                                    Navigator.of(context).pushNamed('register');
+                                  },
                                 ),
-                                onPressed: () {
-                                  Navigator.popUntil(context, (route) => route.isFirst);
-                                  Navigator.of(context).pushNamed('register');
-                                },
                               ),
                             ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: GsaWidgetText(
-                              'or',
-                              style: TextStyle(
-                                color: Colors.grey,
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: GsaWidgetText(
+                                'or',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                           Expanded(
                             child: Align(
-                              alignment: Alignment.centerLeft,
+                              alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
                               child: OutlinedButton(
                                 child: const GsaWidgetText(
                                   'Login',
@@ -227,7 +237,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                   ),
                                 ),
                                 onPressed: () async {
-                                  if (_formKey.currentState?.validate() == true) {
+                                  final formsValidated = _formKey.currentState?.validate() == true;
+                                  final termsValidated = _termsSwitchKey.currentState?.validate() == true;
+                                  if (formsValidated && termsValidated) {
                                     const GsaWidgetOverlayContentBlocking().openDialog(context);
                                     try {
                                       switch (GsaConfig.provider) {
@@ -273,16 +285,18 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      TextButton(
-                        child: const GsaWidgetText(
-                          'Continue as Guest',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
+                      if (GsaConfig.guestLoginEnabled) ...[
+                        const SizedBox(height: 8),
+                        TextButton(
+                          child: const GsaWidgetText(
+                            'Continue as Guest',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
+                          onPressed: () {},
                         ),
-                        onPressed: () {},
-                      ),
+                      ],
                     ],
                   ),
                 ),

@@ -91,12 +91,26 @@ class GsaConfig {
   /// To disable user registration, a dart-define property can be defined as in below example:
   ///
   /// ```dart
-  /// flutter run --dart-define gsaRegisterEnabled=false
+  /// flutter run --dart-define gsaRegistrationEnabled=false
   /// ```
   ///
   /// The value can alternatively be adjusted during the application runtime.
   ///
-  static bool registrationEnabled = const String.fromEnvironment('gsaRegisterEnabled').toLowerCase() != 'false';
+  static bool registrationEnabled = const String.fromEnvironment('gsaRegistrationEnabled').toLowerCase() != 'false';
+
+  /// Defines whether anonymous user access (guest login) is enabled for a client integration.
+  ///
+  /// This feature allows the users to proceed to the app contents without authentication.
+  ///
+  /// To disable guest login, a dart-define property can be defined as in below example:
+  ///
+  /// ```dart
+  /// flutter run --dart-define gsaGuestLoginEnabled=false
+  /// ```
+  ///
+  /// The value can alternatively be adjusted during the application runtime.
+  ///
+  static bool guestLoginEnabled = const String.fromEnvironment('gsaGuestLoginEnabled').toLowerCase() != 'false';
 
   static const _gitBranch = String.fromEnvironment('gsaGitBranch');
 
