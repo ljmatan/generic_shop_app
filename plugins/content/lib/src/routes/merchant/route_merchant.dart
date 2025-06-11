@@ -14,7 +14,7 @@ class GsaRouteMerchant extends GsacRoute {
 
 class _GsaRouteMerchantState extends GsaRouteState<GsaRouteMerchant> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

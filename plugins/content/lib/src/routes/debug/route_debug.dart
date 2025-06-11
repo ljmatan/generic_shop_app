@@ -19,7 +19,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
   final _tabNotifier = ValueNotifier<int>(0);
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: Column(

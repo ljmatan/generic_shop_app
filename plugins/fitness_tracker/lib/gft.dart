@@ -29,7 +29,9 @@ class GftPlugin implements GsaPlugin {
   }
 
   @override
-  List<GsaRouteType> get routes => GftRoutes.values;
+  List<GsaRouteType> get routes {
+    return GftRoutes.values;
+  }
 
   @override
   String? get fontFamily {

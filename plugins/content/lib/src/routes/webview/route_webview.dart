@@ -31,7 +31,7 @@ class GsaRouteWebView extends GsacRoute {
 
 class _GsaRouteWebViewState extends GsaRouteState<GsaRouteWebView> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

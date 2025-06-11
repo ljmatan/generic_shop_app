@@ -14,7 +14,7 @@ class GsaRouteHelp extends GsacRoute {
 
 class _GsaRouteHelpState extends GsaRouteState<GsaRouteHelp> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

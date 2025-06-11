@@ -64,7 +64,7 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     if (!_readyToInitialise) return const SizedBox();
     return Scaffold(
       body: FutureBuilder<void>(

@@ -15,7 +15,7 @@ class GftRouteSplash extends GftRoute {
 
 class _GftRouteSplashState extends GsaRouteState<GftRouteSplash> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,

@@ -14,7 +14,7 @@ class GsaRouteUserProfile extends GsacRoute {
 
 class _GsaRouteUserProfileState extends GsaRouteState<GsaRouteUserProfile> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

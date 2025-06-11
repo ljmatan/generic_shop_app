@@ -14,7 +14,7 @@ class GsaRouteLicences extends GsacRoute {
 
 class _GsaRouteLicencesState extends GsaRouteState<GsaRouteLicences> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

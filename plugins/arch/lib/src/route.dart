@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 import 'package:universal_html/html.dart' as html;
 
@@ -227,6 +228,25 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
         if (_visible) _timeViewed += duration;
       });
     });
+  }
+
+  /// Describes the part of the user interface represented by this widget.
+  ///
+  /// The method is implemented in place of the [build] method.
+  ///
+  Widget view(BuildContext context);
+
+  @override
+  @protected
+  Widget build(BuildContext context) {
+    if (!widget.enabled) {
+      return Center(
+        child: GsaWidgetError(
+          'The route is not enabled for display.',
+        ),
+      );
+    }
+    return view(context);
   }
 
   @override

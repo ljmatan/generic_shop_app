@@ -6,7 +6,8 @@ import 'package:generic_shop_app_architecture/gsar.dart';
 class GsaDataUser extends GsaData {
   GsaDataUser._();
 
-  // ignore: public_member_api_docs
+  /// Globally-accessible singleton class instance.
+  ///
   static final instance = GsaDataUser._();
 
   /// Application user data instance property.

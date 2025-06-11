@@ -19,7 +19,7 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
   final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

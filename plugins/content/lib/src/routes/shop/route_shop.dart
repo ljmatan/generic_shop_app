@@ -116,12 +116,12 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
   void didPushNext() {
     super.didPushNext();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (presentingRoute != runtimeType) _clearSearchFilters();
+      if (presentingRoute != this) _clearSearchFilters();
     });
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

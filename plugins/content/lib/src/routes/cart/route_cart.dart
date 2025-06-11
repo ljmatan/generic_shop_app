@@ -33,7 +33,7 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
   final _scrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

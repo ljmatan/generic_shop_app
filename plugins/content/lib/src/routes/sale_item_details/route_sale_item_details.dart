@@ -22,7 +22,7 @@ class GsaRouteSaleItemDetails extends GsacRoute {
 
 class _GsaRouteSaleItemDetailsState extends GsaRouteState<GsaRouteSaleItemDetails> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

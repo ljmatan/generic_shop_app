@@ -46,7 +46,7 @@ class _GsaRouteGuestInfoState extends GsaRouteState<GsaRouteGuestInfo> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

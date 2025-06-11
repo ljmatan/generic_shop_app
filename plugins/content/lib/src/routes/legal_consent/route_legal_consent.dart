@@ -14,7 +14,7 @@ class GsaRouteLegalConsent extends GsacRoute {
 
 class _GsaRouteLegalConsentState extends GsaRouteState<GsaRouteLegalConsent> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return const Scaffold(
       body: GsaWidgetLegalConsent(),
     );

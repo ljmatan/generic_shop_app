@@ -52,7 +52,7 @@ class _GftRouteOnboardingState extends GsaRouteState<GftRouteOnboarding> {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

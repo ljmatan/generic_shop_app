@@ -31,7 +31,7 @@ class _GsaRouteRegisterState extends GsaRouteState<GsaRouteRegister> {
   bool _termsAccepted = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

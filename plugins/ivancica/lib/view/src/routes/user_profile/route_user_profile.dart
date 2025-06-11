@@ -25,7 +25,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
   final _originData = GsaDataUser.instance.user?.originData as GivModelUser?;
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

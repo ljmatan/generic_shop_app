@@ -43,7 +43,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

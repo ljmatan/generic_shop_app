@@ -25,7 +25,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
   bool _userAgreementAccepted = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

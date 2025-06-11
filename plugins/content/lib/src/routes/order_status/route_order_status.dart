@@ -14,7 +14,7 @@ class GsaRouteOrderStatus extends GsacRoute {
 
 class _GsaRouteOrderStatusState extends GsaRouteState<GsaRouteOrderStatus> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

@@ -12,12 +12,12 @@ class _RouteHttpLogDetails extends GsacRoute {
   String get routeId => 'HTTP Log Details';
 
   @override
-  GsaRouteState<_RouteHttpLogDetails> createState() => __RouteHttpLogDetailsState();
+  GsaRouteState<_RouteHttpLogDetails> createState() => _RouteHttpLogDetailsState();
 }
 
-class __RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
+class _RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

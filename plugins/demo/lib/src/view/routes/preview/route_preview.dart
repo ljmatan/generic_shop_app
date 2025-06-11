@@ -82,7 +82,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Row(
         children: [

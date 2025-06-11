@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 /// Authentication options screen, used for displaying user authentication options.
@@ -9,12 +10,17 @@ class GsaRouteAuth extends GsacRoute {
   const GsaRouteAuth({super.key});
 
   @override
+  bool get enabled {
+    return GsaConfig.registrationEnabled && GsaConfig.authenticationEnabled;
+  }
+
+  @override
   GsaRouteState<GsaRouteAuth> createState() => _GsaRouteAuthState();
 }
 
 class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

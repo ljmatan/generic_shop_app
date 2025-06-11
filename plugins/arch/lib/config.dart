@@ -60,9 +60,37 @@ class GsaConfig {
   ///
   /// A client may opt-in simply for catalog and favourite / bookmark display, for example.
   ///
-  /// To disable the cart feature, a value equaling `false` must be provided during the compile time.
+  /// To disable the cart feature, a value equaling `false` must be provided during the compile time:
+  ///
+  /// ```dart
+  /// flutter run --dart-define gsaCartEnabled=false
+  /// ```
   ///
   static bool cartEnabled = const String.fromEnvironment('gsaCartEnabled').toLowerCase() != 'false';
+
+  /// Property defining whether authentication options are available with an app project.
+  ///
+  /// If the feature is disabled, the user will be allowed to proceed to the app without authentication requirements.
+  ///
+  /// To disable the feature, a dart-define property can be defined as in below example:
+  ///
+  /// ```dart
+  /// flutter run --dart-define authenticationEnabled=false
+  /// ```
+  ///
+  static bool authenticationEnabled = const String.fromEnvironment('gsaAuthEnabled').toLowerCase() != 'false';
+
+  /// Configuration option defining whether the register option is enabled with the application.
+  ///
+  /// Certain client integrations may opt-out of registration within the app.
+  ///
+  /// To disable user registration, a dart-define property can be defined as in below example:
+  ///
+  /// ```dart
+  /// flutter run --dart-define gsaRegisterEnabled=false
+  /// ```
+  ///
+  static bool registrationEnabled = const String.fromEnvironment('gsaRegisterEnabled').toLowerCase() != 'false';
 
   static const _gitBranch = String.fromEnvironment('gsaGitBranch');
 

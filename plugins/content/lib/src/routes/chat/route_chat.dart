@@ -14,7 +14,7 @@ class GsaRouteChat extends GsacRoute {
 
 class _GsaRouteChatState extends GsaRouteState<GsaRouteChat> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

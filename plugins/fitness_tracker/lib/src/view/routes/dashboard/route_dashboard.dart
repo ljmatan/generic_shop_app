@@ -10,7 +10,7 @@ class GftRouteDashboard extends GftRoute {
 
 class _GftRouteDashboardState extends GsaRouteState<GftRouteDashboard> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold();
   }
 }

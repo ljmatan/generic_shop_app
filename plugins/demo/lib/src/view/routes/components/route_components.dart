@@ -10,7 +10,7 @@ class GsdRouteComponents extends GsdRoute {
 
 class _GsdRouteComponentsState extends GsaRouteState<GsdRouteComponents> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Row(
         children: [],

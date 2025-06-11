@@ -14,7 +14,7 @@ class GsaRoutePaymentStatus extends GsacRoute {
 
 class _GsaRoutePaymentStatusState extends GsaRouteState<GsaRoutePaymentStatus> {
   @override
-  Widget build(BuildContext context) {
+  Widget view(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
