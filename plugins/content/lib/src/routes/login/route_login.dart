@@ -261,8 +261,13 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                             password: _passwordTextController.text,
                                           );
                                           GsaDataUser.instance.user = user;
+                                          final originData = user.originData as GfbModelResponseUser;
                                           final products = await GfbApiProducts.instance.getSaleItems(
-                                            user: user.originData as GfbModelUser,
+                                            GfbModelRequestProductsSearch(
+                                              distributorId: originData.distributor?.id,
+                                              regionId: originData.region?.id,
+                                              languageId: originData.language?.id,
+                                            ),
                                           );
                                           GsaDataSaleItems.instance.collection.addAll(products);
                                           break;

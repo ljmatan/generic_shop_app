@@ -460,7 +460,6 @@ abstract class GsaApiEndpointsFields {
       ({
         String key,
         Type type,
-        bool isRequired,
       })>? get requestFields;
 
   /// Specified list of fields and their associated runtime types,
@@ -471,6 +470,29 @@ abstract class GsaApiEndpointsFields {
         String key,
         Type type,
       })>? get responseFields;
+}
+
+abstract class GsaApiModelRequest {
+  GsaApiModelRequest() {
+    _validateRequiredFields();
+  }
+
+  List<dynamic> get requiredFields;
+
+  void _validateRequiredFields() {
+    final errorFields = <int>[];
+    for (final field in requiredFields.indexed) {
+      if (field.$2 == null) {
+        errorFields.add(field.$1);
+      }
+    }
+    if (errorFields.isNotEmpty) {
+      throw Exception(
+        'Error instantiating $runtimeType.\n'
+        'Fields index ${errorFields.join(', ')} not provided with a value.',
+      );
+    }
+  }
 }
 
 /// Model class defining the network log data structure.

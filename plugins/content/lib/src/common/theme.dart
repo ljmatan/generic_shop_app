@@ -95,7 +95,7 @@ class GsaTheme {
   }
 
   String? get _fontFamily {
-    return fontFamily ?? GsaConfig.provider.plugin.fontFamily;
+    return fontFamily ?? GsaConfig.provider.plugin.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
   }
 
   InputDecorationTheme get _inputDecorationTheme {
