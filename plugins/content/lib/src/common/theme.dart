@@ -3,7 +3,6 @@ import 'dart:ui' as dart_ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_content/src/common/widgets/actions/widget_text_field.dart';
 
 /// The default theme configuration for the application project.
 ///
@@ -45,6 +44,10 @@ class GsaTheme {
   /// If the platform has no preference, the value defaults to [Brightness.light].
   ///
   Brightness platformBrightness = dart_ui.PlatformDispatcher.instance.platformBrightness;
+
+  /// Border radius value applied to elements such as [Card], [OutlinedButton], etc.
+  ///
+  final borderRadius = BorderRadius.circular(10);
 
   /// Used to scale the incoming font size by multiplying it with the given text scale factor.
   ///
@@ -105,7 +108,7 @@ class GsaTheme {
       filled: true,
       fillColor: _brightness == Brightness.light ? const Color(0xffF0F3F5) : const Color(0xffb3b3b3),
       border: OutlineInputBorder(
-        borderRadius: GsaWidgetTextField.borderRadius,
+        borderRadius: borderRadius,
       ),
       labelStyle: const TextStyle(
         fontWeight: FontWeight.w600,
@@ -126,6 +129,15 @@ class GsaTheme {
     );
   }
 
+  RoundedRectangleBorder get _roundedRectangleBorder {
+    return RoundedRectangleBorder(
+      borderRadius: borderRadius,
+      side: BorderSide(
+        color: _brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
+      ),
+    );
+  }
+
   /// Getter method for the [ThemeData] implementation.
   ///
   ThemeData get data {
@@ -141,7 +153,7 @@ class GsaTheme {
         menuStyle: MenuStyle(
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(
-              borderRadius: GsaWidgetTextField.borderRadius,
+              borderRadius: borderRadius,
             ),
           ),
         ),
@@ -180,6 +192,20 @@ class GsaTheme {
       dividerTheme: const DividerThemeData(
         thickness: .4,
         space: .4,
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: ButtonStyle(
+          shape: WidgetStatePropertyAll(
+            _roundedRectangleBorder,
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          shape: WidgetStatePropertyAll(
+            _roundedRectangleBorder,
+          ),
+        ),
       ),
       scaffoldBackgroundColor: _brightness == Brightness.light ? Colors.white : const Color(0xff121212),
       colorScheme: _brightness == Brightness.light
@@ -236,7 +262,7 @@ class GsaTheme {
               color: Colors.white,
               margin: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: borderRadius,
                 side: BorderSide(
                   color: Colors.grey.withValues(alpha: .2),
                 ),
@@ -247,7 +273,7 @@ class GsaTheme {
               color: const Color(0xff212121),
               margin: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: borderRadius,
                 side: BorderSide(
                   color: Colors.grey.withValues(alpha: .2),
                 ),

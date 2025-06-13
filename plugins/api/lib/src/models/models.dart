@@ -15,6 +15,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'models.g.dart';
 part 'src/model_address.dart';
 part 'src/model_category.dart';
+part 'src/model_client.dart';
 part 'src/model_order_draft.dart';
 part 'src/model_consent.dart';
 part 'src/model_contact.dart';

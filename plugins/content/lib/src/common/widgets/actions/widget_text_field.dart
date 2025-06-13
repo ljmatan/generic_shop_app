@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// A general text input field display widget with input validation.
 ///
@@ -95,10 +96,6 @@ class GsaWidgetTextField extends StatefulWidget {
   ///
   final TextInputAction? textInputAction;
 
-  /// The border / corner radius applied to this visual element style.
-  ///
-  static final borderRadius = BorderRadius.circular(12);
-
   /// Theme properties applied to the text input field.
   ///
   /// The reason for the property being stored with global-level access
@@ -123,7 +120,7 @@ class GsaWidgetTextField extends StatefulWidget {
       TextEditingController? textEditingController,
     ) {
       return OutlineInputBorder(
-        borderRadius: borderRadius,
+        borderRadius: GsaTheme.instance.borderRadius,
         borderSide: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
             ? const BorderSide(
                 color: Color(0xffE2E5EB),
@@ -135,7 +132,7 @@ class GsaWidgetTextField extends StatefulWidget {
       Color primaryColor,
     ) {
       return OutlineInputBorder(
-        borderRadius: borderRadius,
+        borderRadius: GsaTheme.instance.borderRadius,
         borderSide: BorderSide(
           color: primaryColor,
         ),
@@ -146,7 +143,7 @@ class GsaWidgetTextField extends StatefulWidget {
       TextEditingController? textEditingController,
     ) {
       return OutlineInputBorder(
-        borderRadius: borderRadius,
+        borderRadius: GsaTheme.instance.borderRadius,
         borderSide: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
             ? const BorderSide(
                 color: Color(0xffE2E5EB),
@@ -158,7 +155,7 @@ class GsaWidgetTextField extends StatefulWidget {
       TextEditingController? textEditingController,
     ) {
       return OutlineInputBorder(
-        borderRadius: borderRadius,
+        borderRadius: GsaTheme.instance.borderRadius,
         borderSide: textEditingController?.text.isNotEmpty != true
             ? BorderSide.none
             : const BorderSide(
@@ -168,7 +165,7 @@ class GsaWidgetTextField extends StatefulWidget {
     },
     errorBorder: () {
       return OutlineInputBorder(
-        borderRadius: borderRadius,
+        borderRadius: GsaTheme.instance.borderRadius,
         borderSide: const BorderSide(
           color: Color(0xffDE1E36),
         ),
@@ -176,7 +173,7 @@ class GsaWidgetTextField extends StatefulWidget {
     },
     focusedErrorBorder: () {
       return OutlineInputBorder(
-        borderRadius: borderRadius,
+        borderRadius: GsaTheme.instance.borderRadius,
         borderSide: const BorderSide(
           color: Color(0xffDE1E36),
         ),

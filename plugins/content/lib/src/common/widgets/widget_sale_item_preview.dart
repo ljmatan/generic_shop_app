@@ -90,7 +90,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
                                     color: Colors.black,
-                                    fontSize: 8,
+                                    fontSize: 6,
                                     shadows: [
                                       for (final offset in <Offset>{
                                         const Offset(-.5, -.5),

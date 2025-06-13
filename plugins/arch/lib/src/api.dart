@@ -386,15 +386,24 @@ abstract mixin class GsaApiEndpoints {
     Map<String, dynamic> queryParameters = const {},
     bool decodedResponse = true,
   }) {
-    String endpointPath = path;
-    if (queryParameters.isNotEmpty) {
-      for (final param in queryParameters.entries.indexed) {
-        endpointPath += ((param.$1 == 0 ? '?' : '&') +
-                '${param.$2.key}=' +
-                (param.$2.value is Iterable ? (param.$2.value as Iterable).join(',') : '${param.$2.value}'))
-            .replaceAll(' ', '%20');
-      }
-    }
+    final queryParams = queryParameters.map(
+      (key, value) {
+        return MapEntry(
+          key,
+          value is Iterable ? value.join(',') : value?.toString(),
+        );
+      },
+    );
+    queryParams.removeWhere(
+      (key, value) {
+        return value == null;
+      },
+    );
+    final uri = Uri(
+      path: path,
+      queryParameters: queryParams,
+    );
+    final endpointPath = uri.toString();
     switch (method) {
       case GsaApiEndpointMethodType.httpGet:
         return client.get(

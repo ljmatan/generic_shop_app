@@ -102,6 +102,38 @@ Map<String, dynamic> _$GsaModelCategoryToJson(GsaModelCategory instance) =>
       'description': instance.description,
     };
 
+GsaModelClient _$GsaModelClientFromJson(Map<String, dynamic> json) =>
+    GsaModelClient(
+      id: json['id'] as String?,
+      originId: json['originId'] as String?,
+      categoryId: json['categoryId'] as String?,
+      name: json['name'] as String?,
+    )
+      ..originUrl = json['originUrl'] as String?
+      ..deleted = json['deleted'] as bool?
+      ..consentIds = (json['consentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..tags =
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..logs =
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..originData = json['originData'];
+
+Map<String, dynamic> _$GsaModelClientToJson(GsaModelClient instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'originId': instance.originId,
+      'originUrl': instance.originUrl,
+      'deleted': instance.deleted,
+      'categoryId': instance.categoryId,
+      'consentIds': instance.consentIds,
+      'tags': instance.tags,
+      'logs': instance.logs,
+      'originData': instance.originData,
+      'name': instance.name,
+    };
+
 GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>
     GsaModelOrderDraft(
       id: json['id'] as String?,
@@ -527,13 +559,13 @@ Map<String, dynamic> _$GsaModelPromotionalDiscountToJson(
 
 GsaModelPromoBanner _$GsaModelPromoBannerFromJson(Map<String, dynamic> json) =>
     GsaModelPromoBanner(
+      id: json['id'] as String?,
+      originId: json['originId'] as String?,
       label: json['label'] as String?,
       description: json['description'] as String?,
       contentUrl: json['contentUrl'] as String?,
       photoUrl: json['photoUrl'] as String?,
     )
-      ..id = json['id'] as String?
-      ..originId = json['originId'] as String?
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
       ..categoryId = json['categoryId'] as String?
@@ -660,11 +692,11 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) =>
           ?.map((e) => e as String)
           .toList(),
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      originData: json['originData'],
     )
       ..deleted = json['deleted'] as bool?
       ..logs =
           (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..originData = json['originData']
       ..condition = json['condition'] as String?;
 
 Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) =>

@@ -13,12 +13,12 @@ dependencies:
     path: ./plugins/api
   generic_shop_app_architecture:
     path: ./plugins/arch
-  generic_shop_app_services:
-    path: ./plugins/services
-  generic_shop_app_data:
-    path: ./plugins/data
   generic_shop_app_content:
     path: ./plugins/content
+  generic_shop_app_data:
+    path: ./plugins/data
+  generic_shop_app_services:
+    path: ./plugins/services
 
 dev_dependencies:
   flutter_test:
