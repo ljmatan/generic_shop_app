@@ -175,4 +175,30 @@ class GsaServiceInputValidation extends GsaService {
     }
     return null;
   }
+
+  /// Validation method for numbers.
+  ///
+  /// The given value must not be empty and must be of numerical type.
+  ///
+  String? number(String? input) {
+    if (input == null) return 'Number input is empty.';
+    final trimmed = input.trim();
+    if (trimmed.isEmpty) {
+      return 'Please verify your number input.';
+    }
+    return null;
+  }
+
+  /// Validation method for plain text.
+  ///
+  /// The given value must not be empty..
+  ///
+  String? plainText(String? input) {
+    if (input == null) return 'Input is empty.';
+    final trimmed = input.trim();
+    if (trimmed.isEmpty) {
+      return 'Please verify your input.';
+    }
+    return null;
+  }
 }
