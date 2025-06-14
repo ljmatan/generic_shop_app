@@ -6,7 +6,8 @@ import 'package:generic_shop_app_architecture/gsar.dart';
 class GsaDataSaleItems extends GsaData {
   GsaDataSaleItems._();
 
-  // ignore: public_member_api_docs
+  /// Globally-accessible singleton class instance.
+  ///
   static final instance = GsaDataSaleItems._();
 
   /// List of available sale item categories.

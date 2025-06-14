@@ -16,13 +16,13 @@ class GsaWidgetLegalConsent extends StatefulWidget {
 
 class _GsaWidgetLegalConsentState extends State<GsaWidgetLegalConsent> {
   final _cookieIds = {
-    GsaServiceCacheId.mandatoryCookiesConsent:
+    GsaServiceCacheEntry.mandatoryCookiesConsent:
         'Mandatory cookies are required to use our products and are necessary for our sites to work as intended.',
-    GsaServiceCacheId.functionalCookiesConsent:
+    GsaServiceCacheEntry.functionalCookiesConsent:
         'Functional cookies enhance the usability and performance of our products by enabling various functionalities.',
-    GsaServiceCacheId.statisticalCookiesConsent:
+    GsaServiceCacheEntry.statisticalCookiesConsent:
         'Statistical cookies collect anonymous data to analyze and understand how visitors interact with our services.',
-    GsaServiceCacheId.marketingCookiesConsent:
+    GsaServiceCacheEntry.marketingCookiesConsent:
         'Marketing cookies are utilized to tailor advertisements and promotional content to your interests.',
   };
 
@@ -32,7 +32,7 @@ class _GsaWidgetLegalConsentState extends State<GsaWidgetLegalConsent> {
   void initState() {
     super.initState();
     _cookieIdConsentStatus = [
-      for (final cookieId in _cookieIds.entries) cookieId.key == GsaServiceCacheId.mandatoryCookiesConsent || cookieId.key.value == true,
+      for (final cookieId in _cookieIds.entries) cookieId.key == GsaServiceCacheEntry.mandatoryCookiesConsent || cookieId.key.value == true,
     ];
   }
 
@@ -59,7 +59,7 @@ class _GsaWidgetLegalConsentState extends State<GsaWidgetLegalConsent> {
     );
     setState(() {
       for (int i = 0; i < _cookieIdConsentStatus.length; i++) {
-        if (_cookieIds.entries.elementAt(i).key != GsaServiceCacheId.mandatoryCookiesConsent) {
+        if (_cookieIds.entries.elementAt(i).key != GsaServiceCacheEntry.mandatoryCookiesConsent) {
           _cookieIdConsentStatus[i] = false;
         }
       }
@@ -201,7 +201,7 @@ class _GsaWidgetLegalConsentState extends State<GsaWidgetLegalConsent> {
                             fontSize: 10,
                           ),
                         ),
-                        enabled: cookieId.$2.key != GsaServiceCacheId.mandatoryCookiesConsent,
+                        enabled: cookieId.$2.key != GsaServiceCacheEntry.mandatoryCookiesConsent,
                         value: _cookieIdConsentStatus[cookieId.$1],
                         onTap: (value) {
                           setState(() {
