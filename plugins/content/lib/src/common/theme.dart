@@ -3,6 +3,7 @@ import 'dart:ui' as dart_ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// The default theme configuration for the application project.
 ///
@@ -135,6 +136,22 @@ class GsaTheme {
       side: BorderSide(
         color: _brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
       ),
+    );
+  }
+
+  EdgeInsets get contentPadding {
+    final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
+    final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;
+    if (size == null || ratio == null) {
+      return const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 24,
+      );
+    }
+    final screenWidth = size.width / ratio;
+    return EdgeInsets.symmetric(
+      horizontal: screenWidth < 1000 ? 20 : 30,
+      vertical: screenWidth < 1000 ? 24 : 36,
     );
   }
 

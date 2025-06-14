@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
@@ -25,7 +26,18 @@ class GsaRouteLogin extends GsacRoute {
 class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
   final _formKey = GlobalKey<FormState>();
 
-  final _emailTextController = TextEditingController(), _passwordTextController = TextEditingController();
+  final _emailTextController = TextEditingController(
+        text: switch (GsaConfig.provider) {
+          GsaConfigProvider.froddoB2b => kDebugMode ? 'ante@hyper.hr' : null,
+          _ => null,
+        },
+      ),
+      _passwordTextController = TextEditingController(
+        text: switch (GsaConfig.provider) {
+          GsaConfigProvider.froddoB2b => kDebugMode ? '1234' : null,
+          _ => null,
+        },
+      );
 
   final _termsSwitchKey = GlobalKey<GsaWidgetSwitchState>();
 
@@ -122,82 +134,78 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         onPressed: () {},
                       ),
                       const SizedBox(height: 10),
-                      StatefulBuilder(
-                        builder: (context, setState) {
-                          return GsaWidgetSwitch(
-                            key: _termsSwitchKey,
-                            label: const GsaWidgetText(
-                              'User Agreement',
+                      GsaWidgetSwitch(
+                        key: _termsSwitchKey,
+                        label: const GsaWidgetText(
+                          'User Agreement',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                        ),
+                        child: GsaWidgetText.rich(
+                          [
+                            const GsaWidgetTextSpan(
+                              'I understand and agree to the ',
                               style: TextStyle(
-                                fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
                             ),
-                            child: GsaWidgetText.rich(
-                              [
-                                const GsaWidgetTextSpan(
-                                  'I understand and agree to the ',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                GsaWidgetTextSpan(
-                                  'terms and conditions',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 12,
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed('terms-and-conditions');
-                                  },
-                                ),
-                                const GsaWidgetTextSpan(
-                                  ', ',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                GsaWidgetTextSpan(
-                                  'cookie policy',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 12,
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed('privacy-policy');
-                                  },
-                                ),
-                                const GsaWidgetTextSpan(
-                                  ', and ',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                GsaWidgetTextSpan(
-                                  'privacy policy',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 12,
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed('cookie-policy');
-                                  },
-                                ),
-                                const GsaWidgetTextSpan(
-                                  '.',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
+                            GsaWidgetTextSpan(
+                              'terms and conditions',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                decoration: TextDecoration.underline,
+                                fontSize: 12,
+                              ),
+                              onTap: () {
+                                Navigator.of(context).pushNamed('terms-and-conditions');
+                              },
                             ),
-                            value: _userAgreementAccepted,
-                            onTap: (value) => setState(() => _userAgreementAccepted = value),
-                          );
-                        },
+                            const GsaWidgetTextSpan(
+                              ', ',
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                            GsaWidgetTextSpan(
+                              'cookie policy',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                decoration: TextDecoration.underline,
+                                fontSize: 12,
+                              ),
+                              onTap: () {
+                                Navigator.of(context).pushNamed('privacy-policy');
+                              },
+                            ),
+                            const GsaWidgetTextSpan(
+                              ', and ',
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                            GsaWidgetTextSpan(
+                              'privacy policy',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                decoration: TextDecoration.underline,
+                                fontSize: 12,
+                              ),
+                              onTap: () {
+                                Navigator.of(context).pushNamed('cookie-policy');
+                              },
+                            ),
+                            const GsaWidgetTextSpan(
+                              '.',
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                        value: _userAgreementAccepted,
+                        onTap: (value) => setState(() => _userAgreementAccepted = value),
                       ),
                       const SizedBox(height: 10),
                       Row(

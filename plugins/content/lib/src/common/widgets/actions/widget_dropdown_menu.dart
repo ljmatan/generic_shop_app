@@ -19,6 +19,7 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
     this.labelText,
     this.hintText,
     this.onSelected,
+    this.validator,
   });
 
   /// A collection of selection entries available with this menu.
@@ -65,6 +66,10 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
   ///
   final void Function(T?)? onSelected;
 
+  /// Optional input validation method.
+  ///
+  final String? Function(String?)? validator;
+
   @override
   State<GsaWidgetDropdownMenu<T>> createState() => _GsaWidgetDropdownMenuState<T>();
 }
@@ -88,7 +93,7 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownMenu<T>(
+    return DropdownMenuFormField<T>(
       dropdownMenuEntries: widget.dropdownMenuEntries,
       enableFilter: widget.enableFilter,
       enableSearch: widget.enableSearch,
@@ -142,6 +147,15 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
             ),
           ),
       onSelected: widget.onSelected,
+      validator: widget.validator != null
+          ? (value) {
+              if (value is String) {
+                return widget.validator!(value);
+              } else {
+                return 'DropdownMenuFormField.validator not set with proper type.';
+              }
+            }
+          : null,
     );
   }
 
