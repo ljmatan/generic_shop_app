@@ -2,9 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_froddo_b2b/gfb.dart';
-import 'package:generic_shop_app_ivancica/giv.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Route providing user authentication options, such as login, registration, or guest user login.
@@ -26,18 +23,7 @@ class GsaRouteLogin extends GsacRoute {
 class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
   final _formKey = GlobalKey<FormState>();
 
-  final _emailTextController = TextEditingController(
-        text: switch (GsaConfig.provider) {
-          GsaConfigProvider.froddoB2b => kDebugMode ? 'ante@hyper.hr' : null,
-          _ => null,
-        },
-      ),
-      _passwordTextController = TextEditingController(
-        text: switch (GsaConfig.provider) {
-          GsaConfigProvider.froddoB2b => kDebugMode ? '1234' : null,
-          _ => null,
-        },
-      );
+  final _emailTextController = TextEditingController(), _passwordTextController = TextEditingController();
 
   final _termsSwitchKey = GlobalKey<GsaWidgetSwitchState>();
 
@@ -105,15 +91,13 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           Icons.lock,
                           color: Theme.of(context).primaryColor,
                         ),
-                        validator: switch (GsaConfig.provider) {
-                          GsaConfigProvider.ivancica || GsaConfigProvider.froddoB2b => (value) {
-                              if (value?.isNotEmpty != true) {
-                                return 'Password must not be empty.';
+                        validator: GsaConfig.plugin.passwordValidator ??
+                            (value) {
+                              if (value?.trim().isNotEmpty != true) {
+                                return 'Please verify your input.';
                               }
                               return null;
                             },
-                          _ => GsaServiceInputValidation.instance.password,
-                        },
                       ),
                       TextButton(
                         style: const ButtonStyle(
@@ -255,41 +239,21 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                   if (formsValidated && termsValidated) {
                                     const GsaWidgetOverlayContentBlocking().openDialog(context);
                                     try {
-                                      switch (GsaConfig.provider) {
-                                        case GsaConfigProvider.ivancica:
-                                          final user = await GivApiUser.instance.login(
-                                            email: _emailTextController.text,
-                                            password: _passwordTextController.text,
-                                          );
-                                          GsaDataUser.instance.user = user;
-                                          break;
-                                        case GsaConfigProvider.froddoB2b:
-                                          final user = await GfbApiUser.instance.login(
-                                            email: _emailTextController.text,
-                                            password: _passwordTextController.text,
-                                          );
-                                          GsaDataUser.instance.user = user;
-                                          await GfbDataRequest.instance.cacheUserData();
-                                          final originData = user.originData as GfbModelResponseUser;
-                                          final products = await GfbApiProducts.instance.getSaleItems(
-                                            GfbModelRequestProductsSearch(
-                                              distributorId: originData.distributor?.id,
-                                              regionId: originData.region?.id,
-                                              languageId: originData.language?.id,
-                                            ),
-                                          );
-                                          GsaDataSaleItems.instance.collection.addAll(products);
-                                          break;
-                                        default:
-                                          throw UnimplementedError(
-                                            'Login method for ${GsaConfig.provider} not implemented.',
-                                          );
+                                      if (GsaConfig.plugin.loginWithUsernameAndPassword == null) {
+                                        throw Exception(
+                                          'GsaConfig.plugin.loginWithUsernameAndPassword '
+                                          'not applied for plugin ${GsaConfig.plugin.id}.',
+                                        );
                                       }
+                                      await GsaConfig.plugin.loginWithUsernameAndPassword!(
+                                        username: _emailTextController.text,
+                                        password: _passwordTextController.text,
+                                      );
                                       Navigator.pop(context);
                                       Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute<void>(
                                           builder: (BuildContext context) {
-                                            return GsaConfig.provider.plugin.initialRoute();
+                                            return GsaConfig.plugin.initialRoute();
                                           },
                                         ),
                                         (route) => false,

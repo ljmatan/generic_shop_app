@@ -31,8 +31,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   device_frame.DeviceInfo _device = device_frame.Devices.ios.iPhone12;
 
-  final _providers = GsaConfigProvider.values;
-
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   int _routeIndex = 0;
@@ -72,13 +70,13 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     super.initState();
     _routes = [
       ...GsaRoutes.values,
-      if (GsaConfig.provider.plugin.routes != null) ...GsaConfig.provider.plugin.routes!,
+      if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
     ];
     GsaRoute.navigatorKey = _navigatorKey;
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
-    _primaryColor = GsaConfig.provider.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
+    _primaryColor = GsaConfig.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
   }
 
   @override
@@ -227,14 +225,14 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   ),
                   const Divider(height: 20),
                   const SizedBox(height: 16),
-                  GsaWidgetDropdownMenu<GsaConfigProvider>(
+                  GsaWidgetDropdownMenu<GsaPlugin>(
                     labelText: 'Provider',
                     enableFilter: false,
                     enableSearch: false,
-                    initialSelection: GsaConfig.provider,
+                    initialSelection: GsaConfig.plugin,
                     width: MediaQuery.of(context).size.width * .25 - 40,
                     dropdownMenuEntries: [
-                      for (final provider in _providers)
+                      for (final provider in [])
                         DropdownMenuEntry(
                           label: provider.name,
                           value: provider,
@@ -248,21 +246,21 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       }
                       const GsaWidgetOverlayContentBlocking().openDialog(context);
                       try {
-                        await value.plugin.init();
+                        await GsaConfig.plugin.init();
                         Navigator.pop(context);
                         setState(
                           () {
-                            GsaConfig.provider = value;
+                            GsaConfig.plugin = value;
                             _routeIndex = 0;
                             _routes = [
                               ...GsaRoutes.values,
-                              if (GsaConfig.provider.plugin.routes != null) ...GsaConfig.provider.plugin.routes!,
+                              if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
                             ];
                             _navigatorKey = GlobalKey<NavigatorState>();
                             GsaRoute.navigatorKey = _navigatorKey;
                             _routeDropdownKey = UniqueKey();
-                            _primaryColor = GsaConfig.provider.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                            _fontFamily = GsaConfig.provider.plugin.fontFamily ?? _fontFamily;
+                            _primaryColor = GsaConfig.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
+                            _fontFamily = GsaConfig.plugin.fontFamily ?? _fontFamily;
                           },
                         );
                       } catch (e) {
@@ -430,7 +428,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Divider(height: 20),
-                  for (final provider in _providers) ...[
+                  for (final provider in []) ...[
                     const SizedBox(height: 12),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
@@ -442,23 +440,19 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           const GsaWidgetOverlayContentBlocking().openDialog(context);
                           try {
                             GsaData.clearAll();
-                            if (provider == GsaConfigProvider.demo) {
-                              await GsdServiceMock.instance.init();
-                            } else {
-                              await provider.plugin.init();
-                            }
+                            await GsaConfig.plugin.init();
                             Navigator.pop(context);
                             setState(() {
                               _routeIndex = 0;
                               _routes = [
                                 ...GsaRoutes.values,
-                                if (GsaConfig.provider.plugin.routes != null) ...GsaConfig.provider.plugin.routes!,
+                                if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
                               ];
                               _navigatorKey = GlobalKey<NavigatorState>();
                               GsaRoute.navigatorKey = _navigatorKey;
                               _routeDropdownKey = UniqueKey();
-                              _primaryColor = GsaConfig.provider.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                              _fontFamily = GsaConfig.provider.plugin.fontFamily ?? _fontFamily;
+                              _primaryColor = GsaConfig.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
+                              _fontFamily = GsaConfig.plugin.fontFamily ?? _fontFamily;
                             });
                           } catch (e) {
                             Navigator.pop(context);

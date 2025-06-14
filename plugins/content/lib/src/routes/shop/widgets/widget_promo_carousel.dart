@@ -21,12 +21,13 @@ class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
     super.initState();
     _getBannersFuture = Future<List<GsaModelPromoBanner>>(
       () async {
-        return switch (GsaConfig.provider) {
-          GsaConfigProvider.froddoB2b => GfbApiPromo.instance.getBanners(),
-          _ => throw UnimplementedError(
-              'Promo carousel content endpoint not implemented for ${GsaConfig.provider}.',
-            ),
-        };
+        if (GsaConfig.plugin.getPromoBanners == null) {
+          throw UnimplementedError(
+            'Promo carousel content endpoint not implemented for ${GsaConfig.plugin.id}.',
+          );
+        } else {
+          return GsaConfig.plugin.getPromoBanners!();
+        }
       },
     ).then(
       (value) {

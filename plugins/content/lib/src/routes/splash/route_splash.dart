@@ -22,14 +22,14 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
   /// Function implemented for application runtime setup.
   ///
   Future<void> _initialise() async {
-    await GsaConfig.provider.plugin.init();
+    await GsaConfig.plugin.init();
     Future.delayed(
       Duration.zero,
       () {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute<void>(
             builder: (BuildContext context) {
-              return GsaConfig.provider.plugin.initialRoute();
+              return GsaConfig.plugin.initialRoute();
             },
           ),
           (route) => false,

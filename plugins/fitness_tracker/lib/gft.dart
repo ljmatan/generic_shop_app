@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_fitness_tracker/gft.dart';
 
@@ -6,12 +7,12 @@ export 'src/view/_view.dart';
 
 /// Generic Shop App Fitness Tracker.
 ///
-class GftPlugin implements GsaPlugin {
-  const GftPlugin._();
+class GftPlugin extends GsaPlugin {
+  GftPlugin._();
 
   /// Globally-accessible class instance.
   ///
-  static const instance = GftPlugin._();
+  static final instance = GftPlugin._();
 
   @override
   Future<void> init() async {
@@ -46,15 +47,5 @@ class GftPlugin implements GsaPlugin {
   @override
   Color? get primaryColor {
     return const Color(0xff10467c);
-  }
-
-  @override
-  ({
-    String? cookieNotice,
-    String? helpAndFaq,
-    String? privacyPolicy,
-    String? termsAndConditions,
-  })? get documentUrls {
-    return null;
   }
 }

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_ivancica/giv.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Screen displaying user bookmark list (or wishlist), enabling further processing options.
@@ -129,33 +128,34 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                                                     ),
                                                   ),
                                                 ),
-                                              if (GsaConfig.provider == GsaConfigProvider.ivancica && item.options?.isNotEmpty == true)
-                                                Padding(
-                                                  padding: const EdgeInsets.only(bottom: 2),
-                                                  child: Builder(
-                                                    builder: (context) {
-                                                      final sortedOptions = List.from(item.options!)
-                                                        ..sort(
-                                                          (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                                                            b.price?.centum ?? double.infinity,
-                                                          ),
-                                                        );
-                                                      sortedOptions.removeWhere(
-                                                        (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
-                                                      );
-                                                      if (sortedOptions.isEmpty) return const SizedBox();
-                                                      return Text(
-                                                        'Sizes: ' +
-                                                            (sortedOptions.length > 1
-                                                                ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
-                                                                : sortedOptions[0].name!),
-                                                        style: const TextStyle(
-                                                          fontSize: 12,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
+                                              // TODO: Verify.
+                                              // if (GsaConfig.provider == GsaConfigProvider.ivancica && item.options?.isNotEmpty == true)
+                                              //   Padding(
+                                              //     padding: const EdgeInsets.only(bottom: 2),
+                                              //     child: Builder(
+                                              //       builder: (context) {
+                                              //         final sortedOptions = List.from(item.options!)
+                                              //           ..sort(
+                                              //             (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                                              //               b.price?.centum ?? double.infinity,
+                                              //             ),
+                                              //           );
+                                              //         sortedOptions.removeWhere(
+                                              //           (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
+                                              //         );
+                                              //         if (sortedOptions.isEmpty) return const SizedBox();
+                                              //         return Text(
+                                              //           'Sizes: ' +
+                                              //               (sortedOptions.length > 1
+                                              //                   ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
+                                              //                   : sortedOptions[0].name!),
+                                              //           style: const TextStyle(
+                                              //             fontSize: 12,
+                                              //           ),
+                                              //         );
+                                              //       },
+                                              //     ),
+                                              //   ),
                                               if (item.price?.centum != null)
                                                 GsaWidgetText(
                                                   '${item.price!.formatted()}' +
@@ -206,11 +206,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                               ),
                             ),
                             onTap: () {
-                              (switch (GsaConfig.provider) {
-                                GsaConfigProvider.ivancica => GivRouteSaleItemDetails(item),
-                                _ => GsaRouteSaleItemDetails(item),
-                              })
-                                  .push();
+                              GsaRouteSaleItemDetails(item).push();
                             },
                           ),
                         );

@@ -5,8 +5,6 @@ import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_froddo_b2b/gfb.dart';
-import 'package:generic_shop_app_ivancica/giv.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 part 'widgets/widget_banner.dart';

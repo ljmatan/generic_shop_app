@@ -22,7 +22,7 @@ class GsaWidgetLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logoImagePath = GsaConfig.provider.plugin.logoImagePath;
+    final logoImagePath = GsaConfig.plugin.logoImagePath;
     if (logoImagePath != null) {
       return (logoImagePath.startsWith('assets') || logoImagePath.startsWith('packages') ? GsaWidgetImage.asset : GsaWidgetImage.network)(
         logoImagePath,

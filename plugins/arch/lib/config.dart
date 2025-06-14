@@ -1,13 +1,9 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_demo/gsd.dart';
-import 'package:generic_shop_app_fitness_tracker/gft.dart';
-import 'package:generic_shop_app_froddo_b2b/gfb.dart';
-import 'package:generic_shop_app_ivancica/giv.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Project-level configuration methods and properties.
@@ -15,20 +11,13 @@ import 'package:generic_shop_app_services/services.dart';
 class GsaConfig {
   const GsaConfig._();
 
-  /// Defines the host client provider.
+  /// Plugin implementation for a specified application client.
+  ///
+  /// The value defines the host client provider.
   ///
   /// App handling, such as the initialisation or content display, is based on this value.
   ///
-  /// Example implementation:
-  ///
-  /// ```dart
-  /// flutter run --dart-define gsaProvider=demo
-  /// ```
-  ///
-  static GsaConfigProvider provider = GsaConfigProvider.values.firstWhereOrNull(
-        (provider) => provider.name.toLowerCase() == const String.fromEnvironment('gsaProvider').toLowerCase(),
-      ) ??
-      GsaConfigProvider.demo;
+  static late GsaPlugin plugin;
 
   static const _version = String.fromEnvironment('gsaVersion');
 
@@ -174,7 +163,13 @@ class GsaConfig {
 /// These definitions are required to be implemented in order to comply with the
 /// application architecture, which may be based off of various client integrations.
 ///
-abstract mixin class GsaPlugin {
+abstract class GsaPlugin {
+  /// Widget constructor with body ensuring [GsaConfig.plugin] information setup on initialisation.
+  ///
+  GsaPlugin() {
+    GsaConfig.plugin = this;
+  }
+
   /// Method implemented for managing and initialisationv of the application resources.
   ///
   Future<void> init();
@@ -210,42 +205,28 @@ abstract mixin class GsaPlugin {
     String? privacyPolicy,
     String? cookieNotice,
     String? helpAndFaq,
-  })? get documentUrls;
-}
+  })? get documentUrls {
+    return null;
+  }
 
-/// App client / checkout process provider.
-///
-enum GsaConfigProvider {
-  /// Demo provider, implemented for app mock data display.
+  /// Method used with login screen implementations for logging in a user with [username] and [password].
   ///
-  demo,
+  Future<void> Function({
+    required String username,
+    required String password,
+  })? get loginWithUsernameAndPassword {
+    return null;
+  }
 
-  /// Shoe sales client with a custom API system implementation.
+  /// Method used for validating password input on the user authentication screens.
   ///
-  ivancica,
+  String? Function(String?)? get passwordValidator {
+    return null;
+  }
 
-  /// Shoe sales client with a custom API system implementation.
+  /// Method implemented for retrieving promotional content displayed on the dashboard.
   ///
-  /// The plugin is implemented for business-to-business sales.
-  ///
-  froddoB2b,
-
-  /// Health and fitness tracker client.
-  ///
-  fitnessTracker;
-
-  /// Plugin implementation for a specified application client.
-  ///
-  GsaPlugin get plugin {
-    switch (this) {
-      case GsaConfigProvider.demo:
-        return GsdPlugin.instance;
-      case GsaConfigProvider.ivancica:
-        return GivPlugin.instance;
-      case GsaConfigProvider.froddoB2b:
-        return GfbPlugin.instance;
-      case GsaConfigProvider.fitnessTracker:
-        return GftPlugin.instance;
-    }
+  Future<List<GsaModelPromoBanner>> Function()? get getPromoBanners {
+    return null;
   }
 }

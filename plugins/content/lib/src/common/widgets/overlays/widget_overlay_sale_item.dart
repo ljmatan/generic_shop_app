@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_api/generic_shop_app_api.dart';
-import 'package:generic_shop_app_ivancica/giv.dart';
 
 /// Overlay view displaying sale item details and containing associated cart functionalities.
 ///
@@ -112,11 +110,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                     ),
                     onPressed: () {
                       Navigator.pop(context);
-                      (switch (GsaConfig.provider) {
-                        GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
-                        _ => GsaRouteSaleItemDetails(widget.saleItem),
-                      })
-                          .push();
+                      GsaRouteSaleItemDetails(widget.saleItem).push();
                     },
                   ),
                 ),
@@ -207,55 +201,52 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 ],
               )
             else ...[
-              if (GsaConfig.provider == GsaConfigProvider.ivancica)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Builder(
-                    builder: (context) {
-                      final sortedOptions = List.from(widget.saleItem.options!)
-                        ..sort(
-                          (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                            b.price?.centum ?? double.infinity,
-                          ),
-                        );
-                      sortedOptions.removeWhere(
-                        (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
-                      );
-                      if (sortedOptions.isEmpty) return const SizedBox();
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 12,
-                          ),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Text(
-                              'Available Sizes: ' +
-                                  (sortedOptions.length > 1
-                                      ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
-                                      : sortedOptions[0].name!),
-                              style: const TextStyle(
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+              // TODO: Verify.
+              // if (GsaConfig.provider == GsaConfigProvider.ivancica)
+              //   Padding(
+              //     padding: const EdgeInsets.only(bottom: 12),
+              //     child: Builder(
+              //       builder: (context) {
+              //         final sortedOptions = List.from(widget.saleItem.options!)
+              //           ..sort(
+              //             (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+              //               b.price?.centum ?? double.infinity,
+              //             ),
+              //           );
+              //         sortedOptions.removeWhere(
+              //           (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
+              //         );
+              //         if (sortedOptions.isEmpty) return const SizedBox();
+              //         return Card(
+              //           child: Padding(
+              //             padding: const EdgeInsets.symmetric(
+              //               horizontal: 14,
+              //               vertical: 12,
+              //             ),
+              //             child: SizedBox(
+              //               width: MediaQuery.of(context).size.width,
+              //               child: Text(
+              //                 'Available Sizes: ' +
+              //                     (sortedOptions.length > 1
+              //                         ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
+              //                         : sortedOptions[0].name!),
+              //                 style: const TextStyle(
+              //                   fontSize: 12,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //   ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: OutlinedButton(
                   child: const Text('See Available Options'),
                   onPressed: () {
                     Navigator.pop(context);
-                    (switch (GsaConfig.provider) {
-                      GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
-                      _ => GsaRouteSaleItemDetails(widget.saleItem),
-                    })
-                        .push();
+                    GsaRouteSaleItemDetails(widget.saleItem).push();
                   },
                 ),
               ),

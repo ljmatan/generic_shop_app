@@ -46,13 +46,11 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    (GsaDataUser.instance.authenticated
-                            ? switch (GsaConfig.provider) {
-                                GsaConfigProvider.ivancica => const GivRouteUserProfile(),
-                                _ => const GsaRouteUserProfile(),
-                              }
-                            : const GsaRouteAuth())
-                        .push();
+                    if (GsaDataUser.instance.authenticated) {
+                      const GsaRouteUserProfile().push();
+                    } else {
+                      const GsaRouteAuth().push();
+                    }
                   },
                 ),
                 const SizedBox(height: 30),
@@ -127,7 +125,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           Navigator.pushNamed(context, 'contact');
                         },
                       ),
-                    if (GsaConfig.provider.plugin.documentUrls?.helpAndFaq != null)
+                    if (GsaConfig.plugin.documentUrls?.helpAndFaq != null)
                       (
                         label: 'Help & FAQ',
                         onTap: () {
@@ -149,7 +147,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         Navigator.pushNamed(context, 'licences');
                       },
                     ),
-                    if (GsaConfig.provider.plugin.documentUrls?.termsAndConditions != null)
+                    if (GsaConfig.plugin.documentUrls?.termsAndConditions != null)
                       (
                         label: 'Terms and Conditions',
                         onTap: () {
@@ -157,7 +155,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           Navigator.pushNamed(context, 'privacy-policy');
                         },
                       ),
-                    if (GsaConfig.provider.plugin.documentUrls?.privacyPolicy != null)
+                    if (GsaConfig.plugin.documentUrls?.privacyPolicy != null)
                       (
                         label: 'Privacy Policy',
                         onTap: () {

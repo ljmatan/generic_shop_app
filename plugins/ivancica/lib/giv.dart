@@ -12,12 +12,12 @@ export 'src/view/_view.dart';
 
 /// Generic Shop App Ivancica.
 ///
-class GivPlugin implements GsaPlugin {
-  const GivPlugin._();
+class GivPlugin extends GsaPlugin {
+  GivPlugin._();
 
   /// Globally-accessible class instance.
   ///
-  static const instance = GivPlugin._();
+  static final instance = GivPlugin._();
 
   @override
   String get id {
@@ -66,12 +66,19 @@ class GivPlugin implements GsaPlugin {
   }
 
   @override
-  ({
-    String? cookieNotice,
-    String? helpAndFaq,
-    String? privacyPolicy,
-    String? termsAndConditions,
-  })? get documentUrls {
-    return null;
+  Future<void> Function({
+    required String password,
+    required String username,
+  })? get loginWithUsernameAndPassword {
+    return ({
+      required String username,
+      required String password,
+    }) async {
+      final user = await GivApiUser.instance.login(
+        email: username,
+        password: password,
+      );
+      GsaDataUser.instance.user = user;
+    };
   }
 }

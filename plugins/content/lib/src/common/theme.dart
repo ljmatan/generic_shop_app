@@ -3,7 +3,6 @@ import 'dart:ui' as dart_ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_content/gsac.dart';
 
 /// The default theme configuration for the application project.
 ///
@@ -80,8 +79,8 @@ class GsaTheme {
     if (primaryColor != null) {
       return primaryColor!;
     }
-    if (GsaConfig.provider.plugin.primaryColor != null) {
-      return GsaConfig.provider.plugin.primaryColor!;
+    if (GsaConfig.plugin.primaryColor != null) {
+      return GsaConfig.plugin.primaryColor!;
     }
     if (_brightness == Brightness.light) {
       return const Color(0xffDAB1DA);
@@ -99,7 +98,7 @@ class GsaTheme {
   }
 
   String? get _fontFamily {
-    return fontFamily ?? GsaConfig.provider.plugin.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
+    return fontFamily ?? GsaConfig.plugin.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
   }
 
   InputDecorationTheme get _inputDecorationTheme {

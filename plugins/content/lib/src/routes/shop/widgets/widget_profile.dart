@@ -74,12 +74,7 @@ class _WidgetProfile extends StatelessWidget {
           ),
         ),
         onTap: () {
-          final route = switch (GsaConfig.provider) {
-            GsaConfigProvider.ivancica => const GivRouteUserProfile(),
-            GsaConfigProvider.froddoB2b => const GfbRouteUserProfile(),
-            _ => const GsaRouteUserProfile(),
-          };
-          route.push();
+          const GsaRouteUserProfile().push();
         },
       ),
     );

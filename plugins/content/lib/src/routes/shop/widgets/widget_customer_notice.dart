@@ -34,29 +34,29 @@ class _WidgetCustomerNoticeState extends State<_WidgetCustomerNotice> {
             String urlPath,
             String url,
           })>{
-            if (GsaConfig.provider.plugin.documentUrls?.termsAndConditions != null)
+            if (GsaConfig.plugin.documentUrls?.termsAndConditions != null)
               (
                 label: 'Terms and Conditions',
                 urlPath: 'terms-and-conditions',
-                url: GsaConfig.provider.plugin.documentUrls!.termsAndConditions!,
+                url: GsaConfig.plugin.documentUrls!.termsAndConditions!,
               ),
-            if (GsaConfig.provider.plugin.documentUrls?.privacyPolicy != null)
+            if (GsaConfig.plugin.documentUrls?.privacyPolicy != null)
               (
                 label: 'Privacy Policy',
                 urlPath: 'privacy-policy',
-                url: GsaConfig.provider.plugin.documentUrls!.privacyPolicy!,
+                url: GsaConfig.plugin.documentUrls!.privacyPolicy!,
               ),
-            if (GsaConfig.provider.plugin.documentUrls?.cookieNotice != null)
+            if (GsaConfig.plugin.documentUrls?.cookieNotice != null)
               (
                 label: 'Cookie Policy',
                 urlPath: 'cookie-policy',
-                url: GsaConfig.provider.plugin.documentUrls!.cookieNotice!,
+                url: GsaConfig.plugin.documentUrls!.cookieNotice!,
               ),
-            if (GsaConfig.provider.plugin.documentUrls?.helpAndFaq != null)
+            if (GsaConfig.plugin.documentUrls?.helpAndFaq != null)
               (
                 label: 'Help and FAQ',
                 urlPath: 'help-and-faq',
-                url: GsaConfig.provider.plugin.documentUrls!.helpAndFaq!,
+                url: GsaConfig.plugin.documentUrls!.helpAndFaq!,
               ),
           })
             InkWell(

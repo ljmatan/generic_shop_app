@@ -3,7 +3,6 @@ import 'package:generic_shop_app_api/generic_shop_app_api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_ivancica/giv.dart';
 
 /// Visual element specified for product details preview.
 ///
@@ -183,30 +182,31 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               ),
                             ],
                           ),
-                        if (GsaConfig.provider == GsaConfigProvider.ivancica && widget.saleItem.options?.isNotEmpty == true)
-                          Builder(
-                            builder: (context) {
-                              final sortedOptions = List.from(widget.saleItem.options!)
-                                ..sort(
-                                  (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                                    b.price?.centum ?? double.infinity,
-                                  ),
-                                );
-                              sortedOptions.removeWhere(
-                                (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
-                              );
-                              if (sortedOptions.isEmpty) return const SizedBox();
-                              return Text(
-                                'Sizes: ' +
-                                    (sortedOptions.length > 1
-                                        ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
-                                        : sortedOptions[0].name!),
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                ),
-                              );
-                            },
-                          ),
+                        // TODO: Verify.
+                        // if (GsaConfig.provider == GsaConfigProvider.ivancica && widget.saleItem.options?.isNotEmpty == true)
+                        //   Builder(
+                        //     builder: (context) {
+                        //       final sortedOptions = List.from(widget.saleItem.options!)
+                        //         ..sort(
+                        //           (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                        //             b.price?.centum ?? double.infinity,
+                        //           ),
+                        //         );
+                        //       sortedOptions.removeWhere(
+                        //         (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
+                        //       );
+                        //       if (sortedOptions.isEmpty) return const SizedBox();
+                        //       return Text(
+                        //         'Sizes: ' +
+                        //             (sortedOptions.length > 1
+                        //                 ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
+                        //                 : sortedOptions[0].name!),
+                        //         style: const TextStyle(
+                        //           fontSize: 12,
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
                       ],
                     ),
                     if (GsaConfig.cartEnabled)
@@ -261,11 +261,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               GsaDataCheckout.instance.addItem(widget.saleItem);
                               GsaWidgetOverlaySaleItem(widget.saleItem).openBottomSheet(context);
                             } else {
-                              (switch (GsaConfig.provider) {
-                                GsaConfigProvider.ivancica => GivRouteSaleItemDetails(widget.saleItem),
-                                _ => GsaRouteSaleItemDetails(widget.saleItem),
-                              })
-                                  .push();
+                              GsaRouteSaleItemDetails(widget.saleItem).push();
                             }
                           },
                         ),
