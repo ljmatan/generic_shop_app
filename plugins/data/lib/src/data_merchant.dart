@@ -6,8 +6,7 @@ import 'package:generic_shop_app_architecture/gsar.dart';
 class GsaDataMerchant extends GsaData {
   GsaDataMerchant._();
 
-  /// Globally-accessible singleton class instance.
-  ///
+  // ignore: public_member_api_docs
   static final instance = GsaDataMerchant._();
 
   /// Property holding the instance of the currently selected merchant.

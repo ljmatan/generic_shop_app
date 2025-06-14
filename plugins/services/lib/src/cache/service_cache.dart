@@ -2,8 +2,7 @@ import '../../services.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:shared_preferences/shared_preferences.dart' as shared_preferences;
 
-part 'service_cache_entry.dart';
-part 'service_cache_value.dart';
+part 'service_cache_values.dart';
 
 /// Cache data manager, implemented with the [shared_preferences](https://pub.dev/packages/shared_preferences) package.
 ///
@@ -47,16 +46,16 @@ class GsaServiceCache extends GsaService {
   /// Event triggered on user cookie acknowledgement.
   ///
   Future<void> onCookieConsentAcknowledged() async {
-    final version = GsaServiceCacheEntry.version.value as int?;
+    final version = GsaServiceCacheId.version.value as int?;
     // If the cached version is different than the current [_version], handle logic for updating cached values.
     if (_version != version) {
       switch (version) {
         /// If the cached [version] argument is `null`, the user hasn't previously acknowledged cache service consent.
         ///
-        /// Once the user has given their consent, default values defined for [GsaServiceCacheEntry] objects are recorded to device storage.
+        /// Once the user has given their consent, default values defined for [GsaServiceCacheId] objects are recorded to device storage.
         ///
         case null:
-          for (final cacheId in GsaServiceCacheEntry.values) {
+          for (final cacheId in GsaServiceCacheId.values) {
             if (cacheId.defaultValue != null) {
               try {
                 cacheId.setValue(cacheId.defaultValue);
@@ -79,9 +78,7 @@ class GsaServiceCache extends GsaService {
 
   /// Persistent cache data; shouldn't be deleted.
   ///
-  Set<GsaServiceCacheValue> persistent = {
-    GsaServiceCacheEntry.version,
-  };
+  Set<GsaServiceCacheId> persistent = {GsaServiceCacheId.version};
 
   /// Removes all cache data from the device storage,
   /// except for the keys noted under the [persistent] list.
@@ -89,13 +86,7 @@ class GsaServiceCache extends GsaService {
   Future<void> clearData() async {
     if (_sharedPreferences != null) {
       for (var key in _sharedPreferences!.getKeys()) {
-        if (persistent
-            .where(
-              (cacheId) => cacheId.cacheId == key,
-            )
-            .isEmpty) {
-          await _sharedPreferences?.remove(key);
-        }
+        if (persistent.where((cacheId) => cacheId.name == key).isEmpty) await _sharedPreferences?.remove(key);
       }
     }
   }

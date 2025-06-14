@@ -26,7 +26,7 @@ class GsaServiceBookmarks extends GsaService {
   Future<void> init() async {
     await super.init();
     bookmarks.addAll(
-      GsaServiceCacheEntry.bookmarks.value ?? [],
+      GsaServiceCacheId.bookmarks.value ?? [],
     );
     notifierBookmarkCount = ValueNotifier<int>(bookmarks.length);
   }
@@ -39,7 +39,7 @@ class GsaServiceBookmarks extends GsaService {
   ///
   Future<void> addBookmark(String saleItemId) async {
     bookmarks.add(saleItemId);
-    await GsaServiceCacheEntry.bookmarks.setValue(bookmarks.toList());
+    await GsaServiceCacheId.bookmarks.setValue(bookmarks.toList());
     notifierBookmarkCount.value = bookmarks.length;
     controllerUpdate.add(saleItemId);
   }
@@ -48,7 +48,7 @@ class GsaServiceBookmarks extends GsaService {
   ///
   Future<void> removeBookmark(String saleItemId) async {
     bookmarks.remove(saleItemId);
-    await GsaServiceCacheEntry.bookmarks.setValue(bookmarks.toList());
+    await GsaServiceCacheId.bookmarks.setValue(bookmarks.toList());
     notifierBookmarkCount.value = bookmarks.length;
     controllerUpdate.add(saleItemId);
   }

@@ -8,8 +8,7 @@ import 'package:generic_shop_app_architecture/gsar.dart';
 class GsaDataCheckout extends GsaData {
   GsaDataCheckout._();
 
-  /// Globally-accessible singleton class instance.
-  ///
+  // ignore: public_member_api_docs
   static final instance = GsaDataCheckout._();
 
   /// Draft for the current order initiated by the user.

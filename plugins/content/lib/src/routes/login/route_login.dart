@@ -269,7 +269,6 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                             password: _passwordTextController.text,
                                           );
                                           GsaDataUser.instance.user = user;
-                                          await GfbDataRequest.instance.cacheUserData();
                                           final originData = user.originData as GfbModelResponseUser;
                                           final products = await GfbApiProducts.instance.getSaleItems(
                                             GfbModelRequestProductsSearch(
