@@ -22,11 +22,11 @@ dependencies:
   generic_shop_app_content:
     path: ../content
   generic_shop_app_ivancica:
-    path: ../ivancica
+    path: ../../plugins/ivancica
   generic_shop_app_fitness_tracker:
-    path: ../fitness_tracker
+    path: ../../plugins/fitness_tracker
   generic_shop_app_froddo_b2b:
-    path: ../froddo_b2b
+    path: ../../plugins/froddo_b2b
   device_frame_plus: ^1.5.0
   flutter_colorpicker: ^1.1.0
 
