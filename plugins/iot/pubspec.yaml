@@ -12,15 +12,15 @@ dependencies:
   flutter:
     sdk: flutter
   generic_shop_app_architecture:
-    path: ../arch
+    path: ../../core/arch
   generic_shop_app_api:
-    path: ../api
+    path: ../../core/api
   generic_shop_app_content:
-    path: ../content
+    path: ../../core/content
   generic_shop_app_services:
-    path: ../services
+    path: ../../core/services
   generic_shop_app_data:
-    path: ../data
+    path: ../../core/data
   workmanager: ^0.5.2
 
 dev_dependencies:

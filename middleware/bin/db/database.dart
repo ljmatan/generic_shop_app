@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_api/api.dart';
 import 'package:shelf/shelf.dart' as shelf;
 
 import '../server.dart';

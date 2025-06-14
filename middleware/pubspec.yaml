@@ -8,9 +8,9 @@ environment:
 
 dependencies:
   generic_shop_app_architecture:
-    path: ../plugins/arch
+    path: ../core/arch
   generic_shop_app_api:
-    path: ../plugins/api
+    path: ../core/api
   shelf: ^1.4.1
   shelf_router: ^1.1.4
   shelf_static: ^1.1.2
