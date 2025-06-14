@@ -4,7 +4,7 @@
 
 library;
 
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 export 'package:generic_shop_app_architecture/gsar.dart';

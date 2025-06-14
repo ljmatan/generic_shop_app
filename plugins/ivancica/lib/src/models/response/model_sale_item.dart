@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_api/api.dart';
 
 class GivModelSaleItem {
   int? proId;

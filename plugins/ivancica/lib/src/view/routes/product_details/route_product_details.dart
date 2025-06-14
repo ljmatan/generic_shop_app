@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_ivancica/giv.dart';

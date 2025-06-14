@@ -1,6 +1,6 @@
 import 'dart:math' as dart_math;
 
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
 part 'values/service_mock_values_category.dart';

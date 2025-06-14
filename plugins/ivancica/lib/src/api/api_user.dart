@@ -1,4 +1,4 @@
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_ivancica/src/endpoints/endpoints_user.dart';
 import 'package:generic_shop_app_ivancica/src/models/response/model_user.dart';

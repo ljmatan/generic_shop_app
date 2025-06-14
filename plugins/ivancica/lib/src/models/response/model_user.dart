@@ -1,4 +1,4 @@
-import 'package:generic_shop_app_api/generic_shop_app_api.dart';
+import 'package:generic_shop_app_api/api.dart';
 
 class GivModelUser {
   GivModelUser({

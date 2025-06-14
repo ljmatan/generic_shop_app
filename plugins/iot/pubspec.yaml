@@ -1,7 +1,7 @@
 name: iot
 description: "A new Flutter plugin project."
 version: 0.0.1
-homepage: https://tim.hr
+homepage: https://github.com/ljmatan
 publish_to: none
 
 environment:
