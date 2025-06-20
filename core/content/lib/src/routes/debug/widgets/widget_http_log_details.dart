@@ -18,7 +18,7 @@ class _WidgetHttpLogDetails extends StatelessWidget {
                 'Request start at ' +
                     log.requestTimeFormatted() +
                     ', finished in ${log.responseTime.difference(log.requestTime).inMilliseconds}ms',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 8,
                 ),
               ),
@@ -44,7 +44,7 @@ class _WidgetHttpLogDetails extends StatelessWidget {
               const SizedBox(height: 5),
               GsaWidgetText(
                 log.uri.path,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 10,
                 ),
@@ -69,7 +69,7 @@ class _WidgetHttpLogDetails extends StatelessWidget {
                       log.responseBodyFormatted.length > 200
                           ? '${log.responseBodyFormatted.substring(0, 200)}...'
                           : log.responseBodyFormatted,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                       ),
                     ),

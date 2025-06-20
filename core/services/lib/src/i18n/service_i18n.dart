@@ -88,7 +88,7 @@ extension GsaServiceI18NStringExt on String {
     String? translatedValue = _values[parentRoute]?[this]?[GsaServiceI18N.language];
     translatedValue ??= _values['GsaRoute']?[this]?[GsaServiceI18N.language];
     if (translatedValue == null || translatedValue.isEmpty) {
-      GsaServiceLogging.logError(
+      GsaServiceLogging.instance.logError(
         '${GsaServiceI18N.language} $this not translated with $parentRoute.',
       );
       return this;

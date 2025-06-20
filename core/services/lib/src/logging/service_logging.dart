@@ -2,8 +2,8 @@ import 'dart:convert' as dart_convert;
 
 import 'package:flutter/foundation.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_services/services.dart';
 
-part 'models/model_error_log.dart';
 part 'models/model_general_log.dart';
 
 /// Session logging services, extending to general, error, or network logs.
@@ -24,45 +24,24 @@ class GsaServiceLogging extends GsaService {
   /// Collection of logs generated during the current runtime instance.
   ///
   final logs = (
-    general: <GsaServiceLoggingModelGeneralLog>[],
-    error: <GsaServiceLoggingModelErrorLog>[],
+    general: <GsaServiceLoggingModelAppLog>[],
+    error: <GsaServiceLoggingModelAppLog>[],
   );
 
-  void _logGeneral(GsaServiceLoggingModelGeneralLog log) {
+  void _logGeneral(GsaServiceLoggingModelAppLog log) {
     logs.general.add(log);
   }
 
-  void _logError(GsaServiceLoggingModelErrorLog log) {
+  void _logError(GsaServiceLoggingModelAppLog log) {
     logs.error.add(log);
   }
 
   /// Logs any given message.
   ///
-  static void logGeneral(String message) {
+  void logGeneral(String message) {
     try {
-      // TODO: Fix
-      // final stackTrace = GsaServiceDebug.instance.getStackTrace();
-      final log = GsaServiceLoggingModelGeneralLog._(
-        time: DateTime.now(),
-        message: message,
-        package: null,
-        className: null,
-        method: null,
-        callerFrames: [],
-        // package: stackTrace.package,
-        // className: stackTrace.className,
-        // method: stackTrace.method,
-        // callerFrames: stackTrace.callerFrames
-        //     .map(
-        //       (frame) => (
-        //         package: frame.package,
-        //         className: frame.className,
-        //         method: frame.method,
-        //       ),
-        //     )
-        //     .toList(),
-      );
-      instance._logGeneral(log);
+      final log = GsaServiceLoggingModelAppLog.fromStackTrace(message);
+      _logGeneral(log);
     } catch (e) {
       // Do nothing, service is disabled.
     }
@@ -70,31 +49,10 @@ class GsaServiceLogging extends GsaService {
 
   /// Method aimed at logging error messages.
   ///
-  static void logError(String message) {
+  void logError(String message) {
     try {
-      // TODO: Fix
-      // final stackTrace = GsaServiceDebug.instance.getStackTrace();
-      final log = GsaServiceLoggingModelErrorLog._(
-        time: DateTime.now(),
-        message: message,
-        package: null,
-        className: null,
-        method: null,
-        callerFrames: [],
-        // package: stackTrace.package,
-        // className: stackTrace.className,
-        // method: stackTrace.method,
-        // callerFrames: stackTrace.callerFrames
-        //     .map(
-        //       (frame) => (
-        //         package: frame.package,
-        //         className: frame.className,
-        //         method: frame.method,
-        //       ),
-        //     )
-        //     .toList(),
-      );
-      instance._logError(log);
+      final log = GsaServiceLoggingModelAppLog.fromStackTrace(message);
+      _logError(log);
     } catch (e) {
       // Do nothing, service is disabled.
     }
@@ -108,6 +66,18 @@ class GsaServiceLogging extends GsaService {
     PlatformDispatcher.instance.onError = (details, stackTrace) {
       print('Platform error $details');
       return true;
+    };
+    debugPrint = (
+      message, {
+      wrapWidth,
+    }) {
+      message ??= 'No message provided.';
+      if (wrapWidth == -1) {
+        logError(message);
+      } else {
+        logGeneral(message);
+      }
+      if (kDebugMode) print(message);
     };
   }
 }

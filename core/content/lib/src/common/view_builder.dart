@@ -44,6 +44,10 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
   ///
   int _recordedNumberOfTaps = 0;
 
+  /// Property holding the value of the runtime resource allocation method.
+  ///
+  final _initFuture = GsaConfig.init();
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -53,7 +57,30 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
           textScaler: GsaTheme.instance.textScaler(context),
         ),
         child: Listener(
-          child: widget.child,
+          child: FutureBuilder(
+            future: _initFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Material(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+
+              if (snapshot.hasError) {
+                return Material(
+                  child: Center(
+                    child: GsaWidgetError(
+                      snapshot.error.toString(),
+                    ),
+                  ),
+                );
+              }
+
+              return widget.child;
+            },
+          ),
           onPointerDown: GsaConfig.qaBuild
               ? (_) {
                   _recordedNumberOfTaps++;

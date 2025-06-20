@@ -22,7 +22,6 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
   /// Function implemented for application runtime setup.
   ///
   Future<void> _initialise() async {
-    await GsaConfig.init();
     await GsaConfig.plugin.init();
     Future.delayed(
       Duration.zero,

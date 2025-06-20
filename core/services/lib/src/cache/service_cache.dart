@@ -30,7 +30,7 @@ class GsaServiceCache extends GsaService {
 
   /// Entrypoint to the methods and properties provided by the shared_preferences package.
   ///
-  shared_preferences.SharedPreferences? _sharedPreferences;
+  shared_preferences.SharedPreferencesWithCache? _sharedPreferences;
 
   /// Initialises the [_sharedPreferences] property and handle data cache versions.
   ///
@@ -40,8 +40,9 @@ class GsaServiceCache extends GsaService {
   @override
   Future<void> init() async {
     await super.init();
-    shared_preferences.SharedPreferences.setPrefix('gsa');
-    _sharedPreferences = await shared_preferences.SharedPreferences.getInstance();
+    _sharedPreferences = await shared_preferences.SharedPreferencesWithCache.create(
+      cacheOptions: shared_preferences.SharedPreferencesWithCacheOptions(),
+    );
   }
 
   /// Event triggered on user cookie acknowledgement.
@@ -61,7 +62,7 @@ class GsaServiceCache extends GsaService {
               try {
                 cacheId.setValue(cacheId.defaultValue);
               } catch (e) {
-                GsaServiceLogging.logError('Error setting default cache value: $e');
+                GsaServiceLogging.instance.logError('Error setting default cache value: $e');
               }
             }
           }
@@ -86,9 +87,21 @@ class GsaServiceCache extends GsaService {
   ///
   Future<void> clearData() async {
     if (_sharedPreferences != null) {
-      for (var key in _sharedPreferences!.getKeys()) {
+      for (var key in _sharedPreferences!.keys) {
         if (persistent.where((cacheId) => cacheId.name == key).isEmpty) await _sharedPreferences?.remove(key);
       }
     }
+  }
+
+  /// Collection of cached value keys stored to the user device.
+  ///
+  Set<String>? get cachedKeys {
+    return _sharedPreferences?.keys;
+  }
+
+  /// Returns a value associated with the specified [key].
+  ///
+  dynamic valueWithKey(String key) {
+    return _sharedPreferences?.get(key);
   }
 }

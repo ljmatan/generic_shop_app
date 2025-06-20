@@ -48,14 +48,20 @@ abstract class GsaService {
   static Future<void> initAll() async {
     await Future.wait(
       [
-        for (final observer in _observables.where((observer) => !observer.manualInit && observer.enabled))
-          (observer).init().catchError(
+        for (final observable in _observables.where(
+          (observable) => !observable.manualInit && observable.enabled,
+        ))
+          (observable).init().catchError(
             (e) {
-              final errorMessage = 'Critical service error: $e';
-              if (e != observer._disabledErrorMessage) {
-                GsaServiceLogging.logError(errorMessage);
+              final errorMessage = 'Critical ${observable.runtimeType} service error: $e';
+              if (e != observable._disabledErrorMessage) {
+                GsaServiceLogging.instance.logError(errorMessage);
               }
-              if (observer.critical) throw errorMessage;
+              if (observable.critical) {
+                throw Exception(
+                  errorMessage,
+                );
+              }
             },
           ),
       ],

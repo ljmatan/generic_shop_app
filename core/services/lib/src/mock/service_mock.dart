@@ -95,31 +95,32 @@ class GsaServiceMock extends GsaService {
   @override
   Future<void> init() async {
     await super.init();
-    final herbalifeDataJson = {}; // dart_convert.jsonDecode(await dart_io.File('${}/assets/mock/herbalife_catalogue.json'));
-    late List<GsaModelCategory> mockCategories;
-    mockCategories = (herbalifeDataJson['categories'] as Iterable)
-        .map(
-          (categoryJson) => GsaModelCategory.fromJson(Map<dynamic, dynamic>.from(categoryJson)),
-        )
-        .toList();
-    late List<GsaModelSaleItem> mockSaleItems;
-    mockSaleItems = (herbalifeDataJson['saleItems'] as Iterable)
-        .map(
-          (saleItemJson) => GsaModelSaleItem.fromJson(Map<dynamic, dynamic>.from(saleItemJson))
-            ..categoryId = mockCategories[dart_math.Random().nextInt(mockCategories.length)].id,
-        )
-        .toList();
-    late List<GsaModelSaleItem> mockDeliveryOptions;
-    mockDeliveryOptions = (herbalifeDataJson['deliveryOptions'] as Iterable)
-        .map(
-          (saleItemJson) => GsaModelSaleItem.fromJson(Map<dynamic, dynamic>.from(saleItemJson)),
-        )
-        .toList();
-    late List<GsaModelSaleItem> mockPaymentOptions;
-    mockPaymentOptions = (herbalifeDataJson['paymentOptions'] as Iterable)
-        .map(
-          (saleItemJson) => GsaModelSaleItem.fromJson(Map<dynamic, dynamic>.from(saleItemJson)),
-        )
-        .toList();
+    if (1 == 1) return;
+    // final herbalifeDataJson = dart_convert.jsonDecode(await dart_io.File('${}/assets/mock/herbalife_catalogue.json'),);
+    // late List<GsaModelCategory> mockCategories;
+    // mockCategories = (herbalifeDataJson['categories'] as Iterable)
+    //     .map(
+    //       (categoryJson) => GsaModelCategory.fromJson(Map<dynamic, dynamic>.from(categoryJson)),
+    //     )
+    //     .toList();
+    // late List<GsaModelSaleItem> mockSaleItems;
+    // mockSaleItems = (herbalifeDataJson['saleItems'] as Iterable)
+    //     .map(
+    //       (saleItemJson) => GsaModelSaleItem.fromJson(Map<dynamic, dynamic>.from(saleItemJson))
+    //         ..categoryId = mockCategories[dart_math.Random().nextInt(mockCategories.length)].id,
+    //     )
+    //     .toList();
+    // late List<GsaModelSaleItem> mockDeliveryOptions;
+    // mockDeliveryOptions = (herbalifeDataJson['deliveryOptions'] as Iterable)
+    //     .map(
+    //       (saleItemJson) => GsaModelSaleItem.fromJson(Map<dynamic, dynamic>.from(saleItemJson)),
+    //     )
+    //     .toList();
+    // late List<GsaModelSaleItem> mockPaymentOptions;
+    // mockPaymentOptions = (herbalifeDataJson['paymentOptions'] as Iterable)
+    //     .map(
+    //       (saleItemJson) => GsaModelSaleItem.fromJson(Map<dynamic, dynamic>.from(saleItemJson)),
+    //     )
+    //     .toList();
   }
 }
