@@ -182,31 +182,30 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               ),
                             ],
                           ),
-                        // TODO: Verify.
-                        // if (GsaConfig.provider == GsaConfigProvider.ivancica && widget.saleItem.options?.isNotEmpty == true)
-                        //   Builder(
-                        //     builder: (context) {
-                        //       final sortedOptions = List.from(widget.saleItem.options!)
-                        //         ..sort(
-                        //           (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                        //             b.price?.centum ?? double.infinity,
-                        //           ),
-                        //         );
-                        //       sortedOptions.removeWhere(
-                        //         (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
-                        //       );
-                        //       if (sortedOptions.isEmpty) return const SizedBox();
-                        //       return Text(
-                        //         'Sizes: ' +
-                        //             (sortedOptions.length > 1
-                        //                 ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
-                        //                 : sortedOptions[0].name!),
-                        //         style: const TextStyle(
-                        //           fontSize: 12,
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
+                        if (GsaConfig.plugin.client == GsaClient.froddoB2c && widget.saleItem.options?.isNotEmpty == true)
+                          Builder(
+                            builder: (context) {
+                              final sortedOptions = List.from(widget.saleItem.options!)
+                                ..sort(
+                                  (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                                    b.price?.centum ?? double.infinity,
+                                  ),
+                                );
+                              sortedOptions.removeWhere(
+                                (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
+                              );
+                              if (sortedOptions.isEmpty) return const SizedBox();
+                              return Text(
+                                'Sizes: ' +
+                                    (sortedOptions.length > 1
+                                        ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
+                                        : sortedOptions[0].name!),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                              );
+                            },
+                          ),
                       ],
                     ),
                     if (GsaConfig.cartEnabled)

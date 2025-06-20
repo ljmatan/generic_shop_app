@@ -158,6 +158,17 @@ class GsaConfig {
   }
 }
 
+/// A collection of application client integration identifiers.
+///
+/// Used primarily for identifying of the current client during the app runtime.
+///
+enum GsaClient {
+  demo,
+  fitnessTracker,
+  froddoB2b,
+  froddoB2c;
+}
+
 /// The application client implementations base service definitions.
 ///
 /// These definitions are required to be implemented in order to comply with the
@@ -167,16 +178,24 @@ abstract class GsaPlugin {
   /// Widget constructor with body ensuring [GsaConfig.plugin] information setup on initialisation.
   ///
   GsaPlugin() {
-    GsaConfig.plugin = this;
+    try {
+      GsaConfig.plugin;
+    } catch (e) {
+      GsaConfig.plugin = this;
+    }
   }
 
-  /// Method implemented for managing and initialisationv of the application resources.
+  /// The client specified for this plugin integration.
   ///
-  Future<void> init();
+  GsaClient get client;
 
   /// The identifier for the plugin project specified in the `pubspec.yaml` file.
   ///
   String get id;
+
+  /// Method implemented for managing and initialisationv of the application resources.
+  ///
+  Future<void> init();
 
   /// App screen specified for display after the splash and user consent screens.
   ///

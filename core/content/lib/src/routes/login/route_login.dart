@@ -23,7 +23,18 @@ class GsaRouteLogin extends GsacRoute {
 class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
   final _formKey = GlobalKey<FormState>();
 
-  final _emailTextController = TextEditingController(), _passwordTextController = TextEditingController();
+  final _emailTextController = TextEditingController(
+        text: switch (GsaConfig.plugin.client) {
+          GsaClient.froddoB2b => kDebugMode ? 'ante@hyper.hr' : null,
+          _ => null,
+        },
+      ),
+      _passwordTextController = TextEditingController(
+        text: switch (GsaConfig.plugin.client) {
+          GsaClient.froddoB2b => kDebugMode ? '1234' : null,
+          _ => null,
+        },
+      );
 
   final _termsSwitchKey = GlobalKey<GsaWidgetSwitchState>();
 

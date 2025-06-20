@@ -201,45 +201,44 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 ],
               )
             else ...[
-              // TODO: Verify.
-              // if (GsaConfig.provider == GsaConfigProvider.ivancica)
-              //   Padding(
-              //     padding: const EdgeInsets.only(bottom: 12),
-              //     child: Builder(
-              //       builder: (context) {
-              //         final sortedOptions = List.from(widget.saleItem.options!)
-              //           ..sort(
-              //             (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-              //               b.price?.centum ?? double.infinity,
-              //             ),
-              //           );
-              //         sortedOptions.removeWhere(
-              //           (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
-              //         );
-              //         if (sortedOptions.isEmpty) return const SizedBox();
-              //         return Card(
-              //           child: Padding(
-              //             padding: const EdgeInsets.symmetric(
-              //               horizontal: 14,
-              //               vertical: 12,
-              //             ),
-              //             child: SizedBox(
-              //               width: MediaQuery.of(context).size.width,
-              //               child: Text(
-              //                 'Available Sizes: ' +
-              //                     (sortedOptions.length > 1
-              //                         ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
-              //                         : sortedOptions[0].name!),
-              //                 style: const TextStyle(
-              //                   fontSize: 12,
-              //                 ),
-              //               ),
-              //             ),
-              //           ),
-              //         );
-              //       },
-              //     ),
-              //   ),
+              if (GsaConfig.plugin.client == GsaClient.froddoB2c)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Builder(
+                    builder: (context) {
+                      final sortedOptions = List.from(widget.saleItem.options!)
+                        ..sort(
+                          (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                            b.price?.centum ?? double.infinity,
+                          ),
+                        );
+                      sortedOptions.removeWhere(
+                        (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
+                      );
+                      if (sortedOptions.isEmpty) return const SizedBox();
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 12,
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              'Available Sizes: ' +
+                                  (sortedOptions.length > 1
+                                      ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
+                                      : sortedOptions[0].name!),
+                              style: const TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: OutlinedButton(

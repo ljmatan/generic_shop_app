@@ -21,6 +21,11 @@ class GivPlugin extends GsaPlugin {
   static final instance = GivPlugin._();
 
   @override
+  GsaClient get client {
+    return GsaClient.froddoB2c;
+  }
+
+  @override
   String get id {
     return 'generic_shop_app_ivancica';
   }

@@ -18,13 +18,18 @@ class GsdPlugin extends GsaPlugin {
   static final instance = GsdPlugin._();
 
   @override
-  Future<void> init() async {
-    await GsaServiceCache.instance.clearData();
+  GsaClient get client {
+    return GsaClient.demo;
   }
 
   @override
   String get id {
     return 'generic_shop_app_demo';
+  }
+
+  @override
+  Future<void> init() async {
+    await GsaServiceCache.instance.clearData();
   }
 
   @override

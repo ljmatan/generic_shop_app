@@ -237,7 +237,6 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
   Widget view(BuildContext context);
 
   @override
-  @protected
   Widget build(BuildContext context) {
     if (!widget.enabled) {
       return Scaffold(
@@ -249,6 +248,12 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
           ),
         ),
       );
+    }
+    if (GsaRoutes.replacementRoute != null) {
+      final replacementRoute = GsaRoutes.replacementRoute!(widget.routeType);
+      if (replacementRoute != null) {
+        return replacementRoute()!;
+      }
     }
     return view(context);
   }

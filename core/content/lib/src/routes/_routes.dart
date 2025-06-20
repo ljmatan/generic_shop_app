@@ -228,6 +228,22 @@ enum GsaRoutes implements GsaRouteType {
             );
     }
   }
+
+  /// Property used for overriding route displays.
+  ///
+  /// The property can be set by a client plugin in order to return another route
+  /// as a replacement to [this] option:
+  ///
+  /// ```dart
+  /// GsaRoutes.replacementRoute = (route) {
+  ///   return switch (route) {
+  ///     GsaRoutes.userProfile => () => CustomRoute(),
+  ///     _ => null,
+  ///   };
+  /// };
+  /// ```
+  ///
+  static GsaRoute? Function()? Function(GsaRouteType route)? replacementRoute;
 }
 
 /// A base Route class implementing the [GsaRoute] interface.

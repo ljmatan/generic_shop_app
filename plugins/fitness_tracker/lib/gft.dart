@@ -16,13 +16,18 @@ class GftPlugin extends GsaPlugin {
   static final instance = GftPlugin._();
 
   @override
-  Future<void> init() async {
-    // Do nothing.
+  GsaClient get client {
+    return GsaClient.fitnessTracker;
   }
 
   @override
   String get id {
     return 'generic_shop_app_fitness_tracker';
+  }
+
+  @override
+  Future<void> init() async {
+    // Do nothing.
   }
 
   @override
