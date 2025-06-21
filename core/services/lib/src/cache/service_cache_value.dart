@@ -59,7 +59,7 @@ abstract mixin class GsaServiceCacheValue {
       case const (Set<String>):
         return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
       default:
-        throw 'Value get method not implemented for $dataType with $this.';
+        throw 'Value get method not implemented for $dataType with $_cacheId.';
     }
   }
 
@@ -79,7 +79,7 @@ abstract mixin class GsaServiceCacheValue {
       case const (Set<String>):
         return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
       default:
-        throw 'Value get method not implemented for $dataType with $this.';
+        throw 'Value get method not implemented for $dataType with $_cacheId.';
     }
   }
 
