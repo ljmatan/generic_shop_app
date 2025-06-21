@@ -40,6 +40,7 @@ class GsaServiceSearch extends GsaService {
         if (normalizedComparisonValue.isEmpty) continue;
         if (normalizedComparisonValue.contains(normalizedSearchTerm)) {
           results.add(comparison);
+          break;
         }
       }
     }
