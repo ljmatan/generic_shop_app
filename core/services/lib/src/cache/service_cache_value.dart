@@ -89,10 +89,10 @@ abstract mixin class GsaServiceCacheValue {
   ///
   Future<void> setValue(dynamic value) async {
     if (value == null) {
-      throw 'Value for $this must not be null.';
+      throw 'Value for $_cacheId must not be null.';
     }
     if (value.runtimeType != dataType) {
-      throw 'Incorrect value type ${value.runtimeType} given for $this.';
+      throw 'Incorrect value type ${value.runtimeType} given for $_cacheId.';
     }
     if (enabled) {
       switch (dataType) {
