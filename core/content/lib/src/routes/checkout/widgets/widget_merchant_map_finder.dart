@@ -11,10 +11,10 @@ class _WidgetMerchantMapFinder extends StatefulWidget {
   final Function goToNextStep;
 
   @override
-  State<_WidgetMerchantMapFinder> createState() => __WidgetMerchantMapFinderState();
+  State<_WidgetMerchantMapFinder> createState() => _WidgetMerchantMapFinderState();
 }
 
-class __WidgetMerchantMapFinderState extends State<_WidgetMerchantMapFinder> {
+class _WidgetMerchantMapFinderState extends State<_WidgetMerchantMapFinder> {
   final _mapController = MapController();
 
   @override

@@ -4,10 +4,10 @@ class _WidgetPromoCarousel extends StatefulWidget {
   const _WidgetPromoCarousel();
 
   @override
-  State<_WidgetPromoCarousel> createState() => __WidgetPromoCarouselState();
+  State<_WidgetPromoCarousel> createState() => _WidgetPromoCarouselState();
 }
 
-class __WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
+class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
   late Future<List<GsaModelPromoBanner>> _getBannersFuture;
 
   final _carouselItems = <GsaModelPromoBanner>[];

@@ -14,10 +14,10 @@ class _WidgetHeader extends StatefulWidget {
   final Function clearSearchFilters;
 
   @override
-  State<_WidgetHeader> createState() => __WidgetHeaderState();
+  State<_WidgetHeader> createState() => _WidgetHeaderState();
 }
 
-class __WidgetHeaderState extends State<_WidgetHeader> {
+class _WidgetHeaderState extends State<_WidgetHeader> {
   void _openDrawer() {
     if (MediaQuery.of(context).size.width < 1000) {
       Scaffold.of(context).openDrawer();

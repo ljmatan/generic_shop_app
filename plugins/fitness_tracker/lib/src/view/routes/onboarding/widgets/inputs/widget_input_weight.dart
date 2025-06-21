@@ -11,10 +11,10 @@ class _WidgetInputWeight extends StatefulWidget {
   final Function() onWeightSpecified;
 
   @override
-  State<_WidgetInputWeight> createState() => __WidgetInputWeightState();
+  State<_WidgetInputWeight> createState() => _WidgetInputWeightState();
 }
 
-class __WidgetInputWeightState extends State<_WidgetInputWeight> {
+class _WidgetInputWeightState extends State<_WidgetInputWeight> {
   @override
   Widget build(BuildContext context) {
     if (widget.trainee.weightKilograms == null) {

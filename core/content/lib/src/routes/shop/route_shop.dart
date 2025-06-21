@@ -52,7 +52,11 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
           ? await GsaServiceSearch.instance.findByCharacters(
               searchTerm: _filters.searchTerm!,
               comparisonValues: categoryResults ?? GsaDataSaleItems.instance.collection,
-              comparator: (value) => (value as GsaModelSaleItem).name ?? '',
+              comparator: (value) {
+                return [
+                  (value as GsaModelSaleItem).name ?? '',
+                ];
+              },
             )
           : null;
       return List<GsaModelSaleItem>.from(searchTermResults ?? categoryResults ?? []);

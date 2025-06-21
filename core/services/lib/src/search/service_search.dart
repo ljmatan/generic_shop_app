@@ -28,17 +28,19 @@ class GsaServiceSearch extends GsaService {
   Future<List<dynamic>> findByCharacters({
     required String searchTerm,
     required List<dynamic> comparisonValues,
-    required String Function(dynamic value) comparator,
+    required List<String> Function(dynamic value) comparator,
   }) async {
     final normalizedSearchTerm = _normalizeComparisonValue(searchTerm);
     if (normalizedSearchTerm.isEmpty) return [];
     final results = <dynamic>[];
     for (final comparison in comparisonValues) {
-      final comparisonValue = comparator(comparison);
-      final normalizedComparisonValue = _normalizeComparisonValue(comparisonValue);
-      if (normalizedComparisonValue.isEmpty) continue;
-      if (normalizedComparisonValue.contains(normalizedSearchTerm)) {
-        results.add(comparison);
+      final comparisonValues = comparator(comparison);
+      for (final comparisonValue in comparisonValues) {
+        final normalizedComparisonValue = _normalizeComparisonValue(comparisonValue);
+        if (normalizedComparisonValue.isEmpty) continue;
+        if (normalizedComparisonValue.contains(normalizedSearchTerm)) {
+          results.add(comparison);
+        }
       }
     }
     return results;

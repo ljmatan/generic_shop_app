@@ -6,10 +6,10 @@ class _WidgetSearchResults extends StatefulWidget {
   final List<GsaModelSaleItem> results;
 
   @override
-  State<_WidgetSearchResults> createState() => __WidgetSearchResultsState();
+  State<_WidgetSearchResults> createState() => _WidgetSearchResultsState();
 }
 
-class __WidgetSearchResultsState extends State<_WidgetSearchResults> {
+class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
   @override
   Widget build(BuildContext context) {
     return Stack(

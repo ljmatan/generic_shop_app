@@ -11,10 +11,10 @@ class _WidgetInputGender extends StatefulWidget {
   final Function() onGenderSpecified;
 
   @override
-  State<_WidgetInputGender> createState() => __WidgetInputGenderState();
+  State<_WidgetInputGender> createState() => _WidgetInputGenderState();
 }
 
-class __WidgetInputGenderState extends State<_WidgetInputGender> {
+class _WidgetInputGenderState extends State<_WidgetInputGender> {
   @override
   Widget build(BuildContext context) {
     return Column(

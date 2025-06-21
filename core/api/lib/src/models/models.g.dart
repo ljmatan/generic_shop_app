@@ -104,6 +104,7 @@ GsaModelClient _$GsaModelClientFromJson(Map<String, dynamic> json) =>
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
       name: json['name'] as String?,
+      originData: GsaModelClient._originDataFromJson(json['originData']),
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
@@ -126,6 +127,7 @@ Map<String, dynamic> _$GsaModelClientToJson(GsaModelClient instance) =>
       'tags': instance.tags,
       'logs': instance.logs,
       'name': instance.name,
+      'originData': GsaModelClient._originDataToJson(instance.originData),
     };
 
 GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>

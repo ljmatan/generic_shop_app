@@ -4,10 +4,10 @@ class _WidgetSearchSuggestions extends StatefulWidget {
   const _WidgetSearchSuggestions();
 
   @override
-  State<_WidgetSearchSuggestions> createState() => __WidgetSearchSuggestionsState();
+  State<_WidgetSearchSuggestions> createState() => _WidgetSearchSuggestionsState();
 }
 
-class __WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
+class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
   @override
   Widget build(BuildContext context) {
     return ListView(

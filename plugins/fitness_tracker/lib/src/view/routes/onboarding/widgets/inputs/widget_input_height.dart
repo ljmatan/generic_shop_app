@@ -11,10 +11,10 @@ class _WidgetInputHeight extends StatefulWidget {
   final Function() onHeightSpecified;
 
   @override
-  State<_WidgetInputHeight> createState() => __WidgetInputHeightState();
+  State<_WidgetInputHeight> createState() => _WidgetInputHeightState();
 }
 
-class __WidgetInputHeightState extends State<_WidgetInputHeight> {
+class _WidgetInputHeightState extends State<_WidgetInputHeight> {
   final _pickerController = FixedExtentScrollController(
     initialItem: 50,
   );

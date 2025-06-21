@@ -9,10 +9,10 @@ class _WidgetCartItem extends StatefulWidget {
   final GsaModelSaleItem cartItem;
 
   @override
-  State<_WidgetCartItem> createState() => __WidgetCartItemState();
+  State<_WidgetCartItem> createState() => _WidgetCartItemState();
 }
 
-class __WidgetCartItemState extends State<_WidgetCartItem> {
+class _WidgetCartItemState extends State<_WidgetCartItem> {
   late int _cartCount;
 
   void _setCartCount() {

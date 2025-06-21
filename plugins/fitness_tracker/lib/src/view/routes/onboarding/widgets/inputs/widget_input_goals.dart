@@ -11,10 +11,10 @@ class _WidgetInputGoals extends StatefulWidget {
   final Function() onGoalSpecified;
 
   @override
-  State<_WidgetInputGoals> createState() => __WidgetInputGoalsState();
+  State<_WidgetInputGoals> createState() => _WidgetInputGoalsState();
 }
 
-class __WidgetInputGoalsState extends State<_WidgetInputGoals> {
+class _WidgetInputGoalsState extends State<_WidgetInputGoals> {
   @override
   Widget build(BuildContext context) {
     return Column(

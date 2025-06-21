@@ -281,11 +281,11 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
                     iconSize: 18,
                     onPressed: widget.obscureText == true
                         ? () => setState(() => _obscureText = !_obscureText)
-                        : () async {
+                        : () {
+                            widget.controller!.clear();
                             if (widget.onControllerCleared != null) {
-                              await widget.onControllerCleared!();
+                              widget.onControllerCleared!();
                             }
-                            setState(() => widget.controller!.clear());
                           },
                   )
                 : widget.suffixIcon != null

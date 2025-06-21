@@ -8,10 +8,10 @@ class _WidgetInputsConfirmation extends StatefulWidget {
   final GftModelTrainee trainee;
 
   @override
-  State<_WidgetInputsConfirmation> createState() => __WidgetInputsConfirmationState();
+  State<_WidgetInputsConfirmation> createState() => _WidgetInputsConfirmationState();
 }
 
-class __WidgetInputsConfirmationState extends State<_WidgetInputsConfirmation> {
+class _WidgetInputsConfirmationState extends State<_WidgetInputsConfirmation> {
   @override
   Widget build(BuildContext context) {
     widget.trainee.ensureDataExists();

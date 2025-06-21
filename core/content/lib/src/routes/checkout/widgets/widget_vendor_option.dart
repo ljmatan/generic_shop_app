@@ -4,10 +4,10 @@ class _WidgetVendorOption extends StatefulWidget {
   const _WidgetVendorOption();
 
   @override
-  State<_WidgetVendorOption> createState() => __WidgetVendorOptionState();
+  State<_WidgetVendorOption> createState() => _WidgetVendorOptionState();
 }
 
-class __WidgetVendorOptionState extends State<_WidgetVendorOption> {
+class _WidgetVendorOptionState extends State<_WidgetVendorOption> {
   @override
   Widget build(BuildContext context) {
     return Stack(

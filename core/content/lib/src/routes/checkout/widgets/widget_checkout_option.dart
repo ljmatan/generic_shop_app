@@ -33,10 +33,10 @@ class _WidgetCheckoutOption extends StatefulWidget {
   final List? additionalTextInputFields;
 
   @override
-  State<_WidgetCheckoutOption> createState() => __WidgetCheckoutOptionState();
+  State<_WidgetCheckoutOption> createState() => _WidgetCheckoutOptionState();
 }
 
-class __WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with AutomaticKeepAliveClientMixin {
+class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 

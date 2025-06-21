@@ -135,7 +135,7 @@ class GsaModelSaleItem extends _Model {
   static Function(dynamic json)? originDataFromJson;
 
   static dynamic _originDataFromJson(dynamic json) {
-    if (originDataFromJson == null) {
+    if (originDataFromJson == null || json == null) {
       return null;
     }
     try {

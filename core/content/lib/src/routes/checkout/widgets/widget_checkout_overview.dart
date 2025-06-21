@@ -4,10 +4,10 @@ class _WidgetCheckoutOverview extends StatefulWidget {
   const _WidgetCheckoutOverview();
 
   @override
-  State<_WidgetCheckoutOverview> createState() => __WidgetCheckoutOverviewState();
+  State<_WidgetCheckoutOverview> createState() => _WidgetCheckoutOverviewState();
 }
 
-class __WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
+class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
   bool _termsAccepted = false;
 
   @override

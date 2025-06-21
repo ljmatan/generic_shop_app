@@ -11,10 +11,10 @@ class _WidgetInputAge extends StatefulWidget {
   final Function() onBirthYearSpecified;
 
   @override
-  State<_WidgetInputAge> createState() => __WidgetInputAgeState();
+  State<_WidgetInputAge> createState() => _WidgetInputAgeState();
 }
 
-class __WidgetInputAgeState extends State<_WidgetInputAge> {
+class _WidgetInputAgeState extends State<_WidgetInputAge> {
   final _pickerController = FixedExtentScrollController(
     initialItem: 60,
   );

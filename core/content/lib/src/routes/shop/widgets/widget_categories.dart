@@ -11,10 +11,10 @@ class _WidgetCategories extends StatefulWidget {
   final Function(GsaModelCategory category) setCategory;
 
   @override
-  State<_WidgetCategories> createState() => __WidgetCategoriesState();
+  State<_WidgetCategories> createState() => _WidgetCategoriesState();
 }
 
-class __WidgetCategoriesState extends State<_WidgetCategories> {
+class _WidgetCategoriesState extends State<_WidgetCategories> {
   @override
   Widget build(BuildContext context) {
     return Padding(
