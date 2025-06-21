@@ -10,6 +10,34 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   ///
   version,
 
+  /// Status of the mandatory cookies user privacy consent.
+  ///
+  /// The status will be `null` if the user has not responded to the consent confirmation request,
+  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
+  ///
+  cookieConsentMandatory,
+
+  /// Status of the functional cookies user privacy consent.
+  ///
+  /// The status will be `null` if the user has not responded to the consent confirmation request,
+  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
+  ///
+  cookieConsentFunctional,
+
+  /// Status of the statistical cookies user privacy consent.
+  ///
+  /// The status will be `null` if the user has not responded to the consent confirmation request,
+  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
+  ///
+  cookieConsentStatistical,
+
+  /// Status of the marketing cookies user privacy consent.
+  ///
+  /// The status will be `null` if the user has not responded to the consent confirmation request,
+  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
+  ///
+  cookieConsentMarketing,
+
   /// Token used to authenticate the user with the backend.
   ///
   /// https://en.wikipedia.org/wiki/JSON_Web_Token
@@ -19,34 +47,6 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   /// JSON-encoded string representing the cached guest user information.
   ///
   guestUserEncodedData,
-
-  /// Status of the mandatory cookies user privacy consent.
-  ///
-  /// The status will be `null` if the user has not responded to the consent confirmation request,
-  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
-  ///
-  mandatoryCookiesConsent,
-
-  /// Status of the functional cookies user privacy consent.
-  ///
-  /// The status will be `null` if the user has not responded to the consent confirmation request,
-  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
-  ///
-  functionalCookiesConsent,
-
-  /// Status of the statistical cookies user privacy consent.
-  ///
-  /// The status will be `null` if the user has not responded to the consent confirmation request,
-  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
-  ///
-  statisticalCookiesConsent,
-
-  /// Status of the marketing cookies user privacy consent.
-  ///
-  /// The status will be `null` if the user has not responded to the consent confirmation request,
-  /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
-  ///
-  marketingCookiesConsent,
 
   /// Bookmarked sale item identifiers.
   ///
@@ -58,6 +58,11 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   }
 
   @override
+  String? get cacheIdPrefix {
+    return null;
+  }
+
+  @override
   Type get dataType {
     switch (this) {
       case GsaServiceCacheEntry.version:
@@ -66,13 +71,13 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
         return String;
       case GsaServiceCacheEntry.guestUserEncodedData:
         return String;
-      case GsaServiceCacheEntry.mandatoryCookiesConsent:
+      case GsaServiceCacheEntry.cookieConsentMandatory:
         return bool;
-      case GsaServiceCacheEntry.functionalCookiesConsent:
+      case GsaServiceCacheEntry.cookieConsentFunctional:
         return bool;
-      case GsaServiceCacheEntry.statisticalCookiesConsent:
+      case GsaServiceCacheEntry.cookieConsentStatistical:
         return bool;
-      case GsaServiceCacheEntry.marketingCookiesConsent:
+      case GsaServiceCacheEntry.cookieConsentMarketing:
         return bool;
       case GsaServiceCacheEntry.bookmarks:
         return List<String>;
@@ -110,13 +115,13 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
         return 'Authentication Token';
       case GsaServiceCacheEntry.guestUserEncodedData:
         return 'Guest User Encoded Data';
-      case GsaServiceCacheEntry.mandatoryCookiesConsent:
+      case GsaServiceCacheEntry.cookieConsentMandatory:
         return 'Mandatory cookies';
-      case GsaServiceCacheEntry.functionalCookiesConsent:
+      case GsaServiceCacheEntry.cookieConsentFunctional:
         return 'Functional cookies';
-      case GsaServiceCacheEntry.statisticalCookiesConsent:
+      case GsaServiceCacheEntry.cookieConsentStatistical:
         return 'Statistical cookies';
-      case GsaServiceCacheEntry.marketingCookiesConsent:
+      case GsaServiceCacheEntry.cookieConsentMarketing:
         return 'Marketing cookies';
       case GsaServiceCacheEntry.bookmarks:
         return 'Bookmarks';

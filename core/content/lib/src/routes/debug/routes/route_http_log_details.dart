@@ -6,6 +6,9 @@ class _RouteHttpLogDetails extends GsacRoute {
   final GsaApiModelLog log;
 
   @override
+  GsaRouteType get routeType => GsaRoutes.debug;
+
+  @override
   String get displayName => 'HTTP Log Details';
 
   @override

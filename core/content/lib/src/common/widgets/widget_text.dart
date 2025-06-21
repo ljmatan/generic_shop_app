@@ -48,7 +48,13 @@ class GsaWidgetText extends StatefulWidget {
   ///
   final int? maxLines;
 
+  /// Property defining how overflowing text should be handled.
+  ///
   final TextOverflow? overflow;
+
+  /// Optional method provided for translation purposes.
+  ///
+  static Future<List<String>>? Function(List<String> text)? translate;
 
   @override
   State<GsaWidgetText> createState() {
@@ -58,6 +64,32 @@ class GsaWidgetText extends StatefulWidget {
 }
 
 class _GsaWidgetTextState extends State<GsaWidgetText> {
+  late List<String> text;
+
+  Size _measureTextSize() {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(
+        text: text.length > 1 ? null : text.elementAtOrNull(0),
+        children: text.length > 1
+            ? [
+                for (final textSection in text.indexed)
+                  TextSpan(
+                    text: textSection.$2,
+                    style: widget.labels.elementAtOrNull(textSection.$1)?.style,
+                  ),
+              ]
+            : null,
+        style: widget.style,
+      ),
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+    )..layout(
+        maxWidth: MediaQuery.of(context).size.width,
+      );
+
+    return textPainter.size;
+  }
+
   void _rebuildOnLanguageUpdate() {
     setState(() {});
   }
@@ -66,33 +98,52 @@ class _GsaWidgetTextState extends State<GsaWidgetText> {
   void initState() {
     super.initState();
     GsaConfig.languageNotifier.addListener(_rebuildOnLanguageUpdate);
+    text = widget.labels.isNotEmpty
+        ? [widget.label]
+        : widget.labels.map(
+            (label) {
+              return label.text;
+            },
+          ).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.labels.isNotEmpty
-        ? Text.rich(
-            TextSpan(
-              children: [
-                for (final label in widget.labels)
-                  TextSpan(
-                    text: label.text,
-                    style: label.style,
-                    recognizer: label.onTap != null ? (TapGestureRecognizer()..onTap = label.onTap) : null,
-                  ),
-              ],
-            ),
+    return GsaWidgetText.translate != null
+        ? FutureBuilder(
+            future: GsaWidgetText.translate!(text),
+            builder: (context, snapshot) {
+              if (snapshot.data?.isNotEmpty == true) {
+                return _WidgetTextDisplay(
+                  label: widget.label,
+                  labels: widget.labels,
+                  translatedText: snapshot.data!,
+                  textAlign: widget.textAlign,
+                  style: widget.style,
+                  maxLines: widget.maxLines,
+                  overflow: widget.overflow,
+                );
+              }
+
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: Colors.grey,
+                ),
+                child: SizedBox.fromSize(
+                  size: _measureTextSize(),
+                ),
+              );
+            },
+          )
+        : _WidgetTextDisplay(
+            label: widget.label,
+            labels: widget.labels,
+            translatedText: null,
             textAlign: widget.textAlign,
             style: widget.style,
             maxLines: widget.maxLines,
-            overflow: widget.overflow ?? TextOverflow.ellipsis,
-          )
-        : Text(
-            widget.label.translated(context),
-            style: widget.style,
-            textAlign: widget.textAlign ?? TextAlign.start,
-            maxLines: widget.maxLines,
-            overflow: widget.overflow ?? TextOverflow.ellipsis,
+            overflow: widget.overflow,
           );
   }
 
@@ -103,6 +154,60 @@ class _GsaWidgetTextState extends State<GsaWidgetText> {
   }
 }
 
+class _WidgetTextDisplay extends StatelessWidget {
+  const _WidgetTextDisplay({
+    required this.label,
+    required this.labels,
+    required this.translatedText,
+    required this.textAlign,
+    required this.style,
+    required this.maxLines,
+    required this.overflow,
+  });
+
+  final String label;
+
+  final List<GsaWidgetTextSpan> labels;
+
+  final List<String>? translatedText;
+
+  final TextAlign? textAlign;
+
+  final TextStyle? style;
+
+  final int? maxLines;
+
+  final TextOverflow? overflow;
+
+  @override
+  Widget build(BuildContext context) {
+    return labels.isNotEmpty
+        ? Text.rich(
+            TextSpan(
+              children: [
+                for (final label in labels.indexed)
+                  TextSpan(
+                    text: translatedText?.elementAtOrNull(label.$1) ?? label.$2.text,
+                    style: label.$2.style,
+                    recognizer: label.$2.onTap != null ? (TapGestureRecognizer()..onTap = label.$2.onTap) : null,
+                  ),
+              ],
+            ),
+            textAlign: textAlign,
+            style: style,
+            maxLines: maxLines,
+            overflow: overflow ?? TextOverflow.ellipsis,
+          )
+        : Text(
+            translatedText?.isNotEmpty == true ? translatedText![0] : label.translated(context),
+            style: style,
+            textAlign: textAlign ?? TextAlign.start,
+            maxLines: maxLines,
+            overflow: overflow ?? TextOverflow.ellipsis,
+          );
+  }
+}
+
 class _GsaWidgetEditableTextState extends State<GsaWidgetText> {
   late TextEditingController _textEditingController;
   final _focusNode = FocusNode();
@@ -110,7 +215,9 @@ class _GsaWidgetEditableTextState extends State<GsaWidgetText> {
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController(text: widget.label.translated(context));
+    _textEditingController = TextEditingController(
+      text: widget.label.translated(context),
+    );
   }
 
   @override

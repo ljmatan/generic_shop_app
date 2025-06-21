@@ -8,7 +8,8 @@ class GsaServiceDebug extends GsaService {
 
   static final _instance = GsaServiceDebug._();
 
-  // ignore: public_member_api_docs
+  /// Globally-accessible class instance.
+  ///
   static GsaServiceDebug get instance => _instance() as GsaServiceDebug;
 
   /// Returns the information on the caller frame stack trace.

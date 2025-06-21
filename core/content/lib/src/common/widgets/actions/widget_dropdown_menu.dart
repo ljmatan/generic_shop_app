@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/src/common/widgets/actions/_actions.dart';
 
@@ -85,7 +86,11 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
     _textController = widget.textController ??
         TextEditingController(
           text: widget.initialSelection != null
-              ? widget.dropdownMenuEntries.firstWhere((entry) => entry.value == widget.initialSelection).label
+              ? widget.dropdownMenuEntries
+                  .firstWhereOrNull(
+                    (entry) => entry.value == widget.initialSelection,
+                  )
+                  ?.label
               : null,
         );
     _focusNode = widget.focusNode ?? FocusNode();
@@ -105,6 +110,7 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
       width: widget.width,
       initialSelection: widget.initialSelection,
       textStyle: GsaWidgetTextField.themeProperties.textStyle(),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       menuStyle: Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(
             minimumSize: WidgetStatePropertyAll(
               Size(
@@ -146,7 +152,22 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
               _textController,
             ),
           ),
-      onSelected: widget.onSelected,
+      onSaved: (value) {
+        if (value is String) {
+          _textController.text = value;
+        }
+        setState(() {});
+      },
+      onSelected: (value) {
+        if (value is String) {
+          _textController.text = value;
+        }
+        if (widget.onSelected != null) {
+          widget.onSelected!(value);
+        }
+        setState(() {});
+      },
+      textInputAction: TextInputAction.done,
       validator: widget.validator != null
           ? (value) {
               if (value is String) {

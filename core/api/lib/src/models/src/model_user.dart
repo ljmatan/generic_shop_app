@@ -15,7 +15,7 @@ class GsaModelUser extends _Model {
     this.address,
     this.deliveryAddresses,
     this.invoiceAddresses,
-    super.originData,
+    this.originData,
   });
 
   /// Custom username for the given user.
@@ -42,12 +42,43 @@ class GsaModelUser extends _Model {
   ///
   List<GsaModelAddress>? invoiceAddresses;
 
-  // ignore: public_member_api_docs
+  /// Method user by plugin implementations to serialise data from JSON.
+  ///
+  static Function(dynamic json)? originDataFromJson;
+
+  static dynamic _originDataFromJson(dynamic json) {
+    if (originDataFromJson == null || json == null) {
+      return null;
+    }
+    try {
+      return originDataFromJson!(json);
+    } catch (e) {
+      debugPrint('$e');
+      return null;
+    }
+  }
+
+  static dynamic _originDataToJson(dynamic value) {
+    try {
+      return value?.toJson();
+    } catch (e) {
+      debugPrint('$e');
+      return null;
+    }
+  }
+
+  /// The model object this class has been derived from.
+  ///
+  @JsonKey(
+    fromJson: GsaModelUser._originDataFromJson,
+    toJson: GsaModelUser._originDataToJson,
+  )
+  dynamic originData;
+
   factory GsaModelUser.fromJson(Map json) {
     return _$GsaModelUserFromJson(Map<String, dynamic>.from(json));
   }
 
-  // ignore: public_member_api_docs
   Map<String, dynamic> toJson() {
     return _$GsaModelUserToJson(this);
   }

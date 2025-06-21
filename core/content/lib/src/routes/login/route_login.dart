@@ -25,7 +25,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
 
   final _emailTextController = TextEditingController(
         text: switch (GsaConfig.plugin.client) {
-          GsaClient.froddoB2b => kDebugMode ? 'ante@hyper.hr' : null,
+          GsaClient.froddoB2b => kDebugMode ? 'hyper@hyper.hr' : null,
           _ => null,
         },
       ),

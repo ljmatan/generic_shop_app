@@ -80,15 +80,30 @@ class GsaServiceCache extends GsaService {
 
   /// Persistent cache data; shouldn't be deleted.
   ///
-  Set<GsaServiceCacheEntry> persistent = {GsaServiceCacheEntry.version};
+  final persistent = <GsaServiceCacheEntry>{
+    GsaServiceCacheEntry.version,
+    GsaServiceCacheEntry.cookieConsentMandatory,
+    GsaServiceCacheEntry.cookieConsentFunctional,
+    GsaServiceCacheEntry.cookieConsentMarketing,
+    GsaServiceCacheEntry.cookieConsentStatistical,
+  };
 
   /// Removes all cache data from the device storage,
   /// except for the keys noted under the [persistent] list.
   ///
-  Future<void> clearData() async {
+  Future<void> clearData({
+    bool clearPersistent = false,
+  }) async {
     if (_sharedPreferences != null) {
       for (var key in _sharedPreferences!.keys) {
-        if (persistent.where((cacheId) => cacheId.name == key).isEmpty) await _sharedPreferences?.remove(key);
+        if (clearPersistent ||
+            persistent
+                .where(
+                  (cacheId) => cacheId.name == key,
+                )
+                .isEmpty) {
+          await _sharedPreferences?.remove(key);
+        }
       }
     }
   }

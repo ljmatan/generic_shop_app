@@ -19,6 +19,9 @@ dependencies:
   app_tracking_transparency: ^2.0.6
   shared_preferences: ^2.3.3
   barcode: ^2.2.9
+  share_plus: ^11.0.0
+  path_provider: ^2.1.5
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:

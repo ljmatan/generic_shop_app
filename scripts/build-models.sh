@@ -15,6 +15,6 @@
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 PROJECT_DIR="$SCRIPT_DIR/.."
 
-cd $PROJECT_DIR/plugins/api
+cd $PROJECT_DIR/core/api
 
 dart run build_runner build --delete-conflicting-outputs

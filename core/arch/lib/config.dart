@@ -144,6 +144,7 @@ class GsaConfig {
     GsaServiceLocation.instance;
     GsaServiceLogging.instance;
     GsaServiceMock.instance;
+    GsaServiceShare.instance;
     GsaServiceSearch.instance;
     GsaServiceTracking.instance;
     GsaServiceUrlLauncher.instance;

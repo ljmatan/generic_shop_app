@@ -7,6 +7,20 @@ abstract mixin class GsaServiceCacheValue {
   ///
   String get cacheId;
 
+  /// Prefix assigned to each of the cached item entries.
+  ///
+  String? get cacheIdPrefix;
+
+  /// Unique cache value identifier, derived from [cacheId] and [cacheIdPrefix].
+  ///
+  String get _cacheId {
+    if (cacheIdPrefix == null) {
+      return cacheId;
+    } else {
+      return '$cacheIdPrefix-$cacheId';
+    }
+  }
+
   /// The specified data type for this cache value.
   ///
   Type get dataType;
@@ -35,15 +49,15 @@ abstract mixin class GsaServiceCacheValue {
     if (!enabled) return null;
     switch (dataType) {
       case const (int):
-        return GsaServiceCache.instance._sharedPreferences?.getInt(cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId);
       case const (bool):
-        return GsaServiceCache.instance._sharedPreferences?.getBool(cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId);
       case const (String):
-        return GsaServiceCache.instance._sharedPreferences?.getString(cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getString(_cacheId);
       case const (Iterable<String>):
       case const (List<String>):
       case const (Set<String>):
-        return GsaServiceCache.instance._sharedPreferences?.getStringList(cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
       default:
         throw 'Value get method not implemented for $dataType with $this.';
     }
@@ -55,15 +69,15 @@ abstract mixin class GsaServiceCacheValue {
     if (!enabled || !secure) return null;
     switch (dataType) {
       case const (int):
-        return GsaServiceCache.instance._sharedPreferences?.getInt(cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId);
       case const (bool):
-        return GsaServiceCache.instance._sharedPreferences?.getBool(cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId);
       case const (String):
-        return GsaServiceCache.instance._sharedPreferences?.getString(cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getString(_cacheId);
       case const (Iterable<String>):
       case const (List<String>):
       case const (Set<String>):
-        return GsaServiceCache.instance._sharedPreferences?.getStringList(cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
       default:
         throw 'Value get method not implemented for $dataType with $this.';
     }
@@ -83,18 +97,18 @@ abstract mixin class GsaServiceCacheValue {
     if (enabled) {
       switch (dataType) {
         case const (int):
-          await GsaServiceCache.instance._sharedPreferences?.setInt(cacheId, value);
+          await GsaServiceCache.instance._sharedPreferences?.setInt(_cacheId, value);
           break;
         case const (bool):
-          await GsaServiceCache.instance._sharedPreferences?.setBool(cacheId, value);
+          await GsaServiceCache.instance._sharedPreferences?.setBool(_cacheId, value);
           break;
         case const (String):
-          await GsaServiceCache.instance._sharedPreferences?.setString(cacheId, value);
+          await GsaServiceCache.instance._sharedPreferences?.setString(_cacheId, value);
           break;
         case const (Iterable<String>):
         case const (List<String>):
         case const (Set<String>):
-          await GsaServiceCache.instance._sharedPreferences?.setStringList(cacheId, value);
+          await GsaServiceCache.instance._sharedPreferences?.setStringList(_cacheId, value);
           break;
         default:
           throw 'Value set method not implemented for $dataType with $this.';
@@ -105,7 +119,7 @@ abstract mixin class GsaServiceCacheValue {
   /// Removes the given value for this instance from the given storage.
   ///
   Future<void> removeValue() async {
-    await GsaServiceCache.instance._sharedPreferences?.remove(cacheId);
+    await GsaServiceCache.instance._sharedPreferences?.remove(_cacheId);
   }
 
   /// User-visible name for this cache data instance.

@@ -1,4 +1,7 @@
+import 'dart:convert' as dart_convert;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -104,23 +107,76 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                           ),
                       ],
                     3 => [
+                        const GsaWidgetText.rich(
+                          [
+                            GsaWidgetTextSpan(
+                              'Below are the currently cached keys and their corresponding values.\n\n',
+                            ),
+                            GsaWidgetTextSpan(
+                              'You can double tap on a value to copy it to the clipboard.',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
                         if (GsaServiceCache.instance.cachedKeys != null)
-                          for (final key in GsaServiceCache.instance.cachedKeys!.indexed) ...[
-                            if (key.$1 != 0) const SizedBox(height: 10),
-                            GsaWidgetText.rich(
-                              [
-                                GsaWidgetTextSpan(
-                                  '${key.$2}: ',
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                  ),
+                          for (final key in GsaServiceCache.instance.cachedKeys!.indexed)
+                            ExpansionTile(
+                              leading: GsaWidgetText(
+                                '${key.$1 + 1}',
+                                style: const TextStyle(
+                                  color: Colors.grey,
                                 ),
-                                GsaWidgetTextSpan(
-                                  GsaServiceCache.instance.valueWithKey(key.$2).toString(),
+                              ),
+                              title: GsaWidgetText(
+                                key.$2,
+                              ),
+                              childrenPadding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
+                              children: [
+                                InkWell(
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade800,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(6),
+                                      child: SizedBox(
+                                        width: MediaQuery.of(context).size.width,
+                                        child: GsaWidgetText(
+                                          dart_convert.JsonEncoder.withIndent(' ' * 2).convert(
+                                            dart_convert.jsonDecode(
+                                              GsaServiceCache.instance
+                                                  .valueWithKey(
+                                                    key.$2,
+                                                  )
+                                                  .toString(),
+                                            ),
+                                          ),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onDoubleTap: () async {
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text: GsaServiceCache.instance
+                                            .valueWithKey(
+                                              key.$2,
+                                            )
+                                            .toString(),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
-                            ),
-                          ]
+                            )
                         else
                           const GsaWidgetText(
                             'No entries found.',
@@ -138,7 +194,20 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
         heroTag: null,
         child: const Icon(Icons.share),
         onPressed: () async {
-          // TODO
+          await GsaServiceShare.instance.shareFile(
+            Uint8List.fromList(
+              dart_convert.utf8.encode(
+                dart_convert.jsonEncode(
+                  {
+                    'http': [],
+                    'event': [],
+                    'error': [],
+                    'cache': [],
+                  },
+                ),
+              ),
+            ),
+          );
         },
       ),
     );

@@ -30,10 +30,10 @@ class GsaModelSaleItem extends _Model {
     this.reviews,
     this.deliveryTimeMilliseconds,
     this.informationList,
+    this.originData,
     super.originUrl,
     super.consentIds,
     super.tags,
-    super.originData,
   });
 
   /// Item display name.
@@ -129,6 +129,39 @@ class GsaModelSaleItem extends _Model {
   /// Custom user-visible information applied to this sale item.
   ///
   List<({String label, String description})>? informationList;
+
+  /// Method user by plugin implementations to serialise data from JSON.
+  ///
+  static Function(dynamic json)? originDataFromJson;
+
+  static dynamic _originDataFromJson(dynamic json) {
+    if (originDataFromJson == null) {
+      return null;
+    }
+    try {
+      return originDataFromJson!(json);
+    } catch (e) {
+      debugPrint('$e');
+      return null;
+    }
+  }
+
+  static dynamic _originDataToJson(dynamic value) {
+    try {
+      return value?.toJson();
+    } catch (e) {
+      debugPrint('$e');
+      return null;
+    }
+  }
+
+  /// The model object this class has been derived from.
+  ///
+  @JsonKey(
+    fromJson: GsaModelSaleItem._originDataFromJson,
+    toJson: GsaModelSaleItem._originDataToJson,
+  )
+  dynamic originData;
 
   // ignore: public_member_api_docs
   factory GsaModelSaleItem.fromJson(Map json) {
