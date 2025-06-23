@@ -15,6 +15,7 @@ export 'camera/route_camera.dart';
 export 'cart/route_cart.dart';
 export 'chat/route_chat.dart';
 export 'checkout/route_checkout.dart';
+export 'clients/route_clients.dart';
 export 'contact/route_merchant_contact.dart';
 export 'debug/route_debug.dart';
 export 'guest_info/route_guest_info.dart';
@@ -43,6 +44,7 @@ enum GsaRoutes implements GsaRouteType {
   cart,
   chat,
   checkout,
+  clients,
   contact,
   debug,
   guestInfo,
@@ -77,6 +79,8 @@ enum GsaRoutes implements GsaRouteType {
         return ([args]) => const GsaRouteChat();
       case GsaRoutes.checkout:
         return ([args]) => const GsaRouteCheckout();
+      case GsaRoutes.clients:
+        return ([args]) => const GsaRouteClients();
       case GsaRoutes.contact:
         return ([args]) => const GsaRouteMerchantContact();
       case GsaRoutes.debug:
@@ -160,6 +164,8 @@ enum GsaRoutes implements GsaRouteType {
         return GsaRouteChat;
       case GsaRoutes.checkout:
         return GsaRouteCheckout;
+      case GsaRoutes.clients:
+        return GsaRouteClients;
       case GsaRoutes.contact:
         return GsaRouteMerchantContact;
       case GsaRoutes.debug:

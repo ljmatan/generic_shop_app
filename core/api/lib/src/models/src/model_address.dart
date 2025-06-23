@@ -54,13 +54,41 @@ class GsaModelAddress extends _Model {
   ///
   String? country;
 
+  /// Formatted address display.
+  ///
+  /// Combines available fields into a readable format.
+  ///
+  String? get addressFormatted {
+    final parts = [
+      if (streetName != null && houseNumber != null)
+        '$streetName $houseNumber'
+      else if (streetName != null)
+        streetName
+      else if (houseNumber != null)
+        houseNumber,
+      if (zipCode != null && city != null) '$zipCode $city' else if (zipCode != null) zipCode else if (city != null) city,
+      if (state != null) state,
+      if (country != null) country,
+    ];
+    final nonEmptyParts = parts
+        .whereType<String>()
+        .where(
+          (s) => s.trim().isNotEmpty,
+        )
+        .toList();
+    if (nonEmptyParts.isEmpty) return null;
+    return nonEmptyParts.join(', ');
+  }
+
   /// Coordinates in latitude and longitude.
   ///
   double? latitude, longitude;
 
   /// Helper method for coordinate value management.
   ///
-  (double, double)? get coordinates => latitude != null && longitude != null ? (latitude!, longitude!) : null;
+  (double, double)? get coordinates {
+    return latitude != null && longitude != null ? (latitude!, longitude!) : null;
+  }
 
   /// Custom notes for the given address.
   ///

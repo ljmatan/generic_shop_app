@@ -21,17 +21,17 @@ class _WidgetProfile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GsaWidgetText(
-                        GsaDataUser.instance.user?.personalDetails?.firstName != null
-                            ? 'Hello, ${GsaDataUser.instance.user!.personalDetails!.firstName!}!'
-                            : 'Hey you!',
-                        style: const TextStyle(
+                      const GsaWidgetText(
+                        'Review Your Profile',
+                        style: TextStyle(
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       const SizedBox(height: 5),
                       GsaWidgetText(
-                        'Update your details, adjust your preferences, and manage your account all in one place.',
+                        'Review your details, '
+                        'adjust your preferences, '
+                        'and manage your account all in one place.',
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w300,
@@ -61,7 +61,7 @@ class _WidgetProfile extends StatelessWidget {
                       ),
                       CircleAvatar(
                         radius: 26,
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         child: const Icon(
                           Icons.person,
                         ),
@@ -75,7 +75,9 @@ class _WidgetProfile extends StatelessWidget {
         ),
       ),
       onTap: () {
-        const GsaRouteUserProfile().push();
+        const GsaRouteUserProfile().push(
+          replacement: GsaConfig.plugin.client == GsaClient.froddoB2b,
+        );
       },
     );
   }

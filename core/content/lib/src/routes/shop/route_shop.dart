@@ -54,8 +54,9 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
               searchTerm: _filters.searchTerm!,
               comparisonValues: categoryResults ?? GsaDataSaleItems.instance.collection,
               comparator: (value) {
+                final saleItem = value as GsaModelSaleItem;
                 return [
-                  (value as GsaModelSaleItem).name ?? '',
+                  if (saleItem.name?.isNotEmpty == true) saleItem.name!,
                 ];
               },
             )
@@ -182,8 +183,11 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                                 vertical: GsaTheme.instance.contentPadding.vertical / 2,
                               ),
                               children: [
-                                if (GsaDataCheckout.instance.orderDraft.client != null) ...[
-                                  const _WidgetClientPreview(),
+                                if (<GsaClient>{
+                                      GsaClient.froddoB2b,
+                                    }.contains(GsaConfig.plugin.client) &&
+                                    GsaDataCheckout.instance.orderDraft.client != null) ...[
+                                  _WidgetClientPreview(),
                                   const SizedBox(height: 16),
                                 ],
                                 if (GsaDataUser.instance.authenticated) ...[

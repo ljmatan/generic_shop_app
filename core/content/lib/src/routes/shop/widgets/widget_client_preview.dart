@@ -1,7 +1,9 @@
 part of '../route_shop.dart';
 
 class _WidgetClientPreview extends StatelessWidget {
-  const _WidgetClientPreview();
+  _WidgetClientPreview();
+
+  final client = GsaDataCheckout.instance.orderDraft.client;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +23,54 @@ class _WidgetClientPreview extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GsaWidgetText(
-                    'Client Details',
-                    style: Theme.of(context).textTheme.labelMedium,
+                  Row(
+                    children: [
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          child: GsaWidgetText(
+                            'Client',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (client?.personalDetails?.formattedName != null) ...[
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: GsaWidgetText(
+                            '${GsaDataCheckout.instance.orderDraft.client?.personalDetails?.formattedName}',
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                  if (GsaDataCheckout.instance.orderDraft.client?.personalDetails?.formattedName != null)
+                  if (client?.contactDetails?.personalDetails?.formattedName != null) ...[
+                    const SizedBox(height: 8),
                     GsaWidgetText(
-                      '${GsaDataCheckout.instance.orderDraft.client?.personalDetails?.formattedName}',
+                      '${GsaDataCheckout.instance.orderDraft.client?.contactDetails?.personalDetails?.formattedName}',
                     ),
+                  ],
+                  if (client?.contactDetails?.addressDetails?.addressFormatted != null) ...[
+                    const SizedBox(height: 8),
+                    GsaWidgetText(
+                      '${client?.contactDetails?.addressDetails?.addressFormatted}',
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

@@ -3,6 +3,7 @@ import 'dart:convert' as dart_convert;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 part 'widgets/widget_app_log_details.dart';
@@ -23,6 +24,8 @@ class GsaRouteDebug extends GsacRoute {
 class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
   final _tabNotifier = ValueNotifier<int>(0);
 
+  final _jsonEncoder = dart_convert.JsonEncoder.withIndent(' ' * 2);
+
   @override
   Widget view(BuildContext context) {
     return Scaffold(
@@ -39,16 +42,21 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
             child: ValueListenableBuilder(
               valueListenable: _tabNotifier,
               builder: (context, value, child) {
-                return Row(
-                  children: [
-                    for (final buttonLabel in <String>{
-                      'HTTP (${GsaApi.logs.length})',
-                      'EVENT (${GsaServiceLogging.instance.logs.general.length})',
-                      'ERROR (${GsaServiceLogging.instance.logs.error.length})',
-                      'CACHE (${GsaServiceCache.instance.cachedKeys?.length})',
-                    }.indexed)
-                      Expanded(
-                        child: TextButton(
+                return SizedBox(
+                  height: 48,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    children: [
+                      for (final buttonLabel in <String>{
+                        'HTTP (${GsaApi.logs.length})',
+                        'EVENT (${GsaServiceLogging.instance.logs.general.length})',
+                        'ERROR (${GsaServiceLogging.instance.logs.error.length})',
+                        'CACHE (${GsaServiceCache.instance.cachedKeys?.length})',
+                        'DATA',
+                      }.indexed) ...[
+                        if (buttonLabel.$1 != 0) const SizedBox(width: 10),
+                        TextButton(
                           child: GsaWidgetText(
                             buttonLabel.$2,
                             style: TextStyle(
@@ -60,8 +68,9 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                             _tabNotifier.value = buttonLabel.$1;
                           },
                         ),
-                      ),
-                  ],
+                      ],
+                    ],
+                  ),
                 );
               },
             ),
@@ -71,7 +80,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
               valueListenable: _tabNotifier,
               builder: (context, value, child) {
                 return ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  padding: GsaTheme.instance.contentPadding,
                   children: switch (_tabNotifier.value) {
                     0 => [
                         if (GsaApi.logs.isNotEmpty)
@@ -124,16 +133,10 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                         if (GsaServiceCache.instance.cachedKeys != null)
                           for (final key in GsaServiceCache.instance.cachedKeys!.indexed)
                             ExpansionTile(
-                              leading: GsaWidgetText(
-                                '${key.$1 + 1}',
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
                               title: GsaWidgetText(
                                 key.$2,
                               ),
-                              childrenPadding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
+                              tilePadding: EdgeInsets.zero,
                               children: [
                                 InkWell(
                                   child: DecoratedBox(
@@ -146,7 +149,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                                       child: SizedBox(
                                         width: MediaQuery.of(context).size.width,
                                         child: GsaWidgetText(
-                                          dart_convert.JsonEncoder.withIndent(' ' * 2).convert(
+                                          _jsonEncoder.convert(
                                             dart_convert.jsonDecode(
                                               GsaServiceCache.instance
                                                   .valueWithKey(
@@ -182,6 +185,99 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                             'No entries found.',
                           ),
                       ],
+                    4 => [
+                        const GsaWidgetText.rich(
+                          [
+                            GsaWidgetTextSpan(
+                              'Noted below are active runtime data values.\n\n',
+                            ),
+                            GsaWidgetTextSpan(
+                              'You can double tap on a value to copy it to the clipboard.',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        for (final dataPoint in <({
+                          String label,
+                          Map? value,
+                        })>{
+                          (
+                            label: 'User',
+                            value: GsaDataUser.instance.user?.toJson(),
+                          ),
+                          (
+                            label: 'Merchant',
+                            value: GsaDataMerchant.instance.merchant?.toJson(),
+                          ),
+                          (
+                            label: 'Clients',
+                            value: {
+                              'collection': GsaDataClients.instance.collection.map(
+                                (client) {
+                                  return client.toJson();
+                                },
+                              ).toList(),
+                            },
+                          ),
+                          (
+                            label: 'Sale Items',
+                            value: {
+                              'collection': GsaDataSaleItems.instance.collection.map(
+                                (saleItem) {
+                                  return saleItem.toJson();
+                                },
+                              ).toList(),
+                            },
+                          ),
+                          (
+                            label: 'Checkout',
+                            value: GsaDataCheckout.instance.orderDraft.toJson(),
+                          ),
+                        }) ...[
+                          ExpansionTile(
+                            title: GsaWidgetText(
+                              dataPoint.label,
+                            ),
+                            tilePadding: EdgeInsets.zero,
+                            children: [
+                              InkWell(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade800,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: GsaWidgetText(
+                                        _jsonEncoder.convert(
+                                          dataPoint.value,
+                                        ),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onDoubleTap: () async {
+                                  Clipboard.setData(
+                                    ClipboardData(
+                                      text: _jsonEncoder.convert(
+                                        dataPoint.value,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ],
                     int() => throw UnimplementedError(),
                   },
                 );
@@ -203,6 +299,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                     'event': [],
                     'error': [],
                     'cache': [],
+                    'data': [],
                   },
                 ),
               ),
