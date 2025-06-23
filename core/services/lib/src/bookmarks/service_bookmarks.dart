@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../../services.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_services/services.dart';
 
 class GsaServiceBookmarks extends GsaService {
   GsaServiceBookmarks._();

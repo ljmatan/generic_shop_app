@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 
 /// An overlay widget presented to user with a message.
 ///

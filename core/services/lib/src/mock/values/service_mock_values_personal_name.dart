@@ -144,5 +144,5 @@ const _valuePersonalNames = [
   'Bailey',
   'Chloe',
   'Savannah',
-  'Madison'
+  'Madison',
 ];

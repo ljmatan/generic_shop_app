@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/api.dart';
-import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_ivancica/giv.dart';
 import 'package:generic_shop_app_services/services.dart';

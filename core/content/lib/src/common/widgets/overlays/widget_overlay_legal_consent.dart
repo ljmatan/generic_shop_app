@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Widget overlay displaying user privacy policy and terms and conditions consent.

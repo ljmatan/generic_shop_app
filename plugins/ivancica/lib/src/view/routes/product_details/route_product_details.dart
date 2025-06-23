@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_ivancica/giv.dart';
 
 /// Screen displaying product details and other relevant functionalities and content.
@@ -149,21 +148,21 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text.rich(
-                            TextSpan(
-                              text: widget.saleItem.name ?? 'N/A',
-                              children: [
-                                if (widget.saleItem.productCode != null)
-                                  TextSpan(
-                                    text: '\n${widget.saleItem.productCode!}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.grey,
-                                      fontSize: 10,
-                                    ),
+                          child: GsaWidgetText.rich(
+                            [
+                              GsaWidgetTextSpan(
+                                widget.saleItem.name ?? 'N/A',
+                              ),
+                              if (widget.saleItem.productCode != null)
+                                GsaWidgetTextSpan(
+                                  '\n${widget.saleItem.productCode!}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.grey,
+                                    fontSize: 10,
                                   ),
-                              ],
-                            ),
+                                ),
+                            ],
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 18,
@@ -374,20 +373,20 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                           Padding(
                             padding:
                                 information.$1 == 0 ? const EdgeInsets.fromLTRB(20, 14, 20, 0) : const EdgeInsets.fromLTRB(20, 6, 20, 0),
-                            child: Text.rich(
-                              TextSpan(
-                                text: '${information.$2.label}: ',
-                                style: TextStyle(
-                                  fontSize: 12,
+                            child: GsaWidgetText.rich(
+                              [
+                                GsaWidgetTextSpan(
+                                  '${information.$2.label}: ',
                                 ),
-                                children: [
-                                  TextSpan(
-                                    text: information.$2.description,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                                GsaWidgetTextSpan(
+                                  information.$2.description,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                ],
+                                ),
+                              ],
+                              style: TextStyle(
+                                fontSize: 12,
                               ),
                             ),
                           ),

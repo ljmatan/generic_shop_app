@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_ivancica/giv.dart';
 

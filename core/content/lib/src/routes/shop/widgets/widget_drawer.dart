@@ -178,20 +178,18 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                     ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(14, 16, 14, 0),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Version ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w300,
-                            ),
+                    child: GsaWidgetText.rich(
+                      [
+                        const GsaWidgetTextSpan(
+                          'Version ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w300,
                           ),
-                          TextSpan(
-                            text: GsaConfig.version,
-                          ),
-                        ],
-                      ),
+                        ),
+                        GsaWidgetTextSpan(
+                          GsaConfig.version,
+                        ),
+                      ],
                     ),
                   ),
                 ],

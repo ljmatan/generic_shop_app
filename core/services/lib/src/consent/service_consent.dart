@@ -1,5 +1,5 @@
-import '../../services.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_services/services.dart';
 
 /// Class responsible for handling any user privacy-related consent requests and statuses.
 ///
