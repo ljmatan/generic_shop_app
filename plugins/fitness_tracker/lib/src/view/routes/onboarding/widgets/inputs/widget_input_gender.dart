@@ -30,15 +30,15 @@ class _WidgetInputGenderState extends State<_WidgetInputGender> {
               vertical: 24,
             ),
             children: [
-              Text(
+              GsaWidgetText(
                 'Gender helps us estimate calorie needs, metabolism, and fitness benchmarks more accurately.',
               ),
               const SizedBox(height: 10),
-              Text(
+              GsaWidgetText(
                 'To make your plan truly yours, we use gender to tailor recommendations that match your physiology.',
               ),
               const SizedBox(height: 16),
-              Text(
+              GsaWidgetText(
                 'Select one of the below options to proceed.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -64,7 +64,7 @@ class _WidgetInputGenderState extends State<_WidgetInputGender> {
                             ),
                             const SizedBox(width: 10),
                             Flexible(
-                              child: Text(
+                              child: GsaWidgetText(
                                 genderOption.label,
                                 style: TextStyle(
                                   color: genderOption == widget.trainee.gender ? Colors.white : Theme.of(context).primaryColor,
@@ -108,12 +108,12 @@ class _WidgetInputGenderState extends State<_WidgetInputGender> {
                 ),
               }.indexed) ...[
                 if (infoPoint.$1 != 0) const SizedBox(height: 16),
-                Text(
+                GsaWidgetText(
                   infoPoint.$2.title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const Divider(),
-                Text(
+                GsaWidgetText(
                   infoPoint.$2.description,
                 ),
               ],

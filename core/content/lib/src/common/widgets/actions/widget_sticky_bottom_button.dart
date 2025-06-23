@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 class GsaWidgetStickyBottomButton extends StatelessWidget {
   const GsaWidgetStickyBottomButton({
@@ -34,7 +35,7 @@ class GsaWidgetStickyBottomButton extends StatelessWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: FilledButton(
-            child: Text(
+            child: GsaWidgetText(
               label,
             ),
             onPressed: onTap,

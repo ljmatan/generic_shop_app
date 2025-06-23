@@ -224,7 +224,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                           ),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            child: Text(
+                            child: GsaWidgetText(
                               'Available Sizes: ' +
                                   (sortedOptions.length > 1
                                       ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
@@ -242,7 +242,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: OutlinedButton(
-                  child: const Text('See Available Options'),
+                  child: const GsaWidgetText('See Available Options'),
                   onPressed: () {
                     Navigator.pop(context);
                     GsaRouteSaleItemDetails(widget.saleItem).push();

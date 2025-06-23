@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_content/src/common/widgets/flair/blobs/widget_blobs.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// Application toolbar / navigation bar / app bar implementation.
 ///
@@ -59,7 +59,7 @@ class GsaWidgetAppBar extends StatelessWidget {
                                     horizontal: 16,
                                     vertical: 14,
                                   ),
-                            child: Text(
+                            child: GsaWidgetText(
                               label ?? '',
                               textAlign: TextAlign.center,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(

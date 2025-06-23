@@ -195,7 +195,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                 (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
                               );
                               if (sortedOptions.isEmpty) return const SizedBox();
-                              return Text(
+                              return GsaWidgetText(
                                 'Sizes: ' +
                                     (sortedOptions.length > 1
                                         ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'

@@ -128,6 +128,7 @@ class GsaDataCheckout extends GsaData {
       throw 'Error.';
     }
     notifierCartUpdate.value = totalItemCount;
+    notifyListeners();
   }
 
   /// Removes a sale item from the cart.
@@ -135,6 +136,7 @@ class GsaDataCheckout extends GsaData {
   void removeItem(GsaModelSaleItem product) {
     orderDraft.items.removeWhere((item) => item.id == product.id);
     notifierCartUpdate.value = totalItemCount;
+    notifyListeners();
   }
 
   /// Increases the quantity of an item added to the cart.
@@ -143,6 +145,7 @@ class GsaDataCheckout extends GsaData {
   ///
   void increaseItemCount(GsaModelSaleItem product) {
     addItem(product);
+    notifyListeners();
   }
 
   /// Decreases the quantity of an item added to the cart,
@@ -157,5 +160,6 @@ class GsaDataCheckout extends GsaData {
       orderDraft.items[cartItemIndex] = saleItem;
     }
     notifierCartUpdate.value = totalItemCount;
+    notifyListeners();
   }
 }

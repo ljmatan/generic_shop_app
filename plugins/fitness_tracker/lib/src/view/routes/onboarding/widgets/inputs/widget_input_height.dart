@@ -39,13 +39,13 @@ class _WidgetInputHeightState extends State<_WidgetInputHeight> {
               vertical: 24,
             ),
             children: [
-              Text(
+              GsaWidgetText(
                 'Your height is a key factor in understanding your body composition. '
                 'It\'s used to calculate your BMI (Body Mass Index), calorie needs, and '
                 'tailor recommendations that better fit your physical profile.',
               ),
               const SizedBox(height: 16),
-              Text(
+              GsaWidgetText(
                 'Specify your height using the menu below.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -59,11 +59,11 @@ class _WidgetInputHeightState extends State<_WidgetInputHeight> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            GsaWidgetText(
                               '${widget.trainee.heightLabelMetric}',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
-                            Text(
+                            GsaWidgetText(
                               '${widget.trainee.heightLabelImperial}',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
@@ -104,7 +104,7 @@ class _WidgetInputHeightState extends State<_WidgetInputHeight> {
                               Row(
                                 children: [
                                   const SizedBox(width: 10),
-                                  Text(
+                                  GsaWidgetText(
                                     '${height}cm',
                                     style: TextStyle(
                                       color: widget.trainee.heightCentimeters == height ? Theme.of(context).primaryColor : null,
@@ -144,12 +144,12 @@ class _WidgetInputHeightState extends State<_WidgetInputHeight> {
                 ),
               }.indexed) ...[
                 if (infoPoint.$1 != 0) const SizedBox(height: 16),
-                Text(
+                GsaWidgetText(
                   infoPoint.$2.title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const Divider(),
-                Text(
+                GsaWidgetText(
                   infoPoint.$2.description,
                 ),
               ],

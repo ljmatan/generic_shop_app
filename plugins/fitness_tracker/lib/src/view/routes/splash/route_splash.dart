@@ -28,7 +28,7 @@ class _GftRouteSplashState extends GsaRouteState<GftRouteSplash> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                GsaWidgetText(
                   'iFit Club',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
@@ -37,14 +37,14 @@ class _GftRouteSplashState extends GsaRouteState<GftRouteSplash> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Text(
+                GsaWidgetText(
                   'Personalized plans, real results.\n\n'
                   'Let\'s build a better lifestyle together.',
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
                 FilledButton(
-                  child: Text(
+                  child: GsaWidgetText(
                     'Get Started',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,

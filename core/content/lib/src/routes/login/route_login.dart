@@ -118,7 +118,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         ),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
+                          child: GsaWidgetText(
                             'Forgot password?',
                             style: TextStyle(
                               decoration: TextDecoration.underline,

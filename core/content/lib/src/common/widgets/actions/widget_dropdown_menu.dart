@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_content/src/common/widgets/actions/_actions.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// Generic dropdown menu integration with custom theme properties.
 ///
@@ -121,7 +121,11 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
       controller: _textController,
       focusNode: _focusNode,
       enabled: widget.enabled,
-      label: widget.labelText == null ? null : Text(widget.labelText!),
+      label: widget.labelText == null
+          ? null
+          : GsaWidgetText(
+              widget.labelText!,
+            ),
       hintText: widget.hintText,
       width: widget.width,
       initialSelection: _initialSelection,

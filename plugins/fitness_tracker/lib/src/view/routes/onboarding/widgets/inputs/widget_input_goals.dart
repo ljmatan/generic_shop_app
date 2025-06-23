@@ -30,12 +30,12 @@ class _WidgetInputGoalsState extends State<_WidgetInputGoals> {
               vertical: 24,
             ),
             children: [
-              Text(
+              GsaWidgetText(
                 'Everyone\'s goals are different. '
                 'Tell us yours so we can tailor workouts, nutrition tips, and progress tracking to fit your journey.',
               ),
               const SizedBox(height: 16),
-              Text(
+              GsaWidgetText(
                 'Choose your preference below to proceed.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -65,7 +65,7 @@ class _WidgetInputGoalsState extends State<_WidgetInputGoals> {
                                 ),
                                 const SizedBox(width: 10),
                                 Flexible(
-                                  child: Text(
+                                  child: GsaWidgetText(
                                     goalOption.label,
                                     style: TextStyle(
                                       color: widget.trainee.goal == goalOption ? Colors.white : Theme.of(context).primaryColor,
@@ -76,7 +76,7 @@ class _WidgetInputGoalsState extends State<_WidgetInputGoals> {
                               ],
                             ),
                             const SizedBox(height: 6),
-                            Text(
+                            GsaWidgetText(
                               goalOption.description,
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: widget.trainee.goal == goalOption ? Colors.white : null,

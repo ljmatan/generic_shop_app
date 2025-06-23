@@ -35,13 +35,13 @@ class _WidgetInputWeightState extends State<_WidgetInputWeight> {
               vertical: 24,
             ),
             children: [
-              Text(
+              GsaWidgetText(
                 'Knowing your starting weight lets us measure your progress over '
                 'time and calculate targets that match your goal - whether it\'s to '
                 'lose, gain, or maintain weight.',
               ),
               const SizedBox(height: 16),
-              Text(
+              GsaWidgetText(
                 'Input your current weight data below.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -71,12 +71,12 @@ class _WidgetInputWeightState extends State<_WidgetInputWeight> {
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: Column(
                               children: [
-                                Text(
+                                GsaWidgetText(
                                   '${widget.trainee.weightLabelMetric}',
                                   style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                                 const SizedBox(height: 4),
-                                Text(
+                                GsaWidgetText(
                                   '${widget.trainee.weightLabelImperial}',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
@@ -142,12 +142,12 @@ class _WidgetInputWeightState extends State<_WidgetInputWeight> {
                 ),
               }.indexed) ...[
                 if (infoPoint.$1 != 0) const SizedBox(height: 16),
-                Text(
+                GsaWidgetText(
                   infoPoint.$2.title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const Divider(),
-                Text(
+                GsaWidgetText(
                   infoPoint.$2.description,
                 ),
               ],

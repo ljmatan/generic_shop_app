@@ -9,6 +9,7 @@ import 'package:generic_shop_app_services/services.dart';
 
 part 'widgets/widget_banner.dart';
 part 'widgets/widget_categories.dart';
+part 'widgets/widget_client_preview.dart';
 part 'widgets/widget_customer_notice.dart';
 part 'widgets/widget_drawer.dart';
 part 'widgets/widget_header.dart';
@@ -171,34 +172,65 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                   )
                 : Column(
                     children: [
-                      if (!GsaDataUser.instance.authenticated) const _WidgetBanner(),
+                      if (GsaConfig.authenticationEnabled && !GsaDataUser.instance.authenticated) const _WidgetBanner(),
                       Expanded(
                         child: Stack(
                           children: [
                             ListView(
                               controller: _scrollController,
-                              padding: const EdgeInsets.symmetric(vertical: 26),
+                              padding: EdgeInsets.symmetric(
+                                vertical: GsaTheme.instance.contentPadding.vertical / 2,
+                              ),
                               children: [
-                                if (GsaDataUser.instance.authenticated) const _WidgetProfile(),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
-                                  child: _WidgetPromoCarousel(),
+                                if (GsaDataCheckout.instance.orderDraft.client != null) ...[
+                                  const _WidgetClientPreview(),
+                                  const SizedBox(height: 16),
+                                ],
+                                if (GsaDataUser.instance.authenticated) ...[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                    ),
+                                    child: const _WidgetProfile(),
+                                  ),
+                                  const SizedBox(height: 20),
+                                ],
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                  ),
+                                  child: const _WidgetPromoCarousel(),
                                 ),
                                 GsaWidgetSaleItemCarousel(
                                   GsaDataSaleItems.instance.collection,
                                   label: 'Featured',
-                                  horizontalPadding: 20,
+                                  horizontalPadding: GsaTheme.instance.contentPadding.horizontal / 2,
                                 ),
-                                if (GsaDataSaleItems.instance.categories.isNotEmpty)
-                                  _WidgetCategories(
-                                    GsaDataSaleItems.instance.categories,
-                                    setCategory: (category) {
-                                      _filters.categoryId = category.id;
-                                      _onFiltersUpdated();
-                                    },
+                                const SizedBox(height: 16),
+                                if (GsaDataSaleItems.instance.categories.isNotEmpty) ...[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                    ),
+                                    child: _WidgetCategories(
+                                      GsaDataSaleItems.instance.categories,
+                                      setCategory: (category) {
+                                        _filters.categoryId = category.id;
+                                        _onFiltersUpdated();
+                                      },
+                                    ),
                                   ),
-                                const _WidgetCustomerNotice(),
-                                SizedBox(height: MediaQuery.of(context).padding.bottom + 60),
+                                  const SizedBox(height: 16),
+                                ],
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                  ),
+                                  child: const _WidgetCustomerNotice(),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).padding.bottom + 60,
+                                ),
                               ],
                             ),
                             Positioned(

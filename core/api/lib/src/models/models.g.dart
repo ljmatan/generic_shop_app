@@ -103,7 +103,20 @@ GsaModelClient _$GsaModelClientFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       originId: json['originId'] as String?,
       categoryId: json['categoryId'] as String?,
-      name: json['name'] as String?,
+      personalDetails: json['personalDetails'] == null
+          ? null
+          : GsaModelPerson.fromJson(
+              json['personalDetails'] as Map<String, dynamic>),
+      contactDetails: json['contactDetails'] == null
+          ? null
+          : GsaModelContact.fromJson(
+              json['contactDetails'] as Map<String, dynamic>),
+      deliveryAddresses: (json['deliveryAddresses'] as List<dynamic>?)
+          ?.map((e) => GsaModelAddress.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      invoiceAddresses: (json['invoiceAddresses'] as List<dynamic>?)
+          ?.map((e) => GsaModelAddress.fromJson(e as Map<String, dynamic>))
+          .toList(),
       originData: GsaModelClient._originDataFromJson(json['originData']),
     )
       ..originUrl = json['originUrl'] as String?
@@ -126,7 +139,12 @@ Map<String, dynamic> _$GsaModelClientToJson(GsaModelClient instance) =>
       'consentIds': instance.consentIds,
       'tags': instance.tags,
       'logs': instance.logs,
-      'name': instance.name,
+      'personalDetails': instance.personalDetails?.toJson(),
+      'contactDetails': instance.contactDetails?.toJson(),
+      'deliveryAddresses':
+          instance.deliveryAddresses?.map((e) => e.toJson()).toList(),
+      'invoiceAddresses':
+          instance.invoiceAddresses?.map((e) => e.toJson()).toList(),
       'originData': GsaModelClient._originDataToJson(instance.originData),
     };
 
@@ -137,22 +155,9 @@ GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>
       items: (json['items'] as List<dynamic>)
           .map((e) => GsaModelSaleItem.fromJson(e as Map<String, dynamic>))
           .toList(),
-      personalDetails: json['personalDetails'] == null
+      client: json['client'] == null
           ? null
-          : GsaModelPerson.fromJson(
-              json['personalDetails'] as Map<String, dynamic>),
-      contactDetails: json['contactDetails'] == null
-          ? null
-          : GsaModelContact.fromJson(
-              json['contactDetails'] as Map<String, dynamic>),
-      deliveryAddress: json['deliveryAddress'] == null
-          ? null
-          : GsaModelAddress.fromJson(
-              json['deliveryAddress'] as Map<String, dynamic>),
-      invoiceAddress: json['invoiceAddress'] == null
-          ? null
-          : GsaModelAddress.fromJson(
-              json['invoiceAddress'] as Map<String, dynamic>),
+          : GsaModelClient.fromJson(json['client'] as Map<String, dynamic>),
       deliveryType: json['deliveryType'] == null
           ? null
           : GsaModelSaleItem.fromJson(
@@ -176,6 +181,14 @@ GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
       ..logs =
           (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..deliveryAddress = json['deliveryAddress'] == null
+          ? null
+          : GsaModelAddress.fromJson(
+              json['deliveryAddress'] as Map<String, dynamic>)
+      ..invoiceAddress = json['invoiceAddress'] == null
+          ? null
+          : GsaModelAddress.fromJson(
+              json['invoiceAddress'] as Map<String, dynamic>)
       ..orderProcessor = json['orderProcessor'] == null
           ? null
           : GsaModelMerchant.fromJson(
@@ -192,8 +205,7 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) =>
       'tags': instance.tags,
       'logs': instance.logs,
       'items': instance.items.map((e) => e.toJson()).toList(),
-      'personalDetails': instance.personalDetails?.toJson(),
-      'contactDetails': instance.contactDetails?.toJson(),
+      'client': instance.client?.toJson(),
       'deliveryAddress': instance.deliveryAddress?.toJson(),
       'invoiceAddress': instance.invoiceAddress?.toJson(),
       'deliveryType': instance.deliveryType?.toJson(),

@@ -154,7 +154,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   vertical: 24,
                 ),
                 children: [
-                  Text(
+                  GsaWidgetText(
                     'Device',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
@@ -219,7 +219,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  Text(
+                  GsaWidgetText(
                     'Client',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
@@ -300,14 +300,14 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  Text(
+                  GsaWidgetText(
                     'Options',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Divider(height: 20),
                   GsaWidgetSwitch(
                     value: GsaConfig.cartEnabled,
-                    child: Text('Checkout'),
+                    child: GsaWidgetText('Checkout'),
                     onTap: (value) {
                       setState(() => GsaConfig.cartEnabled = value);
                     },
@@ -315,7 +315,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   const Divider(height: 20),
                   GsaWidgetSwitch(
                     value: GsaConfig.registrationEnabled,
-                    child: Text('Registration'),
+                    child: GsaWidgetText('Registration'),
                     onTap: (value) {
                       setState(() => GsaConfig.registrationEnabled = value);
                     },
@@ -323,13 +323,13 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   const Divider(height: 20),
                   GsaWidgetSwitch(
                     value: GsaConfig.guestLoginEnabled,
-                    child: Text('Guest Login'),
+                    child: GsaWidgetText('Guest Login'),
                     onTap: (value) {
                       setState(() => GsaConfig.guestLoginEnabled = value);
                     },
                   ),
                   const SizedBox(height: 20),
-                  Text(
+                  GsaWidgetText(
                     'Theme',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
@@ -363,7 +363,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   const SizedBox(height: 16),
                   GsaWidgetSwitch(
                     value: _darkTheme,
-                    child: Text('Dark Theme'),
+                    child: GsaWidgetText('Dark Theme'),
                     onTap: (value) {
                       setState(() => _darkTheme = value);
                     },
@@ -380,7 +380,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       child: GsaWidgetTextField(
                         labelText: colorInput.label,
                         enabled: false,
-                        prefix: Text(
+                        prefix: GsaWidgetText(
                           '#',
                         ),
                         suffixIcon: Icon(
@@ -392,7 +392,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         final result = await showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: Text(
+                            title: GsaWidgetText(
                               colorInput.label,
                             ),
                             content: SingleChildScrollView(
@@ -405,7 +405,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                             ),
                             actions: <Widget>[
                               ElevatedButton(
-                                child: const Text('CONFIRM'),
+                                child: const GsaWidgetText('CONFIRM'),
                                 onPressed: () => Navigator.pop(
                                   context,
                                   colorInput.color,
@@ -423,7 +423,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     ),
                   ],
                   const SizedBox(height: 20),
-                  Text(
+                  GsaWidgetText(
                     'Data',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
@@ -433,7 +433,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: OutlinedButton(
-                        child: Text(
+                        child: GsaWidgetText(
                           'INIT ${provider.name.toUpperCase()}',
                         ),
                         onPressed: () async {

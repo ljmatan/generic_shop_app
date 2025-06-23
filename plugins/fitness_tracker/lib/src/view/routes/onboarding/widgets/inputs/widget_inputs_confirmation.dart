@@ -28,7 +28,7 @@ class _WidgetInputsConfirmationState extends State<_WidgetInputsConfirmation> {
               vertical: 24,
             ),
             children: [
-              Text(
+              GsaWidgetText(
                 'Below is the information you\'ve provided during the setup. '
                 'We use this to generate your initial plan.',
               ),
@@ -82,14 +82,14 @@ class _WidgetInputsConfirmationState extends State<_WidgetInputsConfirmation> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Text(
+                                child: GsaWidgetText(
                                   input.$2.label,
                                   style: TextStyle(
                                     fontSize: 12,
                                   ),
                                 ),
                               ),
-                              Text(
+                              GsaWidgetText(
                                 'EDIT',
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
@@ -105,7 +105,7 @@ class _WidgetInputsConfirmationState extends State<_WidgetInputsConfirmation> {
                         const SizedBox(height: 12),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(14, 0, 14, 10),
-                          child: Text(
+                          child: GsaWidgetText(
                             input.$2.data.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
@@ -119,7 +119,7 @@ class _WidgetInputsConfirmationState extends State<_WidgetInputsConfirmation> {
                 const SizedBox(height: 8),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: Text(
+                  child: GsaWidgetText(
                     input.$2.description,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),

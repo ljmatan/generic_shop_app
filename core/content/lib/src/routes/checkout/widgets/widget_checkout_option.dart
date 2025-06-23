@@ -57,45 +57,18 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
       _countryTextController;
 
   final _existingPersonalDetails = GsaDataCheckout.instance.orderDraft.deliveryAddress?.personalDetails ??
-      GsaDataCheckout.instance.orderDraft.personalDetails ??
+      GsaDataCheckout.instance.orderDraft.client?.personalDetails ??
       GsaDataCheckout.instance.orderDraft.invoiceAddress?.personalDetails ??
-      GsaDataUser.instance.user?.personalDetails ??
-      (kDebugMode
-          ? GsaModelPerson(
-              id: null,
-              firstName: 'First',
-              lastName: 'Last',
-            )
-          : null);
+      GsaDataUser.instance.user?.personalDetails;
 
   final _existingContactDetails = GsaDataCheckout.instance.orderDraft.deliveryAddress?.contactDetails ??
-      GsaDataCheckout.instance.orderDraft.contactDetails ??
+      GsaDataCheckout.instance.orderDraft.client?.contactDetails ??
       GsaDataCheckout.instance.orderDraft.invoiceAddress?.contactDetails ??
-      GsaDataUser.instance.user?.contact ??
-      (kDebugMode
-          ? GsaModelContact(
-              id: null,
-              email: 'example@email.com',
-              phoneCountryCode: '1',
-              phoneNumber: '12345678',
-            )
-          : null);
+      GsaDataUser.instance.user?.contact;
 
   final _existingAddressDetails = GsaDataCheckout.instance.orderDraft.deliveryAddress ??
       GsaDataCheckout.instance.orderDraft.invoiceAddress ??
-      GsaDataUser.instance.user?.address ??
-      (kDebugMode
-          ? GsaModelAddress(
-              id: null,
-              streetName: 'Example Street Name',
-              houseNumber: '42A',
-              zipCode: '10000',
-              city: 'Example City',
-              country: 'Example Country',
-              latitude: null,
-              longitude: null,
-            )
-          : null);
+      GsaDataUser.instance.user?.address;
 
   @override
   void initState() {
@@ -113,17 +86,39 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
         GsaDataCheckout.instance.orderDraft.paymentType = _selectedOption;
       }
     }
-    _firstNameTextController = TextEditingController(text: _existingPersonalDetails?.firstName);
-    _lastNameTextController = TextEditingController(text: _existingPersonalDetails?.lastName);
-    _phonePrefixTextController = TextEditingController(text: _existingContactDetails?.phoneCountryCode ?? '1');
-    _phoneNumberTextController = TextEditingController(text: _existingContactDetails?.phoneNumber);
-    _emailTextController = TextEditingController(text: _existingContactDetails?.email);
-    _streetNameTextController = TextEditingController(text: _existingAddressDetails?.streetName);
-    _houseNumberTextController = TextEditingController(text: _existingAddressDetails?.houseNumber);
-    _postcodeTextController = TextEditingController(text: _existingAddressDetails?.zipCode);
-    _cityTextController = TextEditingController(text: _existingAddressDetails?.city);
-    _stateTextController = TextEditingController(text: _existingAddressDetails?.state);
-    _countryTextController = TextEditingController(text: _existingAddressDetails?.country);
+    _firstNameTextController = TextEditingController(
+      text: _existingPersonalDetails?.firstName,
+    );
+    _lastNameTextController = TextEditingController(
+      text: _existingPersonalDetails?.lastName,
+    );
+    _phonePrefixTextController = TextEditingController(
+      text: _existingContactDetails?.phoneCountryCode ?? '1',
+    );
+    _phoneNumberTextController = TextEditingController(
+      text: _existingContactDetails?.phoneNumber,
+    );
+    _emailTextController = TextEditingController(
+      text: _existingContactDetails?.email,
+    );
+    _streetNameTextController = TextEditingController(
+      text: _existingAddressDetails?.streetName,
+    );
+    _houseNumberTextController = TextEditingController(
+      text: _existingAddressDetails?.houseNumber,
+    );
+    _postcodeTextController = TextEditingController(
+      text: _existingAddressDetails?.zipCode,
+    );
+    _cityTextController = TextEditingController(
+      text: _existingAddressDetails?.city,
+    );
+    _stateTextController = TextEditingController(
+      text: _existingAddressDetails?.state,
+    );
+    _countryTextController = TextEditingController(
+      text: _existingAddressDetails?.country,
+    );
   }
 
   final _scrollController = ScrollController();
@@ -292,15 +287,14 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                             setPrefix: (value) => _phonePrefixTextController.text = value,
                             phoneNumberController: _phoneNumberTextController,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20, bottom: 12),
-                            child: GsaWidgetText(
-                              'Address',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                              ),
+                          const SizedBox(height: 20),
+                          const GsaWidgetText(
+                            'Address',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
+                          const SizedBox(height: 12),
                           const GsaWidgetText(
                             'Your delivery data is essential for completing the checkout process and will be shared '
                             'with the vendor and the courier for the purposes of order fulfillment.',

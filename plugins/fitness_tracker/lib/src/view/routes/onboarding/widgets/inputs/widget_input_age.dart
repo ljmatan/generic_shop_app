@@ -39,13 +39,13 @@ class _WidgetInputAgeState extends State<_WidgetInputAge> {
               vertical: 24,
             ),
             children: [
-              Text(
+              GsaWidgetText(
                 'Your age plays a key role in determining your body\'s needs. '
                 'It affects metabolism, recovery rate, and the type of guidance '
                 'that works best for your fitness level.',
               ),
               const SizedBox(height: 16),
-              Text(
+              GsaWidgetText(
                 'Select your birth year from the menu below.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -76,7 +76,7 @@ class _WidgetInputAgeState extends State<_WidgetInputAge> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            GsaWidgetText(
                               '$year',
                               style: TextStyle(
                                 color: widget.trainee.birthYear == year ? Theme.of(context).primaryColor : null,
@@ -85,7 +85,7 @@ class _WidgetInputAgeState extends State<_WidgetInputAge> {
                             ),
                             if (widget.trainee.birthYear == year) ...[
                               const SizedBox(width: 8),
-                              Text(
+                              GsaWidgetText(
                                 '${widget.trainee.ageYears} years old',
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
@@ -123,12 +123,12 @@ class _WidgetInputAgeState extends State<_WidgetInputAge> {
                 ),
               }.indexed) ...[
                 if (infoPoint.$1 != 0) const SizedBox(height: 16),
-                Text(
+                GsaWidgetText(
                   infoPoint.$2.title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const Divider(),
-                Text(
+                GsaWidgetText(
                   infoPoint.$2.description,
                 ),
               ],

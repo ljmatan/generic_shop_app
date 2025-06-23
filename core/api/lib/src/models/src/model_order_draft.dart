@@ -9,10 +9,7 @@ class GsaModelOrderDraft extends _Model {
     super.id,
     super.originId,
     required this.items,
-    this.personalDetails,
-    this.contactDetails,
-    this.deliveryAddress,
-    this.invoiceAddress,
+    this.client,
     this.deliveryType,
     this.paymentType,
     this.couponCode,
@@ -23,13 +20,9 @@ class GsaModelOrderDraft extends _Model {
   ///
   List<GsaModelSaleItem> items;
 
-  /// User personal details.
+  /// Client specified for this checkout order.
   ///
-  GsaModelPerson? personalDetails;
-
-  /// User contact details.
-  ///
-  GsaModelContact? contactDetails;
+  GsaModelClient? client;
 
   /// Delivery and invoice addresses specified for the order.
   ///
@@ -71,10 +64,7 @@ class GsaModelOrderDraft extends _Model {
   ///
   void clear() {
     items.clear();
-    personalDetails = null;
-    contactDetails = null;
-    deliveryAddress = null;
-    invoiceAddress = null;
+    client = null;
     deliveryType = null;
     paymentType = null;
     couponCode = null;
@@ -97,10 +87,7 @@ class GsaModelOrderDraft extends _Model {
       id: _Model._generateRandomString(8),
       originId: _Model._generateRandomString(8),
       items: [],
-      personalDetails: GsaModelPerson.mock(),
-      contactDetails: GsaModelContact.mock(),
-      deliveryAddress: GsaModelAddress.mock(),
-      invoiceAddress: GsaModelAddress.mock(),
+      client: GsaModelClient.mock(),
       deliveryType: GsaModelSaleItem.mock(),
       couponCode: _Model._generateRandomString(8),
       paymentType: GsaModelSaleItem.mock(),

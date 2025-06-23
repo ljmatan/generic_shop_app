@@ -9,13 +9,24 @@ class GsaModelClient extends _Model {
     super.id,
     super.originId,
     super.categoryId,
-    required this.name,
+    required this.personalDetails,
+    required this.contactDetails,
+    required this.deliveryAddresses,
+    required this.invoiceAddresses,
     this.originData,
   });
 
-  /// Display name for the given client.
+  /// Personal details.
   ///
-  String? name;
+  GsaModelPerson? personalDetails;
+
+  /// Contact details.
+  ///
+  GsaModelContact? contactDetails;
+
+  /// Delivery and invoice addresses available with this client.
+  ///
+  List<GsaModelAddress>? deliveryAddresses, invoiceAddresses;
 
   /// Method user by plugin implementations to serialise data from JSON.
   ///
@@ -65,7 +76,14 @@ class GsaModelClient extends _Model {
   // ignore: public_member_api_docs
   factory GsaModelClient.mock() {
     return GsaModelClient(
-      name: _Model._generateRandomString(10),
+      personalDetails: GsaModelPerson.mock(),
+      contactDetails: GsaModelContact.mock(),
+      deliveryAddresses: [
+        for (int i = 0; i < 2; i++) GsaModelAddress.mock(),
+      ],
+      invoiceAddresses: [
+        GsaModelAddress.mock(),
+      ],
     );
   }
 }

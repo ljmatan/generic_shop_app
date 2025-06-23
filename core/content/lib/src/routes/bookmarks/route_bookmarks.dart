@@ -64,7 +64,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                 ),
                 const Divider(height: 32),
                 if (GsaServiceBookmarks.instance.bookmarks.isEmpty)
-                  const Text(
+                  const GsaWidgetText(
                     'No items found.',
                     style: TextStyle(
                       color: Colors.grey,
@@ -120,7 +120,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                                               if (item.name != null)
                                                 Padding(
                                                   padding: const EdgeInsets.only(bottom: 4),
-                                                  child: Text(
+                                                  child: GsaWidgetText(
                                                     item.name!,
                                                     style: const TextStyle(
                                                       fontSize: 15,
@@ -143,7 +143,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                                                         (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
                                                       );
                                                       if (sortedOptions.isEmpty) return const SizedBox();
-                                                      return Text(
+                                                      return GsaWidgetText(
                                                         'Sizes: ' +
                                                             (sortedOptions.length > 1
                                                                 ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'

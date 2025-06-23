@@ -198,7 +198,7 @@ class _WidgetTextDisplay extends StatelessWidget {
             maxLines: maxLines,
             overflow: overflow ?? TextOverflow.ellipsis,
           )
-        : Text(
+        : GsaWidgetText(
             translatedText?.isNotEmpty == true ? translatedText![0] : label.translated(context),
             style: style,
             textAlign: textAlign ?? TextAlign.start,

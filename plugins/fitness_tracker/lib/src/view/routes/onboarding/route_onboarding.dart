@@ -104,7 +104,7 @@ class _GftRouteOnboardingState extends GsaRouteState<GftRouteOnboarding> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: FilledButton(
-                        child: Text(
+                        child: GsaWidgetText(
                           switch (value) {
                             0 || 1 || 2 || 3 || 4 => 'Next Step',
                             5 => 'Finish',
