@@ -62,7 +62,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                           children: [
                             IconButton.filled(
                               icon: Icon(
-                                Icons.menu,
+                                Navigator.of(context).canPop() ? Icons.chevron_left : Icons.menu,
                                 color: Theme.of(context).primaryColor,
                               ),
                               style: const ButtonStyle(
@@ -70,7 +70,13 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                   Colors.white,
                                 ),
                               ),
-                              onPressed: () => _openDrawer(),
+                              onPressed: Navigator.of(context).canPop()
+                                  ? () {
+                                      Navigator.pop(context);
+                                    }
+                                  : () {
+                                      _openDrawer();
+                                    },
                             ),
                             IconButton.filled(
                               icon: Icon(

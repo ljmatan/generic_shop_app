@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// Base class for implementation of overlaying (e.g., dialog) widgets.
 ///
@@ -18,7 +19,13 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
 
   /// This property is used to specify the color of the modal barrier.
   ///
-  Color get barrierColor => Colors.transparent;
+  Color get barrierColor {
+    if (GsaTheme.instance.data.brightness == Brightness.light) {
+      return Colors.white70;
+    } else {
+      return Colors.black26;
+    }
+  }
 
   /// Defines whether this overlay is dismissible by the user.
   ///

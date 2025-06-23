@@ -162,7 +162,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                         }
                         if (searchResponse.hasError || searchResponse.data?.isNotEmpty != true) {
                           return GsaWidgetError(
-                            searchResponse.hasError ? searchResponse.error.toString() : 'No results found.'.translated(context),
+                            searchResponse.hasError ? searchResponse.error.toString() : 'No results found.',
                           );
                         }
                         return _WidgetSearchResults(searchResponse.data!);
@@ -223,7 +223,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
           ),
         ],
       ),
-      drawer: MediaQuery.of(context).size.width < 1000 ? const _WidgetDrawer() : null,
+      drawer: !Navigator.of(context).canPop() && MediaQuery.of(context).size.width >= 1000 ? const _WidgetDrawer() : null,
     );
   }
 

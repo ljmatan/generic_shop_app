@@ -76,9 +76,23 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
 }
 
 class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
+  Key _key = UniqueKey();
+
   late TextEditingController _textController;
 
+  void _onTextControllerUpdate() {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        setState(() {
+          _key = UniqueKey();
+        });
+      },
+    );
+  }
+
   late FocusNode _focusNode;
+
+  late T? _initialSelection;
 
   @override
   void initState() {
@@ -94,11 +108,13 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
               : null,
         );
     _focusNode = widget.focusNode ?? FocusNode();
+    _initialSelection = widget.initialSelection;
   }
 
   @override
   Widget build(BuildContext context) {
     return DropdownMenuFormField<T>(
+      key: _key,
       dropdownMenuEntries: widget.dropdownMenuEntries,
       enableFilter: widget.enableFilter,
       enableSearch: widget.enableSearch,
@@ -108,7 +124,7 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
       label: widget.labelText == null ? null : Text(widget.labelText!),
       hintText: widget.hintText,
       width: widget.width,
-      initialSelection: widget.initialSelection,
+      initialSelection: _initialSelection,
       textStyle: GsaWidgetTextField.themeProperties.textStyle(),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       menuStyle: Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(
@@ -155,17 +171,19 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
       onSaved: (value) {
         if (value is String) {
           _textController.text = value;
+          _initialSelection = value;
+          _onTextControllerUpdate();
         }
-        setState(() {});
       },
       onSelected: (value) {
         if (value is String) {
           _textController.text = value;
+          _initialSelection = value;
+          _onTextControllerUpdate();
         }
         if (widget.onSelected != null) {
           widget.onSelected!(value);
         }
-        setState(() {});
       },
       textInputAction: TextInputAction.done,
       validator: widget.validator != null
