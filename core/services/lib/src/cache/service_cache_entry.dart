@@ -50,7 +50,11 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
 
   /// Bookmarked sale item identifiers.
   ///
-  bookmarks;
+  bookmarks,
+
+  /// Collection of search terms recorded to the device memory.
+  ///
+  shopSearchHistory;
 
   @override
   String get cacheId {
@@ -80,6 +84,8 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
       case GsaServiceCacheEntry.cookieConsentMarketing:
         return bool;
       case GsaServiceCacheEntry.bookmarks:
+        return List<String>;
+      case GsaServiceCacheEntry.shopSearchHistory:
         return List<String>;
     }
   }
@@ -116,15 +122,17 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
       case GsaServiceCacheEntry.guestUserEncodedData:
         return 'Guest User Encoded Data';
       case GsaServiceCacheEntry.cookieConsentMandatory:
-        return 'Mandatory cookies';
+        return 'Mandatory Cookies';
       case GsaServiceCacheEntry.cookieConsentFunctional:
-        return 'Functional cookies';
+        return 'Functional Cookies';
       case GsaServiceCacheEntry.cookieConsentStatistical:
-        return 'Statistical cookies';
+        return 'Statistical Cookies';
       case GsaServiceCacheEntry.cookieConsentMarketing:
-        return 'Marketing cookies';
+        return 'Marketing Cookies';
       case GsaServiceCacheEntry.bookmarks:
         return 'Bookmarks';
+      case GsaServiceCacheEntry.shopSearchHistory:
+        return 'Shop Search History';
     }
   }
 }

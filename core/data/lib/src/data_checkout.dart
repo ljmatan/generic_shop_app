@@ -119,13 +119,11 @@ class GsaDataCheckout extends GsaData {
     if (productItemCount == null) {
       // This item hasn't been previously added to the cart.
       orderDraft.items.add(saleItem..cartCount = 1);
-    } else if (productItemCount < 100000) {
+    } else {
       // This product has already been added to the cart in amount less than 100.
       final cartItemIndex = orderDraft.items.indexWhere((item) => item.id == saleItem.id);
       saleItem.cartCount = saleItem.cartCount! + 1;
       orderDraft.items[cartItemIndex] = saleItem;
-    } else {
-      throw 'Error.';
     }
     notifierCartUpdate.value = totalItemCount;
     notifyListeners();

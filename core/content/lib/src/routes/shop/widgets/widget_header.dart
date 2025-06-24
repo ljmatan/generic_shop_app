@@ -132,18 +132,17 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 14),
-                      child: GsaWidgetTextField(
-                        controller: widget.searchTermController,
-                        focusNode: widget.searchTermFocusNode,
-                        hintText: 'Search'.translated(context),
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                    const SizedBox(height: 10),
+                    GsaWidgetTextField(
+                      controller: widget.searchTermController,
+                      focusNode: widget.searchTermFocusNode,
+                      hintText: 'Search'.translated(context),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
+                    const SizedBox(height: 14),
                   ]
                 : [
                     SizedBox(

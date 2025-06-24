@@ -35,6 +35,7 @@ class GsaWidgetImage extends StatefulWidget {
     this.colorFilter,
     this.shadows,
     this.fit = BoxFit.contain,
+    this.alignment = Alignment.center,
   })  : networkImage = false,
         inputString = null,
         bytes = const [];
@@ -49,6 +50,7 @@ class GsaWidgetImage extends StatefulWidget {
     this.colorFilter,
     this.shadows,
     this.fit = BoxFit.contain,
+    this.alignment = Alignment.center,
   })  : type = GsaWidgetImageByteType.standard,
         networkImage = true,
         inputString = null,
@@ -69,6 +71,7 @@ class GsaWidgetImage extends StatefulWidget {
     this.colorFilter,
     this.shadows,
     this.fit = BoxFit.contain,
+    this.alignment = Alignment.center,
   })  : path = '',
         networkImage = false;
 
@@ -85,6 +88,7 @@ class GsaWidgetImage extends StatefulWidget {
     this.colorFilter,
     this.shadows,
     this.fit = BoxFit.contain,
+    this.alignment = Alignment.center,
   })  : type = GsaWidgetImageByteType.svg,
         path = '',
         networkImage = false;
@@ -103,6 +107,7 @@ class GsaWidgetImage extends StatefulWidget {
     this.colorFilter,
     this.shadows,
     this.fit = BoxFit.contain,
+    this.alignment = Alignment.center,
   })  : path = _placeholderAssetPath,
         networkImage = false;
 
@@ -135,7 +140,13 @@ class GsaWidgetImage extends StatefulWidget {
   final List<BoxShadow>? shadows;
 
   /// Defines how the image fits into the given render box space.
+  ///
   final BoxFit fit;
+
+  /// The alignment aligns the given position in the image to the
+  /// given position in the layout bounds.
+  ///
+  final AlignmentGeometry alignment;
 
   /// Defines whether the image is a network image.
   ///
@@ -155,6 +166,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                 height: widget.height,
                 color: widget.colorFilter,
                 fit: widget.fit,
+                alignment: widget.alignment,
               )
             : SvgPicture.string(
                 widget.inputString!,
@@ -167,6 +179,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                         BlendMode.srcIn,
                       ),
                 fit: widget.fit,
+                alignment: widget.alignment,
               )
         : widget.bytes.isNotEmpty == true
             ? widget.type == GsaWidgetImageByteType.standard
@@ -176,6 +189,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                     height: widget.height,
                     color: widget.colorFilter,
                     fit: widget.fit,
+                    alignment: widget.alignment,
                   )
                 : SvgPicture.memory(
                     Uint8List.fromList(widget.bytes),
@@ -188,6 +202,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                             BlendMode.srcIn,
                           ),
                     fit: widget.fit,
+                    alignment: widget.alignment,
                   )
             : widget.path.endsWith('.svg')
                 ? widget.networkImage == true
@@ -202,6 +217,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                                 BlendMode.srcIn,
                               ),
                         fit: widget.fit,
+                        alignment: widget.alignment,
                       )
                     : widget.path == GsaWidgetImage._placeholderAssetPath
                         ? SizedBox(
@@ -226,6 +242,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                                     BlendMode.srcIn,
                                   ),
                             fit: widget.fit,
+                            alignment: widget.alignment,
                           )
                 : widget.networkImage == true
                     ? Image.network(
@@ -234,6 +251,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                         height: widget.height,
                         color: widget.colorFilter,
                         fit: widget.fit,
+                        alignment: widget.alignment,
                       )
                     : Image.asset(
                         widget.path,
@@ -241,6 +259,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                         height: widget.height,
                         color: widget.colorFilter,
                         fit: widget.fit,
+                        alignment: widget.alignment,
                       );
   }
 

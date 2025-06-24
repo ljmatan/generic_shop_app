@@ -5,7 +5,7 @@ import 'package:generic_shop_app_ivancica/giv.dart';
 
 export 'package:generic_shop_app_architecture/gsar.dart';
 
-export 'product_details/route_product_details.dart';
+export 'sale_item_details/route_sale_item_details.dart';
 export 'user_profile/route_user_profile.dart';
 
 /// Collection of Route objects implemented by the "Generic Shop App" project.
@@ -20,7 +20,7 @@ enum GivRoutes implements GsaRouteType {
       case GivRoutes.productDetails:
         return ([args]) {
           if (args is GsaModelSaleItem) {
-            return GivRouteSaleItemDetails(args);
+            return GivRouteSaleItemDetails();
           } else {
             throw Exception(
               'Provided type ${args.runtimeType} is not of type GsaModelSaleItem.',

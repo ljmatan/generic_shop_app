@@ -21,10 +21,11 @@ class _WidgetProfile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const GsaWidgetText(
+                      GsaWidgetText(
                         'Review Your Profile',
                         style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                       const SizedBox(height: 5),

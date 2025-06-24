@@ -256,11 +256,13 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                   ),
                           ),
                           onPressed: () async {
-                            if (widget.saleItem.price != null) {
-                              GsaDataCheckout.instance.addItem(widget.saleItem);
-                              GsaWidgetOverlaySaleItem(widget.saleItem).openBottomSheet(context);
+                            if (GsaConfig.plugin.addToCart != null) {
+                              await GsaConfig.plugin.addToCart!(
+                                context,
+                                item: widget.saleItem,
+                              );
                             } else {
-                              GsaRouteSaleItemDetails(widget.saleItem).push();
+                              debugPrint('GsaConfig.plugin.addToCart not defined.');
                             }
                           },
                         ),

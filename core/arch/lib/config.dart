@@ -49,7 +49,8 @@ class GsaConfig {
   ///
   /// A client may opt-in simply for catalog and favourite / bookmark display, for example.
   ///
-  /// To disable the cart feature, a value equaling `false` must be provided during the compile time:
+  /// To disable the cart feature,
+  /// a value equaling `false` must be provided during the compile time:
   ///
   /// ```dart
   /// flutter run --dart-define gsaCartEnabled=false
@@ -58,6 +59,19 @@ class GsaConfig {
   /// The value can alternatively be adjusted during the application runtime.
   ///
   static bool cartEnabled = const String.fromEnvironment('gsaCartEnabled').toLowerCase() != 'false';
+
+  /// Whether bookmark options are enabled.
+  ///
+  /// To disable the bookmark feature,
+  /// a value equaling `false` must be provided during the compile time:
+  ///
+  /// ```dart
+  /// flutter run --dart-define gsaBookmarksEnabled=false
+  /// ```
+  ///
+  /// The value can alternatively be adjusted during the application runtime.
+  ///
+  static bool bookmarksEnabled = const String.fromEnvironment('gsaBookmarksEnabled').toLowerCase() != 'false';
 
   /// Property defining whether authentication options are available with an app project.
   ///
@@ -241,6 +255,15 @@ abstract class GsaPlugin {
   /// Method used for validating password input on the user authentication screens.
   ///
   String? Function(String?)? get passwordValidator {
+    return null;
+  }
+
+  /// Used for product purchase intent registration.
+  ///
+  Future<void> Function(
+    BuildContext context, {
+    required GsaModelSaleItem item,
+  })? get addToCart {
     return null;
   }
 

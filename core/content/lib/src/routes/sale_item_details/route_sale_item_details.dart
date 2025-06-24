@@ -7,14 +7,20 @@ import 'package:generic_shop_app_api/api.dart';
 class GsaRouteSaleItemDetails extends GsacRoute {
   /// Default, unnamed widget constructor.
   ///
-  const GsaRouteSaleItemDetails(
+  GsaRouteSaleItemDetails(
     this.saleItem, {
     super.key,
-  });
+  }) {
+    GsaRouteSaleItemDetails.selectedSaleItem = saleItem;
+  }
 
   /// Sale item visually represented by this route.
   ///
   final GsaModelSaleItem? saleItem;
+
+  /// Sale item information propagated via static property.
+  ///
+  static GsaModelSaleItem? selectedSaleItem;
 
   @override
   State<GsaRouteSaleItemDetails> createState() => _GsaRouteSaleItemDetailsState();

@@ -8,6 +8,7 @@ import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 part 'widgets/widget_banner.dart';
+part 'widgets/widget_bookmarks.dart';
 part 'widgets/widget_categories.dart';
 part 'widgets/widget_client_preview.dart';
 part 'widgets/widget_customer_notice.dart';
@@ -139,9 +140,12 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
     });
   }
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget view(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Column(
         children: [
           _WidgetHeader(
@@ -175,81 +179,77 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                     children: [
                       if (GsaConfig.authenticationEnabled && !GsaDataUser.instance.authenticated) const _WidgetBanner(),
                       Expanded(
-                        child: Stack(
+                        child: ListView(
+                          controller: _scrollController,
+                          padding: EdgeInsets.symmetric(
+                            vertical: GsaTheme.instance.contentPadding.vertical / 2,
+                          ),
                           children: [
-                            ListView(
-                              controller: _scrollController,
+                            if (<GsaClient>{
+                                  GsaClient.froddoB2b,
+                                }.contains(GsaConfig.plugin.client) &&
+                                GsaDataCheckout.instance.orderDraft.client != null) ...[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                ),
+                                child: _WidgetClientPreview(),
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                            if (GsaDataUser.instance.authenticated) ...[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                ),
+                                child: const _WidgetProfile(),
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                            if (GsaConfig.bookmarksEnabled) ...[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                ),
+                                child: const _WidgetBookmarks(),
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                            Padding(
                               padding: EdgeInsets.symmetric(
-                                vertical: GsaTheme.instance.contentPadding.vertical / 2,
+                                horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
                               ),
-                              children: [
-                                if (<GsaClient>{
-                                      GsaClient.froddoB2b,
-                                    }.contains(GsaConfig.plugin.client) &&
-                                    GsaDataCheckout.instance.orderDraft.client != null) ...[
-                                  _WidgetClientPreview(),
-                                  const SizedBox(height: 16),
-                                ],
-                                if (GsaDataUser.instance.authenticated) ...[
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
-                                    ),
-                                    child: const _WidgetProfile(),
-                                  ),
-                                  const SizedBox(height: 20),
-                                ],
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
-                                  ),
-                                  child: const _WidgetPromoCarousel(),
-                                ),
-                                GsaWidgetSaleItemCarousel(
-                                  GsaDataSaleItems.instance.collection,
-                                  label: 'Featured',
-                                  horizontalPadding: GsaTheme.instance.contentPadding.horizontal / 2,
-                                ),
-                                const SizedBox(height: 16),
-                                if (GsaDataSaleItems.instance.categories.isNotEmpty) ...[
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
-                                    ),
-                                    child: _WidgetCategories(
-                                      GsaDataSaleItems.instance.categories,
-                                      setCategory: (category) {
-                                        _filters.categoryId = category.id;
-                                        _onFiltersUpdated();
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                ],
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
-                                  ),
-                                  child: const _WidgetCustomerNotice(),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).padding.bottom + 60,
-                                ),
-                              ],
+                              child: const _WidgetPromoCarousel(),
                             ),
-                            Positioned(
-                              right: 12,
-                              bottom: MediaQuery.of(context).padding.bottom + 12,
-                              child: FloatingActionButton(
-                                heroTag: null,
-                                child: const Icon(
-                                  Icons.chat,
-                                  color: Colors.white,
+                            GsaWidgetSaleItemCarousel(
+                              GsaDataSaleItems.instance.collection,
+                              label: 'Featured',
+                              horizontalPadding: GsaTheme.instance.contentPadding.horizontal / 2,
+                            ),
+                            const SizedBox(height: 16),
+                            if (GsaDataSaleItems.instance.categories.isNotEmpty) ...[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
                                 ),
-                                onPressed: () {
-                                  Navigator.of(context).pushNamed('contact');
-                                },
+                                child: _WidgetCategories(
+                                  GsaDataSaleItems.instance.categories,
+                                  setCategory: (category) {
+                                    _filters.categoryId = category.id;
+                                    _onFiltersUpdated();
+                                  },
+                                ),
                               ),
+                              const SizedBox(height: 16),
+                            ],
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                              ),
+                              child: const _WidgetCustomerNotice(),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).padding.bottom + 100,
                             ),
                           ],
                         ),
@@ -259,7 +259,35 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
           ),
         ],
       ),
-      drawer: !Navigator.of(context).canPop() && MediaQuery.of(context).size.width >= 1000 ? const _WidgetDrawer() : null,
+      floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            heroTag: null,
+            child: const Icon(
+              Icons.chat,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed('contact');
+            },
+          ),
+          if (Navigator.of(context).canPop()) ...[
+            const SizedBox(height: 10),
+            FloatingActionButton(
+              child: const Icon(Icons.apps),
+              heroTag: null,
+              onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
+            ),
+          ],
+        ],
+      ),
+      drawerEnableOpenDragGesture: false,
+      drawer: const _WidgetDrawer(),
+      endDrawer: const _WidgetDrawer(),
     );
   }
 

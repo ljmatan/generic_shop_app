@@ -122,32 +122,43 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
               ],
             ),
           ),
-        FutureBuilder(
-          future: Future(() {}),
-          builder: (context, snapshot) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: AnimatedSize(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease,
-                child: snapshot.connectionState != ConnectionState.done || snapshot.hasError
-                    ? const SizedBox()
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const GsaWidgetHeadline('Search History'),
-                          if (snapshot.data is! Iterable || snapshot.data?.isNotEmpty != true)
-                            const GsaWidgetText(
-                              'No search history',
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
-                            ),
-                        ],
-                      ),
-              ),
-            );
-          },
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+          child: AnimatedSize(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.ease,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const GsaWidgetHeadline('Search History'),
+                if ((GsaServiceCacheEntry.shopSearchHistory.value as Iterable?)?.isNotEmpty != true)
+                  const GsaWidgetText(
+                    'No search history',
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  )
+                else
+                  for (final searchHistoryEntry in (GsaServiceCacheEntry.shopSearchHistory.value as Iterable).indexed) ...[
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GsaWidgetText(
+                            searchHistoryEntry.$2,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            // TODO
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+              ],
+            ),
+          ),
         ),
       ],
     );

@@ -86,20 +86,29 @@ class _RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                      child: GsaWidgetText(
-                        httpInformation.value,
-                        style: const TextStyle(
-                          fontSize: 12,
+                  InkWell(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                        child: GsaWidgetText(
+                          httpInformation.value,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ),
+                    onDoubleTap: () async {
+                      await Clipboard.setData(
+                        ClipboardData(
+                          text: httpInformation.value,
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(height: 16),
                 ],

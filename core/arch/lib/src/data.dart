@@ -29,7 +29,9 @@ abstract class GsaData {
   ///
   /// The method will return a unique [String] identifier for the newly-added listener.
   ///
-  String addListener(VoidCallback value) {
+  String addListener(
+    VoidCallback value,
+  ) {
     /// Generates a random, unsecured [String] value to serve as a listener identifier.
     ///
     String generateRandomString(int length) {
@@ -46,7 +48,11 @@ abstract class GsaData {
     String id = generateRandomString(10);
     do {
       id = generateRandomString(10);
-    } while (_listeners.where((listener) => listener.$1 == id).isNotEmpty);
+    } while (_listeners.where(
+      (listener) {
+        return listener.$1 == id;
+      },
+    ).isNotEmpty);
     _listeners.add((id, value));
     return id;
   }

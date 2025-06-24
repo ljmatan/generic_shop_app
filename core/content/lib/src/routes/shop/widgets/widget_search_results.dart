@@ -126,9 +126,15 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
                               ),
                             ],
                           ),
-                          onPressed: () {
-                            GsaDataCheckout.instance.addItem(saleItem);
-                            GsaWidgetOverlaySaleItem(saleItem).openBottomSheet(context);
+                          onPressed: () async {
+                            if (GsaConfig.plugin.addToCart != null) {
+                              await GsaConfig.plugin.addToCart!(
+                                context,
+                                item: saleItem,
+                              );
+                            } else {
+                              debugPrint('GsaConfig.plugin.addToCart not defined.');
+                            }
                           },
                         ),
                       ),

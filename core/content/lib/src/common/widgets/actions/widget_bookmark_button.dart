@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/api.dart';
+import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// A button providing bookmarking / favorite functionalities.
@@ -53,6 +54,7 @@ class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
 
   @override
   Widget build(BuildContext context) {
+    if (!GsaConfig.bookmarksEnabled) return const SizedBox();
     if (widget.saleItem.id == null) return const SizedBox();
     return widget.child == null
         ? IconButton(
