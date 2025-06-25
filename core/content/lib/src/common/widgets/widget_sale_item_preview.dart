@@ -27,21 +27,28 @@ class GsaWidgetSaleItemPreview extends StatefulWidget {
 }
 
 class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
-  late int _cartCount;
+  int? _cartCount;
 
   void _setCartCount() {
-    _cartCount = GsaDataCheckout.instance.itemCount(widget.saleItem) ?? 0;
+    _cartCount = GsaDataCheckout.instance.itemCount(widget.saleItem);
+    if (widget.saleItem.options != null) {
+      for (final saleItemOption in widget.saleItem.options!) {
+        final optionCount = GsaDataCheckout.instance.itemCount(saleItemOption);
+        if (optionCount != null) {
+          _cartCount ??= 0;
+          _cartCount = _cartCount! + optionCount;
+        }
+      }
+    }
   }
 
-  void _onCartCountUpdate() {
-    setState(() => _setCartCount());
-  }
+  late String _cartCountListenerId;
 
   @override
   void initState() {
     super.initState();
     _setCartCount();
-    GsaDataCheckout.instance.notifierCartUpdate.addListener(_onCartCountUpdate);
+    _cartCountListenerId = GsaDataCheckout.instance.addListener(_setCartCount);
   }
 
   @override
@@ -232,7 +239,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Icon(Icons.shopping_cart),
-                                      if (_cartCount > 0)
+                                      if (_cartCount != null && _cartCount! > 0)
                                         Padding(
                                           padding: const EdgeInsets.only(left: 6),
                                           child: DecoratedBox(
@@ -288,7 +295,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
 
   @override
   void dispose() {
-    GsaDataCheckout.instance.notifierCartUpdate.removeListener(_onCartCountUpdate);
+    GsaDataCheckout.instance.removeListener(id: _cartCountListenerId);
     super.dispose();
   }
 }

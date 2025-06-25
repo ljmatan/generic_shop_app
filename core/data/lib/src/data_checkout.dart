@@ -69,15 +69,15 @@ class GsaDataCheckout extends GsaData {
     super.notifyListeners();
   }
 
-  /// Fetches the current cart item count for a specific product.
+  /// Fetches the current cart item count for a specific sale item.
   ///
-  /// Returns null if the product has not been added to the cart.
+  /// Returns null if the sale item has not been added to the cart.
   ///
-  int? itemCount(GsaModelSaleItem product) {
+  int? itemCount(GsaModelSaleItem saleItem) {
     try {
       return orderDraft.itemCount.firstWhere(
         (item) {
-          return item.id == product.id;
+          return item.id == saleItem.id;
         },
       ).count;
     } catch (e) {
@@ -144,8 +144,8 @@ class GsaDataCheckout extends GsaData {
       );
     }
     // Check for existing items in the cart.
-    final productItemCount = itemCount(saleItem);
-    if (productItemCount == null) {
+    final saleItemCount = itemCount(saleItem);
+    if (saleItemCount == null) {
       // This item hasn't been previously added to the cart.
       orderDraft.items.add(saleItem);
       orderDraft.itemCount.add(
@@ -171,20 +171,20 @@ class GsaDataCheckout extends GsaData {
 
   /// Removes a sale item from the cart.
   ///
-  void removeItem(GsaModelSaleItem product) {
-    if (product.id == null) {
+  void removeItem(GsaModelSaleItem saleItem) {
+    if (saleItem.id == null) {
       throw Exception(
         'Sale item ID is missing - can\'t remove.',
       );
     }
     orderDraft.items.removeWhere(
       (item) {
-        return item.id == product.id;
+        return item.id == saleItem.id;
       },
     );
     orderDraft.itemCount.removeWhere(
       (item) {
-        return item.id == product.id;
+        return item.id == saleItem.id;
       },
     );
     notifyListeners();
@@ -199,7 +199,7 @@ class GsaDataCheckout extends GsaData {
   }
 
   /// Decreases the quantity of an item added to the cart,
-  /// or remove the product if the quantity is too low.
+  /// or remove the sale item if the quantity is too low.
   ///
   void decreaseItemCount(GsaModelSaleItem saleItem) {
     final count = itemCount(saleItem) ?? 0;
