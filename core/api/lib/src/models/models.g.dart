@@ -641,7 +641,6 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) =>
       price: json['price'] == null
           ? null
           : GsaModelPrice.fromJson(json['price'] as Map<String, dynamic>),
-      cartCount: (json['cartCount'] as num?)?.toInt(),
       availability: (json['availability'] as List<dynamic>?)
           ?.map((e) => _$recordConvert(
                 e,
@@ -705,7 +704,6 @@ Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) =>
       'thumbnailUrls': instance.thumbnailUrls,
       'attributeIconUrls': instance.attributeIconUrls,
       'price': instance.price?.toJson(),
-      'cartCount': instance.cartCount,
       'availability': instance.availability
           ?.map((e) => <String, dynamic>{
                 'count': e.count,
