@@ -55,6 +55,7 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    if (GsaConfig.plugin.getPromoBanners == null) return const SizedBox();
     return AnimatedContainer(
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeIn,

@@ -38,7 +38,6 @@ class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
     super.didPop();
     GsaDataCheckout.instance.orderDraft.deliveryType = null;
     GsaDataCheckout.instance.orderDraft.paymentType = null;
-    GsaDataCheckout.instance.onCartUpdate();
   }
 
   @override
@@ -52,7 +51,6 @@ class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
               if ((_pageController.page ?? 0) > .5) {
                 if ((_pageController.page ?? 0) > 1 && _pageController.page! < 2) {
                   GsaDataCheckout.instance.orderDraft.paymentType = null;
-                  GsaDataCheckout.instance.onCartUpdate();
                 }
                 await _pageController.animateToPage(
                   (_pageController.page! - 1 > 0 ? _pageController.page! - 1 : 0).toInt(),

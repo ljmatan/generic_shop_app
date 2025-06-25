@@ -14,9 +14,22 @@ class GsaDataCheckout extends GsaData {
 
   /// Draft for the current order initiated by the user.
   ///
-  final orderDraft = GsaModelOrderDraft(
+  GsaModelOrderDraft _orderDraft = GsaModelOrderDraft(
     items: [],
   );
+
+  /// Getter method for the current order draft [_orderDraft] data.
+  ///
+  GsaModelOrderDraft get orderDraft {
+    return _orderDraft;
+  }
+
+  /// Setter method for the current order draft [_orderDraft] data.
+  ///
+  set orderDraft(GsaModelOrderDraft value) {
+    _orderDraft = value;
+    notifyListeners();
+  }
 
   @override
   Future<void> init() async {
@@ -26,7 +39,7 @@ class GsaDataCheckout extends GsaData {
   @override
   void clear() {
     orderDraft.clear();
-    onCartUpdate();
+    notifyListeners();
   }
 
   /// Total number of all sale items in the cart.
@@ -43,10 +56,10 @@ class GsaDataCheckout extends GsaData {
   ///
   final notifierCartUpdate = ValueNotifier<int>(0);
 
-  /// Manually invoked on cart update to notify any listeners.
-  ///
-  void onCartUpdate() {
+  @override
+  void notifyListeners() {
     notifierCartUpdate.value = totalItemCount;
+    super.notifyListeners();
   }
 
   /// Fetches the current cart item count for a specific product.
@@ -55,7 +68,11 @@ class GsaDataCheckout extends GsaData {
   ///
   int? itemCount(GsaModelSaleItem product) {
     try {
-      return orderDraft.items.firstWhere((item) => item.id == product.id).cartCount;
+      return orderDraft.items.firstWhere(
+        (item) {
+          return item.id == product.id;
+        },
+      ).cartCount;
     } catch (e) {
       return null;
     }
@@ -113,16 +130,17 @@ class GsaDataCheckout extends GsaData {
 
   /// Adds a sale item to the cart.
   ///
+  /// Returns the current item cart count.
+  ///
   void addItem(GsaModelSaleItem saleItem) {
     // Check for existing items in the cart.
     final productItemCount = itemCount(saleItem);
     if (productItemCount == null) {
       // This item hasn't been previously added to the cart.
-      orderDraft.items.add(saleItem..cartCount = 1);
+      orderDraft.items.add(saleItem);
     } else {
       // This product has already been added to the cart in amount less than 100.
       final cartItemIndex = orderDraft.items.indexWhere((item) => item.id == saleItem.id);
-      saleItem.cartCount = saleItem.cartCount! + 1;
       orderDraft.items[cartItemIndex] = saleItem;
     }
     notifierCartUpdate.value = totalItemCount;

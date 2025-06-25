@@ -221,7 +221,6 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                     } else {
                       GsaDataCheckout.instance.orderDraft.paymentType = option.$2;
                     }
-                    GsaDataCheckout.instance.onCartUpdate();
                     setState(() => _selectedOption = option.$2);
                   },
                 ),
@@ -424,7 +423,6 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                     break;
                 }
                 widget.onCartSettingsUpdate();
-                GsaDataCheckout.instance.onCartUpdate();
                 widget.goToNextStep();
               }
             },

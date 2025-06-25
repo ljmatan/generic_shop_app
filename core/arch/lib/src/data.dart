@@ -79,7 +79,7 @@ abstract class GsaData {
 
   /// A method used to notify of changes any listener objects added with the [addListener] method.
   ///
-  void notifyListeners() async {
+  void notifyListeners() {
     for (final listener in _listeners) {
       listener.$2();
     }

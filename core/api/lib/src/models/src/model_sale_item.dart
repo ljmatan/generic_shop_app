@@ -19,7 +19,6 @@ class GsaModelSaleItem extends _Model {
     this.thumbnailUrls,
     this.attributeIconUrls,
     this.price,
-    this.cartCount,
     this.availability,
     this.maxCount,
     this.featured,
@@ -84,7 +83,9 @@ class GsaModelSaleItem extends _Model {
 
   /// The amount of the current item in the cart or order draft.
   ///
-  int? cartCount;
+  int? get cartCount {
+    return GsaDataCheckout.instance.itemCount(this);
+  }
 
   /// Availability information, including store location identifier or available item count.
   ///
