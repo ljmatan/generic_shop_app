@@ -197,7 +197,12 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                               ),
                               const SizedBox(height: 16),
                             ],
-                            if (GsaDataUser.instance.authenticated) ...[
+                            if (GsaDataUser.instance.authenticated &&
+                                !<GsaClient>{
+                                  GsaClient.froddoB2b,
+                                }.contains(
+                                  GsaConfig.plugin.client,
+                                )) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
