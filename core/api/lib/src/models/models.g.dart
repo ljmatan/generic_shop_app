@@ -181,6 +181,15 @@ GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList()
       ..logs =
           (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..itemCount = (json['itemCount'] as List<dynamic>)
+          .map((e) => _$recordConvert(
+                e,
+                ($jsonValue) => (
+                  count: ($jsonValue['count'] as num).toInt(),
+                  id: $jsonValue['id'] as String,
+                ),
+              ))
+          .toList()
       ..deliveryAddress = json['deliveryAddress'] == null
           ? null
           : GsaModelAddress.fromJson(
@@ -205,6 +214,12 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) =>
       'tags': instance.tags,
       'logs': instance.logs,
       'items': instance.items.map((e) => e.toJson()).toList(),
+      'itemCount': instance.itemCount
+          .map((e) => <String, dynamic>{
+                'count': e.count,
+                'id': e.id,
+              })
+          .toList(),
       'client': instance.client?.toJson(),
       'deliveryAddress': instance.deliveryAddress?.toJson(),
       'invoiceAddress': instance.invoiceAddress?.toJson(),
@@ -214,6 +229,12 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) =>
       'couponCode': instance.couponCode,
       'price': instance.price?.toJson(),
     };
+
+$Rec _$recordConvert<$Rec>(
+  Object? value,
+  $Rec Function(Map) convert,
+) =>
+    convert(value as Map<String, dynamic>);
 
 GsaModelConsent _$GsaModelConsentFromJson(Map<String, dynamic> json) =>
     GsaModelConsent(
@@ -727,12 +748,6 @@ Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) =>
           .toList(),
       'originData': GsaModelSaleItem._originDataToJson(instance.originData),
     };
-
-$Rec _$recordConvert<$Rec>(
-  Object? value,
-  $Rec Function(Map) convert,
-) =>
-    convert(value as Map<String, dynamic>);
 
 GsaModelSalePoint _$GsaModelSalePointFromJson(Map<String, dynamic> json) =>
     GsaModelSalePoint(

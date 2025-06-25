@@ -46,8 +46,15 @@ class GsaDataCheckout extends GsaData {
   ///
   int get totalItemCount {
     int count = 0;
-    for (final item in orderDraft.items) {
-      if (item.cartCount != null) count += item.cartCount!;
+    for (final cartItem in orderDraft.items) {
+      final itemCount = cartItem.cartCount;
+      if (itemCount != null) count += itemCount;
+      if (cartItem.options?.isNotEmpty == true) {
+        for (final option in cartItem.options!) {
+          final optionCount = option.cartCount;
+          if (optionCount != null) count += optionCount;
+        }
+      }
     }
     return count;
   }
@@ -68,11 +75,11 @@ class GsaDataCheckout extends GsaData {
   ///
   int? itemCount(GsaModelSaleItem product) {
     try {
-      return orderDraft.items.firstWhere(
+      return orderDraft.itemCount.firstWhere(
         (item) {
           return item.id == product.id;
         },
-      ).cartCount;
+      ).count;
     } catch (e) {
       return null;
     }
@@ -82,9 +89,12 @@ class GsaDataCheckout extends GsaData {
   ///
   int get totalItemPriceEurCents {
     int price = 0;
-    for (final item in orderDraft.items) {
-      if (item.price?.centum != null) {
-        price += (item.cartCount ?? 0) * item.price!.centum!;
+    for (final cartItem in orderDraft.items) {
+      if (cartItem.price?.centum != null) {
+        final count = itemCount(cartItem);
+        if (count != null) {
+          price += count * cartItem.price!.centum!;
+        }
       }
     }
     return price;
@@ -105,12 +115,7 @@ class GsaDataCheckout extends GsaData {
   /// Total cart price in EUR cents.'
   ///
   int get totalPriceEurCents {
-    int price = 0;
-    for (final item in orderDraft.items) {
-      if (item.price?.centum != null) {
-        price += (item.cartCount ?? 0) * item.price!.centum!;
-      }
-    }
+    int price = totalItemPriceEurCents;
     price += orderDraft.deliveryType?.price?.centum ?? 0;
     price += orderDraft.paymentType?.price?.centum ?? 0;
     return price;
@@ -133,25 +138,55 @@ class GsaDataCheckout extends GsaData {
   /// Returns the current item cart count.
   ///
   void addItem(GsaModelSaleItem saleItem) {
+    if (saleItem.id == null) {
+      throw Exception(
+        'Sale item ID is missing - can\'t add.',
+      );
+    }
     // Check for existing items in the cart.
     final productItemCount = itemCount(saleItem);
     if (productItemCount == null) {
       // This item hasn't been previously added to the cart.
       orderDraft.items.add(saleItem);
+      orderDraft.itemCount.add(
+        (
+          id: saleItem.id!,
+          count: 1,
+        ),
+      );
     } else {
-      // This product has already been added to the cart in amount less than 100.
-      final cartItemIndex = orderDraft.items.indexWhere((item) => item.id == saleItem.id);
-      orderDraft.items[cartItemIndex] = saleItem;
+      final cartItemIndex = orderDraft.itemCount.indexWhere(
+        (item) {
+          return item.id == saleItem.id;
+        },
+      );
+      final currentCount = orderDraft.itemCount[cartItemIndex].count;
+      orderDraft.itemCount[cartItemIndex] = (
+        id: saleItem.id!,
+        count: currentCount + 1,
+      );
     }
-    notifierCartUpdate.value = totalItemCount;
     notifyListeners();
   }
 
   /// Removes a sale item from the cart.
   ///
   void removeItem(GsaModelSaleItem product) {
-    orderDraft.items.removeWhere((item) => item.id == product.id);
-    notifierCartUpdate.value = totalItemCount;
+    if (product.id == null) {
+      throw Exception(
+        'Sale item ID is missing - can\'t remove.',
+      );
+    }
+    orderDraft.items.removeWhere(
+      (item) {
+        return item.id == product.id;
+      },
+    );
+    orderDraft.itemCount.removeWhere(
+      (item) {
+        return item.id == product.id;
+      },
+    );
     notifyListeners();
   }
 
@@ -159,9 +194,8 @@ class GsaDataCheckout extends GsaData {
   ///
   /// If the item has not previously been added to the cart, it will be added with this method.
   ///
-  void increaseItemCount(GsaModelSaleItem product) {
-    addItem(product);
-    notifyListeners();
+  void increaseItemCount(GsaModelSaleItem item) {
+    addItem(item);
   }
 
   /// Decreases the quantity of an item added to the cart,
@@ -172,10 +206,17 @@ class GsaDataCheckout extends GsaData {
     if (count < 2) {
       removeItem(saleItem);
     } else {
-      final cartItemIndex = orderDraft.items.indexWhere((item) => item.id == saleItem.id);
-      orderDraft.items[cartItemIndex] = saleItem;
+      final cartItemIndex = orderDraft.itemCount.indexWhere(
+        (item) {
+          return item.id == saleItem.id;
+        },
+      );
+      final currentCount = orderDraft.itemCount[cartItemIndex].count;
+      orderDraft.itemCount[cartItemIndex] = (
+        id: saleItem.id!,
+        count: currentCount - 1,
+      );
+      notifyListeners();
     }
-    notifierCartUpdate.value = totalItemCount;
-    notifyListeners();
   }
 }

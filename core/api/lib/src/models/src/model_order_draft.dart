@@ -14,11 +14,15 @@ class GsaModelOrderDraft extends _Model {
     this.paymentType,
     this.couponCode,
     this.price,
-  });
+  }) : itemCount = [];
 
   /// List of products in the order.
   ///
   List<GsaModelSaleItem> items;
+
+  /// Collection of recorded item identifiers and their respective cart count.
+  ///
+  List<({String id, int count})> itemCount;
 
   /// Client specified for this checkout order.
   ///
@@ -51,19 +55,29 @@ class GsaModelOrderDraft extends _Model {
   /// Whether this order is deliverable with the current configuration.
   ///
   bool get deliverable {
-    return items.every((item) => item.delivered != false);
+    return items.every(
+      (cartItem) {
+        return cartItem.delivered != false;
+      },
+    );
   }
 
   /// Whether this order is payable with the current configuration.
   ///
   bool get payable {
-    return items.every((item) => item.payable != false) && deliveryType?.payable != false;
+    return items.every(
+          (cartItem) {
+            return cartItem.payable != false;
+          },
+        ) &&
+        deliveryType?.payable != false;
   }
 
   /// Clears the order by removing all of the items and personal details from the order draft.
   ///
   void clear() {
     items.clear();
+    itemCount.clear();
     client = null;
     deliveryType = null;
     paymentType = null;
