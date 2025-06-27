@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui' as dart_ui;
 
 import 'package:flutter/material.dart';
@@ -90,11 +91,24 @@ class GsaTheme {
   }
 
   Color get _secondaryColor {
-    if (_brightness == Brightness.light) {
-      return const Color(0xff63183f);
-    } else {
-      return const Color(0xffB7C9E2);
-    }
+    final hsl = HSLColor.fromColor(_primaryColor);
+    final random = Random();
+    final hueShift = 180 + random.nextInt(20) - 10;
+    final newHue = (hsl.hue + hueShift) % 360;
+    final baseLightness = hsl.lightness;
+    final lightnessJitter = (random.nextDouble() * 0.1) - 0.05;
+    final adjustedLightness = _brightness == Brightness.dark
+        ? (baseLightness * 1.1 + lightnessJitter).clamp(0.2, 0.9)
+        : (baseLightness * 0.9 + lightnessJitter).clamp(0.2, 0.9);
+    final saturationJitter = (random.nextDouble() * 0.2) - 0.1;
+    final adjustedSaturation = (hsl.saturation * 0.8 + saturationJitter).clamp(0.3, 1.0);
+    final adjusted = HSLColor.fromAHSL(
+      hsl.alpha,
+      newHue,
+      adjustedSaturation,
+      adjustedLightness,
+    );
+    return adjusted.toColor();
   }
 
   String? get _fontFamily {

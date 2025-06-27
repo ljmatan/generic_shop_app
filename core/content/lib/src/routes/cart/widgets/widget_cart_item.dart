@@ -16,7 +16,7 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
   late int _cartCount;
 
   void _setCartCount() {
-    _cartCount = GsaDataCheckout.instance.itemCount(widget.cartItem) ?? 0;
+    _cartCount = GsaDataCheckout.instance.orderDraft.getItemCount(widget.cartItem) ?? 0;
   }
 
   void _onCartCountUpdate() {
@@ -32,11 +32,13 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
 
   Future<void> _removeItem() async {
     final confirmed = await GsaWidgetOverlayConfirmation(
-      'Remove ${widget.cartItem.name} from cart?',
+      'Remove "${widget.cartItem.name}" from cart?',
     ).openDialog(context);
-    if (confirmed) {
-      setState(() => GsaDataCheckout.instance.removeItem(widget.cartItem));
-      if (GsaDataCheckout.instance.orderDraft.items.isEmpty) Navigator.pop(context);
+    if (confirmed == true) {
+      GsaDataCheckout.instance.orderDraft.removeItem(widget.cartItem);
+      if (GsaDataCheckout.instance.orderDraft.items.isEmpty) {
+        Navigator.pop(GsaRoute.navigatorKey.currentContext ?? context);
+      }
     }
   }
 
@@ -44,23 +46,34 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
   Widget build(BuildContext context) {
     return InkWell(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (widget.cartItem.imageUrls?.isNotEmpty == true)
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      widget.cartItem.imageUrls![0],
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
+              if (widget.cartItem.imageUrls?.isNotEmpty == true) ...[
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(1),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        widget.cartItem.imageUrls![0],
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
+                const SizedBox(width: 10),
+              ],
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +87,29 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                         fontSize: 12,
                       ),
                     ),
-                    if (widget.cartItem.amountMeasureFormatted != null)
+                    if (widget.cartItem.productCode != null) ...[
+                      const SizedBox(height: 4),
+                      GsaWidgetText.rich(
+                        [
+                          GsaWidgetTextSpan(
+                            switch (GsaConfig.plugin.client) {
+                              GsaClient.froddoB2b => 'Size ',
+                              _ => '',
+                            },
+                          ),
+                          GsaWidgetTextSpan(
+                            widget.cartItem.productCode!,
+                          ),
+                        ],
+                        maxLines: 1,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                    if (widget.cartItem.amountMeasureFormatted != null) ...[
+                      const SizedBox(height: 4),
                       GsaWidgetText(
                         widget.cartItem.amountMeasureFormatted!,
                         maxLines: 1,
@@ -83,11 +118,34 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                           fontSize: 10,
                         ),
                       ),
+                    ],
                   ],
+                ),
+              ),
+              SizedBox(
+                child: InkWell(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(4),
+                      child: Icon(
+                        Icons.close,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  onTap: () async {
+                    await _removeItem();
+                  },
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
@@ -107,7 +165,8 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               GsaWidgetText(
-                                '$_cartCount x ${widget.cartItem.price!.formatted()} ${GsaConfig.currency.code}',
+                                '$_cartCount x ${widget.cartItem.price!.formatted()} '
+                                '${GsaConfig.currency.code}',
                                 style: const TextStyle(
                                   fontSize: 10,
                                   color: Colors.grey,
@@ -115,7 +174,8 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                                 ),
                               ),
                               GsaWidgetText(
-                                '${(widget.cartItem.price!.unity! * _cartCount).toStringAsFixed(2)} ${GsaConfig.currency.code}',
+                                '${(widget.cartItem.price!.unity! * _cartCount).toStringAsFixed(2)} '
+                                '${GsaConfig.currency.code}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 13,
@@ -130,23 +190,10 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    width: 30,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: () async {
-                        await _removeItem();
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 10),
                   for (int i = 0; i < 3; i++)
                     i == 1
                         ? SizedBox(
-                            width: 20,
+                            width: 40,
                             child: GsaWidgetText(
                               '$_cartCount',
                               textAlign: TextAlign.center,
@@ -155,14 +202,14 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                               ),
                             ),
                           )
-                        : IconButton(
-                            icon: DecoratedBox(
+                        : InkWell(
+                            child: DecoratedBox(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(4),
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(6),
                                 child: Icon(
                                   i == 0 ? Icons.remove : Icons.add_circle,
                                   color: Colors.white,
@@ -170,16 +217,20 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                                 ),
                               ),
                             ),
-                            onPressed: i == 0
+                            onTap: i == 0
                                 ? () async {
                                     if (_cartCount > 1) {
-                                      GsaDataCheckout.instance.decreaseItemCount(widget.cartItem);
+                                      GsaDataCheckout.instance.orderDraft.decreaseItemCount(
+                                        widget.cartItem,
+                                      );
                                     } else {
                                       await _removeItem();
                                     }
                                   }
                                 : () {
-                                    GsaDataCheckout.instance.addItem(widget.cartItem);
+                                    GsaDataCheckout.instance.orderDraft.addItem(
+                                      widget.cartItem,
+                                    );
                                   },
                           ),
                 ],

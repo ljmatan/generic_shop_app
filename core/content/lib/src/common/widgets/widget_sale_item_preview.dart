@@ -30,10 +30,10 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
   int? _cartCount;
 
   void _setCartCount() {
-    _cartCount = GsaDataCheckout.instance.itemCount(widget.saleItem);
+    _cartCount = GsaDataCheckout.instance.orderDraft.getItemCount(widget.saleItem);
     if (widget.saleItem.options != null) {
       for (final saleItemOption in widget.saleItem.options!) {
-        final optionCount = GsaDataCheckout.instance.itemCount(saleItemOption);
+        final optionCount = GsaDataCheckout.instance.orderDraft.getItemCount(saleItemOption);
         if (optionCount != null) {
           _cartCount ??= 0;
           _cartCount = _cartCount! + optionCount;

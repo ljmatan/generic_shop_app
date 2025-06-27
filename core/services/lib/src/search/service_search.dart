@@ -7,15 +7,23 @@ class GsaServiceSearch extends GsaService {
 
   static final _instance = GsaServiceSearch._();
 
-  // ignore: public_member_api_docs
+  /// Globally-accessible singleton class instance.
+  ///
   static GsaServiceSearch get instance => _instance() as GsaServiceSearch;
 
   String _normalizeComparisonValue(String searchTerm) {
-    searchTerm = searchTerm.trim().replaceAll(',', '').replaceAll('.', '').replaceAll('/', '').replaceAll('  ', ' ').toLowerCase();
+    searchTerm = searchTerm.trim().replaceAll('  ', ' ').toLowerCase();
     for (final character in searchTerm.split('').indexed) {
       try {
-        final existingExcluded = _excludedCharacters.firstWhere((excludedChar) => excludedChar.chracter == character.$2);
-        searchTerm = searchTerm.replaceAll(character.$2, existingExcluded.replacement);
+        final existingExcluded = _excludedCharacters.firstWhere(
+          (excludedChar) {
+            return excludedChar.chracter == character.$2;
+          },
+        );
+        searchTerm = searchTerm.replaceAll(
+          character.$2,
+          existingExcluded.replacement,
+        );
       } catch (e) {
         continue;
       }
@@ -47,7 +55,20 @@ class GsaServiceSearch extends GsaService {
     return results;
   }
 
-  final _excludedCharacters = <({String chracter, String replacement})>[
+  final _excludedCharacters = <({
+    String chracter,
+    String replacement,
+  })>[
+    for (final specialCharacter in const <String>{
+      ',',
+      '.',
+      '/',
+      '-',
+    })
+      (
+        chracter: specialCharacter,
+        replacement: '',
+      ),
     (
       chracter: 'š',
       replacement: 's',

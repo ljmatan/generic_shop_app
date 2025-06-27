@@ -291,6 +291,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
         ],
       ),
       drawerEnableOpenDragGesture: false,
+      endDrawerEnableOpenDragGesture: false,
       drawer: const _WidgetDrawer(),
       endDrawer: const _WidgetDrawer(),
     );

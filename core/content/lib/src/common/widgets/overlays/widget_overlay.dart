@@ -52,12 +52,12 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
                             vertical: 26,
                           )
                         : EdgeInsets.zero,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 26, 18, 16),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width < 1000 ? MediaQuery.of(context).size.width : 800,
-                        ),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width < 1000 ? MediaQuery.of(context).size.width : 800,
+                      ),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(18, 26, 18, 16),
                         child: this,
                       ),
                     ),

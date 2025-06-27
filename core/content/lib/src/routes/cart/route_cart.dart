@@ -85,7 +85,7 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                                 valueListenable: GsaDataCheckout.instance.notifierCartUpdate,
                                 builder: (context, value, child) {
                                   return GsaWidgetText(
-                                    GsaDataCheckout.instance.totalItemPriceFormatted,
+                                    GsaDataCheckout.instance.orderDraft.totalItemPriceFormatted,
                                     style: const TextStyle(
                                       decoration: TextDecoration.underline,
                                       fontWeight: FontWeight.w700,
@@ -164,21 +164,21 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                     ),
                   ),
                 const SizedBox(height: 26),
-                for (final item in _filteredCategoryIds.isEmpty
-                    ? GsaDataCheckout.instance.orderDraft.items
-                    : GsaDataCheckout.instance.orderDraft.items.where(
-                        (saleItem) {
-                          return _filteredCategoryIds.contains(saleItem.categoryId);
-                        },
-                      ))
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: _WidgetCartItem(
-                      item,
-                      key: UniqueKey(),
-                    ),
+                for (final item in (_filteredCategoryIds.isEmpty
+                        ? GsaDataCheckout.instance.orderDraft.items
+                        : GsaDataCheckout.instance.orderDraft.items.where(
+                            (saleItem) {
+                              return _filteredCategoryIds.contains(saleItem.categoryId);
+                            },
+                          ))
+                    .indexed) ...[
+                  if (item.$1 != 0) const SizedBox(height: 30),
+                  _WidgetCartItem(
+                    item.$2,
+                    key: UniqueKey(),
                   ),
-                const SizedBox(height: 12),
+                ],
+                const SizedBox(height: 20),
                 const GsaWidgetText(
                   'The items in your cart are subject to verification and adjustment at the time of checkout. '
                   'We reserve the right to modify or cancel orders based on the availability and pricing.',

@@ -52,7 +52,7 @@ class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
                 ),
               (
                 label: 'Total',
-                display: GsaDataCheckout.instance.totalPriceFormatted,
+                display: GsaDataCheckout.instance.orderDraft.totalPriceFormatted,
                 tooltip: 'The total amount due for the items in your cart.',
               ),
             }.indexed)

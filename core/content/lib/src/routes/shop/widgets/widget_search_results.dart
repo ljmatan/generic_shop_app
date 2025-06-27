@@ -19,7 +19,7 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
           itemCount: widget.results.length,
           itemBuilder: (context, index) {
             final saleItem = widget.results[index];
-            final cartCount = GsaDataCheckout.instance.itemCount(saleItem);
+            final cartCount = GsaDataCheckout.instance.orderDraft.getItemCount(saleItem);
             return Padding(
               padding: index == 0 ? EdgeInsets.zero : const EdgeInsets.only(top: 12),
               child: InkWell(

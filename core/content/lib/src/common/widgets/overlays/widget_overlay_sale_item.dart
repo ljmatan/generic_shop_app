@@ -43,7 +43,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
   @override
   void initState() {
     super.initState();
-    _cartCount = GsaDataCheckout.instance.itemCount(widget.saleItem) ?? 0;
+    _cartCount = GsaDataCheckout.instance.orderDraft.getItemCount(widget.saleItem) ?? 0;
   }
 
   @override
@@ -128,12 +128,12 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                         ),
                         onPressed: () {
                           // Set checkout data.
-                          GsaDataCheckout.instance.decreaseItemCount(widget.saleItem);
+                          GsaDataCheckout.instance.orderDraft.decreaseItemCount(widget.saleItem);
                           // Update the overlay state.
                           setState(() => _cartCount--);
                           // If the cart is empty and cart page is visible,
                           // pop all previously pushed routes.
-                          if (GsaDataCheckout.instance.totalItemCount == 0 && widget.displayedFromCart) {
+                          if (GsaDataCheckout.instance.orderDraft.totalItemCount == 0 && widget.displayedFromCart) {
                             Navigator.popUntil(context, (route) => route.isFirst);
                           }
                         },
@@ -174,7 +174,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                         ],
                       ),
                       onPressed: () {
-                        GsaDataCheckout.instance.addItem(widget.saleItem);
+                        GsaDataCheckout.instance.orderDraft.addItem(widget.saleItem);
                         setState(() => _cartCount++);
                       },
                     ),

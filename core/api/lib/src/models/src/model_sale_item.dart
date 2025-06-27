@@ -81,12 +81,6 @@ class GsaModelSaleItem extends _Model {
   ///
   GsaModelPrice? price;
 
-  /// The amount of the current item in the cart or order draft.
-  ///
-  int? get cartCount {
-    return GsaDataCheckout.instance.itemCount(this);
-  }
-
   /// Availability information, including store location identifier or available item count.
   ///
   List<({String? locationId, int? count})>? availability;
@@ -130,6 +124,42 @@ class GsaModelSaleItem extends _Model {
   /// Custom user-visible information applied to this sale item.
   ///
   List<({String label, String description})>? informationList;
+
+  /// The amount of the current item in the cart or order draft.
+  ///
+  int? cartCount([
+    GsaModelOrderDraft? orderDraft,
+  ]) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    return orderDraft.getItemCount(this);
+  }
+
+  /// The set [price] amount for the specified [cartCount] within the [orderDraft].
+  ///
+  int? totalCartPriceCentum([
+    GsaModelOrderDraft? orderDraft,
+  ]) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    return orderDraft.getItemTotalPriceCentum(this);
+  }
+
+  /// The set [price] amount for the specified [cartCount] within the [orderDraft].
+  ///
+  double? totalCartPriceUnity([
+    GsaModelOrderDraft? orderDraft,
+  ]) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    return orderDraft.getItemTotalPriceUnity(this);
+  }
+
+  String? totalCartPriceFormatted([
+    GsaModelOrderDraft? orderDraft,
+  ]) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    final price = totalCartPriceUnity(orderDraft);
+    if (price == null) return null;
+    return price.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
+  }
 
   /// Method user by plugin implementations to serialise data from JSON.
   ///
