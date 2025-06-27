@@ -8,7 +8,7 @@ class _WidgetPromoCarousel extends StatefulWidget {
 }
 
 class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
-  late Future<List<GsaModelPromoBanner>> _getBannersFuture;
+  late Future<List<GsaModelPromoBanner>> Function() _getBannersFuture;
 
   final _carouselItems = <GsaModelPromoBanner>[];
 
@@ -19,22 +19,17 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
   @override
   void initState() {
     super.initState();
-    _getBannersFuture = Future<List<GsaModelPromoBanner>>(
-      () async {
-        if (GsaConfig.plugin.getPromoBanners == null) {
-          throw UnimplementedError(
-            'Promo carousel content endpoint not implemented for ${GsaConfig.plugin.id}.',
-          );
-        } else {
-          return GsaConfig.plugin.getPromoBanners!();
-        }
-      },
-    ).then(
-      (value) {
+    _getBannersFuture = () async {
+      if (GsaConfig.plugin.getPromoBanners == null) {
+        throw UnimplementedError(
+          'Promo carousel content endpoint not implemented for ${GsaConfig.plugin.id}.',
+        );
+      } else {
+        final value = await GsaConfig.plugin.getPromoBanners!();
         _carouselItems.addAll(value);
         return value;
-      },
-    );
+      }
+    };
     _fadeTimer = Timer.periodic(
       const Duration(seconds: 4),
       (_) {
@@ -60,7 +55,7 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeIn,
       child: FutureBuilder(
-        future: _getBannersFuture,
+        future: _getBannersFuture(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done || snapshot.hasError) {
             if (snapshot.hasError) {

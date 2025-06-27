@@ -6,19 +6,19 @@ import 'package:generic_shop_app_content/gsac.dart';
 class GsaWidgetOverlayAlert extends GsaWidgetOverlay {
   /// Default, unnamed widget constructor.
   ///
-  const GsaWidgetOverlayAlert({
+  const GsaWidgetOverlayAlert(
+    this.message, {
     super.key,
     this.title,
-    required this.message,
   });
-
-  /// The title for the dialog.
-  ///
-  final String? title;
 
   /// User-facing alert message.
   ///
   final String message;
+
+  /// The title for the dialog.
+  ///
+  final String? title;
 
   @override
   State<GsaWidgetOverlayAlert> createState() => _GsaWidgetOverlayAlertState();

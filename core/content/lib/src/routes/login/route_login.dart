@@ -273,7 +273,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                       debugPrint('Error logging in: $e');
                                       Navigator.pop(context);
                                       GsaWidgetOverlayAlert(
-                                        message: '$e',
+                                        '$e',
                                       ).openDialog(context);
                                     }
                                   }
