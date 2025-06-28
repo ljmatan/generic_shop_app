@@ -109,7 +109,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                               if (cartItemCount == 0) return const SizedBox();
                               return DecoratedBox(
                                 decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
+                                  borderRadius: BorderRadius.circular(5),
                                   color: Colors.white,
                                   border: Border.all(
                                     color: Colors.black12,
