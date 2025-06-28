@@ -112,7 +112,8 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
                           Row(
                             children: [
                               GsaWidgetText(
-                                '${product.$2.cartCount()} × ${product.$2.price?.formatted()} ${GsaConfig.currency.code} ',
+                                '${product.$2.cartCount()} × ${product.$2.price?.formatted()} '
+                                '${GsaConfig.currency.code} ',
                                 style: const TextStyle(
                                   fontSize: 12,
                                 ),
@@ -152,7 +153,7 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
           ),
           onPressed: _termsAccepted
               ? () async {
-                  GsaWidgetOverlayContentBlocking().openDialog(context);
+                  GsaWidgetOverlayContentBlocking().openDialog();
                   await Future.delayed(const Duration(seconds: 2));
                   GsaDataCheckout.instance.clear();
                   Navigator.popUntil(context, (route) => route.isFirst);

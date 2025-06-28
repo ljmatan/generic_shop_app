@@ -30,7 +30,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
   int? _cartCount;
 
   void _setCartCount() {
-    _cartCount = GsaDataCheckout.instance.orderDraft.getItemCount(widget.saleItem);
+    _cartCount = GsaDataCheckout.instance.orderDraft.getTotalItemCount(widget.saleItem);
     if (widget.saleItem.options != null) {
       for (final saleItemOption in widget.saleItem.options!) {
         final optionCount = GsaDataCheckout.instance.orderDraft.getItemCount(saleItemOption);
@@ -226,7 +226,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                             ),
                           ),
                           child: SizedBox(
-                            width: 60,
+                            width: MediaQuery.of(context).size.width,
                             child: widget.saleItem.price == null &&
                                     widget.saleItem.options?.where((saleItemOption) => saleItemOption.price != null).isNotEmpty != true
                                 ? const GsaWidgetText(
@@ -244,11 +244,14 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                           padding: const EdgeInsets.only(left: 6),
                                           child: DecoratedBox(
                                             decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
+                                              borderRadius: BorderRadius.circular(8),
                                               color: Theme.of(context).primaryColor,
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 4,
+                                              ),
                                               child: GsaWidgetText(
                                                 '$_cartCount',
                                                 style: const TextStyle(
@@ -288,7 +291,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
         ],
       ),
       onTap: () async {
-        await GsaWidgetOverlaySaleItem(widget.saleItem).openBottomSheet(context);
+        await GsaWidgetOverlaySaleItem(widget.saleItem).openBottomSheet();
       },
     );
   }

@@ -244,7 +244,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           'The specified provider value must not be null.',
                         );
                       }
-                      const GsaWidgetOverlayContentBlocking().openDialog(context);
+                      const GsaWidgetOverlayContentBlocking().openDialog();
                       try {
                         await GsaConfig.plugin.init();
                         Navigator.pop(context);
@@ -267,7 +267,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         Navigator.pop(context);
                         GsaWidgetOverlayAlert(
                           '$e',
-                        ).openDialog(context);
+                        ).openDialog();
                       }
                     },
                   ),
@@ -437,7 +437,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           'INIT ${provider.name.toUpperCase()}',
                         ),
                         onPressed: () async {
-                          const GsaWidgetOverlayContentBlocking().openDialog(context);
+                          const GsaWidgetOverlayContentBlocking().openDialog();
                           try {
                             GsaData.clearAll();
                             await GsaConfig.plugin.init();
@@ -458,7 +458,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                             Navigator.pop(context);
                             GsaWidgetOverlayAlert(
                               '$e',
-                            ).openDialog(context);
+                            ).openDialog();
                           }
                         },
                       ),

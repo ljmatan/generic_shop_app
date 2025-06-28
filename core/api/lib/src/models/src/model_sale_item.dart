@@ -25,6 +25,7 @@ class GsaModelSaleItem extends _Model {
     this.delivered,
     this.digital,
     this.payable,
+    this.option,
     this.options,
     this.reviews,
     this.deliveryTimeMilliseconds,
@@ -105,6 +106,10 @@ class GsaModelSaleItem extends _Model {
   ///
   bool? payable;
 
+  /// Whether the sale item is defined as a sale item option.
+  ///
+  bool? option;
+
   /// List of associated [GsaModelSaleItemOption] objects.
   ///
   List<GsaModelSaleItem>? options;
@@ -127,36 +132,48 @@ class GsaModelSaleItem extends _Model {
 
   /// The amount of the current item in the cart or order draft.
   ///
-  int? cartCount([
+  int? cartCount({
     GsaModelOrderDraft? orderDraft,
-  ]) {
+  }) {
     orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    return orderDraft.getItemCount(this);
+    if (option == true) {
+      return orderDraft.getItemOptionCount(this);
+    } else {
+      return orderDraft.getItemCount(this);
+    }
   }
 
   /// The set [price] amount for the specified [cartCount] within the [orderDraft].
   ///
-  int? totalCartPriceCentum([
+  int? totalCartPriceCentum({
     GsaModelOrderDraft? orderDraft,
-  ]) {
+  }) {
     orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    return orderDraft.getItemTotalPriceCentum(this);
+    if (option == true) {
+      return orderDraft.getItemOptionTotalPriceCentum(this);
+    } else {
+      return orderDraft.getItemTotalPriceCentum(this);
+    }
   }
 
   /// The set [price] amount for the specified [cartCount] within the [orderDraft].
   ///
-  double? totalCartPriceUnity([
+  double? totalCartPriceUnity({
     GsaModelOrderDraft? orderDraft,
-  ]) {
+  }) {
     orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    return orderDraft.getItemTotalPriceUnity(this);
+    if (option == true) {
+      return orderDraft.getItemOptionTotalPriceUnity(this);
+    } else {
+      return orderDraft.getItemTotalPriceUnity(this);
+    }
   }
 
-  String? totalCartPriceFormatted([
+  String? totalCartPriceFormatted({
     GsaModelOrderDraft? orderDraft,
-  ]) {
+  }) {
     orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    final price = totalCartPriceUnity(orderDraft);
+    final price = totalCartPriceUnity(orderDraft: orderDraft);
     if (price == null) return null;
     return price.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
   }

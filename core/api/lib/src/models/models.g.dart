@@ -187,6 +187,7 @@ GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>
                 ($jsonValue) => (
                   count: ($jsonValue['count'] as num).toInt(),
                   id: $jsonValue['id'] as String,
+                  optionId: $jsonValue['optionId'] as String?,
                 ),
               ))
           .toList()
@@ -218,6 +219,7 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) =>
           .map((e) => <String, dynamic>{
                 'count': e.count,
                 'id': e.id,
+                'optionId': e.optionId,
               })
           .toList(),
       'client': instance.client?.toJson(),
@@ -676,6 +678,7 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) =>
       delivered: json['delivered'] as bool?,
       digital: json['digital'] as bool?,
       payable: json['payable'] as bool?,
+      option: json['option'] as bool?,
       options: (json['options'] as List<dynamic>?)
           ?.map((e) => GsaModelSaleItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -736,6 +739,7 @@ Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) =>
       'delivered': instance.delivered,
       'digital': instance.digital,
       'payable': instance.payable,
+      'option': instance.option,
       'options': instance.options?.map((e) => e.toJson()).toList(),
       'reviews': instance.reviews?.map((e) => e.toJson()).toList(),
       'deliveryTimeMilliseconds': instance.deliveryTimeMilliseconds,

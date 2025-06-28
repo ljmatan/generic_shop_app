@@ -142,7 +142,7 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
                   ),
                 ),
                 onTap: () {
-                  GsaWidgetOverlaySaleItem(saleItem).openBottomSheet(context);
+                  GsaWidgetOverlaySaleItem(saleItem).openBottomSheet();
                 },
               ),
             );

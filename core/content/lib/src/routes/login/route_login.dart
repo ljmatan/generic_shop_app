@@ -248,7 +248,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                   final formsValidated = _formKey.currentState?.validate() == true;
                                   final termsValidated = _termsSwitchKey.currentState?.validate() == true;
                                   if (formsValidated && termsValidated) {
-                                    const GsaWidgetOverlayContentBlocking().openDialog(context);
+                                    const GsaWidgetOverlayContentBlocking().openDialog();
                                     try {
                                       if (GsaConfig.plugin.loginWithUsernameAndPassword == null) {
                                         throw Exception(
@@ -274,7 +274,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                       Navigator.pop(context);
                                       GsaWidgetOverlayAlert(
                                         '$e',
-                                      ).openDialog(context);
+                                      ).openDialog();
                                     }
                                   }
                                 },

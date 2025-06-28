@@ -32,7 +32,7 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
 
   /// Displays the overlay widget contents by utilising any given [BuildContext] object.
   ///
-  Future<dynamic> openDialog(BuildContext? context) async {
+  Future<dynamic> openDialog([BuildContext? context]) async {
     context ??= GsaRoute.navigatorKey.currentContext;
     if (context != null) {
       return await showDialog(
@@ -78,7 +78,7 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
 
   /// Shows a modal Material Design bottom sheet.
   ///
-  Future<dynamic> openBottomSheet(BuildContext? context) async {
+  Future<dynamic> openBottomSheet([BuildContext? context]) async {
     context ??= GsaRoute.navigatorKey.currentContext;
     if (context != null) {
       return await showModalBottomSheet(

@@ -114,7 +114,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                       label: 'Cookies',
                       onTap: () {
                         Navigator.pop(context);
-                        const GsaWidgetOverlayConsent().openDialog(context);
+                        const GsaWidgetOverlayConsent().openDialog();
                       },
                     ),
                     if (GsaDataMerchant.instance.merchant != null)

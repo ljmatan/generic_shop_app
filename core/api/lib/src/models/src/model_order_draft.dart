@@ -22,7 +22,12 @@ class GsaModelOrderDraft extends _Model {
 
   /// Collection of recorded item identifiers and their respective cart count.
   ///
-  List<({String id, int count})> itemCount;
+  List<
+      ({
+        String id,
+        String? optionId,
+        int count,
+      })> itemCount;
 
   /// Client specified for this checkout order.
   ///
@@ -51,221 +56,6 @@ class GsaModelOrderDraft extends _Model {
   /// Total cart price, including any discount or promo info.
   ///
   GsaModelPrice? price;
-
-  /// Total number of all sale items in the cart.
-  ///
-  int get totalItemCount {
-    int count = 0;
-    for (final cartItem in items) {
-      final itemCount = cartItem.cartCount();
-      if (itemCount != null) count += itemCount;
-      if (cartItem.options?.isNotEmpty == true) {
-        for (final option in cartItem.options!) {
-          final optionCount = option.cartCount();
-          if (optionCount != null) count += optionCount;
-        }
-      }
-    }
-    return count;
-  }
-
-  /// Total combined items price in EUR cents.'
-  ///
-  int get totalItemPriceEurCents {
-    int price = 0;
-    for (final cartItem in items) {
-      if (cartItem.price?.centum != null) {
-        final count = getItemCount(cartItem);
-        if (count != null) {
-          price += count * cartItem.price!.centum!;
-        }
-      }
-    }
-    return price;
-  }
-
-  /// Total cart price in EUR cents.'
-  ///
-  int get totalPriceEurCents {
-    int price = totalItemPriceEurCents;
-    price += deliveryType?.price?.centum ?? 0;
-    price += paymentType?.price?.centum ?? 0;
-    return price;
-  }
-
-  /// Total cart price in EUR.'
-  ///
-  double get totalItemPriceEur {
-    return double.parse((totalPriceEurCents / 100).toStringAsFixed(2));
-  }
-
-  /// User-visible price representation.
-  ///
-  String get totalItemPriceFormatted {
-    return totalPriceEur.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
-  }
-
-  /// Total cart price in EUR.'
-  ///
-  double get totalPriceEur {
-    return double.parse((totalPriceEurCents / 100).toStringAsFixed(2));
-  }
-
-  /// User-visible price representation.
-  ///
-  String get totalPriceFormatted {
-    return totalPriceEur.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
-  }
-
-  /// Whether this order is deliverable with the current configuration.
-  ///
-  bool get deliverable {
-    return items.every(
-      (cartItem) {
-        return cartItem.delivered != false;
-      },
-    );
-  }
-
-  /// Whether this order is payable with the current configuration.
-  ///
-  bool get payable {
-    return items.every(
-          (cartItem) {
-            return cartItem.payable != false;
-          },
-        ) &&
-        deliveryType?.payable != false;
-  }
-
-  /// Fetches the current cart item count for a specific sale item.
-  ///
-  /// Returns null if the sale item has not been added to the cart.
-  ///
-  int? getItemCount(
-    GsaModelSaleItem saleItem,
-  ) {
-    try {
-      return itemCount.firstWhere(
-        (item) {
-          return item.id == saleItem.id;
-        },
-      ).count;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  /// Calculates and returns the combined price of the specified [saleItem].
-  ///
-  /// Returns null if the item doesn't have a price, and returns 0 if count is not recorded.
-  ///
-  int? getItemTotalPriceCentum(
-    GsaModelSaleItem saleItem,
-  ) {
-    if (saleItem.price?.centum == null) return null;
-    final count = getItemCount(saleItem) ?? 0;
-    return count * saleItem.price!.centum!;
-  }
-
-  /// Calculates and returns the combined price of the specified [saleItem].
-  ///
-  /// Returns null if the item doesn't have a price, and returns 0 if count is not recorded.
-  ///
-  double? getItemTotalPriceUnity(
-    GsaModelSaleItem saleItem,
-  ) {
-    if (saleItem.price?.unity == null) return null;
-    final count = getItemCount(saleItem) ?? 0;
-    return count * saleItem.price!.unity!;
-  }
-
-  /// Adds a sale item to the cart.
-  ///
-  /// Returns the current item cart count.
-  ///
-  void addItem(GsaModelSaleItem saleItem) {
-    if (saleItem.id == null) {
-      throw Exception(
-        'Sale item ID is missing - can\'t add.',
-      );
-    }
-    // Check for existing items in the cart.
-    final saleItemCount = getItemCount(saleItem);
-    if (saleItemCount == null) {
-      // This item hasn't been previously added to the cart.
-      items.add(saleItem);
-      itemCount.add(
-        (
-          id: saleItem.id!,
-          count: 1,
-        ),
-      );
-    } else {
-      final cartItemIndex = itemCount.indexWhere(
-        (item) {
-          return item.id == saleItem.id;
-        },
-      );
-      final currentCount = itemCount[cartItemIndex].count;
-      itemCount[cartItemIndex] = (
-        id: saleItem.id!,
-        count: currentCount + 1,
-      );
-    }
-    GsaDataCheckout.instance.notifyListeners();
-  }
-
-  /// Removes a sale item from the cart.
-  ///
-  void removeItem(GsaModelSaleItem saleItem) {
-    if (saleItem.id == null) {
-      throw Exception(
-        'Sale item ID is missing - can\'t remove.',
-      );
-    }
-    items.removeWhere(
-      (item) {
-        return item.id == saleItem.id;
-      },
-    );
-    itemCount.removeWhere(
-      (item) {
-        return item.id == saleItem.id;
-      },
-    );
-    GsaDataCheckout.instance.notifyListeners();
-  }
-
-  /// Increases the quantity of an item added to the cart.
-  ///
-  /// If the item has not previously been added to the cart, it will be added with this method.
-  ///
-  void increaseItemCount(GsaModelSaleItem item) {
-    addItem(item);
-  }
-
-  /// Decreases the quantity of an item added to the cart,
-  /// or remove the sale item if the quantity is too low.
-  ///
-  void decreaseItemCount(GsaModelSaleItem saleItem) {
-    final count = getItemCount(saleItem) ?? 0;
-    if (count < 2) {
-      removeItem(saleItem);
-    } else {
-      final cartItemIndex = itemCount.indexWhere(
-        (item) {
-          return item.id == saleItem.id;
-        },
-      );
-      final currentCount = itemCount[cartItemIndex].count;
-      itemCount[cartItemIndex] = (
-        id: saleItem.id!,
-        count: currentCount - 1,
-      );
-      GsaDataCheckout.instance.notifyListeners();
-    }
-  }
 
   /// Clears the order by removing all of the items and personal details from the order draft.
   ///
@@ -301,5 +91,508 @@ class GsaModelOrderDraft extends _Model {
       paymentType: GsaModelSaleItem.mock(),
       price: null,
     );
+  }
+}
+
+extension GsaModelOrderDraftState on GsaModelOrderDraft {
+  /// Whether this order is deliverable with the current configuration.
+  ///
+  bool get deliverable {
+    return items.every(
+      (cartItem) {
+        return cartItem.delivered != false;
+      },
+    );
+  }
+
+  /// Whether this order is payable with the current configuration.
+  ///
+  bool get payable {
+    return items.every(
+          (cartItem) {
+            return cartItem.payable != false;
+          },
+        ) &&
+        deliveryType?.payable != false;
+  }
+}
+
+extension GsaModelOrderDraftItems on GsaModelOrderDraft {
+  /// Total number of all sale items in the cart.
+  ///
+  int get totalItemCount {
+    int count = 0;
+    for (final itemCountEntry in itemCount) {
+      count += itemCountEntry.count;
+    }
+    return count;
+  }
+
+  /// Calculates and returns the combined price of the specified [saleItem].
+  ///
+  /// Returns null if the item price is not larger than 0.
+  ///
+  int? getItemTotalPriceCentum(
+    GsaModelSaleItem saleItem,
+  ) {
+    final itemSaleOptions = [
+      saleItem,
+      if (saleItem.options != null) ...saleItem.options!,
+    ];
+    int price = 0;
+    for (final saleOption in itemSaleOptions.indexed) {
+      final priceCentum = saleOption.$2.price?.centum;
+      if (priceCentum != null) {
+        int? count;
+        if (saleOption.$1 == 0) {
+          count = getItemCount(saleOption.$2);
+        } else {
+          count = getItemOptionCount(saleOption.$2);
+        }
+        if (count != null) {
+          price += priceCentum * count;
+        }
+      }
+    }
+    if (price == 0) return null;
+    return price;
+  }
+
+  /// Calculates and returns the combined price of the specified [saleItemOption].
+  ///
+  /// Returns null if the item option price is not larger than 0.
+  ///
+  int? getItemOptionTotalPriceCentum(
+    GsaModelSaleItem saleItemOption,
+  ) {
+    final optionCount = getItemOptionCount(saleItemOption);
+    if (optionCount == null || saleItemOption.price?.centum == null) {
+      return null;
+    }
+    return optionCount * saleItemOption.price!.centum!;
+  }
+
+  /// Calculates and returns the combined price of the specified [saleItem].
+  ///
+  /// Returns null if the calculated item price is not larger than 0.
+  ///
+  double? getItemTotalPriceUnity(
+    GsaModelSaleItem saleItem,
+  ) {
+    final priceCentum = getItemTotalPriceCentum(saleItem);
+    if (priceCentum == null) return null;
+    return priceCentum / 100;
+  }
+
+  /// Calculates and returns the combined price of the specified [saleItem].
+  ///
+  /// Returns null if the calculated item price is not larger than 0.
+  ///
+  double? getItemOptionTotalPriceUnity(
+    GsaModelSaleItem saleItem,
+  ) {
+    final priceCentum = getItemOptionTotalPriceCentum(saleItem);
+    if (priceCentum == null) return null;
+    return priceCentum / 100;
+  }
+
+  /// Total combined items price in centum.'
+  ///
+  int get totalItemPriceCentum {
+    int price = 0;
+    for (final saleItem in items) {
+      final itemPrice = getItemTotalPriceCentum(saleItem);
+      if (itemPrice != null) {
+        price += itemPrice;
+      }
+    }
+    return price;
+  }
+
+  /// Total cart price in EUR cents.'
+  ///
+  int get totalPriceCentum {
+    int price = totalItemPriceCentum;
+    price += deliveryType?.price?.centum ?? 0;
+    price += paymentType?.price?.centum ?? 0;
+    return price;
+  }
+
+  /// Total cart price in EUR.'
+  ///
+  double get totalItemPriceUnity {
+    return double.parse((totalPriceCentum / 100).toStringAsFixed(2));
+  }
+
+  /// Total cart price in EUR.'
+  ///
+  double get totalPriceUnity {
+    return double.parse((totalPriceCentum / 100).toStringAsFixed(2));
+  }
+
+  /// User-visible price representation.
+  ///
+  String get totalItemPriceFormatted {
+    return totalPriceUnity.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
+  }
+
+  /// User-visible price representation.
+  ///
+  String get totalPriceFormatted {
+    return totalPriceUnity.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
+  }
+
+  /// Fetches the current cart item count for a specific sale item.
+  ///
+  /// Returns null if the sale item has not been added to the cart.
+  ///
+  int? getItemCount(
+    GsaModelSaleItem saleItem,
+  ) {
+    return itemCount.firstWhereOrNull(
+      (item) {
+        return item.optionId == null && item.id == saleItem.id;
+      },
+    )?.count;
+  }
+
+  /// Fetches the current cart item count for a specific sale item option.
+  ///
+  /// Returns null if no such option has been added to the cart.
+  ///
+  int? getItemOptionCount(
+    GsaModelSaleItem saleItemOption,
+  ) {
+    return itemCount.firstWhereOrNull(
+      (item) {
+        return item.optionId != null && item.optionId == saleItemOption.id;
+      },
+    )?.count;
+  }
+
+  /// Fetches the current cart item count for relevant sale item options.
+  ///
+  /// Returns null if no such sale item option has been added to the cart.
+  ///
+  int? getItemOptionsCount(
+    GsaModelSaleItem saleItem,
+  ) {
+    final optionsCounts = itemCount.where(
+      (item) {
+        return item.optionId != null && item.id == saleItem.id;
+      },
+    );
+    if (optionsCounts.isEmpty) {
+      return null;
+    } else {
+      int optionCount = 0;
+      for (final option in optionsCounts) {
+        optionCount += option.count;
+      }
+      return optionCount;
+    }
+  }
+
+  /// Returns the total number of item and options added to the cart.
+  ///
+  int? getTotalItemCount(
+    GsaModelSaleItem saleItem,
+  ) {
+    final itemCount = getItemCount(saleItem);
+    final itemOptionsCount = getItemOptionsCount(saleItem);
+    if (itemCount == null && itemOptionsCount == null) {
+      return null;
+    }
+    return (itemCount ?? 0) + (itemOptionsCount ?? 0);
+  }
+
+  /// Adds a sale item to the cart.
+  ///
+  /// Returns the current item cart count.
+  ///
+  void addItem(GsaModelSaleItem saleItem) {
+    if (saleItem.id == null) {
+      throw Exception(
+        'Sale item ID is missing - can\'t add.',
+      );
+    }
+    // Check for existing items in the cart.
+    final saleItemCount = getItemCount(saleItem);
+    if (saleItemCount == null) {
+      // This item hasn't been previously added to the cart.
+      items.add(saleItem);
+      itemCount.add(
+        (
+          id: saleItem.id!,
+          optionId: null,
+          count: 1,
+        ),
+      );
+    } else {
+      final cartItemIndex = itemCount.indexWhere(
+        (item) {
+          return item.optionId == null && item.id == saleItem.id;
+        },
+      );
+      if (cartItemIndex == -1) {
+        throw Exception(
+          'Can\'t find item index to add.',
+        );
+      }
+      final currentCount = itemCount[cartItemIndex].count;
+      itemCount[cartItemIndex] = (
+        id: saleItem.id!,
+        optionId: null,
+        count: currentCount + 1,
+      );
+    }
+    GsaDataCheckout.instance.notifyListeners();
+  }
+
+  /// Validates the [saleItem] and [optionIndex] values.
+  ///
+  /// Returns the option selection object.
+  ///
+  GsaModelSaleItem _verifyItemOptionInput({
+    required GsaModelSaleItem saleItem,
+    required int optionIndex,
+  }) {
+    if (saleItem.id == null) {
+      throw Exception(
+        'Sale item ID is missing - can\'t add option.',
+      );
+    }
+    if (saleItem.options?.isNotEmpty != true) {
+      throw Exception(
+        'Sale item options missing - can\'t add option.',
+      );
+    }
+    if (optionIndex == -1) {
+      throw Exception(
+        'Option index unreachable - can\'t add option..',
+      );
+    }
+    final option = saleItem.options!.elementAtOrNull(optionIndex);
+    if (option == null) {
+      throw Exception(
+        'Sale item option is missing - can\'t add option.',
+      );
+    }
+    if (option.id == null) {
+      throw Exception(
+        'Sale item option ID is missing - can\'t add option.',
+      );
+    }
+    return option;
+  }
+
+  /// Adds a specified [saleItem] option entry with [optionIndex] into the order draft.
+  ///
+  void addItemOption({
+    required GsaModelSaleItem saleItem,
+    required int optionIndex,
+  }) {
+    final saleItemOption = _verifyItemOptionInput(
+      saleItem: saleItem,
+      optionIndex: optionIndex,
+    );
+    // Check for existing items in the cart.
+    final saleItemOptionCount = getItemOptionCount(saleItemOption);
+    if (saleItemOptionCount == null) {
+      // Item option has not yet been added to the cart.
+      final saleItemCount = getItemCount(saleItem);
+      if (saleItemCount == null) {
+        items.add(saleItem);
+      }
+      itemCount.add(
+        (
+          id: saleItem.id!,
+          optionId: saleItemOption.id!,
+          count: 1,
+        ),
+      );
+    } else {
+      // Item option has been added to the cart.
+      final cartItemIndex = itemCount.indexWhere(
+        (item) {
+          return item.optionId != null && item.optionId == saleItemOption.id;
+        },
+      );
+      if (cartItemIndex == -1) {
+        throw Exception(
+          'Can\'t find item option index to add.',
+        );
+      }
+      final currentCount = itemCount[cartItemIndex].count;
+      itemCount[cartItemIndex] = (
+        id: saleItem.id!,
+        optionId: saleItemOption.id!,
+        count: currentCount + 1,
+      );
+    }
+    GsaDataCheckout.instance.notifyListeners();
+  }
+
+  /// Removes a sale item from the cart.
+  ///
+  void removeItem(GsaModelSaleItem saleItem) {
+    if (saleItem.id == null) {
+      throw Exception(
+        'Sale item ID is missing - can\'t remove.',
+      );
+    }
+    items.removeWhere(
+      (item) {
+        return item.id == saleItem.id;
+      },
+    );
+    itemCount.removeWhere(
+      (item) {
+        return item.id == saleItem.id;
+      },
+    );
+    GsaDataCheckout.instance.notifyListeners();
+  }
+
+  /// Removes a sale item option from the cart.
+  ///
+  void removeItemOption({
+    required GsaModelSaleItem saleItem,
+    required int optionIndex,
+  }) {
+    final saleItemOption = _verifyItemOptionInput(
+      saleItem: saleItem,
+      optionIndex: optionIndex,
+    );
+    itemCount.removeWhere(
+      (item) {
+        return item.optionId != null && item.optionId == saleItemOption.id;
+      },
+    );
+    final saleItemCount = getTotalItemCount(saleItem);
+    if (saleItemCount == null) {
+      items.removeWhere(
+        (item) {
+          return item.id == saleItem.id;
+        },
+      );
+    }
+    GsaDataCheckout.instance.notifyListeners();
+  }
+
+  /// Increases the quantity of an item added to the cart.
+  ///
+  /// If the item has not previously been added to the cart,
+  /// it will be added with this method.
+  ///
+  void increaseItemCount(GsaModelSaleItem item) {
+    addItem(item);
+  }
+
+  /// Increases the quantity of an item option added to the cart.
+  ///
+  /// If the item option has not previously been added to the cart,
+  /// it will be added with this method.
+  ///
+  void increaseItemOptionCount({
+    required GsaModelSaleItem saleItem,
+    required int optionIndex,
+  }) {
+    addItemOption(
+      saleItem: saleItem,
+      optionIndex: optionIndex,
+    );
+  }
+
+  /// Decreases the quantity of an item added to the cart,
+  /// or remove the sale item if the quantity is too low.
+  ///
+  void decreaseItemCount(GsaModelSaleItem saleItem) {
+    final count = getItemCount(saleItem) ?? 0;
+    if (count < 2) {
+      removeItem(saleItem);
+    } else {
+      final cartItemIndex = itemCount.indexWhere(
+        (item) {
+          return item.id == saleItem.id;
+        },
+      );
+      if (cartItemIndex == -1) {
+        throw Exception(
+          'Can\'t find item index to decrease.',
+        );
+      }
+      final currentCount = itemCount[cartItemIndex].count;
+      itemCount[cartItemIndex] = (
+        id: saleItem.id!,
+        optionId: null,
+        count: currentCount - 1,
+      );
+      GsaDataCheckout.instance.notifyListeners();
+    }
+  }
+
+  /// Decreases the quantity of an item option added to the cart,
+  /// or remove the sale item option if the quantity is too low.
+  ///
+  void decreaseItemOptionCount({
+    required GsaModelSaleItem saleItem,
+    required int optionIndex,
+  }) {
+    final saleItemOption = _verifyItemOptionInput(
+      saleItem: saleItem,
+      optionIndex: optionIndex,
+    );
+    final count = getItemOptionCount(saleItemOption) ?? 0;
+    if (count < 2) {
+      removeItemOption(
+        saleItem: saleItem,
+        optionIndex: optionIndex,
+      );
+    } else {
+      final cartItemIndex = itemCount.indexWhere(
+        (item) {
+          return item.optionId != null && item.optionId == saleItemOption.id;
+        },
+      );
+      if (cartItemIndex == -1) {
+        throw Exception(
+          'Can\'t find item option index to decrease.',
+        );
+      }
+      final currentCount = itemCount[cartItemIndex].count;
+      itemCount[cartItemIndex] = (
+        id: saleItem.id!,
+        optionId: saleItemOption.id!,
+        count: currentCount - 1,
+      );
+      GsaDataCheckout.instance.notifyListeners();
+    }
+  }
+
+  /// Returs a list of sale item options added to the cart.
+  ///
+  List<GsaModelSaleItem> getCartSaleItemOptions(
+    GsaModelSaleItem saleItem,
+  ) {
+    if (saleItem.options?.isNotEmpty != true) {
+      throw Exception(
+        'No sale item options defined for ${saleItem.id}.',
+      );
+    }
+    final matchingOptions = itemCount.where(
+      (itemCountEntry) {
+        return itemCountEntry.id == saleItem.id;
+      },
+    );
+    return saleItem.options!.where(
+      (option) {
+        return matchingOptions.where(
+          (matchingOption) {
+            return matchingOption.optionId != null && matchingOption.optionId == option.id;
+          },
+        ).isNotEmpty;
+      },
+    ).toList();
   }
 }

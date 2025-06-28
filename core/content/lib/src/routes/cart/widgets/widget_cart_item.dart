@@ -33,7 +33,7 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
   Future<void> _removeItem() async {
     final confirmed = await GsaWidgetOverlayConfirmation(
       'Remove "${widget.cartItem.name}" from cart?',
-    ).openDialog(context);
+    ).openDialog();
     if (confirmed == true) {
       GsaDataCheckout.instance.orderDraft.removeItem(widget.cartItem);
       if (GsaDataCheckout.instance.orderDraft.items.isEmpty) {
@@ -243,7 +243,7 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
         GsaWidgetOverlaySaleItem(
           widget.cartItem,
           displayedFromCart: true,
-        ).openBottomSheet(context);
+        ).openBottomSheet();
       },
     );
   }
