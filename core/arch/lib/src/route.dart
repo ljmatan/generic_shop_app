@@ -225,14 +225,16 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
     List<
             ({
               GsaData notifier,
-              void Function() callback,
+              Function? callback,
             })>
         subscriptionEntries,
   ) {
     for (final subscriptionEntry in subscriptionEntries) {
       final listenerId = subscriptionEntry.notifier.addListener(
-        () {
-          subscriptionEntry.callback();
+        () async {
+          if (subscriptionEntry.callback != null) {
+            await subscriptionEntry.callback!();
+          }
           _rebuild();
         },
       );
