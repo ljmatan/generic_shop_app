@@ -214,6 +214,34 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
   ///
   final mainScrollController = ScrollController();
 
+  final _listeners = <({
+    String id,
+    GsaData notifier,
+  })>[];
+
+  /// Registers a listener with a given [GsaData] [notifier] with the specified [callback].
+  ///
+  void subscribe(
+    List<
+            ({
+              GsaData notifier,
+              void Function() callback,
+            })>
+        subscriptionEntries,
+  ) {
+    for (final subscriptionEntry in subscriptionEntries) {
+      final listenerId = subscriptionEntry.notifier.addListener(
+        subscriptionEntry.callback,
+      );
+      _listeners.add(
+        (
+          id: listenerId,
+          notifier: subscriptionEntry.notifier,
+        ),
+      );
+    }
+  }
+
   @override
   @mustCallSuper
   void initState() {
@@ -263,6 +291,9 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
   void dispose() {
     _timeViewedTimer?.cancel();
     mainScrollController.dispose();
+    for (final listener in _listeners) {
+      listener.notifier.removeListener(id: listener.id);
+    }
     GsaRoute.navigatorObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
     GsaRoute._observables.remove(this);

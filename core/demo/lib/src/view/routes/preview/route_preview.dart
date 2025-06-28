@@ -266,7 +266,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       } catch (e) {
                         Navigator.pop(context);
                         GsaWidgetOverlayAlert(
-                          message: '$e',
+                          '$e',
                         ).openDialog(context);
                       }
                     },
@@ -457,7 +457,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           } catch (e) {
                             Navigator.pop(context);
                             GsaWidgetOverlayAlert(
-                              message: '$e',
+                              '$e',
                             ).openDialog(context);
                           }
                         },
