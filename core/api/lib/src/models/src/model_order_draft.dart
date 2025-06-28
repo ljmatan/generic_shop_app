@@ -310,7 +310,10 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
   ///
   /// Returns the current item cart count.
   ///
-  void addItem(GsaModelSaleItem saleItem) {
+  void addItem({
+    required GsaModelSaleItem saleItem,
+    int? newCount,
+  }) {
     if (saleItem.id == null) {
       throw Exception(
         'Sale item ID is missing - can\'t add.',
@@ -325,7 +328,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
         (
           id: saleItem.id!,
           optionId: null,
-          count: 1,
+          count: newCount ?? 1,
         ),
       );
     } else {
@@ -343,7 +346,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
       itemCount[cartItemIndex] = (
         id: saleItem.id!,
         optionId: null,
-        count: currentCount + 1,
+        count: newCount ?? (currentCount + 1),
       );
     }
     GsaDataCheckout.instance.notifyListeners();
@@ -391,6 +394,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
   void addItemOption({
     required GsaModelSaleItem saleItem,
     required int optionIndex,
+    int? newCount,
   }) {
     final saleItemOption = _verifyItemOptionInput(
       saleItem: saleItem,
@@ -408,7 +412,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
         (
           id: saleItem.id!,
           optionId: saleItemOption.id!,
-          count: 1,
+          count: newCount ?? 1,
         ),
       );
     } else {
@@ -427,7 +431,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
       itemCount[cartItemIndex] = (
         id: saleItem.id!,
         optionId: saleItemOption.id!,
-        count: currentCount + 1,
+        count: newCount ?? (currentCount + 1),
       );
     }
     GsaDataCheckout.instance.notifyListeners();
@@ -486,7 +490,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
   /// it will be added with this method.
   ///
   void increaseItemCount(GsaModelSaleItem item) {
-    addItem(item);
+    addItem(saleItem: item);
   }
 
   /// Increases the quantity of an item option added to the cart.
@@ -567,6 +571,47 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
         count: currentCount - 1,
       );
       GsaDataCheckout.instance.notifyListeners();
+    }
+  }
+
+  /// Specifies the [saleItem] cart count with [newCount].
+  ///
+  /// If no valid count is provided, the item is removed.
+  ///
+  void updateItemCount({
+    required GsaModelSaleItem saleItem,
+    required int newCount,
+  }) {
+    if (newCount < 1) {
+      removeItem(saleItem);
+    } else {
+      addItem(
+        saleItem: saleItem,
+        newCount: newCount,
+      );
+    }
+  }
+
+  /// Specifies the [saleItem] option cart count with [newCount].
+  ///
+  /// If no valid count is provided, the item is removed.
+  ///
+  void updateItemOptionCount({
+    required GsaModelSaleItem saleItem,
+    required int optionIndex,
+    required int newCount,
+  }) {
+    if (newCount < 1) {
+      removeItemOption(
+        saleItem: saleItem,
+        optionIndex: optionIndex,
+      );
+    } else {
+      addItemOption(
+        saleItem: saleItem,
+        optionIndex: optionIndex,
+        newCount: newCount,
+      );
     }
   }
 

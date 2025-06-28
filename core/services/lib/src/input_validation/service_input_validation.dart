@@ -183,7 +183,7 @@ class GsaServiceInputValidation extends GsaService {
   String? number(String? input) {
     if (input == null) return 'Number input is empty.';
     final trimmed = input.trim();
-    if (trimmed.isEmpty) {
+    if (trimmed.isEmpty || int.tryParse(trimmed) == null) {
       return 'Please verify your number input.';
     }
     return null;

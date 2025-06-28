@@ -174,7 +174,9 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                         ],
                       ),
                       onPressed: () {
-                        GsaDataCheckout.instance.orderDraft.addItem(widget.saleItem);
+                        GsaDataCheckout.instance.orderDraft.addItem(
+                          saleItem: widget.saleItem,
+                        );
                         setState(() => _cartCount++);
                       },
                     ),

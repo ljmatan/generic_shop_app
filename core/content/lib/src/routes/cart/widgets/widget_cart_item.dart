@@ -229,7 +229,7 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                                   }
                                 : () {
                                     GsaDataCheckout.instance.orderDraft.addItem(
-                                      widget.cartItem,
+                                      saleItem: widget.cartItem,
                                     );
                                   },
                           ),
