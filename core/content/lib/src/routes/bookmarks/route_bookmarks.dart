@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_data/data.dart';
@@ -157,8 +158,8 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                                                 ),
                                               if (item.price?.centum != null)
                                                 GsaWidgetText(
-                                                  '${item.price!.formatted()}' +
-                                                      (item.price?.discount?.centum != null ? ' ${item.price!.discount!.formatted()}' : ''),
+                                                  '${item.price!.formatted}' +
+                                                      (item.price?.discount?.centum != null ? ' ${item.price!.discount!.formatted}' : ''),
                                                   maxLines: 1,
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.w700,
@@ -174,14 +175,15 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                                                       ),
                                                     ),
                                                     GsaWidgetTextSpan(
-                                                      (List.from(item.options!)
-                                                            ..sort(
-                                                              (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                                                                b.price?.centum ?? double.infinity,
-                                                              ),
-                                                            ))[0]
-                                                          .price!
-                                                          .formatted()!,
+                                                      (List<GsaModelSaleItem>.from(item.options ?? [])
+                                                                ..sort(
+                                                                  (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                                                                    b.price?.centum ?? double.infinity,
+                                                                  ),
+                                                                ))[0]
+                                                              .price
+                                                              ?.formatted ??
+                                                          'N/A',
                                                       style: const TextStyle(
                                                         fontWeight: FontWeight.w700,
                                                       ),

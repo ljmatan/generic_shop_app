@@ -70,6 +70,18 @@ enum GsaModelPriceCurrencyType {
     }
   }
 
+  /// Separator for decimals,
+  /// defined for each of the currencies according to their default display.
+  ///
+  String get decimalSeparator {
+    switch (this) {
+      case GsaModelPriceCurrencyType.usd:
+        return '.';
+      default:
+        return ',';
+    }
+  }
+
   /// Converts an amount in centum from one currency to another.
   ///
   int convertCentum(
@@ -103,7 +115,9 @@ class GsaModelPrice extends _Model {
     this.centum,
     this.discount,
     this.clientVisible,
-  });
+  }) {
+    currencyType ??= GsaConfig.currency;
+  }
 
   /// The type of the currency with which the price is denoted.
   ///
@@ -125,14 +139,30 @@ class GsaModelPrice extends _Model {
     GsaModelPriceCurrencyType.eur,
   );
 
-  /// Formatted price amount in EUR, or with an applied currency conersion factor.
+  /// Formatted price amount in EUR, or with an applied currency conversion factor.
   ///
-  String? formatted() {
+  String? get formatted {
     if (centum == null) return null;
-    return (currencyType != null && currencyType != conversionFactorNotifier.value
-            ? currencyType!.convertUnity(conversionFactorNotifier.value, unity!).toStringAsFixed(2)
-            : unity!.toStringAsFixed(2)) +
-        ' ${conversionFactorNotifier.value.symbol}';
+    final value = currencyType != null && currencyType != GsaModelPrice.conversionFactorNotifier.value
+        ? currencyType!.convertUnity(GsaModelPrice.conversionFactorNotifier.value, unity!)
+        : unity!;
+    final parts = value.toStringAsFixed(2).split('.');
+    final integerPart = parts[0];
+    final decimalPart = parts[1];
+    final useCommaDecimalSeparator = currencyType?.decimalSeparator == ',';
+    final thousandSeparator = useCommaDecimalSeparator ? '.' : ',';
+    final decimalSeparator = useCommaDecimalSeparator ? ',' : '.';
+    final buffer = StringBuffer();
+    for (int i = 0; i < integerPart.length; i++) {
+      int reversedIndex = integerPart.length - 1 - i;
+      buffer.write(integerPart[reversedIndex]);
+      if ((i + 1) % 3 == 0 && i + 1 != integerPart.length) {
+        buffer.write(thousandSeparator);
+      }
+    }
+    final formattedInt = buffer.toString().split('').reversed.join();
+    return '$formattedInt$decimalSeparator$decimalPart '
+        '${GsaModelPrice.conversionFactorNotifier.value.symbol}';
   }
 
   /// The discount applied to this price.
@@ -182,7 +212,9 @@ class GsaModelDiscount extends _Model {
     this.timeStartIso8601,
     this.timeEndIso8601,
     super.consentIds,
-  });
+  }) {
+    currencyType ??= GsaConfig.currency;
+  }
 
   /// The type of the currency with which the price is denoted.
   ///
@@ -198,12 +230,10 @@ class GsaModelDiscount extends _Model {
 
   /// Human-readable discount amount in EUR, or in any other currency with applied [conversionFactor].
   ///
-  String? formatted() {
-    if (centum == null) return null;
-    return (currencyType != null && currencyType != GsaModelPrice.conversionFactorNotifier.value
-            ? currencyType!.convertUnity(GsaModelPrice.conversionFactorNotifier.value, unity!).toStringAsFixed(2)
-            : unity!.toStringAsFixed(2)) +
-        ' ${GsaModelPrice.conversionFactorNotifier.value.symbol}';
+  String? get formatted {
+    return GsaModelPrice(
+      centum: centum,
+    ).formatted;
   }
 
   /// The start time of when the discount is applicable in ISO 8601 format.

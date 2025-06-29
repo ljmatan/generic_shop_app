@@ -116,7 +116,10 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(6),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
                                   child: GsaWidgetText(
                                     '$cartItemCount',
                                     style: TextStyle(
@@ -245,8 +248,10 @@ class _WidgetHeaderOverlayEmptyCart extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           GsaWidgetText(
-            'Your cart is looking a bit empty right now. Take your time browsing through our selection '
-            'and when you find something you love, just click "Add to Cart" to bring a little joy '
+            'Your cart is looking a bit empty right now. '
+            'Take your time browsing through our selection '
+            'and when you find something you love, '
+            'just click "Add to Cart" to bring a little joy '
             'into your shopping experience!',
             textAlign: TextAlign.justify,
             style: TextStyle(

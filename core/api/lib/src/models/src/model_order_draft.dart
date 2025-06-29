@@ -233,13 +233,19 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
   /// User-visible price representation.
   ///
   String get totalItemPriceFormatted {
-    return totalPriceUnity.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
+    return GsaModelPrice(
+          centum: totalItemPriceCentum,
+        ).formatted ??
+        'N/A';
   }
 
   /// User-visible price representation.
   ///
   String get totalPriceFormatted {
-    return totalPriceUnity.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
+    return GsaModelPrice(
+          centum: totalPriceCentum,
+        ).formatted ??
+        'N/A';
   }
 
   /// Fetches the current cart item count for a specific sale item.
@@ -319,6 +325,11 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
         'Sale item ID is missing - can\'t add.',
       );
     }
+    if (newCount != null && saleItem.maxCount != null && newCount > saleItem.maxCount!) {
+      throw Exception(
+        'Amount $newCount larger than max count ${saleItem.maxCount}.',
+      );
+    }
     // Check for existing items in the cart.
     final saleItemCount = getItemCount(saleItem);
     if (saleItemCount == null) {
@@ -343,10 +354,16 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
         );
       }
       final currentCount = itemCount[cartItemIndex].count;
+      final updatedCount = newCount ?? (currentCount + 1);
+      if (saleItem.maxCount != null && updatedCount > saleItem.maxCount!) {
+        throw Exception(
+          'Amount $updatedCount larger than max count ${saleItem.maxCount}.',
+        );
+      }
       itemCount[cartItemIndex] = (
         id: saleItem.id!,
         optionId: null,
-        count: newCount ?? (currentCount + 1),
+        count: updatedCount,
       );
     }
     GsaDataCheckout.instance.notifyListeners();
@@ -400,6 +417,11 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
       saleItem: saleItem,
       optionIndex: optionIndex,
     );
+    if (newCount != null && saleItemOption.maxCount != null && newCount > saleItemOption.maxCount!) {
+      throw Exception(
+        'Amount $newCount larger than max count ${saleItemOption.maxCount}.',
+      );
+    }
     // Check for existing items in the cart.
     final saleItemOptionCount = getItemOptionCount(saleItemOption);
     if (saleItemOptionCount == null) {
@@ -428,10 +450,16 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
         );
       }
       final currentCount = itemCount[cartItemIndex].count;
+      final updatedCount = newCount ?? (currentCount + 1);
+      if (saleItemOption.maxCount != null && updatedCount > saleItemOption.maxCount!) {
+        throw Exception(
+          'Amount $updatedCount larger than max count ${saleItemOption.maxCount}.',
+        );
+      }
       itemCount[cartItemIndex] = (
         id: saleItem.id!,
         optionId: saleItemOption.id!,
-        count: newCount ?? (currentCount + 1),
+        count: updatedCount,
       );
     }
     GsaDataCheckout.instance.notifyListeners();

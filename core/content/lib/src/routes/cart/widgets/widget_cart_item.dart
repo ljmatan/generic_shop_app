@@ -165,7 +165,7 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               GsaWidgetText(
-                                '$_cartCount x ${widget.cartItem.price!.formatted()} '
+                                '$_cartCount x ${widget.cartItem.price!.formatted} '
                                 '${GsaConfig.currency.code}',
                                 style: const TextStyle(
                                   fontSize: 10,

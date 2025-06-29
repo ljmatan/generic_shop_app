@@ -71,7 +71,7 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
                                             ),
                                           ),
                                         GsaWidgetText(
-                                          saleItem.price?.formatted() ?? 'N/A',
+                                          saleItem.price?.formatted ?? 'N/A',
                                           maxLines: 2,
                                           style: const TextStyle(
                                             fontSize: 12,

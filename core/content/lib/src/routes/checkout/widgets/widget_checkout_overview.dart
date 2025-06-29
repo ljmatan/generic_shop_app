@@ -112,7 +112,7 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
                           Row(
                             children: [
                               GsaWidgetText(
-                                '${product.$2.cartCount()} × ${product.$2.price?.formatted()} '
+                                '${product.$2.cartCount()} × ${product.$2.price?.formatted} '
                                 '${GsaConfig.currency.code} ',
                                 style: const TextStyle(
                                   fontSize: 12,

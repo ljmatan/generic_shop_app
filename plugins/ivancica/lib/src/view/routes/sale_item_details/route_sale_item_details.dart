@@ -190,7 +190,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                       );
                                     }
                                     return GsaWidgetText(
-                                      value!.price!.formatted()!,
+                                      value!.price!.formatted!,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,

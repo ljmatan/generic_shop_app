@@ -152,7 +152,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                                     currencyType: GsaModelPriceCurrencyType.values.firstWhereOrNull(
                                       (currency) => currency.symbol == _originData.currency,
                                     ),
-                                  ).formatted() ??
+                                  ).formatted ??
                                   'N/A',
                             ),
                         }.indexed)

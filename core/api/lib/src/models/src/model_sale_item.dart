@@ -173,9 +173,12 @@ class GsaModelSaleItem extends _Model {
     GsaModelOrderDraft? orderDraft,
   }) {
     orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    final price = totalCartPriceUnity(orderDraft: orderDraft);
+    final price = totalCartPriceCentum(orderDraft: orderDraft);
     if (price == null) return null;
-    return price.toStringAsFixed(2) + ' ${GsaConfig.currency.code}';
+    return GsaModelPrice(
+          centum: price,
+        ).formatted ??
+        'N/A';
   }
 
   /// Method user by plugin implementations to serialise data from JSON.

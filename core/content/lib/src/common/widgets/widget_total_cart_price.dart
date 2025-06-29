@@ -41,14 +41,14 @@ class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
                     ? 'Specified at Checkout'
                     : GsaDataCheckout.instance.orderDraft.deliveryType?.price?.centum == 0
                         ? 'FREE'
-                        : GsaDataCheckout.instance.orderDraft.deliveryType!.price?.formatted() ?? 'N/A',
+                        : GsaDataCheckout.instance.orderDraft.deliveryType!.price?.formatted ?? 'N/A',
                 tooltip: 'Optional doorstep delivery.',
               ),
               if (GsaDataCheckout.instance.orderDraft.paymentType?.price?.centum != null &&
                   GsaDataCheckout.instance.orderDraft.paymentType!.price!.centum! > 0)
                 (
                   label: 'Payment',
-                  display: GsaDataCheckout.instance.orderDraft.paymentType!.price!.formatted(),
+                  display: GsaDataCheckout.instance.orderDraft.paymentType!.price!.formatted,
                   tooltip: 'The additional cost of the specified payment method.',
                 ),
               (

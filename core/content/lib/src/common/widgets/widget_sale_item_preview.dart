@@ -122,7 +122,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                   child: GsaWidgetText(
-                                    '${widget.saleItem.price!.discount!.formatted()} EUR',
+                                    '${widget.saleItem.price!.discount!.formatted} EUR',
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.secondary,
                                     ),
@@ -158,8 +158,8 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                         ),
                         if (widget.saleItem.price?.centum != null)
                           GsaWidgetText(
-                            '${widget.saleItem.price!.formatted()}' +
-                                (widget.saleItem.price?.discount?.centum != null ? ' ${widget.saleItem.price!.discount!.formatted()}' : ''),
+                            '${widget.saleItem.price!.formatted}' +
+                                (widget.saleItem.price?.discount?.centum != null ? ' ${widget.saleItem.price!.discount!.formatted}' : ''),
                             maxLines: 1,
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
@@ -175,14 +175,15 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                 ),
                               ),
                               GsaWidgetTextSpan(
-                                (List.from(widget.saleItem.options!)
-                                      ..sort(
-                                        (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                                          b.price?.centum ?? double.infinity,
-                                        ),
-                                      ))[0]
-                                    .price!
-                                    .formatted()!,
+                                (List<GsaModelSaleItem>.from(widget.saleItem.options ?? [])
+                                          ..sort(
+                                            (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+                                              b.price?.centum ?? double.infinity,
+                                            ),
+                                          ))[0]
+                                        .price
+                                        ?.formatted ??
+                                    'N/A',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                 ),

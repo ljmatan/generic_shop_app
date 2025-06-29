@@ -192,7 +192,7 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                                 ),
                               ),
                               GsaWidgetText(
-                                ' ${option.$2.price?.formatted()}',
+                                ' ${option.$2.price?.formatted}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,
