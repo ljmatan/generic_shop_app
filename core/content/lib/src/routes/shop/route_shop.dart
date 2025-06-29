@@ -58,6 +58,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                 final saleItem = value as GsaModelSaleItem;
                 return [
                   if (saleItem.name?.isNotEmpty == true) saleItem.name!,
+                  if (saleItem.productCode?.isNotEmpty == true) saleItem.productCode!,
                 ];
               },
             )
