@@ -197,7 +197,9 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
   ) {
     final priceCentum = getItemOptionTotalPriceCentum(saleItem);
     if (priceCentum == null) return null;
-    return priceCentum / 100;
+    final value = priceCentum / 100;
+    if (value == 0) return null;
+    return value;
   }
 
   /// Total combined items price in centum.'
