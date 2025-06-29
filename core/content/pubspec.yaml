@@ -19,11 +19,13 @@ dependencies:
     path: ../services
   generic_shop_app_data:
     path: ../data
-  flutter_svg: ^2.0.17
-  webview_flutter: ^4.10.0
-  flutter_map: ^7.0.2
-  collection: ^1.19.0
+  flutter_svg: ^2.2.0
+  webview_flutter: ^4.13.0
+  flutter_map: ^8.1.1
+  collection: ^1.19.1
   camera: ^0.11.1
+  zxing2: ^0.2.4
+  image: ^4.5.4
 
 dev_dependencies:
   flutter_test:

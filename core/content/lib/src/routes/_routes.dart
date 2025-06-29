@@ -72,7 +72,13 @@ enum GsaRoutes implements GsaRouteType {
       case GsaRoutes.bookmarks:
         return ([args]) => const GsaRouteBookmarks();
       case GsaRoutes.camera:
-        return ([args]) => const GsaRouteCamera();
+        return ([args]) => GsaRouteCamera(
+              mode: GsaRouteCameraMode.values.firstWhere(
+                (value) {
+                  return value.name == args['mode'];
+                },
+              ),
+            );
       case GsaRoutes.cart:
         return ([args]) => const GsaRouteCart();
       case GsaRoutes.chat:

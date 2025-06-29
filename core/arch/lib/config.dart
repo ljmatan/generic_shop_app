@@ -41,9 +41,27 @@ class GsaConfig {
   ///
   static bool editMode = const String.fromEnvironment('gsaEditMode').toLowerCase() == 'true';
 
-  /// Whether the client access to the application requires login or registration.
+  static const _gitBranch = String.fromEnvironment('gsaGitBranch');
+
+  /// Git branch this build was compiled from.
   ///
-  static bool requiresAuthentication = const String.fromEnvironment('gsaRequiresAuthentication').toLowerCase() == 'true';
+  static String? gitBranch = _gitBranch.isEmpty ? null : _gitBranch;
+
+  /// The specified runtime language notifier.
+  ///
+  static final languageNotifier = ValueNotifier<GsaServiceI18NLanguage>(GsaServiceI18NLanguage.en);
+
+  /// The specified runtime language.
+  ///
+  static GsaServiceI18NLanguage get language => languageNotifier.value;
+
+  /// The specified runtime display currency.
+  ///
+  static final currencyNotifier = GsaModelPrice.conversionFactorNotifier;
+
+  /// The specified runtime currency.
+  ///
+  static GsaModelPriceCurrencyType get currency => currencyNotifier.value;
 
   /// Whether cart and shopping options are enabled.
   ///
@@ -114,28 +132,6 @@ class GsaConfig {
   /// The value can alternatively be adjusted during the application runtime.
   ///
   static bool guestLoginEnabled = const String.fromEnvironment('gsaGuestLoginEnabled').toLowerCase() != 'false';
-
-  static const _gitBranch = String.fromEnvironment('gsaGitBranch');
-
-  /// Git branch this build was compiled from.
-  ///
-  static String? gitBranch = _gitBranch.isEmpty ? null : _gitBranch;
-
-  /// The specified runtime language notifier.
-  ///
-  static final languageNotifier = ValueNotifier<GsaServiceI18NLanguage>(GsaServiceI18NLanguage.en);
-
-  /// The specified runtime language.
-  ///
-  static GsaServiceI18NLanguage get language => languageNotifier.value;
-
-  /// The specified runtime display currency.
-  ///
-  static final currencyNotifier = GsaModelPrice.conversionFactorNotifier;
-
-  /// The specified runtime currency.
-  ///
-  static GsaModelPriceCurrencyType get currency => currencyNotifier.value;
 
   /// Initialise the runtime resources with the specified parameters.
   ///

@@ -110,6 +110,39 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                   },
                 ),
                 const Divider(height: 30),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: OutlinedButton(
+                          child: const GsaWidgetText(
+                            'Add More Items',
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ),
+                    if (<GsaClient>{
+                      GsaClient.froddoB2b,
+                    }.contains(GsaConfig.plugin.client)) ...[
+                      const SizedBox(width: 10),
+                      FilledButton(
+                        child: const Icon(
+                          Icons.camera_alt,
+                        ),
+                        onPressed: () {
+                          const GsaRouteCamera(
+                            mode: GsaRouteCameraMode.scan,
+                          ).push();
+                        },
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: 12),
                 const GsaWidgetText(
                   'Browse and review the items in your cart.',
                   style: TextStyle(

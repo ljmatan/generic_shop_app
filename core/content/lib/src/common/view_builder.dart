@@ -28,6 +28,10 @@ class GsaViewBuilder extends StatefulWidget {
 }
 
 class _GsaViewBuilderState extends State<GsaViewBuilder> {
+  /// Property holding the value of the runtime resource allocation method.
+  ///
+  final _initFuture = GsaConfig.init();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -44,9 +48,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
   ///
   int _recordedNumberOfTaps = 0;
 
-  /// Property holding the value of the runtime resource allocation method.
-  ///
-  final _initFuture = GsaConfig.init();
+  final _activePointerIds = <int>{};
 
   @override
   Widget build(BuildContext context) {
@@ -81,22 +83,37 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
               return widget.child;
             },
           ),
-          onPointerDown: GsaConfig.qaBuild
-              ? (_) {
-                  _recordedNumberOfTaps++;
-                  if (_recordedNumberOfTaps == 10) {
-                    _recordedNumberOfTaps = 0;
-                    const GsaRouteDebug().push();
-                  } else {
-                    Future.delayed(
-                      const Duration(seconds: 3),
-                      () {
-                        if (_recordedNumberOfTaps > 0) _recordedNumberOfTaps--;
-                      },
-                    );
-                  }
+          onPointerDown: (event) {
+            if (GsaConfig.qaBuild) {
+              _recordedNumberOfTaps++;
+              if (_recordedNumberOfTaps == 10) {
+                _recordedNumberOfTaps = 0;
+                const GsaRouteDebug().push();
+              } else {
+                Future.delayed(
+                  const Duration(seconds: 3),
+                  () {
+                    if (_recordedNumberOfTaps > 0) _recordedNumberOfTaps--;
+                  },
+                );
+              }
+            } else {
+              _activePointerIds.add(event.pointer);
+              if (_activePointerIds.length == 3) {
+                _recordedNumberOfTaps++;
+                if (_recordedNumberOfTaps == 4) {
+                  _recordedNumberOfTaps = 0;
+                  const GsaRouteDebug().push();
                 }
-              : null,
+              }
+            }
+          },
+          onPointerUp: (PointerUpEvent event) {
+            _activePointerIds.remove(event.pointer);
+          },
+          onPointerCancel: (PointerCancelEvent event) {
+            _activePointerIds.remove(event.pointer);
+          },
         ),
       ),
     );

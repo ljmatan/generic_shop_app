@@ -426,8 +426,11 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
     final saleItemOptionCount = getItemOptionCount(saleItemOption);
     if (saleItemOptionCount == null) {
       // Item option has not yet been added to the cart.
-      final saleItemCount = getItemCount(saleItem);
-      if (saleItemCount == null) {
+      if (items.where(
+        (item) {
+          return item.id != null && item.id == saleItem.id;
+        },
+      ).isEmpty) {
         items.add(saleItem);
       }
       itemCount.add(
