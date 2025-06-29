@@ -197,29 +197,31 @@ abstract class GsaApi {
       }
       if (response.statusCode ~/ 2 != 100) {
         String message = '';
-        if (decodedResponseBody['errors'] is Iterable) {
-          for (final error in decodedResponseBody['errors'] as Iterable) {
-            if (error is String) {
-              message += '$error\n';
+        if (decodedResponseBody is Map) {
+          if (decodedResponseBody['errors'] is Iterable) {
+            for (final error in decodedResponseBody['errors'] as Iterable) {
+              if (error is String) {
+                message += '$error\n';
+              }
             }
           }
-        }
-        if (decodedResponseBody['errors'] is Map) {
-          for (final error in (decodedResponseBody['errors'] as Map).values) {
-            if (error is String) {
-              message += '$error\n';
-            }
-            if (error is Iterable) {
-              for (final errorEntry in error) {
-                if (errorEntry is String) {
-                  message += '$errorEntry\n';
+          if (decodedResponseBody['errors'] is Map) {
+            for (final error in (decodedResponseBody['errors'] as Map).values) {
+              if (error is String) {
+                message += '$error\n';
+              }
+              if (error is Iterable) {
+                for (final errorEntry in error) {
+                  if (errorEntry is String) {
+                    message += '$errorEntry\n';
+                  }
                 }
               }
             }
           }
-        }
-        if (message.isNotEmpty) {
-          throw message.substring(0, message.length - 1);
+          if (message.isNotEmpty) {
+            throw message.substring(0, message.length - 1);
+          }
         }
         throw decodedResponseBody['message'] ??
             decodedResponseBody['error'] ??

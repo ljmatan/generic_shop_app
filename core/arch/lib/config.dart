@@ -263,6 +263,14 @@ abstract class GsaPlugin {
     return null;
   }
 
+  /// Method optionally implemented for starting the checkout process from the cart page.
+  ///
+  Future<void> Function(
+    BuildContext context,
+  )? get startCheckout {
+    return null;
+  }
+
   /// Method implemented for retrieving promotional content displayed on the dashboard.
   ///
   Future<List<GsaModelPromoBanner>> Function()? get getPromoBanners {

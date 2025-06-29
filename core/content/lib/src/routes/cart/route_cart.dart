@@ -327,15 +327,25 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
           GsaWidgetStickyBottomButton(
             label: 'Checkout',
             onTap: () async {
-              if (_scrollController.position.pixels < _scrollController.position.maxScrollExtent - 20) {
-                await _scrollController.animateTo(
-                  _scrollController.position.maxScrollExtent + 20,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.fastOutSlowIn,
-                );
-              } else {
-                Navigator.popUntil(context, (route) => route.isFirst);
-                const GsaRouteCheckout().push(context: context);
+              try {
+                if (_scrollController.position.pixels < _scrollController.position.maxScrollExtent - 20) {
+                  await _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent + 20,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.fastOutSlowIn,
+                  );
+                } else {
+                  if (GsaConfig.plugin.startCheckout != null) {
+                    GsaConfig.plugin.startCheckout!(context);
+                  } else {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                    const GsaRouteCheckout().push(context: context);
+                  }
+                }
+              } catch (e) {
+                GsaWidgetOverlayAlert(
+                  '$e',
+                ).openDialog();
               }
             },
           ),
