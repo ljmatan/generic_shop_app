@@ -169,7 +169,9 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
     if (optionCount == null || saleItemOption.price?.centum == null) {
       return null;
     }
-    return optionCount * saleItemOption.price!.centum!;
+    final value = optionCount * saleItemOption.price!.centum!;
+    if (value == 0) return null;
+    return value;
   }
 
   /// Calculates and returns the combined price of the specified [saleItem].
@@ -181,7 +183,9 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
   ) {
     final priceCentum = getItemTotalPriceCentum(saleItem);
     if (priceCentum == null) return null;
-    return priceCentum / 100;
+    final value = priceCentum / 100;
+    if (value == 0) return null;
+    return value;
   }
 
   /// Calculates and returns the combined price of the specified [saleItem].
