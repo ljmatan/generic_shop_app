@@ -329,10 +329,15 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
         'Sale item ID is missing - can\'t add.',
       );
     }
-    if (newCount != null && saleItem.maxCount != null && newCount > saleItem.maxCount!) {
-      throw Exception(
-        'Amount $newCount larger than max count ${saleItem.maxCount}.',
-      );
+    if (newCount != null) {
+      if (newCount < 1) {
+        throw Exception('New count must not be less than 1.');
+      }
+      if (saleItem.maxCount != null && newCount > saleItem.maxCount!) {
+        throw Exception(
+          'Amount $newCount larger than max count ${saleItem.maxCount}.',
+        );
+      }
     }
     // Check for existing items in the cart.
     final saleItemCount = getItemCount(saleItem);
@@ -421,10 +426,15 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
       saleItem: saleItem,
       optionIndex: optionIndex,
     );
-    if (newCount != null && saleItemOption.maxCount != null && newCount > saleItemOption.maxCount!) {
-      throw Exception(
-        'Amount $newCount larger than max count ${saleItemOption.maxCount}.',
-      );
+    if (newCount != null) {
+      if (newCount < 1) {
+        throw Exception('New count must not be less than 1.');
+      }
+      if (saleItemOption.maxCount != null && newCount > saleItemOption.maxCount!) {
+        throw Exception(
+          'Amount $newCount larger than max count ${saleItemOption.maxCount}.',
+        );
+      }
     }
     // Check for existing items in the cart.
     final saleItemOptionCount = getItemOptionCount(saleItemOption);
