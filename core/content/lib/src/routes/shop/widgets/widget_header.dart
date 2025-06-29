@@ -101,36 +101,38 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                         Positioned(
                           top: 0,
                           right: 0,
-                          child: ValueListenableBuilder(
-                            valueListenable: GsaConfig.cartEnabled
-                                ? GsaDataCheckout.instance.notifierCartUpdate
-                                : GsaServiceBookmarks.instance.notifierBookmarkCount,
-                            builder: (context, cartItemCount, child) {
-                              if (cartItemCount == 0) return const SizedBox();
-                              return DecoratedBox(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    color: Colors.black12,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                    vertical: 2,
-                                  ),
-                                  child: GsaWidgetText(
-                                    '$cartItemCount',
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.secondary,
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 11,
+                          child: IgnorePointer(
+                            child: ValueListenableBuilder(
+                              valueListenable: GsaConfig.cartEnabled
+                                  ? GsaDataCheckout.instance.notifierCartUpdate
+                                  : GsaServiceBookmarks.instance.notifierBookmarkCount,
+                              builder: (context, cartItemCount, child) {
+                                if (cartItemCount == 0) return const SizedBox();
+                                return DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.black12,
                                     ),
                                   ),
-                                ),
-                              );
-                            },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
+                                    child: GsaWidgetText(
+                                      '$cartItemCount',
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.secondary,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
