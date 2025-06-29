@@ -400,7 +400,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
     }
     if (optionIndex == -1) {
       throw Exception(
-        'Option index unreachable - can\'t add option..',
+        'Option index unreachable - can\'t add option.',
       );
     }
     final option = saleItem.options!.elementAtOrNull(optionIndex);
