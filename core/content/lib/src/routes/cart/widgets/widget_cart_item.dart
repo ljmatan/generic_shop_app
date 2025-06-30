@@ -177,11 +177,11 @@ class _WidgetCartItemAmountSpecification extends StatefulWidget {
 
   @override
   State<_WidgetCartItemAmountSpecification> createState() {
-    return __WidgetCartItemAmountSpecificationState();
+    return _WidgetCartItemAmountSpecificationState();
   }
 }
 
-class __WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmountSpecification> {
+class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmountSpecification> {
   int? _cartCount;
 
   void _setCartCount() {

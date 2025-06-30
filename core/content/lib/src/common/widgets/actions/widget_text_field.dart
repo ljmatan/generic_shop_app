@@ -80,9 +80,13 @@ class GsaWidgetTextField extends StatefulWidget {
   ///
   final bool displayDeleteButton;
 
-  /// Events triggered on focus and controller changes.
+  /// Event triggered on focus change.
   ///
-  final Function()? onFocusChange, onControllerChanged;
+  final Function()? onFocusChange;
+
+  /// Event triggered on controller change.
+  ///
+  final Function(String value)? onControllerChanged;
 
   /// Invoked on text deletion by the "delete button" applied with [displayDeleteButton].
   ///
@@ -203,16 +207,28 @@ class GsaWidgetTextField extends StatefulWidget {
 }
 
 class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
+  late TextEditingController _textController;
+
   Future<void> _onTextControllerUpdate() async {
-    if (widget.onControllerChanged != null) await widget.onControllerChanged!();
-    if (mounted) setState(() {});
+    if (widget.onControllerChanged != null) {
+      await widget.onControllerChanged!(
+        _textController.text,
+      );
+    }
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   late FocusNode _focusNode;
 
   Future<void> _onFocusNodeUpdate() async {
-    if (widget.onFocusChange != null) await widget.onFocusChange!();
-    if (mounted) setState(() {});
+    if (widget.onFocusChange != null) {
+      await widget.onFocusChange!();
+    }
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   late bool _obscureText;
@@ -220,7 +236,8 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
   @override
   void initState() {
     super.initState();
-    widget.controller?.addListener(_onTextControllerUpdate);
+    _textController = widget.controller ?? TextEditingController();
+    _textController.addListener(_onTextControllerUpdate);
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusNodeUpdate);
     _obscureText = widget.obscureText;
@@ -229,7 +246,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
+      controller: _textController,
       focusNode: _focusNode,
       enabled: widget.enabled,
       autofocus: widget.autofocus,
@@ -243,21 +260,21 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
         fillColor: GsaWidgetTextField.themeProperties.fillColor(
           Theme.of(context).brightness,
           _focusNode,
-          widget.controller,
+          _textController,
         ),
         border: GsaWidgetTextField.themeProperties.border(
           _focusNode,
-          widget.controller,
+          _textController,
         ),
         focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
           Theme.of(context).primaryColor,
         ),
         enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
           _focusNode,
-          widget.controller,
+          _textController,
         ),
         disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
-          widget.controller,
+          _textController,
         ),
         errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
         focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
@@ -272,7 +289,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
             : null,
         suffix: widget.suffix,
         suffixIcon:
-            widget.obscureText == true || _focusNode.hasFocus && widget.controller?.text.isNotEmpty == true && widget.displayDeleteButton
+            widget.obscureText == true || _focusNode.hasFocus && _textController.text.isNotEmpty == true && widget.displayDeleteButton
                 ? IconButton(
                     icon: Icon(
                       widget.obscureText == true ? Icons.visibility : Icons.close,
@@ -282,7 +299,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
                     onPressed: widget.obscureText == true
                         ? () => setState(() => _obscureText = !_obscureText)
                         : () {
-                            widget.controller!.clear();
+                            _textController.clear();
                             if (widget.onControllerCleared != null) {
                               widget.onControllerCleared!();
                             }
@@ -301,7 +318,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
         labelText: widget.labelText,
         labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
           _focusNode,
-          widget.controller,
+          _textController,
         ),
       ),
       style: GsaWidgetTextField.themeProperties.textStyle(),
@@ -316,6 +333,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
   @override
   void dispose() {
     widget.controller?.removeListener(_onTextControllerUpdate);
+    if (widget.controller == null) _textController.dispose();
     _focusNode.removeListener(_onFocusNodeUpdate);
     if (widget.focusNode == null) _focusNode.dispose();
     super.dispose();

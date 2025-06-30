@@ -19,6 +19,8 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
     this.enabled = true,
     this.labelText,
     this.hintText,
+    this.prefixIcon,
+    this.suffixIcon,
     this.onSelected,
     this.validator,
   });
@@ -63,13 +65,17 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
   ///
   final String? labelText, hintText;
 
+  /// Decorative elements.
+  ///
+  final Widget? prefixIcon, suffixIcon;
+
   /// Callback invoked on dropdown menu entry selection.
   ///
-  final void Function(T?)? onSelected;
+  final void Function(T? value)? onSelected;
 
   /// Optional input validation method.
   ///
-  final String? Function(String?)? validator;
+  final String? Function(String? value)? validator;
 
   @override
   State<GsaWidgetDropdownMenu<T>> createState() => _GsaWidgetDropdownMenuState<T>();
@@ -121,6 +127,8 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
       controller: _textController,
       focusNode: _focusNode,
       enabled: widget.enabled,
+      leadingIcon: widget.prefixIcon,
+      trailingIcon: widget.suffixIcon,
       label: widget.labelText == null
           ? null
           : GsaWidgetText(
