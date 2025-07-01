@@ -49,15 +49,15 @@ abstract mixin class GsaServiceCacheValue {
     if (!enabled) return null;
     switch (dataType) {
       case const (int):
-        return GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId) ?? defaultValue;
       case const (bool):
-        return GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId) ?? defaultValue;
       case const (String):
-        return GsaServiceCache.instance._sharedPreferences?.getString(_cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getString(_cacheId) ?? defaultValue;
       case const (Iterable<String>):
       case const (List<String>):
       case const (Set<String>):
-        return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
+        return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId) ?? defaultValue;
       default:
         throw 'Value get method not implemented for $dataType with $_cacheId.';
     }

@@ -14,7 +14,9 @@ class _WidgetHeader extends StatefulWidget {
   final Function clearSearchFilters;
 
   @override
-  State<_WidgetHeader> createState() => _WidgetHeaderState();
+  State<_WidgetHeader> createState() {
+    return _WidgetHeaderState();
+  }
 }
 
 class _WidgetHeaderState extends State<_WidgetHeader> {
@@ -28,14 +30,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
 
   void _openCartPage() {
     if (GsaDataCheckout.instance.orderDraft.items.isEmpty) {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        showDragHandle: true,
-        builder: (context) {
-          return const _WidgetHeaderOverlayEmptyCart();
-        },
-      );
+      const _WidgetHeaderOverlayEmptyCart().openBottomSheet();
     } else {
       const GsaRouteCart().push();
     }
@@ -98,43 +93,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                             ),
                           ],
                         ),
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: IgnorePointer(
-                            child: ValueListenableBuilder(
-                              valueListenable: GsaConfig.cartEnabled
-                                  ? GsaDataCheckout.instance.notifierCartUpdate
-                                  : GsaServiceBookmarks.instance.notifierBookmarkCount,
-                              builder: (context, cartItemCount, child) {
-                                if (cartItemCount == 0) return const SizedBox();
-                                return DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 2,
-                                    ),
-                                    child: GsaWidgetText(
-                                      '$cartItemCount',
-                                      style: TextStyle(
-                                        color: Theme.of(context).colorScheme.secondary,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 11,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
+                        const _WidgetHeaderCartButtonCount(),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -156,10 +115,34 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Row(
                           children: [
-                            const CircleAvatar(
-                              radius: 20,
-                              backgroundColor: Colors.grey,
-                            ),
+                            if (Navigator.of(context).canPop()) ...[
+                              IconButton.filled(
+                                icon: Icon(
+                                  Icons.chevron_left,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                style: const ButtonStyle(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                    Colors.white,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              const SizedBox(width: 10),
+                            ],
+                            if (!<GsaClient>{
+                              GsaClient.froddoB2b,
+                            }.contains(GsaConfig.plugin.client))
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  Icons.person,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
                             const Spacer(),
                             Row(
                               mainAxisSize: MainAxisSize.min,
@@ -177,33 +160,39 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                   ),
                                 ),
                                 const SizedBox(width: 16),
-                                IconButton.filled(
-                                  icon: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                                    child: Row(
-                                      children: [
-                                        const GsaWidgetText(
-                                          'Cart',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    IconButton.filled(
+                                      icon: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                                        child: Row(
+                                          children: [
+                                            const GsaWidgetText(
+                                              'Cart',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Icon(
+                                              GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
+                                              color: Colors.white,
+                                            ),
+                                          ],
                                         ),
-                                        const SizedBox(width: 10),
-                                        Icon(
-                                          GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
-                                          color: Colors.white,
-                                        ),
-                                      ],
+                                      ),
+                                      onPressed: GsaConfig.cartEnabled
+                                          ? () {
+                                              _openCartPage();
+                                            }
+                                          : () {
+                                              const GsaRouteBookmarks().push();
+                                            },
                                     ),
-                                  ),
-                                  onPressed: GsaConfig.cartEnabled
-                                      ? () {
-                                          _openCartPage();
-                                        }
-                                      : () {
-                                          const GsaRouteBookmarks().push();
-                                        },
+                                    const _WidgetHeaderCartButtonCount(),
+                                  ],
                                 ),
                                 const SizedBox(width: 16),
                                 IconButton.filled(
@@ -228,9 +217,66 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
   }
 }
 
-class _WidgetHeaderOverlayEmptyCart extends StatelessWidget {
+class _WidgetHeaderCartButtonCount extends StatelessWidget {
+  const _WidgetHeaderCartButtonCount();
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 0,
+      right: 0,
+      child: IgnorePointer(
+        child: ValueListenableBuilder(
+          valueListenable:
+              GsaConfig.cartEnabled ? GsaDataCheckout.instance.notifierCartUpdate : GsaServiceBookmarks.instance.notifierBookmarkCount,
+          builder: (context, cartItemCount, child) {
+            if (cartItemCount == 0) return const SizedBox();
+            return Transform.translate(
+              offset: const Offset(5, -10),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Colors.black12,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
+                  child: GsaWidgetText(
+                    '$cartItemCount',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 11,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _WidgetHeaderOverlayEmptyCart extends GsaWidgetOverlay {
   const _WidgetHeaderOverlayEmptyCart();
 
+  @override
+  bool get isScrollControlled => true;
+
+  @override
+  State<_WidgetHeaderOverlayEmptyCart> createState() {
+    return _WidgetHeaderOverlayEmptyCartState();
+  }
+}
+
+class _WidgetHeaderOverlayEmptyCartState extends State<_WidgetHeaderOverlayEmptyCart> {
   @override
   Widget build(BuildContext context) {
     return Padding(

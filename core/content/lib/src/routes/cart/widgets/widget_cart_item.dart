@@ -13,23 +13,6 @@ class _WidgetCartItem extends StatefulWidget {
 }
 
 class _WidgetCartItemState extends State<_WidgetCartItem> {
-  late int _cartCount;
-
-  void _setCartCount() {
-    _cartCount = GsaDataCheckout.instance.orderDraft.getItemCount(widget.cartItem) ?? 0;
-  }
-
-  void _onCartCountUpdate() {
-    setState(() => _setCartCount());
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _setCartCount();
-    GsaDataCheckout.instance.notifierCartUpdate.addListener(_onCartCountUpdate);
-  }
-
   Future<void> _removeItem() async {
     final confirmed = await GsaWidgetOverlayConfirmation(
       'Remove "${widget.cartItem.name}" from cart?',
@@ -80,8 +63,6 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                   children: [
                     GsaWidgetText(
                       widget.cartItem.name ?? 'N/A',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
@@ -152,12 +133,6 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
         ).push();
       },
     );
-  }
-
-  @override
-  void dispose() {
-    GsaDataCheckout.instance.notifierCartUpdate.removeListener(_onCartCountUpdate);
-    super.dispose();
   }
 }
 
@@ -238,8 +213,7 @@ class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmoun
                             ),
                             const SizedBox(height: 2),
                             GsaWidgetText(
-                              '$_cartCount x ${widget.saleItem.price!.formatted} '
-                              '${GsaConfig.currency.code}',
+                              '$_cartCount x ${widget.saleItem.price?.formatted}',
                               style: const TextStyle(
                                 fontSize: 10,
                                 color: Colors.grey,
@@ -248,8 +222,10 @@ class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmoun
                             ),
                             const SizedBox(height: 2),
                             GsaWidgetText(
-                              '${(widget.saleItem.price!.unity! * _cartCount!).toStringAsFixed(2)} '
-                              '${GsaConfig.currency.code}',
+                              GsaModelPrice(
+                                    centum: (widget.saleItem.price?.centum ?? 0) * (_cartCount ?? 0),
+                                  ).formatted ??
+                                  'N/A',
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,

@@ -143,6 +143,29 @@ class GsaModelSaleItem extends _Model {
     }
   }
 
+  /// Returns the amount of the current item in the cart,
+  /// alongside the amount of any specified options.
+  ///
+  /// Returns null if no count is specified for any of the items.
+  ///
+  int? cartCountWithOptions({
+    GsaModelOrderDraft? orderDraft,
+  }) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    int count = 0;
+    if (option == true) {
+      return null;
+    }
+    count += orderDraft.getItemCount(this) ?? 0;
+    if (options?.isNotEmpty == true) {
+      for (final saleItemOption in options!) {
+        count += orderDraft.getItemOptionCount(saleItemOption) ?? 0;
+      }
+    }
+    if (count == 0) return null;
+    return count;
+  }
+
   /// The set [price] amount for the specified [cartCount] within the [orderDraft].
   ///
   int? totalCartPriceCentum({

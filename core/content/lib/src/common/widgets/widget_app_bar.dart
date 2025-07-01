@@ -40,12 +40,13 @@ class GsaWidgetAppBar extends StatelessWidget {
           children: [
             const GsaWidgetFlairBlobBackground(count: 12),
             Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top,
+              ),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: child ??
                     Stack(
-                      alignment: Alignment.center,
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
@@ -61,7 +62,7 @@ class GsaWidgetAppBar extends StatelessWidget {
                                   ),
                             child: GsaWidgetText(
                               label ?? '',
-                              textAlign: TextAlign.center,
+                              textAlign: MediaQuery.of(context).size.width < 1000 ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
                                 shadows: [
                                   for (final offset in <Offset>{
@@ -88,6 +89,18 @@ class GsaWidgetAppBar extends StatelessWidget {
                               icon: Icon(
                                 Icons.chevron_left,
                                 color: Theme.of(context).appBarTheme.titleTextStyle?.color,
+                                shadows: [
+                                  for (final offset in <Offset>{
+                                    const Offset(-.1, -.1),
+                                    const Offset(.1, -.1),
+                                    const Offset(.1, .1),
+                                    const Offset(-.1, .1),
+                                  })
+                                    Shadow(
+                                      offset: offset,
+                                      color: Colors.black,
+                                    ),
+                                ],
                               ),
                               onPressed: () => onBackPressed == null ? Navigator.pop(context) : onBackPressed!(),
                             ),

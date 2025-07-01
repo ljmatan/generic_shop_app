@@ -58,17 +58,18 @@ class GsaTheme {
   ]) {
     screenWidth ??= MediaQuery.of(context).size.width;
     return TextScaler.linear(
-      screenWidth < 400
-          ? 1
-          : screenWidth < 600
-              ? 1.1
-              : screenWidth < 800
-                  ? 1.2
-                  : screenWidth < 1000
-                      ? 1.3
-                      : screenWidth < 1400
-                          ? 1.4
-                          : 1.6,
+      MediaQuery.of(context).textScaler.scale(1) *
+          (screenWidth < 400
+              ? 1
+              : screenWidth < 600
+                  ? 1.1
+                  : screenWidth < 800
+                      ? 1.2
+                      : screenWidth < 1000
+                          ? 1.3
+                          : screenWidth < 1400
+                              ? 1.4
+                              : 1.6),
     );
   }
 
@@ -143,6 +144,10 @@ class GsaTheme {
     );
   }
 
+  EdgeInsetsGeometry get _inputDecorationThemePadding {
+    return _inputDecorationTheme.contentPadding ?? EdgeInsets.zero;
+  }
+
   RoundedRectangleBorder get _roundedRectangleBorder {
     return RoundedRectangleBorder(
       borderRadius: borderRadius,
@@ -163,8 +168,8 @@ class GsaTheme {
     }
     final screenWidth = size.width / ratio;
     return EdgeInsets.symmetric(
-      horizontal: screenWidth < 1000 ? 20 : 30,
-      vertical: screenWidth < 1000 ? 24 : 36,
+      horizontal: screenWidth < 1000 ? 20 : 26,
+      vertical: screenWidth < 1000 ? 24 : 30,
     );
   }
 
@@ -228,12 +233,28 @@ class GsaTheme {
           shape: WidgetStatePropertyAll(
             _roundedRectangleBorder,
           ),
+          padding: WidgetStatePropertyAll(
+            _inputDecorationThemePadding,
+          ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
           shape: WidgetStatePropertyAll(
             _roundedRectangleBorder,
+          ),
+          padding: WidgetStatePropertyAll(
+            _inputDecorationThemePadding,
+          ),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          shape: WidgetStatePropertyAll(
+            _roundedRectangleBorder,
+          ),
+          padding: WidgetStatePropertyAll(
+            _inputDecorationThemePadding,
           ),
         ),
       ),
@@ -267,6 +288,9 @@ class GsaTheme {
               onSurface: Colors.white,
               surfaceTint: const Color(0xff212121),
             ),
+      iconTheme: const IconThemeData(
+        applyTextScaling: true,
+      ),
       appBarTheme: AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.light,
@@ -279,6 +303,7 @@ class GsaTheme {
         ),
         iconTheme: const IconThemeData(
           color: Colors.white,
+          applyTextScaling: true,
         ),
         titleTextStyle: TextStyle(
           fontFamily: _fontFamily,

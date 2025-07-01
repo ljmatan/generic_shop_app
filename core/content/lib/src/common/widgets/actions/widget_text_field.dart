@@ -30,6 +30,8 @@ class GsaWidgetTextField extends StatefulWidget {
     this.onControllerCleared,
     this.onTap,
     this.textInputAction,
+    this.textAlign = TextAlign.start,
+    this.contentPadding,
   });
 
   /// The default controller for this text field.
@@ -86,7 +88,7 @@ class GsaWidgetTextField extends StatefulWidget {
 
   /// Event triggered on controller change.
   ///
-  final Function(String value)? onControllerChanged;
+  final Future<String?>? Function(String value)? onControllerChanged;
 
   /// Invoked on text deletion by the "delete button" applied with [displayDeleteButton].
   ///
@@ -99,6 +101,14 @@ class GsaWidgetTextField extends StatefulWidget {
   /// An action the user has requested the text input control to perform.
   ///
   final TextInputAction? textInputAction;
+
+  /// Whether and how to align text horizontally.
+  ///
+  final TextAlign textAlign;
+
+  /// The padding for the input decoration's container.
+  ///
+  final EdgeInsetsGeometry? contentPadding;
 
   /// Theme properties applied to the text input field.
   ///
@@ -209,11 +219,19 @@ class GsaWidgetTextField extends StatefulWidget {
 class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
   late TextEditingController _textController;
 
+  bool _externalTextUpdate = false;
+
   Future<void> _onTextControllerUpdate() async {
-    if (widget.onControllerChanged != null) {
-      await widget.onControllerChanged!(
+    if (widget.onControllerChanged != null && !_externalTextUpdate) {
+      final text = await widget.onControllerChanged!(
         _textController.text,
       );
+      if (text != null) {
+        _externalTextUpdate = true;
+        _textController.text = text;
+      }
+    } else {
+      _externalTextUpdate = false;
     }
     if (mounted) {
       setState(() {});
@@ -256,7 +274,9 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
       maxLines: widget.maxLines,
       textInputAction: widget.textInputAction,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      textAlign: widget.textAlign,
       decoration: InputDecoration(
+        contentPadding: widget.contentPadding ?? Theme.of(context).inputDecorationTheme.contentPadding,
         fillColor: GsaWidgetTextField.themeProperties.fillColor(
           Theme.of(context).brightness,
           _focusNode,
