@@ -42,35 +42,38 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
             child: ValueListenableBuilder(
               valueListenable: _tabNotifier,
               builder: (context, value, child) {
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        for (final buttonLabel in <String>{
-                          'HTTP (${GsaApi.logs.length})',
-                          'EVENT (${GsaServiceLogging.instance.logs.general.length})',
-                          'ERROR (${GsaServiceLogging.instance.logs.error.length})',
-                          'CACHE (${GsaServiceCache.instance.cachedKeys?.length})',
-                          'DATA',
-                        }.indexed) ...[
-                          if (buttonLabel.$1 != 0) const SizedBox(width: 10),
-                          TextButton(
-                            child: GsaWidgetText(
-                              buttonLabel.$2,
-                              style: TextStyle(
-                                color: _tabNotifier.value == buttonLabel.$1 ? null : Colors.grey,
-                                fontWeight: _tabNotifier.value == buttonLabel.$1 ? null : FontWeight.w300,
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (final buttonLabel in <String>{
+                            'HTTP (${GsaApi.logs.length})',
+                            'EVENT (${GsaServiceLogging.instance.logs.general.length})',
+                            'ERROR (${GsaServiceLogging.instance.logs.error.length})',
+                            'CACHE (${GsaServiceCache.instance.cachedKeys?.length})',
+                            'DATA',
+                          }.indexed) ...[
+                            if (buttonLabel.$1 != 0) const SizedBox(width: 10),
+                            TextButton(
+                              child: GsaWidgetText(
+                                buttonLabel.$2,
+                                style: TextStyle(
+                                  color: _tabNotifier.value == buttonLabel.$1 ? null : Colors.grey,
+                                  fontWeight: _tabNotifier.value == buttonLabel.$1 ? null : FontWeight.w300,
+                                ),
                               ),
+                              onPressed: () {
+                                _tabNotifier.value = buttonLabel.$1;
+                              },
                             ),
-                            onPressed: () {
-                              _tabNotifier.value = buttonLabel.$1;
-                            },
-                          ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
                 );

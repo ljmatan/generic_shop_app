@@ -108,6 +108,9 @@ class _RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
                           text: httpInformation.value,
                         ),
                       );
+                      const GsaWidgetOverlayAlert(
+                        'Data copied to clipboard!',
+                      );
                     },
                   ),
                   const SizedBox(height: 16),
