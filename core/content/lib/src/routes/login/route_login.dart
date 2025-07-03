@@ -55,7 +55,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                   maxWidth: 800,
                 ),
                 child: SingleChildScrollView(
-                  padding: GsaTheme.instance.contentPadding,
+                  padding: Theme.of(context).listViewPadding,
                   child: Form(
                     key: _formKey,
                     child: Column(

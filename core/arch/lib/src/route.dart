@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,11 +95,29 @@ abstract class GsaRoute extends StatefulWidget {
   ///
   static final _observables = <GsaRouteState>[];
 
+  /// Currently-active route state object.
+  ///
+  /// Returns `null` if the route is not active.
+  ///
+  /// The method is provided with a [GsaRouteState] subclass as a [T] parameter:
+  ///
+  /// ```dart
+  /// GsaRoute.state<GsaRouteStateExample>().exampleMethod();
+  /// ```
+  ///
+  static T? state<T>() {
+    return _observables.firstWhereOrNull(
+      (observable) {
+        return observable.runtimeType == T;
+      },
+    ) as T?;
+  }
+
   /// Invokes the [setState] method in all of the [GsaRouteState] subclass instances.
   ///
   static void rebuildAll() {
     for (final observer in _observables) {
-      observer._rebuild();
+      observer.rebuild();
     }
   }
 
@@ -154,7 +173,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
 
   /// Avoids the @protected annotation on the [setState] method with public method access.
   ///
-  void _rebuild() => setState(() {});
+  void rebuild() => setState(() {});
 
   /// Runs a given [callback], returning it's result,
   /// blocking user input, and displaying a dialog with an error message in case of an exception.
@@ -235,7 +254,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
           if (subscriptionEntry.callback != null) {
             await subscriptionEntry.callback!();
           }
-          _rebuild();
+          rebuild();
         },
       );
       _listeners.add(

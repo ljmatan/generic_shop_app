@@ -276,7 +276,7 @@ class _GsaRouteCameraState extends GsaRouteState<GsaRouteCamera> with WidgetsBin
                 }
 
                 return ListView(
-                  padding: GsaTheme.instance.contentPadding,
+                  padding: Theme.of(context).listViewPadding,
                   children: [
                     GsaWidgetText(
                       widget.mode.label,

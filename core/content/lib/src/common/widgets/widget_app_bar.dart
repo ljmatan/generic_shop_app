@@ -34,6 +34,7 @@ class GsaWidgetAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shadowSize = MediaQuery.of(context).size.width < 1000 ? .1 : .4;
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Stack(
@@ -66,10 +67,10 @@ class GsaWidgetAppBar extends StatelessWidget {
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
                                 shadows: [
                                   for (final offset in <Offset>{
-                                    const Offset(-.1, -.1),
-                                    const Offset(.1, -.1),
-                                    const Offset(.1, .1),
-                                    const Offset(-.1, .1),
+                                    Offset(-shadowSize, -shadowSize),
+                                    Offset(shadowSize, -shadowSize),
+                                    Offset(shadowSize, shadowSize),
+                                    Offset(-shadowSize, shadowSize),
                                   })
                                     Shadow(
                                       offset: offset,
@@ -91,10 +92,10 @@ class GsaWidgetAppBar extends StatelessWidget {
                                 color: Theme.of(context).appBarTheme.titleTextStyle?.color,
                                 shadows: [
                                   for (final offset in <Offset>{
-                                    const Offset(-.1, -.1),
-                                    const Offset(.1, -.1),
-                                    const Offset(.1, .1),
-                                    const Offset(-.1, .1),
+                                    Offset(-shadowSize, -shadowSize),
+                                    Offset(shadowSize, -shadowSize),
+                                    Offset(shadowSize, shadowSize),
+                                    Offset(-shadowSize, shadowSize),
                                   })
                                     Shadow(
                                       offset: offset,

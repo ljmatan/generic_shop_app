@@ -157,22 +157,6 @@ class GsaTheme {
     );
   }
 
-  EdgeInsets get contentPadding {
-    final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
-    final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;
-    if (size == null || ratio == null) {
-      return const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 24,
-      );
-    }
-    final screenWidth = size.width / ratio;
-    return EdgeInsets.symmetric(
-      horizontal: screenWidth < 1000 ? 20 : 26,
-      vertical: screenWidth < 1000 ? 24 : 30,
-    );
-  }
-
   /// Getter method for the [ThemeData] implementation.
   ///
   ThemeData get data {
@@ -377,5 +361,23 @@ class GsaTheme {
             systemNavigationBarIconBrightness: Brightness.light,
             systemNavigationBarContrastEnforced: false,
           );
+  }
+}
+
+extension GsaThemeContentPaddingExtension on ThemeData {
+  EdgeInsets get listViewPadding {
+    final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
+    final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;
+    if (size == null || ratio == null) {
+      return const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 24,
+      );
+    }
+    final screenWidth = size.width / ratio;
+    return EdgeInsets.symmetric(
+      horizontal: screenWidth < 1000 ? 20 : 26,
+      vertical: screenWidth < 1000 ? 24 : 30,
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert' as dart_convert;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -38,7 +39,10 @@ class GsaServiceLogging extends GsaService {
 
   /// Logs any given message.
   ///
-  void logGeneral(String message) {
+  void logGeneral(
+    String message, {
+    StackTrace? parentStackTrace,
+  }) {
     try {
       final log = GsaServiceLoggingModelAppLog.fromStackTrace(message);
       _logGeneral(log);
@@ -49,7 +53,10 @@ class GsaServiceLogging extends GsaService {
 
   /// Method aimed at logging error messages.
   ///
-  void logError(String message) {
+  void logError(
+    String message, {
+    StackTrace? parentStackTrace,
+  }) {
     try {
       final log = GsaServiceLoggingModelAppLog.fromStackTrace(message);
       _logError(log);
@@ -60,12 +67,45 @@ class GsaServiceLogging extends GsaService {
 
   Future<void> init() async {
     await super.init();
-    FlutterError.onError = (details) {
-      print('Flutter error $details');
+    final defaultErrorWidgetBuilder = ErrorWidget.builder;
+    ErrorWidget.builder = (details) {
+      StackTrace? parentStackTrace;
+      try {
+        parentStackTrace = (details.exception as Error).stackTrace;
+      } catch (e) {
+        // Do nothing.
+      }
+      parentStackTrace ??= details.stack;
+      logError(
+        details.summary.toString(),
+        parentStackTrace: parentStackTrace,
+      );
+      return defaultErrorWidgetBuilder(details);
     };
-    PlatformDispatcher.instance.onError = (details, stackTrace) {
-      print('Platform error $details');
-      return true;
+    final defaultFlutterErrorHandler = FlutterError.onError;
+    FlutterError.onError = (details) {
+      StackTrace? parentStackTrace;
+      try {
+        parentStackTrace = (details.exception as Error).stackTrace;
+      } catch (e) {
+        // Do nothing.
+      }
+      parentStackTrace ??= details.stack;
+      logError(
+        '${details.exception}',
+        parentStackTrace: parentStackTrace,
+      );
+      if (defaultFlutterErrorHandler != null) {
+        return defaultFlutterErrorHandler(details);
+      }
+    };
+    final defaultPlatformDispatcherErrorHandler = PlatformDispatcher.instance.onError;
+    PlatformDispatcher.instance.onError = (error, stackTrace) {
+      logError(
+        '$error',
+        parentStackTrace: stackTrace,
+      );
+      return defaultPlatformDispatcherErrorHandler == null ? false : defaultPlatformDispatcherErrorHandler(error, stackTrace);
     };
     debugPrint = (
       message, {

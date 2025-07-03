@@ -67,4 +67,26 @@ class GsaServiceDebug extends GsaService {
       );
     }
   }
+
+  /// Returns a filtered list of available stack frame information.
+  ///
+  List<
+      ({
+        String package,
+        String source,
+        String className,
+        String method,
+      })>? processStackFrames(List<StackFrame>? value) {
+    if (value == null) return null;
+    return value
+        .map(
+          (callerTrace) => (
+            package: callerTrace.package,
+            source: callerTrace.source.split('(').last.split(')').first.replaceAll('package:', ''),
+            className: callerTrace.className,
+            method: callerTrace.method,
+          ),
+        )
+        .toList();
+  }
 }

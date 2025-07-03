@@ -183,7 +183,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                         child: ListView(
                           controller: _scrollController,
                           padding: EdgeInsets.symmetric(
-                            vertical: GsaTheme.instance.contentPadding.vertical / 2,
+                            vertical: Theme.of(context).listViewPadding.vertical / 2,
                           ),
                           children: [
                             if (<GsaClient>{
@@ -192,7 +192,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                                 GsaDataCheckout.instance.orderDraft.client != null) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                  horizontal: Theme.of(context).listViewPadding.horizontal / 2,
                                 ),
                                 child: _WidgetClientPreview(),
                               ),
@@ -206,7 +206,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                                 )) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                  horizontal: Theme.of(context).listViewPadding.horizontal / 2,
                                 ),
                                 child: const _WidgetProfile(),
                               ),
@@ -215,7 +215,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                             if (GsaConfig.bookmarksEnabled) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                  horizontal: Theme.of(context).listViewPadding.horizontal / 2,
                                 ),
                                 child: const _WidgetBookmarks(),
                               ),
@@ -223,20 +223,20 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                             ],
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                horizontal: Theme.of(context).listViewPadding.horizontal / 2,
                               ),
                               child: const _WidgetPromoCarousel(),
                             ),
                             GsaWidgetSaleItemCarousel(
                               GsaDataSaleItems.instance.collection,
                               label: 'Featured',
-                              horizontalPadding: GsaTheme.instance.contentPadding.horizontal / 2,
+                              horizontalPadding: Theme.of(context).listViewPadding.horizontal / 2,
                             ),
                             const SizedBox(height: 16),
                             if (GsaDataSaleItems.instance.categories.isNotEmpty) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                  horizontal: Theme.of(context).listViewPadding.horizontal / 2,
                                 ),
                                 child: _WidgetCategories(
                                   GsaDataSaleItems.instance.categories,
@@ -250,7 +250,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                             ],
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                horizontal: GsaTheme.instance.contentPadding.horizontal / 2,
+                                horizontal: Theme.of(context).listViewPadding.horizontal / 2,
                               ),
                               child: const _WidgetCustomerNotice(),
                             ),

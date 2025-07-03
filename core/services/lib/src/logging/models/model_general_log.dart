@@ -36,8 +36,19 @@ class GsaServiceLoggingModelAppLog {
         String? method,
       })>? callerFrames;
 
-  factory GsaServiceLoggingModelAppLog.fromStackTrace(String message) {
+  factory GsaServiceLoggingModelAppLog.fromStackTrace(
+    String message, {
+    StackTrace? parentStackTrace,
+  }) {
     final stackTrace = GsaServiceDebug.instance.getStackTrace();
+    final callerFrames = GsaServiceDebug.instance.processStackFrames(
+      stackTrace.callerTraces,
+    );
+    final parentCallerFrames = parentStackTrace == null
+        ? null
+        : GsaServiceDebug.instance.processStackFrames(
+            StackFrame.fromStackTrace(parentStackTrace),
+          );
     return GsaServiceLoggingModelAppLog._(
       time: DateTime.now(),
       message: message,
@@ -46,16 +57,12 @@ class GsaServiceLoggingModelAppLog {
       className: stackTrace.className,
       method: stackTrace.method,
       line: stackTrace.line,
-      callerFrames: stackTrace.callerTraces
-          ?.map(
-            (callerTrace) => (
-              package: callerTrace.package,
-              source: callerTrace.source.split('(').last.split(')').first.replaceAll('package:', ''),
-              className: callerTrace.className,
-              method: callerTrace.method,
-            ),
-          )
-          .toList(),
+      callerFrames: callerFrames != null || parentCallerFrames != null
+          ? [
+              if (callerFrames != null) ...callerFrames,
+              if (parentCallerFrames != null) ...parentCallerFrames,
+            ]
+          : null,
     );
   }
 
