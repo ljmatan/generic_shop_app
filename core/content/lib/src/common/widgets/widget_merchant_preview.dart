@@ -51,7 +51,7 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (displayActions && MediaQuery.of(context).size.width >= 1000)
+                if (displayActions && Theme.of(context).dimensions.largeScreen)
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -64,7 +64,7 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                   ),
               ],
             ),
-            if (displayActions && MediaQuery.of(context).size.width < 1000)
+            if (displayActions && Theme.of(context).dimensions.smallScreen)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Row(

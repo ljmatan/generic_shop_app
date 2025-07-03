@@ -34,7 +34,7 @@ class GsaWidgetAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shadowSize = MediaQuery.of(context).size.width < 1000 ? .1 : .4;
+    final shadowSize = Theme.of(context).dimensions.smallScreen ? .1 : .4;
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Stack(
@@ -63,7 +63,7 @@ class GsaWidgetAppBar extends StatelessWidget {
                                   ),
                             child: GsaWidgetText(
                               label ?? '',
-                              textAlign: MediaQuery.of(context).size.width < 1000 ? TextAlign.center : TextAlign.left,
+                              textAlign: Theme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
                                 shadows: [
                                   for (final offset in <Offset>{

@@ -234,9 +234,6 @@ class GsaTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-          shape: WidgetStatePropertyAll(
-            _roundedRectangleBorder,
-          ),
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
           ),
@@ -364,7 +361,32 @@ class GsaTheme {
   }
 }
 
-extension GsaThemeContentPaddingExtension on ThemeData {
+/// Extension methods and properties for the [ThemeData] object.
+///
+extension GsaThemeExt on ThemeData {
+  /// Getter method defining available screen dimensions.
+  ///
+  ({
+    bool smallScreen,
+    bool largeScreen,
+  }) get dimensions {
+    final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
+    final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;
+    if (size == null || ratio == null) {
+      return (
+        smallScreen: true,
+        largeScreen: false,
+      );
+    }
+    final screenWidth = size.width / ratio;
+    return (
+      smallScreen: screenWidth < 1000,
+      largeScreen: screenWidth >= 1000,
+    );
+  }
+
+  /// Default padding specified for [ListView] and other such elements.
+  ///
   EdgeInsets get listViewPadding {
     final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
     final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;

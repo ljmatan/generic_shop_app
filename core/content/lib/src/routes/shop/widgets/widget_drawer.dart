@@ -107,7 +107,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Column(
-                crossAxisAlignment: MediaQuery.of(context).size.width < 1000 ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                crossAxisAlignment: Theme.of(context).dimensions.smallScreen ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                 children: [
                   for (final action in {
                     (

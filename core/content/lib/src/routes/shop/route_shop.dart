@@ -279,7 +279,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
               Navigator.of(context).pushNamed('contact');
             },
           ),
-          if (MediaQuery.of(context).size.width < 1000 && Navigator.of(context).canPop()) ...[
+          if (Theme.of(context).dimensions.smallScreen && Navigator.of(context).canPop()) ...[
             const SizedBox(height: 10),
             FloatingActionButton(
               child: const Icon(Icons.apps),
