@@ -214,10 +214,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                             child: Card(
                               color: Theme.of(context).colorScheme.secondary,
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 14,
-                                  vertical: 16,
-                                ),
+                                padding: Theme.of(context).cardPadding,
                                 child: Stack(
                                   children: [
                                     Align(

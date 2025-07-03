@@ -292,29 +292,17 @@ class GsaTheme {
           fontSize: 18,
         ),
       ),
-      cardTheme: _brightness == Brightness.light
-          ? CardThemeData(
-              elevation: 0,
-              color: Colors.white,
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: borderRadius,
-                side: BorderSide(
-                  color: Colors.grey.withValues(alpha: .2),
-                ),
-              ),
-            )
-          : CardThemeData(
-              elevation: 0,
-              color: const Color(0xff212121),
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: borderRadius,
-                side: BorderSide(
-                  color: Colors.grey.withValues(alpha: .2),
-                ),
-              ),
-            ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        color: _brightness == Brightness.light ? Colors.white : const Color(0xff212121),
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius,
+          side: BorderSide(
+            color: Colors.grey.withValues(alpha: .2),
+          ),
+        ),
+      ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStatePropertyAll(_primaryColor),
         trackColor: WidgetStateProperty.resolveWith(
@@ -388,18 +376,18 @@ extension GsaThemeExt on ThemeData {
   /// Default padding specified for [ListView] and other such elements.
   ///
   EdgeInsets get listViewPadding {
-    final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
-    final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;
-    if (size == null || ratio == null) {
-      return const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 24,
-      );
-    }
-    final screenWidth = size.width / ratio;
     return EdgeInsets.symmetric(
-      horizontal: screenWidth < 1000 ? 20 : 26,
-      vertical: screenWidth < 1000 ? 24 : 30,
+      horizontal: dimensions.smallScreen ? 20 : 26,
+      vertical: dimensions.smallScreen ? 24 : 30,
+    );
+  }
+
+  /// Default padding specified for [Card] elements.
+  ///
+  EdgeInsets get cardPadding {
+    return EdgeInsets.symmetric(
+      horizontal: dimensions.smallScreen ? 16 : 20,
+      vertical: dimensions.smallScreen ? 12 : 16,
     );
   }
 }

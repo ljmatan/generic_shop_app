@@ -173,7 +173,11 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
 
   /// Avoids the @protected annotation on the [setState] method with public method access.
   ///
-  void rebuild() => setState(() {});
+  void rebuild() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   /// Runs a given [callback], returning it's result,
   /// blocking user input, and displaying a dialog with an error message in case of an exception.

@@ -27,14 +27,8 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: InkWell(
             child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: BorderSide(
-                  color: Color.lerp(Theme.of(context).primaryColor, Colors.white, 0.8)!,
-                ),
-              ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+                padding: Theme.of(context).cardPadding,
                 child: Row(
                   children: [
                     Expanded(

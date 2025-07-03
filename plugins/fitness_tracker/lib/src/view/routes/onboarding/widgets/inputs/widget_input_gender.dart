@@ -51,10 +51,7 @@ class _WidgetInputGenderState extends State<_WidgetInputGender> {
                     child: Card(
                       color: genderOption == widget.trainee.gender ? Theme.of(context).colorScheme.primary : null,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
-                        ),
+                        padding: Theme.of(context).cardPadding,
                         child: Row(
                           children: [
                             Icon(
