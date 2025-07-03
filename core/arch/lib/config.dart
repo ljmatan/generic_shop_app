@@ -239,6 +239,14 @@ abstract class GsaPlugin {
     return null;
   }
 
+  /// Defines whether client has network image caching enabled.
+  ///
+  /// The caching is applied to sale item entries.
+  ///
+  bool get cachedNetworkImages {
+    return true;
+  }
+
   /// Method used with login screen implementations for logging in a user with [username] and [password].
   ///
   Future<void> Function({

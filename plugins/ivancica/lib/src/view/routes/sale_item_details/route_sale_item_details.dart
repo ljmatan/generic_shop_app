@@ -70,7 +70,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                   ? ValueListenableBuilder(
                                       valueListenable: _imageUrlSelectionNotifier,
                                       builder: (context, value, child) {
-                                        return Image.network(
+                                        return GsaWidgetImage.network(
                                           value!,
                                           width: MediaQuery.of(context).size.width,
                                           height: MediaQuery.of(context).size.height,
@@ -124,7 +124,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                             padding: const EdgeInsets.all(2),
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.circular(4),
-                                              child: Image.network(
+                                              child: GsaWidgetImage.network(
                                                 imageUrl.$2,
                                                 width: MediaQuery.of(context).size.width,
                                                 height: MediaQuery.of(context).size.height,
@@ -368,7 +368,7 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                   for (final icon in saleItem!.attributeIconUrls!.indexed)
                                     Padding(
                                       padding: icon.$1 == 0 ? EdgeInsets.zero : const EdgeInsets.only(left: 10),
-                                      child: Image.network(
+                                      child: GsaWidgetImage.network(
                                         icon.$2,
                                         width: 50,
                                         height: 50,

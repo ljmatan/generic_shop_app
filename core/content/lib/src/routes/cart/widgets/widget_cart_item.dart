@@ -46,7 +46,7 @@ class _WidgetCartItemState extends State<_WidgetCartItem> {
                     padding: const EdgeInsets.all(1),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
+                      child: GsaWidgetImage.network(
                         widget.cartItem.imageUrls![0],
                         width: 80,
                         height: 80,
