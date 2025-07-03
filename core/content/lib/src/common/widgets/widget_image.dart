@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -36,7 +37,8 @@ class GsaWidgetImage extends StatefulWidget {
     this.shadows,
     this.fit = BoxFit.contain,
     this.alignment = Alignment.center,
-  })  : networkImage = false,
+  })  : _networkImage = false,
+        cached = false,
         inputString = null,
         bytes = const [];
 
@@ -51,8 +53,9 @@ class GsaWidgetImage extends StatefulWidget {
     this.shadows,
     this.fit = BoxFit.contain,
     this.alignment = Alignment.center,
+    this.cached = false,
   })  : type = GsaWidgetImageByteType.standard,
-        networkImage = true,
+        _networkImage = true,
         inputString = null,
         bytes = const [];
 
@@ -73,7 +76,8 @@ class GsaWidgetImage extends StatefulWidget {
     this.fit = BoxFit.contain,
     this.alignment = Alignment.center,
   })  : path = '',
-        networkImage = false;
+        _networkImage = false,
+        cached = false;
 
   /// Used for displaying SVG files directly from [String] values, or for loading base64-encoded images.
   ///
@@ -91,7 +95,8 @@ class GsaWidgetImage extends StatefulWidget {
     this.alignment = Alignment.center,
   })  : type = GsaWidgetImageByteType.svg,
         path = '',
-        networkImage = false;
+        _networkImage = false,
+        cached = false;
 
   static const _placeholderAssetPath = 'assets/svg/placeholder.svg';
 
@@ -109,7 +114,8 @@ class GsaWidgetImage extends StatefulWidget {
     this.fit = BoxFit.contain,
     this.alignment = Alignment.center,
   })  : path = _placeholderAssetPath,
-        networkImage = false;
+        _networkImage = false,
+        cached = false;
 
   /// The asset image path or network image URL.
   ///
@@ -150,7 +156,13 @@ class GsaWidgetImage extends StatefulWidget {
 
   /// Defines whether the image is a network image.
   ///
-  final bool networkImage;
+  final bool _networkImage;
+
+  /// Defines whether this image will get saved to device memory.
+  ///
+  /// Applicable only to network images.
+  ///
+  final bool cached;
 
   @override
   State<GsaWidgetImage> createState() => _GsaWidgetImageState();
@@ -205,7 +217,7 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                     alignment: widget.alignment,
                   )
             : widget.path.endsWith('.svg')
-                ? widget.networkImage == true
+                ? widget._networkImage == true
                     ? SvgPicture.network(
                         widget.path,
                         width: widget.width,
@@ -244,15 +256,24 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                             fit: widget.fit,
                             alignment: widget.alignment,
                           )
-                : widget.networkImage == true
-                    ? Image.network(
-                        widget.path,
-                        width: widget.width,
-                        height: widget.height,
-                        color: widget.colorFilter,
-                        fit: widget.fit,
-                        alignment: widget.alignment,
-                      )
+                : widget._networkImage == true
+                    ? widget.cached
+                        ? CachedNetworkImage(
+                            imageUrl: widget.path,
+                            width: widget.width,
+                            height: widget.height,
+                            color: widget.colorFilter,
+                            fit: widget.fit,
+                            alignment: widget.alignment as Alignment,
+                          )
+                        : Image.network(
+                            widget.path,
+                            width: widget.width,
+                            height: widget.height,
+                            color: widget.colorFilter,
+                            fit: widget.fit,
+                            alignment: widget.alignment,
+                          )
                     : Image.asset(
                         widget.path,
                         width: widget.width,
