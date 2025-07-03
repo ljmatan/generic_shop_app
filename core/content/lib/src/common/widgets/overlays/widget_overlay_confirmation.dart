@@ -9,11 +9,16 @@ class GsaWidgetOverlayConfirmation extends GsaWidgetOverlay {
   const GsaWidgetOverlayConfirmation(
     this.message, {
     super.key,
+    this.additionalContent,
   });
 
   /// User-facing message clarifying the confirmation request.
   ///
   final String? message;
+
+  /// Additional content displayed below the [message] view section.
+  ///
+  final Widget? additionalContent;
 
   @override
   State<GsaWidgetOverlayConfirmation> createState() => _GsaWidgetOverlayConfirmationState();
@@ -32,7 +37,11 @@ class _GsaWidgetOverlayConfirmationState extends State<GsaWidgetOverlayConfirmat
             fontSize: 16,
           ),
         ),
-        const SizedBox(height: 16),
+        if (widget.additionalContent != null) ...[
+          const SizedBox(height: 20),
+          widget.additionalContent!,
+        ],
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
