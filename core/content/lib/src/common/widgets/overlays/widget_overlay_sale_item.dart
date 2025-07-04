@@ -66,9 +66,12 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
               ),
             ),
             const SizedBox(height: 20),
-            if (widget.saleItem.imageUrls?.isNotEmpty == true)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 14),
+            if (widget.saleItem.imageUrls?.isNotEmpty == true) ...[
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: Center(
                   child: GsaWidgetImage.network(
                     widget.saleItem.imageUrls![0],
@@ -76,6 +79,8 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   ),
                 ),
               ),
+              const SizedBox(height: 14),
+            ],
             if (widget.saleItem.amountMeasureFormatted != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 12),

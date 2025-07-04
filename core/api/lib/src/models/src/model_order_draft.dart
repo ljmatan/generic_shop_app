@@ -94,7 +94,7 @@ class GsaModelOrderDraft extends _Model {
   }
 }
 
-extension GsaModelOrderDraftState on GsaModelOrderDraft {
+extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
   /// Whether this order is deliverable with the current configuration.
   ///
   bool get deliverable {
@@ -115,9 +115,7 @@ extension GsaModelOrderDraftState on GsaModelOrderDraft {
         ) &&
         deliveryType?.payable != false;
   }
-}
 
-extension GsaModelOrderDraftItems on GsaModelOrderDraft {
   /// Total number of all sale items in the cart.
   ///
   int get totalItemCount {
@@ -317,7 +315,9 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
     }
     return (itemCount ?? 0) + (itemOptionsCount ?? 0);
   }
+}
 
+extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
   /// Adds a sale item to the cart.
   ///
   /// Returns the current item cart count.
@@ -332,7 +332,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
       );
     }
     if (newCount != null) {
-      if (newCount < 1) {
+      if (newCount < 1 && saleItem.allowZeroCartCount != true) {
         throw Exception('New count must not be less than 1.');
       }
       if (saleItem.maxCount != null && newCount > saleItem.maxCount!) {
@@ -435,7 +435,7 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
       optionIndex: optionIndex,
     );
     if (newCount != null) {
-      if (newCount < 1) {
+      if (newCount < 1 && saleItemOption.allowZeroCartCount != true) {
         throw Exception('New count must not be less than 1.');
       }
       if (saleItemOption.maxCount != null && newCount > saleItemOption.maxCount!) {
@@ -526,13 +526,15 @@ extension GsaModelOrderDraftItems on GsaModelOrderDraft {
         return item.optionId != null && item.optionId == saleItemOption.id;
       },
     );
-    final saleItemCount = getTotalItemCount(saleItem);
-    if (saleItemCount == null) {
-      items.removeWhere(
-        (item) {
-          return item.id == saleItem.id;
-        },
-      );
+    if (saleItem.allowZeroCartCount != true) {
+      final saleItemCount = getTotalItemCount(saleItem);
+      if (saleItemCount == null) {
+        items.removeWhere(
+          (item) {
+            return item.id == saleItem.id;
+          },
+        );
+      }
     }
     GsaDataCheckout.instance.notifyListeners();
   }

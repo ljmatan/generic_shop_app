@@ -14,6 +14,7 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
     this.enableFilter = true,
     this.enableSearch = true,
     this.width,
+    this.height,
     this.textController,
     this.focusNode,
     this.enabled = true,
@@ -45,9 +46,9 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
   ///
   final bool enableSearch;
 
-  /// Size in width specified for a dropdown menu instance.
+  /// Size specified for a dropdown menu instance.
   ///
-  final double? width;
+  final double? width, height;
 
   /// The default controller for this dropdown menu.
   ///
@@ -78,7 +79,9 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
   final String? Function(String? value)? validator;
 
   @override
-  State<GsaWidgetDropdownMenu<T>> createState() => _GsaWidgetDropdownMenuState<T>();
+  State<GsaWidgetDropdownMenu<T>> createState() {
+    return _GsaWidgetDropdownMenuState<T>();
+  }
 }
 
 class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
@@ -136,7 +139,9 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
             ),
       hintText: widget.hintText,
       width: widget.width,
+      menuHeight: widget.height,
       initialSelection: _initialSelection,
+      expandedInsets: EdgeInsets.zero,
       textStyle: GsaWidgetTextField.themeProperties.textStyle(),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       menuStyle: Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(

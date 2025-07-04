@@ -125,7 +125,8 @@ class GsaTheme {
       border: OutlineInputBorder(
         borderRadius: borderRadius,
       ),
-      labelStyle: const TextStyle(
+      labelStyle: TextStyle(
+        color: _brightness == Brightness.light ? null : Colors.white,
         fontWeight: FontWeight.w600,
         fontSize: 12,
       ),
@@ -134,12 +135,12 @@ class GsaTheme {
         fontSize: 10,
       ),
       errorMaxLines: 1000,
-      helperStyle: const TextStyle(
-        color: Color(0xff63747E),
+      helperStyle: TextStyle(
+        color: _brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
         fontSize: 10,
       ),
-      hintStyle: const TextStyle(
-        color: Color(0xff63747E),
+      hintStyle: TextStyle(
+        color: _brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
       ),
     );
   }
@@ -162,6 +163,7 @@ class GsaTheme {
   ThemeData get data {
     return ThemeData(
       platform: platform,
+      brightness: _brightness,
       primaryColor: _primaryColor,
       fontFamily: _fontFamily,
       splashColor: Colors.transparent,
@@ -220,6 +222,18 @@ class GsaTheme {
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
           ),
+          iconColor: WidgetStatePropertyAll(
+            _brightness == Brightness.light ? null : Colors.white,
+          ),
+          textStyle: WidgetStatePropertyAll(
+            TextStyle(
+              color: _brightness == Brightness.light ? null : Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          foregroundColor: WidgetStatePropertyAll(
+            _brightness == Brightness.light ? null : Colors.white,
+          ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -230,12 +244,36 @@ class GsaTheme {
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
           ),
+          iconColor: WidgetStatePropertyAll(
+            _brightness == Brightness.light ? null : Colors.white,
+          ),
+          textStyle: WidgetStatePropertyAll(
+            TextStyle(
+              color: _brightness == Brightness.light ? null : Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          foregroundColor: WidgetStatePropertyAll(
+            _brightness == Brightness.light ? null : Colors.white,
+          ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
+          ),
+          iconColor: WidgetStatePropertyAll(
+            _brightness == Brightness.light ? null : Colors.white,
+          ),
+          textStyle: WidgetStatePropertyAll(
+            TextStyle(
+              color: _brightness == Brightness.light ? null : Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          foregroundColor: WidgetStatePropertyAll(
+            _brightness == Brightness.light ? null : Colors.white,
           ),
         ),
       ),
@@ -269,7 +307,8 @@ class GsaTheme {
               onSurface: Colors.white,
               surfaceTint: const Color(0xff212121),
             ),
-      iconTheme: const IconThemeData(
+      iconTheme: IconThemeData(
+        color: _brightness == Brightness.light ? null : Colors.white,
         applyTextScaling: true,
       ),
       appBarTheme: AppBarTheme(

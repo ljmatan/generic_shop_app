@@ -26,6 +26,7 @@ class GsaModelSaleItem extends _Model {
     this.digital,
     this.payable,
     this.option,
+    this.allowZeroCartCount,
     this.options,
     this.reviews,
     this.deliveryTimeMilliseconds,
@@ -84,7 +85,11 @@ class GsaModelSaleItem extends _Model {
 
   /// Availability information, including store location identifier or available item count.
   ///
-  List<({String? locationId, int? count})>? availability;
+  List<
+      ({
+        String? locationId,
+        int? count,
+      })>? availability;
 
   /// Maximum count of products to purchase in a single checkout session.
   ///
@@ -110,6 +115,13 @@ class GsaModelSaleItem extends _Model {
   ///
   bool? option;
 
+  /// Whether the item can be added to the cart with amount specified as 0.
+  ///
+  /// The value is utilised by the [GsaModelOrderDraft] object
+  /// in order to implement additional functionality.
+  ///
+  bool? allowZeroCartCount;
+
   /// List of associated [GsaModelSaleItemOption] objects.
   ///
   List<GsaModelSaleItem>? options;
@@ -128,7 +140,11 @@ class GsaModelSaleItem extends _Model {
 
   /// Custom user-visible information applied to this sale item.
   ///
-  List<({String label, String description})>? informationList;
+  List<
+      ({
+        String label,
+        String description,
+      })>? informationList;
 
   /// The amount of the current item in the cart or order draft.
   ///

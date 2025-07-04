@@ -679,6 +679,7 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) =>
       digital: json['digital'] as bool?,
       payable: json['payable'] as bool?,
       option: json['option'] as bool?,
+      allowZeroCartCount: json['allowZeroCartCount'] as bool?,
       options: (json['options'] as List<dynamic>?)
           ?.map((e) => GsaModelSaleItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -740,6 +741,7 @@ Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) =>
       'digital': instance.digital,
       'payable': instance.payable,
       'option': instance.option,
+      'allowZeroCartCount': instance.allowZeroCartCount,
       'options': instance.options?.map((e) => e.toJson()).toList(),
       'reviews': instance.reviews?.map((e) => e.toJson()).toList(),
       'deliveryTimeMilliseconds': instance.deliveryTimeMilliseconds,

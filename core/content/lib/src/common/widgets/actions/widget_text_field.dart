@@ -84,7 +84,7 @@ class GsaWidgetTextField extends StatefulWidget {
 
   /// Event triggered on focus change.
   ///
-  final Function()? onFocusChange;
+  final Function(bool focused)? onFocusChange;
 
   /// Event triggered on controller change.
   ///
@@ -199,14 +199,16 @@ class GsaWidgetTextField extends StatefulWidget {
     ) {
       return TextStyle(
         fontWeight: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true ? FontWeight.w600 : FontWeight.w400,
-        color: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
-            ? const Color(0xff283033)
-            : const Color(0xff63747E),
+        color: GsaTheme.instance.data.brightness == Brightness.light
+            ? focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
+                ? const Color(0xff283033)
+                : const Color(0xff63747E)
+            : Colors.white,
       );
     },
     textStyle: () {
-      return const TextStyle(
-        color: Color(0xff63747E),
+      return TextStyle(
+        color: GsaTheme.instance.data.brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
         fontSize: 12,
       );
     },
@@ -242,12 +244,16 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
 
   Future<void> _onFocusNodeUpdate() async {
     if (widget.onFocusChange != null) {
-      await widget.onFocusChange!();
+      await widget.onFocusChange!(_focusNode.hasFocus);
     }
     if (mounted) {
       setState(() {});
     }
   }
+
+  final _buttonFocusNode = FocusNode(
+    canRequestFocus: false,
+  );
 
   late bool _obscureText;
 
@@ -316,6 +322,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
                       color: _obscureText ? const Color(0xff63747E) : Theme.of(context).primaryColor,
                     ),
                     iconSize: 18,
+                    focusNode: _buttonFocusNode,
                     onPressed: widget.obscureText == true
                         ? () => setState(() => _obscureText = !_obscureText)
                         : () {
@@ -356,6 +363,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
     if (widget.controller == null) _textController.dispose();
     _focusNode.removeListener(_onFocusNodeUpdate);
     if (widget.focusNode == null) _focusNode.dispose();
+    _buttonFocusNode.dispose();
     super.dispose();
   }
 }

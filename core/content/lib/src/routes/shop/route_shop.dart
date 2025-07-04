@@ -42,29 +42,31 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
   Future<List<GsaModelSaleItem>>? _searchFuture;
 
   void _onFiltersUpdated() {
-    _searchFuture = Future(() async {
-      final categoryResults = _filters.categoryId == null
-          ? null
-          : GsaDataSaleItems.instance.collection.where(
-              (product) {
-                return product.categoryId == _filters.categoryId;
-              },
-            ).toList();
-      final searchTermResults = _filters.searchTerm?.trim().isNotEmpty == true
-          ? await GsaServiceSearch.instance.findByCharacters(
-              searchTerm: _filters.searchTerm!,
-              comparisonValues: categoryResults ?? GsaDataSaleItems.instance.collection,
-              comparator: (value) {
-                final saleItem = value as GsaModelSaleItem;
-                return [
-                  if (saleItem.name?.isNotEmpty == true) saleItem.name!,
-                  if (saleItem.productCode?.isNotEmpty == true) saleItem.productCode!,
-                ];
-              },
-            )
-          : null;
-      return List<GsaModelSaleItem>.from(searchTermResults ?? categoryResults ?? []);
-    });
+    _searchFuture = Future(
+      () async {
+        final categoryResults = _filters.categoryId == null
+            ? null
+            : GsaDataSaleItems.instance.collection.where(
+                (product) {
+                  return product.categoryId == _filters.categoryId;
+                },
+              ).toList();
+        final searchTermResults = _filters.searchTerm?.trim().isNotEmpty == true
+            ? await GsaServiceSearch.instance.findByCharacters(
+                searchTerm: _filters.searchTerm!,
+                comparisonValues: categoryResults ?? GsaDataSaleItems.instance.collection,
+                comparator: (value) {
+                  final saleItem = value as GsaModelSaleItem;
+                  return [
+                    if (saleItem.name?.isNotEmpty == true) saleItem.name!,
+                    if (saleItem.productCode?.isNotEmpty == true) saleItem.productCode!,
+                  ];
+                },
+              )
+            : null;
+        return List<GsaModelSaleItem>.from(searchTermResults ?? categoryResults ?? []);
+      },
+    );
     setState(() {});
   }
 

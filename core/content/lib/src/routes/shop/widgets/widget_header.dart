@@ -103,7 +103,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                       hintText: 'Search'.translated(context),
                       prefixIcon: Icon(
                         Icons.search,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).brightness == Brightness.light ? Theme.of(context).primaryColor : Colors.white,
                       ),
                     ),
                     const SizedBox(height: 14),
@@ -155,7 +155,8 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                     hintText: 'Search'.translated(context),
                                     prefixIcon: Icon(
                                       Icons.search,
-                                      color: Theme.of(context).primaryColor,
+                                      color:
+                                          Theme.of(context).brightness == Brightness.light ? Theme.of(context).primaryColor : Colors.white,
                                     ),
                                   ),
                                 ),
@@ -280,7 +281,7 @@ class _WidgetHeaderOverlayEmptyCartState extends State<_WidgetHeaderOverlayEmpty
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(26, 0, 26, 16),
+      padding: const EdgeInsets.fromLTRB(26, 20, 26, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

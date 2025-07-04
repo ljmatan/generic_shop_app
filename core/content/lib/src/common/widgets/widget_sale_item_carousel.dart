@@ -4,8 +4,9 @@ import 'package:generic_shop_app_content/gsac.dart';
 
 /// Horizontally scrollable list of sale items.
 ///
-class GsaWidgetSaleItemCarousel extends StatelessWidget {
-  // ignore: public_member_api_docs
+class GsaWidgetSaleItemCarousel extends StatefulWidget {
+  /// Default, unnamed widget constructor.
+  ///
   const GsaWidgetSaleItemCarousel(
     this.saleItems, {
     super.key,
@@ -25,42 +26,86 @@ class GsaWidgetSaleItemCarousel extends StatelessWidget {
   ///
   final double horizontalPadding;
 
+  /// Padding applied between element entries.
+  ///
   static const _internalPadding = 8.0;
 
   @override
+  State<GsaWidgetSaleItemCarousel> createState() => _GsaWidgetSaleItemCarouselState();
+}
+
+class _GsaWidgetSaleItemCarouselState extends State<GsaWidgetSaleItemCarousel> {
+  /// The number of items displayed per row with grid view mode.
+  ///
+  int get _itemsPerRow {
+    final screenWidth = MediaQuery.of(context).size.width;
+    if (Theme.of(context).dimensions.smallScreen) return 0;
+    return screenWidth < 1300
+        ? 3
+        : screenWidth < 1600
+            ? 4
+            : 5;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (saleItems.isEmpty) return const SizedBox();
+    if (widget.saleItems.isEmpty) return const SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (label != null) ...[
+        if (widget.label != null) ...[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+            padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
             child: GsaWidgetHeadline(
-              label!,
+              widget.label!,
             ),
           ),
         ],
         const SizedBox(height: 12),
-        SizedBox(
-          height: GsaWidgetSaleItemPreview.previewHeight,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: saleItems.length,
-            padding: EdgeInsets.only(
-              left: horizontalPadding,
-              right: horizontalPadding < _internalPadding ? horizontalPadding : horizontalPadding - _internalPadding,
-            ),
-            itemBuilder: (context, index) => Padding(
+        if (Theme.of(context).dimensions.smallScreen)
+          SizedBox(
+            height: GsaWidgetSaleItemPreview.previewHeight,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.saleItems.length,
               padding: EdgeInsets.only(
-                right: horizontalPadding < _internalPadding ? horizontalPadding : _internalPadding,
+                left: widget.horizontalPadding,
+                right: widget.horizontalPadding < GsaWidgetSaleItemCarousel._internalPadding
+                    ? widget.horizontalPadding
+                    : widget.horizontalPadding - GsaWidgetSaleItemCarousel._internalPadding,
               ),
-              child: GsaWidgetSaleItemPreview(
-                saleItems[index],
+              itemBuilder: (context, index) => Padding(
+                padding: EdgeInsets.only(
+                  right: widget.horizontalPadding < GsaWidgetSaleItemCarousel._internalPadding
+                      ? widget.horizontalPadding
+                      : GsaWidgetSaleItemCarousel._internalPadding,
+                ),
+                child: GsaWidgetSaleItemPreview(
+                  widget.saleItems[index],
+                ),
               ),
+            ),
+          )
+        else ...[
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: widget.horizontalPadding,
+            ),
+            child: Wrap(
+              spacing: GsaWidgetSaleItemCarousel._internalPadding,
+              runSpacing: GsaWidgetSaleItemCarousel._internalPadding,
+              children: [
+                for (final saleItem in widget.saleItems)
+                  GsaWidgetSaleItemPreview(
+                    saleItem,
+                    width: ((MediaQuery.of(context).size.width - widget.horizontalPadding * 2) -
+                            (GsaWidgetSaleItemCarousel._internalPadding * (_itemsPerRow - 1))) /
+                        _itemsPerRow,
+                  ),
+              ],
             ),
           ),
-        ),
+        ],
       ],
     );
   }
