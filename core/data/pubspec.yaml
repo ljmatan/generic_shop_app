@@ -17,6 +17,8 @@ dependencies:
     path: ../api
   generic_shop_app_services:
     path: ../services
+  generic_shop_app_content:
+    path: ../content
 
 dev_dependencies:
   flutter_test:

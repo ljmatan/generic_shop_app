@@ -128,7 +128,7 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
 
   /// Calculates and returns the combined price of the specified [saleItem].
   ///
-  /// Returns null if the item price is not larger than 0.
+  /// Returns null if the item price entries are not found.
   ///
   int? getItemTotalPriceCentum(
     GsaModelSaleItem saleItem,
@@ -137,7 +137,7 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
       saleItem,
       if (saleItem.options != null) ...saleItem.options!,
     ];
-    int price = 0;
+    int? price;
     for (final saleOption in itemSaleOptions.indexed) {
       final priceCentum = saleOption.$2.price?.centum;
       if (priceCentum != null) {
@@ -148,17 +148,17 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
           count = getItemOptionCount(saleOption.$2);
         }
         if (count != null) {
+          price ??= 0;
           price += priceCentum * count;
         }
       }
     }
-    if (price == 0) return null;
     return price;
   }
 
   /// Calculates and returns the combined price of the specified [saleItemOption].
   ///
-  /// Returns null if the item option price is not larger than 0.
+  /// Returns null if the item option price is not found.
   ///
   int? getItemOptionTotalPriceCentum(
     GsaModelSaleItem saleItemOption,
@@ -168,13 +168,12 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
       return null;
     }
     final value = optionCount * saleItemOption.price!.centum!;
-    if (value == 0) return null;
     return value;
   }
 
   /// Calculates and returns the combined price of the specified [saleItem].
   ///
-  /// Returns null if the calculated item price is not larger than 0.
+  /// Returns null if the calculated item price is not found.
   ///
   double? getItemTotalPriceUnity(
     GsaModelSaleItem saleItem,
@@ -182,13 +181,12 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
     final priceCentum = getItemTotalPriceCentum(saleItem);
     if (priceCentum == null) return null;
     final value = priceCentum / 100;
-    if (value == 0) return null;
     return value;
   }
 
   /// Calculates and returns the combined price of the specified [saleItem].
   ///
-  /// Returns null if the calculated item price is not larger than 0.
+  /// Returns null if the calculated item price is not found.
   ///
   double? getItemOptionTotalPriceUnity(
     GsaModelSaleItem saleItem,
@@ -196,17 +194,19 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
     final priceCentum = getItemOptionTotalPriceCentum(saleItem);
     if (priceCentum == null) return null;
     final value = priceCentum / 100;
-    if (value == 0) return null;
     return value;
   }
 
   /// Total combined items price in centum.'
   ///
-  int get totalItemPriceCentum {
-    int price = 0;
+  /// Returns null if no price information is found.
+  ///
+  int? get totalItemPriceCentum {
+    int? price;
     for (final saleItem in items) {
       final itemPrice = getItemTotalPriceCentum(saleItem);
       if (itemPrice != null) {
+        price ??= 0;
         price += itemPrice;
       }
     }
@@ -215,8 +215,9 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
 
   /// Total cart price in EUR cents.'
   ///
-  int get totalPriceCentum {
-    int price = totalItemPriceCentum;
+  int? get totalPriceCentum {
+    int? price = totalItemPriceCentum;
+    if (price == null) return null;
     price += deliveryType?.price?.centum ?? 0;
     price += paymentType?.price?.centum ?? 0;
     return price;
@@ -224,14 +225,18 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
 
   /// Total cart price in EUR.'
   ///
-  double get totalItemPriceUnity {
-    return double.parse((totalPriceCentum / 100).toStringAsFixed(2));
+  double? get totalItemPriceUnity {
+    final price = totalItemPriceCentum;
+    if (price == null) return null;
+    return double.parse((price / 100).toStringAsFixed(2));
   }
 
   /// Total cart price in EUR.'
   ///
-  double get totalPriceUnity {
-    return double.parse((totalPriceCentum / 100).toStringAsFixed(2));
+  double? get totalPriceUnity {
+    final price = totalPriceCentum;
+    if (price == null) return null;
+    return double.parse((price / 100).toStringAsFixed(2));
   }
 
   /// User-visible price representation.
@@ -310,9 +315,7 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
   ) {
     final itemCount = getItemCount(saleItem);
     final itemOptionsCount = getItemOptionsCount(saleItem);
-    if (itemCount == null && itemOptionsCount == null) {
-      return null;
-    }
+    if (itemCount == null && itemOptionsCount == null) return null;
     return (itemCount ?? 0) + (itemOptionsCount ?? 0);
   }
 }

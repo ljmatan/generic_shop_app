@@ -158,9 +158,17 @@ abstract class GsaApi {
 
   /// Method implemented for enabling the refresh JWT functionality.
   ///
-  Future<void>? refreshToken() {
+  Future<void> refreshToken() {
     throw UnimplementedError(
       'Token refresh method is not implemented.',
+    );
+  }
+
+  /// Method implemented for logging out the user.
+  ///
+  Future<void> logout() {
+    throw UnimplementedError(
+      'Logout method is not implemented.',
     );
   }
 
@@ -247,6 +255,18 @@ abstract class GsaApi {
             throw message.substring(0, message.length - 1);
           }
         }
+        Future.delayed(
+          Duration.zero,
+          () async {
+            try {
+              await logout();
+            } catch (e) {
+              GsaServiceLogging.instance.logError(
+                'Error logging out automatically:\n$e',
+              );
+            }
+          },
+        );
         throw decodedResponseBody['message'] ??
             decodedResponseBody['error'] ??
             decodedResponseBody['msg'] ??
