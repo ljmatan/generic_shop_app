@@ -20,6 +20,7 @@ export 'src/input_validation/service_input_validation.dart';
 export 'src/location/service_location.dart';
 export 'src/logging/service_logging.dart';
 export 'src/mock/service_mock.dart';
+export 'src/permissions/service_permissions.dart';
 export 'src/share/service_share.dart';
 export 'src/search/service_search.dart';
 export 'src/tracking/service_tracking.dart';
