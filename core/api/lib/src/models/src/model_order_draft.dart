@@ -57,18 +57,6 @@ class GsaModelOrderDraft extends _Model {
   ///
   GsaModelPrice? price;
 
-  /// Clears the order by removing all of the items and personal details from the order draft.
-  ///
-  void clear() {
-    items.clear();
-    itemCount.clear();
-    client = null;
-    deliveryType = null;
-    paymentType = null;
-    couponCode = null;
-    price = null;
-  }
-
   // ignore: public_member_api_docs
   factory GsaModelOrderDraft.fromJson(Map json) {
     return _$GsaModelOrderDraftFromJson(Map<String, dynamic>.from(json));
@@ -697,5 +685,42 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
         ).isNotEmpty;
       },
     ).toList();
+  }
+
+  /// Sale items can be optionally added to the cart with amount equaling 0,
+  /// where only their specified [options] can then be purchased.
+  ///
+  /// When such an item has been added but not confirmed with any option input,
+  /// the entries are cleared from the list of relevant [items] their [itemCount].
+  ///
+  void _removeEmptyEntries() {
+    items.removeWhere(
+      (item) {
+        return item.cartCountWithOptions(orderDraft: this) == null;
+      },
+    );
+    itemCount.removeWhere(
+      (itemCount) {
+        return items.where(
+          (item) {
+            return item.id == itemCount.id;
+          },
+        ).isEmpty;
+      },
+    );
+    GsaDataCheckout.instance.notifyListeners();
+  }
+
+  /// Clears the order by removing all of the items and personal details from the order draft.
+  ///
+  void clear() {
+    _removeEmptyEntries();
+    items.clear();
+    itemCount.clear();
+    client = null;
+    deliveryType = null;
+    paymentType = null;
+    couponCode = null;
+    price = null;
   }
 }

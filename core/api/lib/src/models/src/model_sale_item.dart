@@ -168,17 +168,24 @@ class GsaModelSaleItem extends _Model {
     GsaModelOrderDraft? orderDraft,
   }) {
     orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    int count = 0;
+    int? count;
     if (option == true) {
       return null;
     }
-    count += orderDraft.getItemCount(this) ?? 0;
+    final itemCount = orderDraft.getItemCount(this);
+    if (itemCount != null && itemCount > 0) {
+      count ??= 0;
+      count += itemCount;
+    }
     if (options?.isNotEmpty == true) {
       for (final saleItemOption in options!) {
-        count += orderDraft.getItemOptionCount(saleItemOption) ?? 0;
+        final optionCount = orderDraft.getItemOptionCount(saleItemOption);
+        if (optionCount != null && optionCount > 0) {
+          count ??= 0;
+          count += optionCount;
+        }
       }
     }
-    if (count == 0) return null;
     return count;
   }
 
