@@ -1,5 +1,6 @@
 import 'dart:convert' as dart_convert;
 
+import 'package:generic_shop_app_services/services.dart';
 import 'package:http/http.dart' as http;
 
 /// A base class for the HTTP client services.
@@ -155,11 +156,20 @@ abstract class GsaApi {
     return errors.isEmpty ? null : errors;
   }
 
+  /// Method implemented for enabling the refresh JWT functionality.
+  ///
+  Future<void>? refreshToken() {
+    throw UnimplementedError(
+      'Token refresh method is not implemented.',
+    );
+  }
+
   /// Default HTTP request and response handler.
   ///
   Future<dynamic> _httpRequest(
     Future<http.Response> Function() request, {
     required bool decodedResponse,
+    bool retry = false,
   }) async {
     final requestTime = DateTime.now();
     try {
@@ -196,6 +206,20 @@ abstract class GsaApi {
         // Do nothing.
       }
       if (response.statusCode ~/ 2 != 100) {
+        if (response.statusCode == 401 && !retry) {
+          try {
+            await refreshToken();
+            return await _httpRequest(
+              request,
+              decodedResponse: decodedResponse,
+              retry: true,
+            );
+          } catch (e) {
+            GsaServiceLogging.instance.logError(
+              'Refresh JWT failed: $e',
+            );
+          }
+        }
         String message = '';
         if (decodedResponseBody is Map) {
           if (decodedResponseBody['errors'] is Iterable) {
@@ -239,12 +263,13 @@ abstract class GsaApi {
   ///
   Future<dynamic> get(
     String endpoint, {
+    Map<String, String> additionalHeaders = const {},
     bool decodedResponse = true,
   }) async {
     return await _httpRequest(
       () async => http.get(
         Uri.parse('$url$endpoint'),
-        headers: headers,
+        headers: headers..addAll(additionalHeaders),
       ),
       decodedResponse: decodedResponse,
     );
@@ -255,12 +280,13 @@ abstract class GsaApi {
   Future<dynamic> post(
     String endpoint,
     Map<String, dynamic> body, {
+    Map<String, String> additionalHeaders = const {},
     bool decodedResponse = true,
   }) async {
     return await _httpRequest(
       () async => http.post(
         Uri.parse('$url$endpoint'),
-        headers: headers,
+        headers: headers..addAll(additionalHeaders),
         body: dart_convert.jsonEncode(body),
       ),
       decodedResponse: decodedResponse,
@@ -272,12 +298,13 @@ abstract class GsaApi {
   Future<dynamic> put(
     String endpoint,
     Map<String, dynamic> body, {
+    Map<String, String> additionalHeaders = const {},
     bool decodedResponse = true,
   }) async {
     return await _httpRequest(
       () async => http.put(
         Uri.parse('$url$endpoint'),
-        headers: headers,
+        headers: headers..addAll(additionalHeaders),
         body: dart_convert.jsonEncode(body),
       ),
       decodedResponse: decodedResponse,
@@ -289,12 +316,13 @@ abstract class GsaApi {
   Future<dynamic> patch(
     String endpoint,
     Map<String, dynamic> body, {
+    Map<String, String> additionalHeaders = const {},
     bool decodedResponse = true,
   }) async {
     return await _httpRequest(
       () async => http.patch(
         Uri.parse('$url$endpoint'),
-        headers: headers,
+        headers: headers..addAll(additionalHeaders),
         body: dart_convert.jsonEncode(body),
       ),
       decodedResponse: decodedResponse,
@@ -305,13 +333,14 @@ abstract class GsaApi {
   ///
   Future<dynamic> delete(
     String endpoint, {
+    Map<String, String> additionalHeaders = const {},
     Map<String, dynamic>? body,
     bool decodedResponse = true,
   }) async {
     return await _httpRequest(
       () async => http.delete(
         Uri.parse('$url$endpoint'),
-        headers: headers,
+        headers: headers..addAll(additionalHeaders),
         body: body,
       ),
       decodedResponse: decodedResponse,
@@ -384,8 +413,9 @@ abstract mixin class GsaApiEndpoints {
   ///
   Future<dynamic> request(
     GsaApi client, {
-    Map<String, dynamic> body = const {},
     Map<String, dynamic> queryParameters = const {},
+    Map<String, String> additionalHeaders = const {},
+    Map<String, dynamic> body = const {},
     bool decodedResponse = true,
   }) {
     final queryParams = queryParameters.map(
@@ -410,29 +440,34 @@ abstract mixin class GsaApiEndpoints {
       case GsaApiEndpointMethodType.httpGet:
         return client.get(
           endpointPath,
+          additionalHeaders: additionalHeaders,
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpPost:
         return client.post(
           endpointPath,
+          additionalHeaders: additionalHeaders,
           body,
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpPatch:
         return client.patch(
           endpointPath,
+          additionalHeaders: additionalHeaders,
           body,
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpPut:
         return client.put(
           endpointPath,
+          additionalHeaders: additionalHeaders,
           body,
           decodedResponse: decodedResponse,
         );
       case GsaApiEndpointMethodType.httpDelete:
         return client.delete(
           endpointPath,
+          additionalHeaders: additionalHeaders,
           body: body,
           decodedResponse: decodedResponse,
         );

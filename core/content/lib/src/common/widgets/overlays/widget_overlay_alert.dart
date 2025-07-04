@@ -47,9 +47,9 @@ class _GsaWidgetOverlayAlertState extends State<GsaWidgetOverlayAlert> {
             fontSize: 16,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 20),
         Center(
-          child: TextButton(
+          child: OutlinedButton(
             child: const GsaWidgetText('OK'),
             onPressed: () => Navigator.pop(context),
           ),
