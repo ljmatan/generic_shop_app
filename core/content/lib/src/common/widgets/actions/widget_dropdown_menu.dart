@@ -72,7 +72,9 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
 
   /// Callback invoked on dropdown menu entry selection.
   ///
-  final void Function(T? value)? onSelected;
+  /// If `true` is returned by the method, the input is cleared on selection.
+  ///
+  final bool? Function(T? value)? onSelected;
 
   /// Optional input validation method.
   ///
@@ -87,12 +89,15 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
 class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
   Key _key = UniqueKey();
 
+  late T? _initialSelection;
+
   late TextEditingController _textController;
 
   void _onTextControllerUpdate() {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         setState(() {
+          if (_textController.text.isEmpty) _initialSelection = null;
           _key = UniqueKey();
         });
       },
@@ -101,23 +106,21 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
 
   late FocusNode _focusNode;
 
-  late T? _initialSelection;
-
   @override
   void initState() {
     super.initState();
+    _initialSelection = widget.initialSelection;
     _textController = widget.textController ??
         TextEditingController(
           text: widget.initialSelection != null
               ? widget.dropdownMenuEntries
                   .firstWhereOrNull(
-                    (entry) => entry.value == widget.initialSelection,
+                    (entry) => entry.value == _initialSelection,
                   )
                   ?.label
               : null,
         );
     _focusNode = widget.focusNode ?? FocusNode();
-    _initialSelection = widget.initialSelection;
   }
 
   @override
@@ -199,7 +202,8 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
           _onTextControllerUpdate();
         }
         if (widget.onSelected != null) {
-          widget.onSelected!(value);
+          final clear = widget.onSelected!(value);
+          if (clear == true) _textController.clear();
         }
       },
       textInputAction: TextInputAction.done,

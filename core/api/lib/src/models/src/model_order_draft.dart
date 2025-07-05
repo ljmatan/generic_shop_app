@@ -22,12 +22,7 @@ class GsaModelOrderDraft extends _Model {
 
   /// Collection of recorded item identifiers and their respective cart count.
   ///
-  List<
-      ({
-        String id,
-        String? optionId,
-        int count,
-      })> itemCount;
+  List<GsaModelOrderDraftItemCount> itemCount;
 
   /// Client specified for this checkout order.
   ///
@@ -79,6 +74,40 @@ class GsaModelOrderDraft extends _Model {
       paymentType: GsaModelSaleItem.mock(),
       price: null,
     );
+  }
+}
+
+/// Class defining the specified cart item count.
+///
+@JsonSerializable(explicitToJson: true)
+class GsaModelOrderDraftItemCount {
+  // ignore: public_member_api_docs
+  GsaModelOrderDraftItemCount({
+    required this.id,
+    required this.optionId,
+    required this.count,
+  });
+
+  /// Sale item identifier.
+  ///
+  String id;
+
+  /// Any defined option identifier for the relevant sale item.
+  ///
+  String? optionId;
+
+  /// The current count of this entry in the cart.
+  ///
+  int count;
+
+  // ignore: public_member_api_docs
+  factory GsaModelOrderDraftItemCount.fromJson(Map json) {
+    return _$GsaModelOrderDraftItemCountFromJson(Map<String, dynamic>.from(json));
+  }
+
+  // ignore: public_member_api_docs
+  Map<String, dynamic> toJson() {
+    return _$GsaModelOrderDraftItemCountToJson(this);
   }
 }
 
@@ -344,7 +373,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
         items.add(saleItem);
       }
       itemCount.add(
-        (
+        GsaModelOrderDraftItemCount(
           id: saleItem.id!,
           optionId: null,
           count: newCount ?? 1,
@@ -368,11 +397,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
           'Amount $updatedCount larger than max count ${saleItem.maxCount}.',
         );
       }
-      itemCount[cartItemIndex] = (
-        id: saleItem.id!,
-        optionId: null,
-        count: updatedCount,
-      );
+      itemCount[cartItemIndex].count = updatedCount;
     }
     GsaDataCheckout.instance.notifyListeners();
   }
@@ -447,7 +472,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
         items.add(saleItem);
       }
       itemCount.add(
-        (
+        GsaModelOrderDraftItemCount(
           id: saleItem.id!,
           optionId: saleItemOption.id!,
           count: newCount ?? 1,
@@ -472,11 +497,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
           'Amount $updatedCount larger than max count ${saleItemOption.maxCount}.',
         );
       }
-      itemCount[cartItemIndex] = (
-        id: saleItem.id!,
-        optionId: saleItemOption.id!,
-        count: updatedCount,
-      );
+      itemCount[cartItemIndex].count = updatedCount;
     }
     GsaDataCheckout.instance.notifyListeners();
   }
@@ -573,11 +594,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
         );
       }
       final currentCount = itemCount[cartItemIndex].count;
-      itemCount[cartItemIndex] = (
-        id: saleItem.id!,
-        optionId: null,
-        count: currentCount - 1,
-      );
+      itemCount[cartItemIndex].count = currentCount - 1;
       GsaDataCheckout.instance.notifyListeners();
     }
   }
@@ -611,11 +628,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
         );
       }
       final currentCount = itemCount[cartItemIndex].count;
-      itemCount[cartItemIndex] = (
-        id: saleItem.id!,
-        optionId: saleItemOption.id!,
-        count: currentCount - 1,
-      );
+      itemCount[cartItemIndex].count = currentCount - 1;
       GsaDataCheckout.instance.notifyListeners();
     }
   }
@@ -687,34 +700,9 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
     ).toList();
   }
 
-  /// Sale items can be optionally added to the cart with amount equaling 0,
-  /// where only their specified [options] can then be purchased.
-  ///
-  /// When such an item has been added but not confirmed with any option input,
-  /// the entries are cleared from the list of relevant [items] their [itemCount].
-  ///
-  void _removeEmptyEntries() {
-    items.removeWhere(
-      (item) {
-        return item.cartCountWithOptions(orderDraft: this) == null;
-      },
-    );
-    itemCount.removeWhere(
-      (itemCount) {
-        return items.where(
-          (item) {
-            return item.id == itemCount.id;
-          },
-        ).isEmpty;
-      },
-    );
-    GsaDataCheckout.instance.notifyListeners();
-  }
-
   /// Clears the order by removing all of the items and personal details from the order draft.
   ///
   void clear() {
-    _removeEmptyEntries();
     items.clear();
     itemCount.clear();
     client = null;

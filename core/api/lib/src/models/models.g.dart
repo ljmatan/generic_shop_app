@@ -182,14 +182,8 @@ GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>
       ..logs =
           (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
       ..itemCount = (json['itemCount'] as List<dynamic>)
-          .map((e) => _$recordConvert(
-                e,
-                ($jsonValue) => (
-                  count: ($jsonValue['count'] as num).toInt(),
-                  id: $jsonValue['id'] as String,
-                  optionId: $jsonValue['optionId'] as String?,
-                ),
-              ))
+          .map((e) =>
+              GsaModelOrderDraftItemCount.fromJson(e as Map<String, dynamic>))
           .toList()
       ..deliveryAddress = json['deliveryAddress'] == null
           ? null
@@ -215,13 +209,7 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) =>
       'tags': instance.tags,
       'logs': instance.logs,
       'items': instance.items.map((e) => e.toJson()).toList(),
-      'itemCount': instance.itemCount
-          .map((e) => <String, dynamic>{
-                'count': e.count,
-                'id': e.id,
-                'optionId': e.optionId,
-              })
-          .toList(),
+      'itemCount': instance.itemCount.map((e) => e.toJson()).toList(),
       'client': instance.client?.toJson(),
       'deliveryAddress': instance.deliveryAddress?.toJson(),
       'invoiceAddress': instance.invoiceAddress?.toJson(),
@@ -232,11 +220,21 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) =>
       'price': instance.price?.toJson(),
     };
 
-$Rec _$recordConvert<$Rec>(
-  Object? value,
-  $Rec Function(Map) convert,
-) =>
-    convert(value as Map<String, dynamic>);
+GsaModelOrderDraftItemCount _$GsaModelOrderDraftItemCountFromJson(
+        Map<String, dynamic> json) =>
+    GsaModelOrderDraftItemCount(
+      id: json['id'] as String,
+      optionId: json['optionId'] as String?,
+      count: (json['count'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$GsaModelOrderDraftItemCountToJson(
+        GsaModelOrderDraftItemCount instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'optionId': instance.optionId,
+      'count': instance.count,
+    };
 
 GsaModelConsent _$GsaModelConsentFromJson(Map<String, dynamic> json) =>
     GsaModelConsent(
@@ -754,6 +752,12 @@ Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) =>
           .toList(),
       'originData': GsaModelSaleItem._originDataToJson(instance.originData),
     };
+
+$Rec _$recordConvert<$Rec>(
+  Object? value,
+  $Rec Function(Map) convert,
+) =>
+    convert(value as Map<String, dynamic>);
 
 GsaModelSalePoint _$GsaModelSalePointFromJson(Map<String, dynamic> json) =>
     GsaModelSalePoint(
