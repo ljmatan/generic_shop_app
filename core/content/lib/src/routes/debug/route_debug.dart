@@ -29,7 +29,6 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
       body: Column(
         children: [
           GsaWidgetAppBar(
@@ -63,7 +62,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                               child: GsaWidgetText(
                                 buttonLabel.$2,
                                 style: TextStyle(
-                                  color: _tabNotifier.value == buttonLabel.$1 ? null : Colors.grey,
+                                  color: _tabNotifier.value == buttonLabel.$1 ? Theme.of(context).primaryColor : Colors.grey,
                                   fontWeight: _tabNotifier.value == buttonLabel.$1 ? null : FontWeight.w300,
                                 ),
                               ),

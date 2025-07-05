@@ -26,34 +26,38 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InkWell(
-                  child: Row(
-                    children: [
-                      const CircleAvatar(
-                        child: Center(
-                          child: Icon(Icons.person_2_outlined),
+                if (!<GsaClient>{
+                  GsaClient.froddoB2b,
+                }.contains(GsaConfig.plugin.client)) ...[
+                  InkWell(
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          child: Center(
+                            child: Icon(Icons.person_2_outlined),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 14),
-                      GsaWidgetText(
-                        GsaDataUser.instance.user?.personalDetails?.formattedName ?? 'Login',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
+                        const SizedBox(width: 14),
+                        GsaWidgetText(
+                          GsaDataUser.instance.user?.personalDetails?.formattedName ?? 'Login',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      if (GsaDataUser.instance.authenticated) {
+                        const GsaRouteUserProfile().push();
+                      } else {
+                        const GsaRouteAuth().push();
+                      }
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    if (GsaDataUser.instance.authenticated) {
-                      const GsaRouteUserProfile().push();
-                    } else {
-                      const GsaRouteAuth().push();
-                    }
-                  },
-                ),
-                const SizedBox(height: 30),
+                  const SizedBox(height: 30),
+                ],
                 for (final dropdownMenuOption in <({
                   String label,
                   int initialSelectionIndex,
@@ -70,6 +74,40 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           onTap: () {
                             GsaConfig.languageNotifier.value = language;
                             context.routeState?.rebuildAllRoutes();
+                          },
+                        ),
+                    ],
+                  ),
+                  (
+                    label: 'Theme',
+                    initialSelectionIndex: Theme.of(context).brightness == Brightness.light ? 0 : 1,
+                    dropdownEntries: [
+                      for (final themeOption in <({
+                        String label,
+                        Brightness value,
+                      })>{
+                        (
+                          label: 'Light',
+                          value: Brightness.light,
+                        ),
+                        (
+                          label: 'Dark',
+                          value: Brightness.dark,
+                        ),
+                      })
+                        GsaWidgetDropdownEntry(
+                          id: themeOption.label,
+                          label: themeOption.label,
+                          onTap: () async {
+                            GsaTheme.instance.brightness = themeOption.value;
+                            context.findAncestorStateOfType<GsaState>()?.setState(() {});
+                            try {
+                              await GsaServiceCacheEntry.themeBrightness.setValue(themeOption.value.name);
+                            } catch (e) {
+                              GsaServiceLogging.instance.logGeneral(
+                                'Failed to cached theme brightness data:\n$e',
+                              );
+                            }
                           },
                         ),
                     ],

@@ -12,29 +12,56 @@ class Gsa extends StatefulWidget {
   const Gsa({super.key});
 
   @override
-  State<Gsa> createState() => _GsaState();
+  State<Gsa> createState() => GsaState();
 }
 
-class _GsaState extends State<Gsa> {
+class GsaState extends State<Gsa> {
+  /// Property holding the value of the runtime resource allocation method.
+  ///
+  final _initFuture = GsaConfig.init();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: GsaRoute.navigatorKey,
-      debugShowCheckedModeBanner: false,
-      builder: (context, child) => GsaViewBuilder(child!),
-      navigatorObservers: [GsaRoute.navigatorObserver],
-      home: const GsaRouteSplash(),
-      theme: GsaTheme.instance.data,
-      onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder: (_) {
-            late GsaRouteType route;
-            try {
-              route = GsaConfig.plugin.routes!.firstWhere((route) => route.routeId == settings.name);
-            } catch (e) {
-              route = GsaRoutes.values.firstWhere((route) => route.routeId == settings.name);
-            }
-            return route.widget();
+    return FutureBuilder(
+      future: _initFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Material(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+
+        if (snapshot.hasError) {
+          return Material(
+            child: Center(
+              child: GsaWidgetError(
+                snapshot.error.toString(),
+              ),
+            ),
+          );
+        }
+
+        return MaterialApp(
+          navigatorKey: GsaRoute.navigatorKey,
+          debugShowCheckedModeBanner: false,
+          builder: (context, child) => GsaViewBuilder(child!),
+          navigatorObservers: [GsaRoute.navigatorObserver],
+          home: const GsaRouteSplash(),
+          theme: GsaTheme.instance.data,
+          onGenerateRoute: (settings) {
+            return MaterialPageRoute(
+              builder: (_) {
+                late GsaRouteType route;
+                try {
+                  route = GsaConfig.plugin.routes!.firstWhere((route) => route.routeId == settings.name);
+                } catch (e) {
+                  route = GsaRoutes.values.firstWhere((route) => route.routeId == settings.name);
+                }
+                return route.widget();
+              },
+            );
           },
         );
       },

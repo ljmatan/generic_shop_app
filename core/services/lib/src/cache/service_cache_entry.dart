@@ -54,7 +54,11 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
 
   /// Collection of search terms recorded to the device memory.
   ///
-  shopSearchHistory;
+  shopSearchHistory,
+
+  /// User-specified app theme brightness.
+  ///
+  themeBrightness;
 
   @override
   String get cacheId {
@@ -87,6 +91,8 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
         return Iterable<String>;
       case GsaServiceCacheEntry.shopSearchHistory:
         return Iterable<String>;
+      case GsaServiceCacheEntry.themeBrightness:
+        return String;
     }
   }
 
@@ -133,6 +139,8 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
         return 'Bookmarks';
       case GsaServiceCacheEntry.shopSearchHistory:
         return 'Shop Search History';
+      case GsaServiceCacheEntry.themeBrightness:
+        return 'Theme Brightness';
     }
   }
 }

@@ -28,17 +28,15 @@ class GsaViewBuilder extends StatefulWidget {
 }
 
 class _GsaViewBuilderState extends State<GsaViewBuilder> {
-  /// Property holding the value of the runtime resource allocation method.
-  ///
-  final _initFuture = GsaConfig.init();
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Handle platform theme brightness changes.
-    final systemBrightness = MediaQuery.of(context).platformBrightness;
-    if (systemBrightness != GsaTheme.instance.platformBrightness) {
-      setState(() => GsaTheme.instance.platformBrightness = systemBrightness);
+    if (GsaTheme.instance.brightness == null) {
+      final systemBrightness = MediaQuery.of(context).platformBrightness;
+      if (systemBrightness != GsaTheme.instance.platformBrightness) {
+        setState(() => GsaTheme.instance.platformBrightness = systemBrightness);
+      }
     }
   }
 
@@ -59,30 +57,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
           textScaler: GsaTheme.instance.textScaler(context),
         ),
         child: Listener(
-          child: FutureBuilder(
-            future: _initFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Material(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
-
-              if (snapshot.hasError) {
-                return Material(
-                  child: Center(
-                    child: GsaWidgetError(
-                      snapshot.error.toString(),
-                    ),
-                  ),
-                );
-              }
-
-              return widget.child;
-            },
-          ),
+          child: widget.child,
           onPointerDown: (event) {
             if (GsaConfig.qaBuild) {
               _recordedNumberOfTaps++;

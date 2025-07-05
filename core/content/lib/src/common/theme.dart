@@ -1,10 +1,12 @@
 import 'dart:math';
 import 'dart:ui' as dart_ui;
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_services/services.dart';
 
 /// The default theme configuration for the application project.
 ///
@@ -20,6 +22,21 @@ class GsaTheme {
     this.primaryColor,
     this.fontFamily,
   });
+
+  /// Private constructor defined for [instance] property initialisation.
+  ///
+  /// The constructor fetches and applies cached theme data and applies.
+  ///
+  GsaTheme._() {
+    final cachedBrightnessName = GsaServiceCacheEntry.themeBrightness.value;
+    if (cachedBrightnessName != null) {
+      brightness = Brightness.values.firstWhereOrNull(
+        (brightness) {
+          return brightness.name == cachedBrightnessName;
+        },
+      );
+    }
+  }
 
   /// The platform that user interaction should adapt to target.
   ///
@@ -39,7 +56,7 @@ class GsaTheme {
 
   /// Globally-accessible class instance.
   ///
-  static final instance = GsaTheme();
+  static final instance = GsaTheme._();
 
   /// The setting indicating the current brightness mode of the host platform.
   ///
