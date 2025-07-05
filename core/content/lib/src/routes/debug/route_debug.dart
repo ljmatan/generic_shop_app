@@ -321,15 +321,9 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                     'cache': [
                       if (GsaServiceCache.instance.cachedKeys != null)
                         for (final key in GsaServiceCache.instance.cachedKeys!)
-                          () {
-                            try {
-                              return dart_convert.jsonDecode(
-                                GsaServiceCache.instance.valueWithKey(key).toString(),
-                              );
-                            } catch (e) {
-                              return GsaServiceCache.instance.valueWithKey(key);
-                            }
-                          }(),
+                          {
+                            key: GsaServiceCache.instance.valueWithKey(key),
+                          },
                     ],
                     'data': [
                       for (final dataPoint in <({

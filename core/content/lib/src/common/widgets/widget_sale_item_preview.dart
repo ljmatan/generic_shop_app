@@ -272,13 +272,14 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                               horizontal: 10,
+                                              vertical: 4,
                                             ),
                                             child: GsaWidgetText(
                                               '$_cartCount',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: Colors.white,
-                                                fontSize: 12,
+                                                fontSize: 10,
                                               ),
                                             ),
                                           ),
