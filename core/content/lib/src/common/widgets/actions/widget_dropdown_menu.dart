@@ -22,6 +22,7 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
+    this.clearOnSelected,
     this.onSelected,
     this.validator,
   });
@@ -70,11 +71,15 @@ class GsaWidgetDropdownMenu<T> extends StatefulWidget {
   ///
   final Widget? prefixIcon, suffixIcon;
 
+  /// Whether the relevant text input should be cleared with [onSelected] trigger.
+  ///
+  final bool? clearOnSelected;
+
   /// Callback invoked on dropdown menu entry selection.
   ///
   /// If `true` is returned by the method, the input is cleared on selection.
   ///
-  final bool? Function(T? value)? onSelected;
+  final void Function(T? value)? onSelected;
 
   /// Optional input validation method.
   ///
@@ -202,8 +207,10 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
           _onTextControllerUpdate();
         }
         if (widget.onSelected != null) {
-          final clear = widget.onSelected!(value);
-          if (clear == true) _textController.clear();
+          widget.onSelected!(value);
+          if (widget.clearOnSelected == true) {
+            _textController.clear();
+          }
         }
       },
       textInputAction: TextInputAction.done,

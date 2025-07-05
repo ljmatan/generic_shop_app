@@ -359,10 +359,21 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
 
   @override
   void dispose() {
-    widget.controller?.removeListener(_onTextControllerUpdate);
-    if (widget.controller == null) _textController.dispose();
-    _focusNode.removeListener(_onFocusNodeUpdate);
-    if (widget.focusNode == null) _focusNode.dispose();
+    widget.controller?.removeListener(
+      _onTextControllerUpdate,
+    );
+    if (widget.controller == null) {
+      _textController.dispose();
+    }
+    if (_focusNode.hasFocus && widget.onFocusChange != null) {
+      widget.onFocusChange!(false);
+    }
+    _focusNode.removeListener(
+      _onFocusNodeUpdate,
+    );
+    if (widget.focusNode == null) {
+      _focusNode.dispose();
+    }
     _buttonFocusNode.dispose();
     super.dispose();
   }

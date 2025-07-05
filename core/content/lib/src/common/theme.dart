@@ -4,6 +4,7 @@ import 'dart:ui' as dart_ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// The default theme configuration for the application project.
 ///
@@ -428,5 +429,28 @@ extension GsaThemeExt on ThemeData {
       horizontal: dimensions.smallScreen ? 16 : 20,
       vertical: dimensions.smallScreen ? 12 : 16,
     );
+  }
+
+  /// Method used for calculating approximate [Text] widget size.
+  ///
+  Size measureTextSize({
+    required String text,
+    required TextStyle style,
+  }) {
+    if (GsaRoute.navigatorKey.currentContext == null) {
+      return const Size(0, 0);
+    }
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: style,
+      ),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.of(
+        GsaRoute.navigatorKey.currentContext!,
+      ).textScaler,
+    )..layout();
+    return textPainter.size;
   }
 }
