@@ -21,6 +21,6 @@ class GsaWidgetOverlayConsent extends GsaWidgetOverlay {
 class _GsaWidgetOverlayConsentState extends State<GsaWidgetOverlayConsent> {
   @override
   Widget build(BuildContext context) {
-    return const GsaWidgetLegalConsent();
+    return const GsaWidgetCookieConsent();
   }
 }

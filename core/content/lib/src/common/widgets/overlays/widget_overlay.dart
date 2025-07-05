@@ -54,7 +54,7 @@ abstract class GsaWidgetOverlay extends StatefulWidget {
                         : EdgeInsets.zero,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        maxWidth: Theme.of(context).dimensions.smallScreen ? MediaQuery.of(context).size.width : 800,
+                        maxWidth: Theme.of(context).maxOverlayInlineWidth,
                       ),
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.fromLTRB(18, 26, 18, 16),

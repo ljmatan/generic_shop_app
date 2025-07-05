@@ -35,7 +35,8 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
     if (GsaTheme.instance.brightness == null) {
       final systemBrightness = MediaQuery.of(context).platformBrightness;
       if (systemBrightness != GsaTheme.instance.platformBrightness) {
-        setState(() => GsaTheme.instance.platformBrightness = systemBrightness);
+        GsaTheme.instance.platformBrightness = systemBrightness;
+        context.findAncestorStateOfType<GsaState>()?.setState(() {});
       }
     }
   }

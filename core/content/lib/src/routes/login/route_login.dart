@@ -38,7 +38,23 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
 
   final _termsSwitchKey = GlobalKey<GsaWidgetSwitchState>();
 
-  bool _userAgreementAccepted = false;
+  final _userAgreementRequired = <String?>{
+    GsaConfig.plugin.documentUrls?.cookieNotice,
+    GsaConfig.plugin.documentUrls?.termsAndConditions,
+    GsaConfig.plugin.documentUrls?.privacyPolicy,
+  }.any(
+    (document) {
+      return document != null;
+    },
+  );
+
+  late bool _userAgreementAccepted;
+
+  @override
+  void initState() {
+    super.initState();
+    _userAgreementAccepted = !_userAgreementRequired;
+  }
 
   @override
   Widget view(BuildContext context) {
@@ -51,8 +67,8 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
           Expanded(
             child: Center(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: 800,
+                constraints: BoxConstraints(
+                  maxWidth: Theme.of(context).maxOverlayInlineWidth,
                 ),
                 child: SingleChildScrollView(
                   padding: Theme.of(context).listViewPadding,
@@ -114,98 +130,103 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                 return null;
                               },
                         ),
-                        TextButton(
-                          style: const ButtonStyle(
-                            padding: WidgetStatePropertyAll(
-                              EdgeInsets.zero,
+                        if (<GsaClient>{}.contains(GsaConfig.plugin.client)) ...[
+                          const SizedBox(height: 10),
+                          TextButton(
+                            style: const ButtonStyle(
+                              padding: WidgetStatePropertyAll(
+                                EdgeInsets.zero,
+                              ),
                             ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: GsaWidgetText(
+                                'Forgot password?',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                            onPressed: () {},
                           ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: GsaWidgetText(
-                              'Forgot password?',
+                        ],
+                        if (_userAgreementRequired) ...[
+                          const SizedBox(height: 10),
+                          GsaWidgetSwitch(
+                            key: _termsSwitchKey,
+                            label: const GsaWidgetText(
+                              'User Agreement',
                               style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
                               ),
                             ),
-                          ),
-                          onPressed: () {},
-                        ),
-                        const SizedBox(height: 10),
-                        GsaWidgetSwitch(
-                          key: _termsSwitchKey,
-                          label: const GsaWidgetText(
-                            'User Agreement',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12,
+                            child: GsaWidgetText.rich(
+                              [
+                                const GsaWidgetTextSpan(
+                                  'I understand and agree to the ',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                GsaWidgetTextSpan(
+                                  'terms and conditions',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12,
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('terms-and-conditions');
+                                  },
+                                ),
+                                const GsaWidgetTextSpan(
+                                  ', ',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                GsaWidgetTextSpan(
+                                  'cookie policy',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12,
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('privacy-policy');
+                                  },
+                                ),
+                                const GsaWidgetTextSpan(
+                                  ', and ',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                GsaWidgetTextSpan(
+                                  'privacy policy',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12,
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('cookie-policy');
+                                  },
+                                ),
+                                const GsaWidgetTextSpan(
+                                  '.',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
                             ),
+                            value: _userAgreementAccepted,
+                            onTap: (value) => setState(() => _userAgreementAccepted = value),
                           ),
-                          child: GsaWidgetText.rich(
-                            [
-                              const GsaWidgetTextSpan(
-                                'I understand and agree to the ',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                              GsaWidgetTextSpan(
-                                'terms and conditions',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 12,
-                                ),
-                                onTap: () {
-                                  Navigator.of(context).pushNamed('terms-and-conditions');
-                                },
-                              ),
-                              const GsaWidgetTextSpan(
-                                ', ',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                              GsaWidgetTextSpan(
-                                'cookie policy',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 12,
-                                ),
-                                onTap: () {
-                                  Navigator.of(context).pushNamed('privacy-policy');
-                                },
-                              ),
-                              const GsaWidgetTextSpan(
-                                ', and ',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                              GsaWidgetTextSpan(
-                                'privacy policy',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 12,
-                                ),
-                                onTap: () {
-                                  Navigator.of(context).pushNamed('cookie-policy');
-                                },
-                              ),
-                              const GsaWidgetTextSpan(
-                                '.',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                          value: _userAgreementAccepted,
-                          onTap: (value) => setState(() => _userAgreementAccepted = value),
-                        ),
+                        ],
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -250,7 +271,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                   ),
                                   onPressed: () async {
                                     final formsValidated = _formKey.currentState?.validate() == true;
-                                    final termsValidated = _termsSwitchKey.currentState?.validate() == true;
+                                    final termsValidated = _userAgreementRequired ? _termsSwitchKey.currentState?.validate() == true : true;
                                     if (formsValidated && termsValidated) {
                                       const GsaWidgetOverlayContentBlocking().openDialog();
                                       try {
@@ -264,18 +285,11 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                           username: _emailTextController.text,
                                           password: _passwordTextController.text,
                                         );
-                                        Navigator.pop(context);
-                                        Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute<void>(
-                                            builder: (BuildContext context) {
-                                              return GsaConfig.plugin.initialRoute();
-                                            },
-                                          ),
-                                          (route) => false,
-                                        );
+                                        Navigator.pop(GsaRoute.navigatorKey.currentContext ?? context);
+                                        GsaConfig.plugin.initialRoute().push(replacement: true);
                                       } catch (e) {
-                                        debugPrint('Error logging in: $e');
-                                        Navigator.pop(context);
+                                        GsaServiceLogging.instance.logError('Error logging in:\n$e');
+                                        Navigator.pop(GsaRoute.navigatorKey.currentContext ?? context);
                                         GsaWidgetOverlayAlert(
                                           '$e',
                                         ).openDialog();
@@ -296,7 +310,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              const GsaRouteShop().push(replacement: true);
+                            },
                           ),
                         ],
                       ],

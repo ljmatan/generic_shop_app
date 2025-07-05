@@ -409,24 +409,53 @@ class GsaTheme {
 /// Extension methods and properties for the [ThemeData] object.
 ///
 extension GsaThemeExt on ThemeData {
+  /// Method providing screen specifications.
+  ///
+  /// [size] -> The current dimensions of the rectangle as last reported by the platform
+  /// into which scenes rendered in this view are drawn.
+  ///
+  /// [ratio] -> The number of device pixels for each logical pixel for the screen this view is displayed on.
+  ///
+  ({
+    Size? size,
+    double? ratio,
+  }) get screenSpecifications {
+    final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
+    final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;
+    return (
+      size: size,
+      ratio: ratio,
+    );
+  }
+
+  /// Returns the screen dimension specification in DIP format.
+  ///
+  /// Returns `null` if the data cannot be retrieved.
+  ///
+  Size? get screenSize {
+    final screenSpecs = screenSpecifications;
+    if (screenSpecs.size == null || screenSpecs.ratio == null) {
+      return null;
+    }
+    return Size(screenSpecs.size!.width / screenSpecs.ratio!, screenSpecs.size!.height / screenSpecs.ratio!);
+  }
+
   /// Getter method defining available screen dimensions.
   ///
   ({
     bool smallScreen,
     bool largeScreen,
   }) get dimensions {
-    final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
-    final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;
-    if (size == null || ratio == null) {
+    final size = screenSize;
+    if (size == null) {
       return (
         smallScreen: true,
         largeScreen: false,
       );
     }
-    final screenWidth = size.width / ratio;
     return (
-      smallScreen: screenWidth < 1000,
-      largeScreen: screenWidth >= 1000,
+      smallScreen: size.width < 1000,
+      largeScreen: size.width >= 1000,
     );
   }
 
@@ -446,6 +475,12 @@ extension GsaThemeExt on ThemeData {
       horizontal: dimensions.smallScreen ? 16 : 20,
       vertical: dimensions.smallScreen ? 12 : 16,
     );
+  }
+
+  /// Maximum specified width for overlay and inline elements.
+  ///
+  double get maxOverlayInlineWidth {
+    return dimensions.smallScreen ? (screenSize?.width ?? double.infinity) : 800;
   }
 
   /// Method used for calculating approximate [Text] widget size.

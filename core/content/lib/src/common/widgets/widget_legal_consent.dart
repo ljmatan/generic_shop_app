@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
@@ -5,16 +7,16 @@ import 'package:generic_shop_app_services/services.dart';
 /// Visual element containing the required, legal consent
 /// asking for user cookie storage permission.
 ///
-class GsaWidgetLegalConsent extends StatefulWidget {
+class GsaWidgetCookieConsent extends StatefulWidget {
   /// Default, unnamed widget constructor.
   ///
-  const GsaWidgetLegalConsent({super.key});
+  const GsaWidgetCookieConsent({super.key});
 
   @override
-  State<GsaWidgetLegalConsent> createState() => _GsaWidgetLegalConsentState();
+  State<GsaWidgetCookieConsent> createState() => _GsaWidgetCookieConsentState();
 }
 
-class _GsaWidgetLegalConsentState extends State<GsaWidgetLegalConsent> {
+class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
   final _cookieIds = {
     GsaServiceCacheEntry.cookieConsentMandatory:
         'Mandatory cookies are required to use our products and are necessary for our sites to work as intended.',
@@ -79,6 +81,7 @@ class _GsaWidgetLegalConsentState extends State<GsaWidgetLegalConsent> {
       }
       GsaServiceConsent.instance.onConsentStatusChanged();
       Navigator.pop(context);
+      GsaServiceAppTrackingTransparency.instance.requestConsent();
     }
   }
 

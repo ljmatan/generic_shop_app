@@ -181,17 +181,10 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         },
                       ),
                     (
-                      label: 'Settings',
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, 'settings');
-                      },
-                    ),
-                    (
                       label: 'Licences',
                       onTap: () {
                         Navigator.pop(context);
-                        Navigator.pushNamed(context, 'licences');
+                        const GsaRouteLicences().push();
                       },
                     ),
                     if (GsaConfig.plugin.documentUrls?.termsAndConditions != null)
