@@ -91,7 +91,12 @@ abstract mixin class GsaServiceCacheValue {
     if (value == null) {
       throw 'Value for $_cacheId must not be null.';
     }
-    if (value.runtimeType != dataType) {
+    if (value.runtimeType != dataType &&
+        dataType is Iterable &&
+        !<Type>{
+          List,
+          Set,
+        }.contains(dataType)) {
       throw 'Incorrect value type ${value.runtimeType} given for $_cacheId.';
     }
     if (enabled) {
@@ -108,7 +113,7 @@ abstract mixin class GsaServiceCacheValue {
         case const (Iterable<String>):
         case const (List<String>):
         case const (Set<String>):
-          await GsaServiceCache.instance._sharedPreferences?.setStringList(_cacheId, value);
+          await GsaServiceCache.instance._sharedPreferences?.setStringList(_cacheId, value.toList());
           break;
         default:
           throw 'Value set method not implemented for $dataType with $this.';

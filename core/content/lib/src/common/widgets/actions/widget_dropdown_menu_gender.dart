@@ -42,11 +42,11 @@ class _GsaWidgetDropdownGenderState extends State<GsaWidgetDropdownGender> {
       child: GsaWidgetDropdown(
         key: widget.dropdownKey,
         label: 'Title',
-        valueAt: _salutationIndex,
+        initialSelectionIndex: _salutationIndex,
         padding: 20,
         children: _salutations
             .map(
-              (e) => (
+              (e) => GsaWidgetDropdownEntry(
                 label: e,
                 id: null,
                 onTap: () {

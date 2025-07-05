@@ -146,87 +146,6 @@ class GsaModelSaleItem extends _Model {
         String description,
       })>? informationList;
 
-  /// The amount of the current item in the cart or order draft.
-  ///
-  int? cartCount({
-    GsaModelOrderDraft? orderDraft,
-  }) {
-    orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    if (option == true) {
-      return orderDraft.getItemOptionCount(this);
-    } else {
-      return orderDraft.getItemCount(this);
-    }
-  }
-
-  /// Returns the amount of the current item in the cart,
-  /// alongside the amount of any specified options.
-  ///
-  /// Returns null if no count is specified for any of the items.
-  ///
-  int? cartCountWithOptions({
-    GsaModelOrderDraft? orderDraft,
-  }) {
-    orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    int? count;
-    if (option == true) {
-      return null;
-    }
-    final itemCount = orderDraft.getItemCount(this);
-    if (itemCount != null && itemCount > 0) {
-      count ??= 0;
-      count += itemCount;
-    }
-    if (options?.isNotEmpty == true) {
-      for (final saleItemOption in options!) {
-        final optionCount = orderDraft.getItemOptionCount(saleItemOption);
-        if (optionCount != null && optionCount > 0) {
-          count ??= 0;
-          count += optionCount;
-        }
-      }
-    }
-    return count;
-  }
-
-  /// The set [price] amount for the specified [cartCount] within the [orderDraft].
-  ///
-  int? totalCartPriceCentum({
-    GsaModelOrderDraft? orderDraft,
-  }) {
-    orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    if (option == true) {
-      return orderDraft.getItemOptionTotalPriceCentum(this);
-    } else {
-      return orderDraft.getItemTotalPriceCentum(this);
-    }
-  }
-
-  /// The set [price] amount for the specified [cartCount] within the [orderDraft].
-  ///
-  double? totalCartPriceUnity({
-    GsaModelOrderDraft? orderDraft,
-  }) {
-    orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    if (option == true) {
-      return orderDraft.getItemOptionTotalPriceUnity(this);
-    } else {
-      return orderDraft.getItemTotalPriceUnity(this);
-    }
-  }
-
-  String? totalCartPriceFormatted({
-    GsaModelOrderDraft? orderDraft,
-  }) {
-    orderDraft ??= GsaDataCheckout.instance.orderDraft;
-    final price = totalCartPriceCentum(orderDraft: orderDraft);
-    if (price == null) return null;
-    return GsaModelPrice(
-          centum: price,
-        ).formatted ??
-        'N/A';
-  }
-
   /// Method user by plugin implementations to serialise data from JSON.
   ///
   static Function(dynamic json)? originDataFromJson;
@@ -306,5 +225,135 @@ class GsaModelSaleItem extends _Model {
         return saleItem.id == saleItemId;
       },
     );
+  }
+}
+
+/// Extension methods for the [GsaModelSaleItem] model class.
+///
+extension GsaModelSaleItemExt on GsaModelSaleItem {
+  /// The amount of the current item in the cart or order draft.
+  ///
+  int? cartCount({
+    GsaModelOrderDraft? orderDraft,
+  }) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    if (option == true) {
+      return orderDraft.getItemOptionCount(this);
+    } else {
+      return orderDraft.getItemCount(this);
+    }
+  }
+
+  /// Returns the amount of the current item in the cart,
+  /// alongside the amount of any specified options.
+  ///
+  /// Returns null if no count is specified for any of the items.
+  ///
+  int? cartCountWithOptions({
+    GsaModelOrderDraft? orderDraft,
+  }) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    int? count;
+    if (option == true) {
+      return null;
+    }
+    final itemCount = orderDraft.getItemCount(this);
+    if (itemCount != null && itemCount > 0) {
+      count ??= 0;
+      count += itemCount;
+    }
+    if (options?.isNotEmpty == true) {
+      for (final saleItemOption in options!) {
+        final optionCount = orderDraft.getItemOptionCount(saleItemOption);
+        if (optionCount != null && optionCount > 0) {
+          count ??= 0;
+          count += optionCount;
+        }
+      }
+    }
+    return count;
+  }
+
+  /// The set [price] amount for the specified [cartCount] within the [orderDraft].
+  ///
+  int? totalCartPriceCentum({
+    GsaModelOrderDraft? orderDraft,
+  }) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    if (option == true) {
+      return orderDraft.getItemOptionTotalPriceCentum(this);
+    } else {
+      return orderDraft.getItemTotalPriceCentum(this);
+    }
+  }
+
+  /// The set [price] amount for the specified [cartCount] within the [orderDraft].
+  ///
+  double? totalCartPriceUnity({
+    GsaModelOrderDraft? orderDraft,
+  }) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    if (option == true) {
+      return orderDraft.getItemOptionTotalPriceUnity(this);
+    } else {
+      return orderDraft.getItemTotalPriceUnity(this);
+    }
+  }
+
+  /// Formatted display of the total cart price for this sale item.
+  ///
+  String? totalCartPriceFormatted({
+    GsaModelOrderDraft? orderDraft,
+  }) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    final price = totalCartPriceCentum(orderDraft: orderDraft);
+    if (price == null) return null;
+    return GsaModelPrice(
+          centum: price,
+        ).formatted ??
+        'N/A';
+  }
+
+  /// Returns the price value for the cheapest of available [options].
+  ///
+  /// Returns null if no options with defined price exist.
+  ///
+  int? startingOptionPriceCentum({
+    GsaModelOrderDraft? orderDraft,
+  }) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    if (options?.any(
+          (option) {
+            return option.price?.centum != null;
+          },
+        ) !=
+        true) {
+      return null;
+    }
+    final sortedOptions = List<GsaModelSaleItem>.from(options ?? [])
+      ..sort(
+        (a, b) => (a.price?.centum ?? double.infinity).compareTo(
+          b.price?.centum ?? double.infinity,
+        ),
+      );
+    sortedOptions.removeWhere(
+      (option) {
+        return option.price?.centum == null;
+      },
+    );
+    return sortedOptions.first.price?.centum;
+  }
+
+  /// Returns the formatted display of the cheapest available sale item option.
+  ///
+  /// Returns null if there is no option with a price defined available.
+  ///
+  String? startingOptionPriceFormatted({
+    GsaModelOrderDraft? orderDraft,
+  }) {
+    orderDraft ??= GsaDataCheckout.instance.orderDraft;
+    final price = startingOptionPriceCentum(orderDraft: orderDraft);
+    if (price == null) return null;
+    return 'From ${GsaModelPrice(centum: price).formatted}';
   }
 }

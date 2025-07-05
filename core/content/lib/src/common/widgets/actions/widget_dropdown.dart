@@ -5,7 +5,7 @@ class GsaWidgetDropdown extends StatefulWidget {
   const GsaWidgetDropdown({
     super.key,
     this.label,
-    this.valueAt,
+    this.initialSelectionIndex,
     this.children,
     this.labelStyle,
     this.height = 52,
@@ -14,10 +14,17 @@ class GsaWidgetDropdown extends StatefulWidget {
   }) : assert(label != null || children != null);
 
   final String? label;
-  final int? valueAt;
-  final List<({String label, String? id, Function onTap})>? children;
+
+  final int? initialSelectionIndex;
+
+  final List<GsaWidgetDropdownEntry>? children;
+
   final TextStyle? labelStyle;
-  final double height, padding;
+
+  final double height;
+
+  final double padding;
+
   final bool loading;
 
   @override
@@ -67,9 +74,9 @@ class GsaWidgetDropdownState extends State<GsaWidgetDropdown> {
     if (widget.children != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _getWidgetInfo());
     }
-    if (widget.label == null || widget.valueAt != null) {
-      _selected = widget.children?[widget.valueAt ?? 0].label;
-      _selectedId = widget.children?[widget.valueAt ?? 0].id;
+    if (widget.label == null || widget.initialSelectionIndex != null) {
+      _selected = widget.children?[widget.initialSelectionIndex ?? 0].label;
+      _selectedId = widget.children?[widget.initialSelectionIndex ?? 0].id;
     }
   }
 
@@ -278,4 +285,18 @@ class GsaWidgetDropdownState extends State<GsaWidgetDropdown> {
       ],
     );
   }
+}
+
+class GsaWidgetDropdownEntry {
+  GsaWidgetDropdownEntry({
+    required this.label,
+    required this.id,
+    required this.onTap,
+  });
+
+  final String label;
+
+  final String? id;
+
+  final Function onTap;
 }

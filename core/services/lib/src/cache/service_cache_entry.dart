@@ -84,9 +84,9 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
       case GsaServiceCacheEntry.cookieConsentMarketing:
         return bool;
       case GsaServiceCacheEntry.bookmarks:
-        return List<String>;
+        return Iterable<String>;
       case GsaServiceCacheEntry.shopSearchHistory:
-        return List<String>;
+        return Iterable<String>;
     }
   }
 

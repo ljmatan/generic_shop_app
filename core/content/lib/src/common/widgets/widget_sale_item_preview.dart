@@ -189,15 +189,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                 ),
                               ),
                               GsaWidgetTextSpan(
-                                (List<GsaModelSaleItem>.from(widget.saleItem.options ?? [])
-                                          ..sort(
-                                            (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                                              b.price?.centum ?? double.infinity,
-                                            ),
-                                          ))[0]
-                                        .price
-                                        ?.formatted ??
-                                    'N/A',
+                                widget.saleItem.startingOptionPriceFormatted() ?? 'N/A',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                 ),

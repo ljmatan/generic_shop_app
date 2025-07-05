@@ -40,11 +40,11 @@ class _GsaWidgetPhoneNumberInputState extends State<GsaWidgetPhoneNumberInput> {
         Expanded(
           child: GsaWidgetDropdown(
             padding: 20,
-            valueAt: _phonePrefixes.indexOf(widget.prefix()),
+            initialSelectionIndex: _phonePrefixes.indexOf(widget.prefix()),
             height: 52,
             children: [
               for (var i = 0; i < _phonePrefixes.length; i++)
-                (
+                GsaWidgetDropdownEntry(
                   label: '+${_phonePrefixes[i]}',
                   id: null,
                   onTap: () => widget.setPrefix(_phonePrefixes[i]),

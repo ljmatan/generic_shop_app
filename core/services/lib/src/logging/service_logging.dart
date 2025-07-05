@@ -31,10 +31,12 @@ class GsaServiceLogging extends GsaService {
 
   void _logGeneral(GsaServiceLoggingModelAppLog log) {
     logs.general.add(log);
+    if (kDebugMode) print('New log:\n${log.message}');
   }
 
   void _logError(GsaServiceLoggingModelAppLog log) {
     logs.error.add(log);
+    if (kDebugMode) print('An error occurred:\n${log.message}');
   }
 
   /// Logs any given message.

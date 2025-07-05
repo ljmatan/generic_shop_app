@@ -54,54 +54,63 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                   },
                 ),
                 const SizedBox(height: 30),
-                for (int i = 0; i < 2; i++)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: GsaWidgetText(
-                            i == 0 ? 'Language' : 'Currency',
-                            style: const TextStyle(),
-                          ),
+                for (final dropdownMenuOption in <({
+                  String label,
+                  int initialSelectionIndex,
+                  List<GsaWidgetDropdownEntry> dropdownEntries,
+                })>{
+                  (
+                    label: 'Language',
+                    initialSelectionIndex: GsaServiceI18NLanguage.values.indexOf(GsaConfig.language),
+                    dropdownEntries: [
+                      for (final language in GsaServiceI18NLanguage.values)
+                        GsaWidgetDropdownEntry(
+                          id: language.name,
+                          label: language.displayName,
+                          onTap: () {
+                            GsaConfig.languageNotifier.value = language;
+                            context.routeState?.rebuildAllRoutes();
+                          },
                         ),
-                        Expanded(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: GsaWidgetDropdown(
-                              valueAt: i == 0
-                                  ? GsaServiceI18NLanguage.values.indexOf(GsaConfig.language)
-                                  : GsaModelPriceCurrencyType.values.indexOf(GsaConfig.currency),
-                              children: i == 0
-                                  ? [
-                                      for (final language in GsaServiceI18NLanguage.values)
-                                        (
-                                          id: language.name,
-                                          label: language.displayName,
-                                          onTap: () {
-                                            GsaConfig.languageNotifier.value = language;
-                                            context.routeState?.rebuildAllRoutes();
-                                          },
-                                        ),
-                                    ]
-                                  : [
-                                      for (final currency in GsaModelPriceCurrencyType.values)
-                                        (
-                                          id: currency.name,
-                                          label: currency.displayName,
-                                          onTap: () {
-                                            GsaConfig.currencyNotifier.value = currency;
-                                            context.routeState?.rebuildAllRoutes();
-                                          },
-                                        ),
-                                    ],
-                            ),
+                    ],
+                  ),
+                  if (GsaConfig.currencyConversionEnabled)
+                    (
+                      label: 'Currency',
+                      initialSelectionIndex: GsaModelPriceCurrencyType.values.indexOf(GsaConfig.currency),
+                      dropdownEntries: [
+                        for (final currency in GsaModelPriceCurrencyType.values)
+                          GsaWidgetDropdownEntry(
+                            id: currency.name,
+                            label: currency.displayName,
+                            onTap: () {
+                              GsaConfig.currencyNotifier.value = currency;
+                              context.routeState?.rebuildAllRoutes();
+                            },
                           ),
-                        ),
                       ],
                     ),
+                }) ...[
+                  Row(
+                    children: [
+                      GsaWidgetText(
+                        dropdownMenuOption.label,
+                        style: const TextStyle(),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: GsaWidgetDropdown(
+                            initialSelectionIndex: dropdownMenuOption.initialSelectionIndex,
+                            children: dropdownMenuOption.dropdownEntries,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 12),
+                ],
               ],
             ),
             SizedBox(

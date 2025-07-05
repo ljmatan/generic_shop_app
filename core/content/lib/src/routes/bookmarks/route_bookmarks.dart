@@ -175,15 +175,7 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                                                       ),
                                                     ),
                                                     GsaWidgetTextSpan(
-                                                      (List<GsaModelSaleItem>.from(item.options ?? [])
-                                                                ..sort(
-                                                                  (a, b) => (a.price?.centum ?? double.infinity).compareTo(
-                                                                    b.price?.centum ?? double.infinity,
-                                                                  ),
-                                                                ))[0]
-                                                              .price
-                                                              ?.formatted ??
-                                                          'N/A',
+                                                      item.startingOptionPriceFormatted() ?? 'N/A',
                                                       style: const TextStyle(
                                                         fontWeight: FontWeight.w700,
                                                       ),

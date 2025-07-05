@@ -24,7 +24,7 @@ class GsaModelShopSearch extends _Model {
   /// Determines whether any filters are applied.
   ///
   bool get active {
-    return searchTerm?.isNotEmpty == true || categoryId != null;
+    return searchTerm?.isNotEmpty == true && searchTerm!.length > 2 || categoryId != null;
   }
 
   /// Clears any applied filters.

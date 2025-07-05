@@ -133,6 +133,16 @@ class GsaConfig {
   ///
   static bool guestLoginEnabled = const String.fromEnvironment('gsaGuestLoginEnabled').toLowerCase() != 'false';
 
+  /// Defines whether currrency conversion or switch is enabled.
+  ///
+  /// To update the property, it can be set during the runtime:
+  ///
+  /// ```dart
+  /// GsaConfig.currencyConversionEnabled = false;
+  /// ```
+  ///
+  static bool currencyConversionEnabled = true;
+
   /// Initialise the runtime resources with the specified parameters.
   ///
   static Future<void> init() async {

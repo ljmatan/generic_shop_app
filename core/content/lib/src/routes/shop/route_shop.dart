@@ -41,6 +41,18 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
 
   Future<List<GsaModelSaleItem>>? _searchFuture;
 
+  Future<void> _updateSearchTermHistory(
+    String searchTerm,
+  ) async {
+    final previousTerms = GsaServiceCacheEntry.shopSearchHistory.value;
+    await GsaServiceCacheEntry.shopSearchHistory.setValue(
+      <String>{
+        if (previousTerms is Iterable) ...previousTerms,
+        searchTerm,
+      }.toList().reversed.take(5).toList(),
+    );
+  }
+
   void _onFiltersUpdated() {
     _searchFuture = Future(
       () async {
@@ -60,10 +72,18 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                   return [
                     if (saleItem.name?.isNotEmpty == true) saleItem.name!,
                     if (saleItem.productCode?.isNotEmpty == true) saleItem.productCode!,
+                    if (saleItem.id?.isNotEmpty == true) saleItem.id!,
                   ];
                 },
               )
             : null;
+        if (_filters.searchTerm?.isNotEmpty == true) {
+          try {
+            await _updateSearchTermHistory(_filters.searchTerm!);
+          } catch (e) {
+            GsaServiceLogging.instance.logError('Couldn\'t update search term history:\n$e');
+          }
+        }
         return List<GsaModelSaleItem>.from(searchTermResults ?? categoryResults ?? []);
       },
     );
@@ -143,6 +163,10 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
     });
   }
 
+  bool get _searchActive {
+    return _searchTermFocusNode.hasFocus || _filters.active == true;
+  }
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -157,12 +181,16 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
             clearSearchFilters: () => _clearSearchFilters(),
           ),
           Expanded(
-            child: _searchTermFocusNode.hasFocus || _filters.active == true
+            child: _searchActive
                 ? FutureBuilder<List<GsaModelSaleItem>>(
                     future: _searchFuture,
                     builder: (context, searchResponse) {
                       if (!_filters.active) {
-                        return const _WidgetSearchSuggestions();
+                        return _WidgetSearchSuggestions(
+                          updateSearchTerm: (value) {
+                            _searchTermController.text = value;
+                          },
+                        );
                       } else {
                         if (_searchFuture == null || searchResponse.connectionState != ConnectionState.done) {
                           return const Center(
@@ -267,32 +295,32 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
           ),
         ],
       ),
-      floatingActionButton: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FloatingActionButton(
-            heroTag: null,
-            child: const Icon(
-              Icons.chat,
-              color: Colors.white,
+      floatingActionButton: _searchActive
+          ? null
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FilledButton(
+                  child: const Icon(
+                    Icons.chat,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    const GsaRouteMerchantContact().push();
+                  },
+                ),
+                if (Theme.of(context).dimensions.smallScreen && Navigator.of(context).canPop()) ...[
+                  const SizedBox(height: 10),
+                  FilledButton(
+                    child: const Icon(Icons.apps),
+                    onPressed: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                  ),
+                ],
+              ],
             ),
-            onPressed: () {
-              Navigator.of(context).pushNamed('contact');
-            },
-          ),
-          if (Theme.of(context).dimensions.smallScreen && Navigator.of(context).canPop()) ...[
-            const SizedBox(height: 10),
-            FloatingActionButton(
-              child: const Icon(Icons.apps),
-              heroTag: null,
-              onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-            ),
-          ],
-        ],
-      ),
       drawerEnableOpenDragGesture: false,
       endDrawerEnableOpenDragGesture: false,
       drawer: const _WidgetDrawer(),
