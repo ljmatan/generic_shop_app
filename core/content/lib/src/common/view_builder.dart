@@ -58,7 +58,12 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
           textScaler: GsaTheme.instance.textScaler(context),
         ),
         child: Listener(
-          child: widget.child,
+          child: Stack(
+            children: [
+              widget.child,
+              if (GsaConfig.plugin.overlayBuilder != null) GsaConfig.plugin.overlayBuilder!,
+            ],
+          ),
           onPointerDown: (event) {
             if (GsaConfig.qaBuild) {
               _recordedNumberOfTaps++;

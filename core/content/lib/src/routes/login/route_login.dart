@@ -227,7 +227,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                             onTap: (value) => setState(() => _userAgreementAccepted = value),
                           ),
                         ],
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

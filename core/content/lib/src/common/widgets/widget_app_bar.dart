@@ -3,7 +3,7 @@ import 'package:generic_shop_app_content/gsac.dart';
 
 /// Application toolbar / navigation bar / app bar implementation.
 ///
-class GsaWidgetAppBar extends StatelessWidget {
+class GsaWidgetAppBar extends StatefulWidget {
   /// Default, unnamed widget constructor.
   ///
   const GsaWidgetAppBar({
@@ -33,6 +33,21 @@ class GsaWidgetAppBar extends StatelessWidget {
   final Function? onBackPressed;
 
   @override
+  State<GsaWidgetAppBar> createState() => _GsaWidgetAppBarState();
+}
+
+class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
+  /// Whether this widget can invoke the [Navigator.pop] method.
+  ///
+  bool get _canPop {
+    try {
+      return Navigator.of(context).canPop();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final shadowSize = Theme.of(context).dimensions.smallScreen ? .1 : .4;
     return IntrinsicWidth(
@@ -46,13 +61,13 @@ class GsaWidgetAppBar extends StatelessWidget {
               ),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: child ??
+                child: widget.child ??
                     Stack(
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
-                            padding: showBackButton && Navigator.of(context).canPop() == true
+                            padding: widget.showBackButton && (_canPop || widget.onBackPressed != null)
                                 ? const EdgeInsets.symmetric(
                                     horizontal: 56,
                                     vertical: 14,
@@ -62,7 +77,7 @@ class GsaWidgetAppBar extends StatelessWidget {
                                     vertical: 14,
                                   ),
                             child: GsaWidgetText(
-                              label ?? '',
+                              widget.label ?? '',
                               textAlign: Theme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
                                 shadows: [
@@ -81,7 +96,7 @@ class GsaWidgetAppBar extends StatelessWidget {
                             ),
                           ),
                         ),
-                        if (showBackButton && Navigator.of(context).canPop() == true)
+                        if (widget.showBackButton && (_canPop || widget.onBackPressed != null))
                           Positioned(
                             left: 0,
                             top: 0,
@@ -103,7 +118,11 @@ class GsaWidgetAppBar extends StatelessWidget {
                                     ),
                                 ],
                               ),
-                              onPressed: () => onBackPressed == null ? Navigator.pop(context) : onBackPressed!(),
+                              onPressed: () => widget.onBackPressed == null
+                                  ? _canPop
+                                      ? Navigator.pop(context)
+                                      : null
+                                  : widget.onBackPressed!(),
                             ),
                           ),
                       ],

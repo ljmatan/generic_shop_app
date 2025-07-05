@@ -277,7 +277,10 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
     GsaRoute._observables.add(this);
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      GsaRoute.navigatorObserver.subscribe(this, ModalRoute.of(context)!);
+      final modalRoute = ModalRoute.of(context);
+      if (modalRoute != null) {
+        GsaRoute.navigatorObserver.subscribe(this, modalRoute);
+      }
       _visible = true;
       const duration = Duration(seconds: 1);
       _timeViewedTimer = Timer.periodic(duration, (_) {

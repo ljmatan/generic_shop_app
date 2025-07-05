@@ -250,12 +250,10 @@ abstract class GsaPlugin {
     return null;
   }
 
-  /// Defines whether client has network image caching enabled.
+  /// Widget specified for display above the [MaterialApp.builder.child] object.
   ///
-  /// The caching is applied to sale item entries.
-  ///
-  bool get cachedNetworkImages {
-    return true;
+  Widget? get overlayBuilder {
+    return null;
   }
 
   /// Method used with login screen implementations for logging in a user with [username] and [password].
