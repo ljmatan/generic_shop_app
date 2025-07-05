@@ -72,11 +72,11 @@ class GsaWidgetTextField extends StatefulWidget {
 
   /// Event triggered on keyboard "enter" key / confirmation.
   ///
-  final Function(String)? onSubmitted;
+  final Function(String value)? onSubmitted;
 
   /// Optional input validation method.
   ///
-  final String? Function(String?)? validator;
+  final String? Function(String? value)? validator;
 
   /// Whether to automatically display the delete "x" button.
   ///

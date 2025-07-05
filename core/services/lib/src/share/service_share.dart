@@ -1,6 +1,7 @@
 import 'dart:io' as dart_io;
 import 'dart:typed_data' as dart_typed_data;
 
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -66,6 +67,14 @@ class GsaServiceShare extends GsaService {
     await share_plus.SharePlus.instance.share(
       share_plus.ShareParams(
         text: text,
+        sharePositionOrigin: GsaRoute.navigatorKey.currentContext == null
+            ? null
+            : Rect.fromLTWH(
+                0,
+                0,
+                MediaQuery.of(GsaRoute.navigatorKey.currentContext!).size.width,
+                MediaQuery.of(GsaRoute.navigatorKey.currentContext!).size.height / 2,
+              ),
         files: compressedValue != null
             ? [
                 share_plus.XFile(

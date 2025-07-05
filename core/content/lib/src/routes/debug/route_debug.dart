@@ -154,15 +154,25 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                                       child: SizedBox(
                                         width: MediaQuery.of(context).size.width,
                                         child: GsaWidgetText(
-                                          _jsonEncoder.convert(
-                                            dart_convert.jsonDecode(
-                                              GsaServiceCache.instance
-                                                  .valueWithKey(
-                                                    key.$2,
-                                                  )
-                                                  .toString(),
-                                            ),
-                                          ),
+                                          () {
+                                            try {
+                                              return _jsonEncoder.convert(
+                                                dart_convert.jsonDecode(
+                                                  GsaServiceCache.instance
+                                                      .valueWithKey(
+                                                        key.$2,
+                                                      )
+                                                      .toString(),
+                                                ),
+                                              );
+                                            } catch (e) {
+                                              return _jsonEncoder.convert(
+                                                GsaServiceCache.instance.valueWithKey(
+                                                  key.$2,
+                                                ),
+                                              );
+                                            }
+                                          }(),
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
@@ -300,11 +310,70 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
               dart_convert.utf8.encode(
                 dart_convert.jsonEncode(
                   {
-                    'http': [],
-                    'event': [],
-                    'error': [],
-                    'cache': [],
-                    'data': [],
+                    'http': [
+                      for (final log in GsaApi.logs) log.toJson(),
+                    ],
+                    'event': [
+                      for (final log in GsaServiceLogging.instance.logs.general) log.toJson(),
+                    ],
+                    'error': [
+                      for (final log in GsaServiceLogging.instance.logs.error) log.toJson(),
+                    ],
+                    'cache': [
+                      if (GsaServiceCache.instance.cachedKeys != null)
+                        for (final key in GsaServiceCache.instance.cachedKeys!)
+                          () {
+                            try {
+                              return dart_convert.jsonDecode(
+                                GsaServiceCache.instance.valueWithKey(key).toString(),
+                              );
+                            } catch (e) {
+                              return GsaServiceCache.instance.valueWithKey(key);
+                            }
+                          }(),
+                    ],
+                    'data': [
+                      for (final dataPoint in <({
+                        String label,
+                        Map? value,
+                      })>{
+                        (
+                          label: 'User',
+                          value: GsaDataUser.instance.user?.toJson(),
+                        ),
+                        (
+                          label: 'Merchant',
+                          value: GsaDataMerchant.instance.merchant?.toJson(),
+                        ),
+                        (
+                          label: 'Clients',
+                          value: {
+                            'collection': GsaDataClients.instance.collection.map(
+                              (client) {
+                                return client.toJson();
+                              },
+                            ).toList(),
+                          },
+                        ),
+                        (
+                          label: 'Sale Items',
+                          value: {
+                            'collection': GsaDataSaleItems.instance.collection.map(
+                              (saleItem) {
+                                return saleItem.toJson();
+                              },
+                            ).toList(),
+                          },
+                        ),
+                        (
+                          label: 'Checkout',
+                          value: GsaDataCheckout.instance.orderDraft.toJson(),
+                        ),
+                      })
+                        {
+                          dataPoint.label: dataPoint.value,
+                        },
+                    ],
                   },
                 ),
               ),

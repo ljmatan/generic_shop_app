@@ -175,7 +175,8 @@ class _WidgetSearchResultsEntryState extends State<_WidgetSearchResultsEntry> {
                                 GsaWidgetText(
                                   widget.saleItem.price?.formatted ?? widget.saleItem.startingOptionPriceFormatted()!,
                                   maxLines: 2,
-                                  style: const TextStyle(
+                                  style: TextStyle(
+                                    color: widget.saleItem.price?.formatted == null ? Colors.grey : null,
                                     fontSize: 12,
                                   ),
                                 ),
