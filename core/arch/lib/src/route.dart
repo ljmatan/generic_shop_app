@@ -139,6 +139,9 @@ abstract class GsaRoute extends StatefulWidget {
     if (context != null) {
       final route = MaterialPageRoute<void>(
         builder: (BuildContext context) => this,
+        settings: RouteSettings(
+          name: routeId,
+        ),
       );
       return replacement
           ? await Navigator.of(context).pushAndRemoveUntil(

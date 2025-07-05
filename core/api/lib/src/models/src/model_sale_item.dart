@@ -216,16 +216,6 @@ class GsaModelSaleItem extends _Model {
       originUrl: 'https://wikipedia.org/',
     );
   }
-
-  static GsaModelSaleItem? findById(
-    String saleItemId,
-  ) {
-    return GsaDataSaleItems.instance.collection.firstWhereOrNull(
-      (saleItem) {
-        return saleItem.id == saleItemId;
-      },
-    );
-  }
 }
 
 /// Extension methods for the [GsaModelSaleItem] model class.
