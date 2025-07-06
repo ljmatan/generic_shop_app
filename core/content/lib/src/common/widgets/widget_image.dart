@@ -169,7 +169,39 @@ class GsaWidgetImage extends StatefulWidget {
 }
 
 class _GsaWidgetImageState extends State<GsaWidgetImage> {
-  Widget get _imageProvider {
+  @override
+  Widget build(BuildContext context) {
+    try {
+      return SizedBox(
+        width: widget.width,
+        height: widget.height,
+        child: widget.shadows != null
+            ? DecoratedBox(
+                decoration: BoxDecoration(boxShadow: widget.shadows),
+                child: _GsaWidgetImageBuilder(
+                  widget: widget,
+                ),
+              )
+            : _GsaWidgetImageBuilder(
+                widget: widget,
+              ),
+      );
+    } catch (e) {
+      debugPrint('$e');
+      return SizedBox(width: widget.width, height: widget.height);
+    }
+  }
+}
+
+class _GsaWidgetImageBuilder extends StatelessWidget {
+  const _GsaWidgetImageBuilder({
+    required this.widget,
+  });
+
+  final GsaWidgetImage widget;
+
+  @override
+  Widget build(BuildContext context) {
     return widget.inputString != null
         ? widget.type == GsaWidgetImageByteType.standard
             ? Image.memory(
@@ -282,24 +314,5 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
                         fit: widget.fit,
                         alignment: widget.alignment,
                       );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    try {
-      return SizedBox(
-        width: widget.width,
-        height: widget.height,
-        child: widget.shadows != null
-            ? DecoratedBox(
-                decoration: BoxDecoration(boxShadow: widget.shadows),
-                child: _imageProvider,
-              )
-            : _imageProvider,
-      );
-    } catch (e) {
-      debugPrint('$e');
-      return SizedBox(width: widget.width, height: widget.height);
-    }
   }
 }
