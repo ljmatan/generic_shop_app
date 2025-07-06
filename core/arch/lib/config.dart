@@ -151,7 +151,6 @@ class GsaConfig {
     // Allocate the application runtime resources according to the given configuration.
     GsaServiceAppTrackingTransparency.instance;
     GsaServiceAuth.instance;
-    GsaServiceBarcodeGenerator.instance;
     GsaServiceBookmarks.instance;
     GsaServiceCache.instance;
     GsaServiceCalendar.instance;
@@ -169,7 +168,6 @@ class GsaConfig {
     GsaServiceSearch.instance;
     GsaServiceTracking.instance;
     GsaServiceUrlLauncher.instance;
-    GsaServiceBarcodeGenerator.instance;
     await GsaServiceCache.instance.init();
     await GsaService.initAll();
     GsaDataCheckout.instance;

@@ -3,14 +3,14 @@ import 'package:barcode/barcode.dart';
 
 /// Class implementing methods and properties for generating barcode images.
 ///
-class GsaServiceBarcodeGenerator extends GsaService {
-  GsaServiceBarcodeGenerator._();
+class GivServiceBarcodeGenerator extends GsaService {
+  GivServiceBarcodeGenerator._();
 
-  static final _instance = GsaServiceBarcodeGenerator._();
+  static final _instance = GivServiceBarcodeGenerator._();
 
   /// Globally-accessible class instance.
   ///
-  static GsaServiceBarcodeGenerator get instance => _instance() as GsaServiceBarcodeGenerator;
+  static GivServiceBarcodeGenerator get instance => _instance() as GivServiceBarcodeGenerator;
 
   /// Generates an SVG representation of Code 128 barcode from the given [data].
   ///

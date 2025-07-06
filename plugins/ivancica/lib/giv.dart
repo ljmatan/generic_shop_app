@@ -9,6 +9,7 @@ export 'package:generic_shop_app_content/gsac.dart';
 export 'src/api/_api.dart';
 export 'src/endpoints/_endpoints.dart';
 export 'src/models/_models.dart';
+export 'src/services/_services.dart';
 export 'src/view/_view.dart';
 
 /// Generic Shop App Ivancica.
@@ -32,6 +33,7 @@ class GivPlugin extends GsaPlugin {
 
   @override
   Future<void> init() async {
+    GivServiceBarcodeGenerator.instance;
     GsaDataMerchant.instance.merchant = GsaModelMerchant(
       name: 'froddo',
       contact: GsaModelContact(

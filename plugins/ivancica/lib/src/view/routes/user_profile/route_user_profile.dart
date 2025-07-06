@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_ivancica/giv.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 /// Screen containing user profile information and configuration options.
 ///
@@ -126,7 +125,7 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                               vertical: 4,
                             ),
                             child: GsaWidgetImage.string(
-                              GsaServiceBarcodeGenerator.instance.generateCode128Svg(
+                              GivServiceBarcodeGenerator.instance.generateCode128Svg(
                                 _originData!.loyaltyCard!.substring(0, 12),
                               ),
                               width: MediaQuery.of(context).size.width,

@@ -158,7 +158,7 @@ abstract class GsaApi {
 
   /// Method implemented for enabling the refresh JWT functionality.
   ///
-  Future<void> refreshToken() {
+  Future<http.Response> refreshToken() {
     throw UnimplementedError(
       'Token refresh method is not implemented.',
     );
@@ -178,6 +178,7 @@ abstract class GsaApi {
     Future<http.Response> Function() request, {
     required bool decodedResponse,
     bool retry = false,
+    bool throws = true,
   }) async {
     final requestTime = DateTime.now();
     try {
@@ -214,64 +215,74 @@ abstract class GsaApi {
         // Do nothing.
       }
       if (response.statusCode ~/ 2 != 100) {
-        if (response.statusCode == 401 && !retry) {
+        int? refreshTokenResponseStatusCode;
+        if (response.statusCode == 401 && retry) {
           try {
-            await refreshToken();
+            refreshTokenResponseStatusCode = (await refreshToken()).statusCode;
+            if (response.statusCode == 401) {
+              throw Exception(
+                'Refresh token failed.',
+              );
+            }
             return await _httpRequest(
               request,
               decodedResponse: decodedResponse,
-              retry: true,
+              retry: false,
             );
           } catch (e) {
             GsaServiceLogging.instance.logError(
               'Refresh JWT failed: $e',
             );
-          }
-        }
-        String message = '';
-        if (decodedResponseBody is Map) {
-          if (decodedResponseBody['errors'] is Iterable) {
-            for (final error in decodedResponseBody['errors'] as Iterable) {
-              if (error is String) {
-                message += '$error\n';
-              }
+            if (refreshTokenResponseStatusCode == 401) {
+              Future.delayed(
+                Duration.zero,
+                () async {
+                  try {
+                    await logout();
+                  } catch (e) {
+                    GsaServiceLogging.instance.logError(
+                      'Error logging out automatically:\n$e',
+                    );
+                  }
+                },
+              );
             }
           }
-          if (decodedResponseBody['errors'] is Map) {
-            for (final error in (decodedResponseBody['errors'] as Map).values) {
-              if (error is String) {
-                message += '$error\n';
+        }
+        if (throws) {
+          String message = '';
+          if (decodedResponseBody is Map) {
+            if (decodedResponseBody['errors'] is Iterable) {
+              for (final error in decodedResponseBody['errors'] as Iterable) {
+                if (error is String) {
+                  message += '$error\n';
+                }
               }
-              if (error is Iterable) {
-                for (final errorEntry in error) {
-                  if (errorEntry is String) {
-                    message += '$errorEntry\n';
+            }
+            if (decodedResponseBody['errors'] is Map) {
+              for (final error in (decodedResponseBody['errors'] as Map).values) {
+                if (error is String) {
+                  message += '$error\n';
+                }
+                if (error is Iterable) {
+                  for (final errorEntry in error) {
+                    if (errorEntry is String) {
+                      message += '$errorEntry\n';
+                    }
                   }
                 }
               }
             }
-          }
-          if (message.isNotEmpty) {
-            throw message.substring(0, message.length - 1);
-          }
-        }
-        Future.delayed(
-          Duration.zero,
-          () async {
-            try {
-              await logout();
-            } catch (e) {
-              GsaServiceLogging.instance.logError(
-                'Error logging out automatically:\n$e',
-              );
+            if (message.isNotEmpty) {
+              throw message.substring(0, message.length - 1);
             }
-          },
-        );
-        throw decodedResponseBody['message'] ??
-            decodedResponseBody['error'] ??
-            decodedResponseBody['msg'] ??
-            decodedResponseBody['reason'] ??
-            response.body;
+          }
+          throw decodedResponseBody['message'] ??
+              decodedResponseBody['error'] ??
+              decodedResponseBody['msg'] ??
+              decodedResponseBody['reason'] ??
+              response.body;
+        }
       }
       return decodedResponse ? dart_convert.jsonDecode(response.body) : response;
     } catch (e) {
@@ -285,6 +296,8 @@ abstract class GsaApi {
     String endpoint, {
     Map<String, String> additionalHeaders = const {},
     bool decodedResponse = true,
+    bool throws = true,
+    bool retry = true,
   }) async {
     return await _httpRequest(
       () async => http.get(
@@ -292,6 +305,8 @@ abstract class GsaApi {
         headers: headers..addAll(additionalHeaders),
       ),
       decodedResponse: decodedResponse,
+      throws: throws,
+      retry: retry,
     );
   }
 
@@ -302,6 +317,8 @@ abstract class GsaApi {
     Map<String, dynamic> body, {
     Map<String, String> additionalHeaders = const {},
     bool decodedResponse = true,
+    bool throws = true,
+    bool retry = true,
   }) async {
     return await _httpRequest(
       () async => http.post(
@@ -310,6 +327,8 @@ abstract class GsaApi {
         body: dart_convert.jsonEncode(body),
       ),
       decodedResponse: decodedResponse,
+      throws: throws,
+      retry: retry,
     );
   }
 
@@ -320,6 +339,8 @@ abstract class GsaApi {
     Map<String, dynamic> body, {
     Map<String, String> additionalHeaders = const {},
     bool decodedResponse = true,
+    bool throws = true,
+    bool retry = true,
   }) async {
     return await _httpRequest(
       () async => http.put(
@@ -328,6 +349,8 @@ abstract class GsaApi {
         body: dart_convert.jsonEncode(body),
       ),
       decodedResponse: decodedResponse,
+      throws: throws,
+      retry: retry,
     );
   }
 
@@ -338,6 +361,8 @@ abstract class GsaApi {
     Map<String, dynamic> body, {
     Map<String, String> additionalHeaders = const {},
     bool decodedResponse = true,
+    bool throws = true,
+    bool retry = true,
   }) async {
     return await _httpRequest(
       () async => http.patch(
@@ -346,6 +371,8 @@ abstract class GsaApi {
         body: dart_convert.jsonEncode(body),
       ),
       decodedResponse: decodedResponse,
+      throws: throws,
+      retry: retry,
     );
   }
 
@@ -356,6 +383,8 @@ abstract class GsaApi {
     Map<String, String> additionalHeaders = const {},
     Map<String, dynamic>? body,
     bool decodedResponse = true,
+    bool throws = true,
+    bool retry = true,
   }) async {
     return await _httpRequest(
       () async => http.delete(
@@ -364,6 +393,8 @@ abstract class GsaApi {
         body: body,
       ),
       decodedResponse: decodedResponse,
+      throws: throws,
+      retry: retry,
     );
   }
 }
@@ -437,6 +468,8 @@ abstract mixin class GsaApiEndpoints {
     Map<String, String> additionalHeaders = const {},
     Map<String, dynamic> body = const {},
     bool decodedResponse = true,
+    bool throws = true,
+    bool retry = true,
   }) {
     final queryParams = queryParameters.map(
       (key, value) {
@@ -462,6 +495,8 @@ abstract mixin class GsaApiEndpoints {
           endpointPath,
           additionalHeaders: additionalHeaders,
           decodedResponse: decodedResponse,
+          throws: throws,
+          retry: retry,
         );
       case GsaApiEndpointMethodType.httpPost:
         return client.post(
@@ -469,6 +504,8 @@ abstract mixin class GsaApiEndpoints {
           additionalHeaders: additionalHeaders,
           body,
           decodedResponse: decodedResponse,
+          throws: throws,
+          retry: retry,
         );
       case GsaApiEndpointMethodType.httpPatch:
         return client.patch(
@@ -476,6 +513,8 @@ abstract mixin class GsaApiEndpoints {
           additionalHeaders: additionalHeaders,
           body,
           decodedResponse: decodedResponse,
+          throws: throws,
+          retry: retry,
         );
       case GsaApiEndpointMethodType.httpPut:
         return client.put(
@@ -483,6 +522,8 @@ abstract mixin class GsaApiEndpoints {
           additionalHeaders: additionalHeaders,
           body,
           decodedResponse: decodedResponse,
+          throws: throws,
+          retry: retry,
         );
       case GsaApiEndpointMethodType.httpDelete:
         return client.delete(
@@ -490,6 +531,8 @@ abstract mixin class GsaApiEndpoints {
           additionalHeaders: additionalHeaders,
           body: body,
           decodedResponse: decodedResponse,
+          throws: throws,
+          retry: retry,
         );
     }
   }

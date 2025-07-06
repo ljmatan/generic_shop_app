@@ -7,7 +7,6 @@ library;
 
 export 'src/app_tracking_transparency/service_app_tracking_transparency.dart';
 export 'src/auth/service_auth.dart';
-export 'src/barcode_generator/service_barcode_generator.dart';
 export 'src/bookmarks/service_bookmarks.dart';
 export 'src/cache/service_cache.dart';
 export 'src/calendar/service_calendar.dart';
