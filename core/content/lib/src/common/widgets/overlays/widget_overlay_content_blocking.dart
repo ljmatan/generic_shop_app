@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_content/src/common/widgets/overlays/widget_overlay.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
 /// Widget overlay serving for user input blocking.
 ///

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
-class GsaWidgetDropdown extends StatefulWidget {
-  const GsaWidgetDropdown({
+class GsaWidgetDropdownButton extends StatefulWidget {
+  const GsaWidgetDropdownButton({
     super.key,
     this.label,
     this.initialSelectionIndex,
@@ -28,10 +28,12 @@ class GsaWidgetDropdown extends StatefulWidget {
   final bool loading;
 
   @override
-  GsaWidgetDropdownState createState() => GsaWidgetDropdownState();
+  GsaWidgetDropdownButtonState createState() {
+    return GsaWidgetDropdownButtonState();
+  }
 }
 
-class GsaWidgetDropdownState extends State<GsaWidgetDropdown> {
+class GsaWidgetDropdownButtonState extends State<GsaWidgetDropdownButton> {
   final _key = GlobalKey();
   RenderBox? _renderBox;
   Offset? _widgetOffset;

@@ -15,6 +15,8 @@ dependencies:
     path: ../api
   generic_shop_app_architecture:
     path: ../arch
+  generic_shop_app_content:
+    path: ../content
   url_launcher: ^6.3.1
   app_tracking_transparency: ^2.0.6
   shared_preferences: ^2.3.3
@@ -22,6 +24,7 @@ dependencies:
   path_provider: ^2.1.5
   path: ^1.9.1
   permission_handler: ^12.0.1
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:

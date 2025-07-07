@@ -100,7 +100,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                     GsaWidgetTextField(
                       controller: widget.searchTermController,
                       focusNode: widget.searchTermFocusNode,
-                      hintText: 'Search'.translated(context),
+                      hintText: 'Search',
                       prefixIcon: Icon(
                         Icons.search,
                         color: Theme.of(context).brightness == Brightness.light ? Theme.of(context).primaryColor : Colors.white,
@@ -152,7 +152,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                   child: GsaWidgetTextField(
                                     controller: widget.searchTermController,
                                     focusNode: widget.searchTermFocusNode,
-                                    hintText: 'Search'.translated(context),
+                                    hintText: 'Search',
                                     prefixIcon: Icon(
                                       Icons.search,
                                       color:

@@ -139,7 +139,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                       Expanded(
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          child: GsaWidgetDropdown(
+                          child: GsaWidgetDropdownButton(
                             initialSelectionIndex: dropdownMenuOption.initialSelectionIndex,
                             children: dropdownMenuOption.dropdownEntries,
                           ),

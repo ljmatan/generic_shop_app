@@ -11,7 +11,7 @@ class GsaWidgetDropdownGender extends StatefulWidget {
 
   final Function(String) onChanged;
 
-  final GlobalKey<GsaWidgetDropdownState> dropdownKey;
+  final GlobalKey<GsaWidgetDropdownButtonState> dropdownKey;
 
   final String? initialValue;
 
@@ -39,7 +39,7 @@ class _GsaWidgetDropdownGenderState extends State<GsaWidgetDropdownGender> {
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       widthFactor: 0.5,
-      child: GsaWidgetDropdown(
+      child: GsaWidgetDropdownButton(
         key: widget.dropdownKey,
         label: 'Title',
         initialSelectionIndex: _salutationIndex,

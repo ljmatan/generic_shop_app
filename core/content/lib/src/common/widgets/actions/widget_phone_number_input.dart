@@ -38,7 +38,7 @@ class _GsaWidgetPhoneNumberInputState extends State<GsaWidgetPhoneNumberInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: GsaWidgetDropdown(
+          child: GsaWidgetDropdownButton(
             padding: 20,
             initialSelectionIndex: _phonePrefixes.indexOf(widget.prefix()),
             height: 52,

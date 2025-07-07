@@ -1,23 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
-import 'package:generic_shop_app_services/services.dart';
+import 'package:collection/collection.dart';
+import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 
-part 'values/service_i18n_values.dart';
-part 'values/service_i18n_values_route.dart';
-part 'values/service_i18n_values_route_auth.dart';
-part 'values/service_i18n_values_route_cart.dart';
-part 'values/service_i18n_values_route_checkout.dart';
-part 'values/service_i18n_values_route_debug.dart';
-part 'values/service_i18n_values_route_guest_info.dart';
-part 'values/service_i18n_values_route_help.dart';
-part 'values/service_i18n_values_route_licences.dart';
-part 'values/service_i18n_values_route_merchant.dart';
-part 'values/service_i18n_values_route_payment_status.dart';
-part 'values/service_i18n_values_route_privacy_policy.dart';
-part 'values/service_i18n_values_route_product_details.dart';
-part 'values/service_i18n_values_route_settings.dart';
-part 'values/service_i18n_values_route_shop.dart';
-part 'values/service_i18n_values_route_terms_and_conditions.dart';
+part 'extensions/service_i18n_extension_date_time.dart';
 
 /// Central access point for the internationalization services.
 ///
@@ -31,7 +16,44 @@ class GsaServiceI18N extends GsaService {
 
   /// The specified runtime display language.
   ///
-  static GsaServiceI18NLanguage language = GsaServiceI18NLanguage.en;
+  GsaServiceI18NLanguage language = GsaServiceI18NLanguage.enUs;
+
+  /// Collection of translated app display values.
+  ///
+  /// The value is represented by the following format:
+  ///
+  /// ```dart
+  /// // Example type definition for the translation content reference.
+  /// ExampleType: {
+  ///   // Identifier for the language the value will be translated into.
+  ///   GsaServiceI18NLanguage.enUk: {
+  ///     // Text is translated from English (US) source,
+  ///     // and identified with a [Map.key] value in this language.
+  ///     'Color': 'Colour',
+  ///   },
+  /// },
+  /// ```
+  ///
+  final _values = <Type, Map<GsaServiceI18NLanguage, Map<String, String>>>{};
+
+  @override
+  Future<void> init() async {
+    await super.init();
+  }
+
+  /// Method used for translating text content.
+  ///
+  /// Method requires an [ancestor] definition for which the translation is defined,
+  /// a [value] representing the identifier for the value to be translated,
+  /// as well as an optional [language] identifier for specifying the result language.
+  ///
+  String? translate({
+    required Type ancestor,
+    required String value,
+    GsaServiceI18NLanguage? language,
+  }) {
+    return _values[ancestor]?[language ?? instance.language]?[value];
+  }
 }
 
 /// Unique language identifiers.
@@ -39,11 +61,23 @@ class GsaServiceI18N extends GsaService {
 enum GsaServiceI18NLanguage {
   /// English (US) language.
   ///
-  en,
+  enUs,
+
+  /// English (Ireland).
+  ///
+  enIr,
+
+  /// English (United Kingdom).
+  ///
+  enUk,
 
   /// German language.
   ///
   de,
+
+  /// Italian language.
+  ///
+  it,
 
   /// French language.
   ///
@@ -54,111 +88,110 @@ enum GsaServiceI18NLanguage {
   es,
 
   /// Croatian language.
+  ///
   hr,
-}
 
-/// Extension methods for the language identifiers.
-///
-extension GsaServiceI18NLanguageExt on GsaServiceI18NLanguage {
+  /// Czech language.
+  ///
+  cz;
+
   /// Currency display name visible to the user.
   ///
   String get displayName {
     switch (this) {
-      case GsaServiceI18NLanguage.en:
-        return 'English';
+      case GsaServiceI18NLanguage.enUs:
+        return 'English (United States)';
+      case GsaServiceI18NLanguage.enIr:
+        return 'English (Ireland)';
+      case GsaServiceI18NLanguage.enUk:
+        return 'English (United Kingdom)';
       case GsaServiceI18NLanguage.de:
         return 'Deutsch';
+      case GsaServiceI18NLanguage.it:
+        return 'Italian';
       case GsaServiceI18NLanguage.fr:
         return 'French';
       case GsaServiceI18NLanguage.es:
         return 'Spanish';
       case GsaServiceI18NLanguage.hr:
         return 'Croatian';
+      case GsaServiceI18NLanguage.cz:
+        return 'Czech';
     }
   }
 }
 
-/// Internationalization extension methods for [String] type objects.
+/// Object defining translatable text value properties.
 ///
-extension GsaServiceI18NStringExt on String {
-  /// The default method for translating strings, identified by the given [parentRoute] object.
+class GsaServiceI18NTranslationValue {
+  GsaServiceI18NTranslationValue._({
+    required this.ancestor,
+    required this.language,
+    required this.value,
+  });
+
+  /// Widget specified with a text value.
   ///
-  String translatedFromType(Type parentRoute) {
-    if (GsaServiceI18N.language == GsaServiceI18NLanguage.en) return this;
-    String? translatedValue = _values[parentRoute]?[this]?[GsaServiceI18N.language];
-    translatedValue ??= _values['GsaRoute']?[this]?[GsaServiceI18N.language];
-    if (translatedValue == null || translatedValue.isEmpty) {
-      GsaServiceLogging.instance.logError(
-        '${GsaServiceI18N.language} $this not translated with $parentRoute.',
-      );
-      return this;
-    } else {
-      return translatedValue;
-    }
+  final Type? ancestor;
+
+  /// The specified language of this text value.
+  ///
+  final GsaServiceI18NLanguage? language;
+
+  /// The text value specified for this object.
+  ///
+  final String value;
+
+  /// [Type] objects for which the translation is defined for.
+  ///
+  static final widgetTypes = GsaWidgets.values.map(
+    (widget) {
+      return widget.widgetRuntimeType;
+    },
+  ).toList();
+
+  /// [Type] objects for which the translation is defined for.
+  ///
+  static final _types = <Type>[
+    ...GsaRoutes.values.map(
+      (route) {
+        return route.routeRuntimeType;
+      },
+    ),
+    if (GsaConfig.plugin.routes != null)
+      ...GsaConfig.plugin.routes!.map(
+        (route) {
+          return route.routeRuntimeType;
+        },
+      ),
+    ...widgetTypes,
+  ];
+
+  /// Factory method for constructing this object from a [Map] object.
+  ///
+  factory GsaServiceI18NTranslationValue.fromJson(Map json) {
+    return GsaServiceI18NTranslationValue._(
+      ancestor: _types.firstWhereOrNull(
+        (typeId) {
+          return typeId == json['ancestor'];
+        },
+      ),
+      language: GsaServiceI18NLanguage.values.firstWhereOrNull(
+        (languageEntry) {
+          return languageEntry.name == json['language'];
+        },
+      ),
+      value: json['value'],
+    );
   }
-}
 
-extension GsaServiceI18nExt on String {
+  /// Method for generating a [Map]-type object from this class instance.
   ///
-  ///
-  String translated(BuildContext context) {
-    Type? routeType = context.findAncestorStateOfType<GsaRouteState>()?.widget.runtimeType;
-    routeType ??= context.widget.runtimeType;
-    return translatedFromType(routeType);
-  }
-}
-
-enum GsaServiceI18nDateFormattingOrder {
-  dmy,
-  mdy,
-  ymd,
-}
-
-enum GsaServiceI18nDateFormattingSeparator {
-  slash,
-  dash,
-  dot,
-}
-
-extension GsaServiceI18nDateFormatting on DateTime {
-  String formatted({
-    GsaServiceI18nDateFormattingOrder order = GsaServiceI18nDateFormattingOrder.dmy,
-    GsaServiceI18nDateFormattingSeparator separator = GsaServiceI18nDateFormattingSeparator.dot,
-    bool includeTime = false,
-    bool padZero = true,
-  }) {
-    String sep;
-    switch (separator) {
-      case GsaServiceI18nDateFormattingSeparator.slash:
-        sep = '/';
-        break;
-      case GsaServiceI18nDateFormattingSeparator.dash:
-        sep = '-';
-        break;
-      case GsaServiceI18nDateFormattingSeparator.dot:
-        sep = '.';
-        break;
-    }
-    String twoDigits(int n) => padZero && n < 10 ? '0$n' : '$n';
-    final d = twoDigits(day);
-    final m = twoDigits(month);
-    final y = year.toString();
-    String dateStr;
-    switch (order) {
-      case GsaServiceI18nDateFormattingOrder.dmy:
-        dateStr = '$d$sep$m$sep$y';
-        break;
-      case GsaServiceI18nDateFormattingOrder.mdy:
-        dateStr = '$m$sep$d$sep$y';
-        break;
-      case GsaServiceI18nDateFormattingOrder.ymd:
-        dateStr = '$y$sep$m$sep$d';
-        break;
-    }
-    if (!includeTime) return dateStr;
-    final h = twoDigits(hour);
-    final min = twoDigits(minute);
-    final sec = twoDigits(second);
-    return '$dateStr $h:$min:$sec';
+  Map<String, String?> toJson() {
+    return {
+      'ancestor': ancestor?.toString(),
+      'language': language?.toString(),
+      'value': value,
+    };
   }
 }

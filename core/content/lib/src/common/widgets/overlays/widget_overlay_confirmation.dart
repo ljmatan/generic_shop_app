@@ -21,7 +21,9 @@ class GsaWidgetOverlayConfirmation extends GsaWidgetOverlay {
   final Widget? additionalContent;
 
   @override
-  State<GsaWidgetOverlayConfirmation> createState() => _GsaWidgetOverlayConfirmationState();
+  State<GsaWidgetOverlayConfirmation> createState() {
+    return _GsaWidgetOverlayConfirmationState();
+  }
 }
 
 class _GsaWidgetOverlayConfirmationState extends State<GsaWidgetOverlayConfirmation> {

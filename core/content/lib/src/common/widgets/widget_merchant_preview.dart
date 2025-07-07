@@ -71,7 +71,7 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                   children: [
                     for (final action in {
                       (
-                        label: 'CALL'.translated(context),
+                        label: 'CALL',
                         icon: Icons.call_outlined,
                         onTap: merchant.contact?.formattedPhoneNumber != null
                             ? () async {
@@ -82,7 +82,7 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                             : null,
                       ),
                       (
-                        label: 'ROUTE'.translated(context),
+                        label: 'ROUTE',
                         icon: Icons.navigation,
                         onTap: merchant.address?.coordinates != null
                             ? () async {
@@ -95,7 +95,7 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                             : null,
                       ),
                       (
-                        label: 'INFO'.translated(context),
+                        label: 'INFO',
                         icon: Icons.web_asset,
                         onTap: merchant.originUrl != null
                             ? () async {

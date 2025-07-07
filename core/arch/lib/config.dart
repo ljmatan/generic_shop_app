@@ -49,7 +49,9 @@ class GsaConfig {
 
   /// The specified runtime language notifier.
   ///
-  static final languageNotifier = ValueNotifier<GsaServiceI18NLanguage>(GsaServiceI18NLanguage.en);
+  static final languageNotifier = ValueNotifier<GsaServiceI18NLanguage>(
+    GsaServiceI18NLanguage.enUs,
+  );
 
   /// The specified runtime language.
   ///

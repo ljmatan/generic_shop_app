@@ -4,7 +4,6 @@ import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_content/src/common/widgets/actions/widget_sticky_bottom_button.dart';
 import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 part 'widgets/widget_cart_item.dart';
 
@@ -74,9 +73,8 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                         ),
                         Tooltip(
                           message: 'The total price of your cart is an estimate based on the available display price of items added to it. '
-                                  'It is subject to change and may not always reflect real-time updates. '
-                                  'Additional charges for taxes or options such as delivery may also apply.'
-                              .translated(context),
+                              'It is subject to change and may not always reflect real-time updates. '
+                              'Additional charges for taxes or options such as delivery may also apply.',
                           triggerMode: TooltipTriggerMode.tap,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

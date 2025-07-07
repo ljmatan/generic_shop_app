@@ -10,6 +10,12 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   ///
   version,
 
+  /// Collection of translations loaded into the app and updated with any relevant changes.
+  ///
+  /// Only used when [GsaConfig.editMode] is set to `true`.
+  ///
+  translations,
+
   /// Status of the mandatory cookies user privacy consent.
   ///
   /// The status will be `null` if the user has not responded to the consent confirmation request,
@@ -75,6 +81,8 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
     switch (this) {
       case GsaServiceCacheEntry.version:
         return int;
+      case GsaServiceCacheEntry.translations:
+        return Iterable<String>;
       case GsaServiceCacheEntry.authenticationToken:
         return String;
       case GsaServiceCacheEntry.guestUserEncodedData:
@@ -123,6 +131,8 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
     switch (this) {
       case GsaServiceCacheEntry.version:
         return 'Version';
+      case GsaServiceCacheEntry.translations:
+        return 'Translations';
       case GsaServiceCacheEntry.authenticationToken:
         return 'Authentication Token';
       case GsaServiceCacheEntry.guestUserEncodedData:

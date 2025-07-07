@@ -67,7 +67,7 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
                             keyboardType: TextInputType.text,
                             validator: (input) {
                               if (input == null || input.trim().replaceAll('  ', ' ').length < 10) {
-                                return 'Please verify your input.'.translated(context);
+                                return 'Please verify your input.';
                               }
                               return null;
                             },

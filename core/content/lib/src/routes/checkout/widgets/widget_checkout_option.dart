@@ -264,19 +264,19 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                           ),
                           const SizedBox(height: 20),
                           GsaWidgetTextField(
-                            labelText: 'First Name'.translated(context),
+                            labelText: 'First Name',
                             controller: _firstNameTextController,
                             validator: GsaServiceInputValidation.instance.firstName,
                           ),
                           const SizedBox(height: 16),
                           GsaWidgetTextField(
-                            labelText: 'Last Name'.translated(context),
+                            labelText: 'Last Name',
                             controller: _lastNameTextController,
                             validator: GsaServiceInputValidation.instance.lastName,
                           ),
                           const SizedBox(height: 16),
                           GsaWidgetTextField(
-                            labelText: 'Email'.translated(context),
+                            labelText: 'Email',
                             controller: _emailTextController,
                             validator: GsaServiceInputValidation.instance.lastName,
                           ),
@@ -309,7 +309,7 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                               Expanded(
                                 flex: 2,
                                 child: GsaWidgetTextField(
-                                  labelText: 'Street Name'.translated(context),
+                                  labelText: 'Street Name',
                                   controller: _streetNameTextController,
                                   validator: GsaServiceInputValidation.instance.street,
                                 ),
@@ -317,7 +317,7 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                               const SizedBox(width: 12),
                               Expanded(
                                 child: GsaWidgetTextField(
-                                  labelText: 'Number'.translated(context),
+                                  labelText: 'Number',
                                   controller: _houseNumberTextController,
                                   validator: GsaServiceInputValidation.instance.houseNumber,
                                 ),
@@ -326,25 +326,25 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                           ),
                           const SizedBox(height: 16),
                           GsaWidgetTextField(
-                            labelText: 'Postcode'.translated(context),
+                            labelText: 'Postcode',
                             controller: _postcodeTextController,
                             validator: GsaServiceInputValidation.instance.postCode,
                           ),
                           const SizedBox(height: 16),
                           GsaWidgetTextField(
-                            labelText: 'City'.translated(context),
+                            labelText: 'City',
                             controller: _cityTextController,
                             validator: GsaServiceInputValidation.instance.city,
                           ),
                           const SizedBox(height: 16),
                           GsaWidgetTextField(
-                            labelText: 'State'.translated(context),
+                            labelText: 'State',
                             controller: _stateTextController,
                             validator: GsaServiceInputValidation.instance.state,
                           ),
                           const SizedBox(height: 16),
                           GsaWidgetTextField(
-                            labelText: 'Country'.translated(context),
+                            labelText: 'Country',
                             controller: _countryTextController,
                             validator: GsaServiceInputValidation.instance.country,
                           ),
