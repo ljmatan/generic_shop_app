@@ -1,33 +1,33 @@
 part of '../service_i18n.dart';
 
-enum GsaServiceI18nDateFormattingOrder {
+enum GsaServiceI18NDateFormattingOrder {
   dmy,
   mdy,
   ymd,
 }
 
-enum GsaServiceI18nDateFormattingSeparator {
+enum GsaServiceI18NDateFormattingSeparator {
   slash,
   dash,
   dot,
 }
 
-extension GsaServiceI18nDateFormatting on DateTime {
+extension GsaServiceI18NDateFormatting on DateTime {
   String formatted({
-    GsaServiceI18nDateFormattingOrder order = GsaServiceI18nDateFormattingOrder.dmy,
-    GsaServiceI18nDateFormattingSeparator separator = GsaServiceI18nDateFormattingSeparator.dot,
+    GsaServiceI18NDateFormattingOrder order = GsaServiceI18NDateFormattingOrder.dmy,
+    GsaServiceI18NDateFormattingSeparator separator = GsaServiceI18NDateFormattingSeparator.dot,
     bool includeTime = false,
     bool padZero = true,
   }) {
     String sep;
     switch (separator) {
-      case GsaServiceI18nDateFormattingSeparator.slash:
+      case GsaServiceI18NDateFormattingSeparator.slash:
         sep = '/';
         break;
-      case GsaServiceI18nDateFormattingSeparator.dash:
+      case GsaServiceI18NDateFormattingSeparator.dash:
         sep = '-';
         break;
-      case GsaServiceI18nDateFormattingSeparator.dot:
+      case GsaServiceI18NDateFormattingSeparator.dot:
         sep = '.';
         break;
     }
@@ -37,13 +37,13 @@ extension GsaServiceI18nDateFormatting on DateTime {
     final y = year.toString();
     String dateStr;
     switch (order) {
-      case GsaServiceI18nDateFormattingOrder.dmy:
+      case GsaServiceI18NDateFormattingOrder.dmy:
         dateStr = '$d$sep$m$sep$y';
         break;
-      case GsaServiceI18nDateFormattingOrder.mdy:
+      case GsaServiceI18NDateFormattingOrder.mdy:
         dateStr = '$m$sep$d$sep$y';
         break;
-      case GsaServiceI18nDateFormattingOrder.ymd:
+      case GsaServiceI18NDateFormattingOrder.ymd:
         dateStr = '$y$sep$m$sep$d';
         break;
     }

@@ -79,17 +79,29 @@ abstract class GsaRoute extends StatefulWidget {
   ///
   /// Derived from [routeType], but can be overridden within subclass instances.
   ///
-  String get routeId => routeType.routeId;
+  String get routeId {
+    return routeType.routeId;
+  }
 
   /// Human-readable route display name.
   ///
   /// Derived from [routeType], but can be overridden within subclass instances.
   ///
-  String get displayName => routeType.displayName;
+  String get displayName {
+    return routeType.displayName;
+  }
 
   /// Whether the route is enabled for client display.
   ///
-  bool get enabled => true;
+  bool get enabled {
+    return true;
+  }
+
+  /// Property defining if child widget values are to be translated.
+  ///
+  bool get translatable {
+    return true;
+  }
 
   /// Collection of [GsaRouteState] subclass instances or [State] object references.
   ///

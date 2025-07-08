@@ -18,6 +18,11 @@ class GsaRouteDebug extends GsacRoute {
   const GsaRouteDebug({super.key});
 
   @override
+  bool get translatable {
+    return false;
+  }
+
+  @override
   State<GsaRouteDebug> createState() => _GsaRouteDebugState();
 }
 
@@ -56,6 +61,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                             'ERROR (${GsaServiceLogging.instance.logs.error.length})',
                             'CACHE (${GsaServiceCache.instance.cachedKeys?.length})',
                             'DATA',
+                            'STRINGS',
                           }.indexed) ...[
                             if (buttonLabel.$1 != 0) const SizedBox(width: 10),
                             TextButton(
@@ -292,6 +298,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                           ),
                         ],
                       ],
+                    5 => [],
                     int() => throw UnimplementedError(),
                   },
                 );

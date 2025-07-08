@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_content/src/common/widgets/actions/widget_sticky_bottom_button.dart';
 
@@ -17,6 +19,16 @@ export 'widget_sale_item_preview.dart';
 export 'widget_text.dart';
 export 'widget_total_cart_price.dart';
 export 'widget_web_content.dart';
+
+mixin GsaWidget on Widget {
+  GsaWidgets? get widgetRepresentation {
+    return GsaWidgets.values.firstWhereOrNull(
+      (widget) {
+        return widget.widgetRuntimeType == runtimeType;
+      },
+    );
+  }
+}
 
 enum GsaWidgets {
   actionBookmarkButton,
@@ -93,7 +105,7 @@ enum GsaWidgets {
       case GsaWidgets.logo:
         return GsaWidgetLogo;
       case GsaWidgets.map:
-        throw UnimplementedError();
+        return Widget; // TODO
       case GsaWidgets.merchantPreview:
         return GsaWidgetMerchantPreview;
       case GsaWidgets.saleItemCarousel:

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
@@ -178,19 +179,32 @@ class _WidgetTextDisplay extends StatefulWidget {
 
 class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
   Type? get _translationReference {
+    if (widget.text.translationReference != null) {
+      return widget.text.translationReference;
+    }
     Type? translationReference;
     final ancestorElements = <Element>[];
-    context.visitAncestorElements(
-      (element) {
-        ancestorElements.add(element);
-        if (element.widget is GsaRoute) {
-          return false;
+    if (context.findAncestorWidgetOfExactType<GsaWidgetAppBar>() != null) {
+      context.visitAncestorElements(
+        (element) {
+          if (element.widget is GsaRoute) {
+            return false;
+          }
+          ancestorElements.add(element);
+          return true;
+        },
+      );
+      for (final ancestor in ancestorElements) {
+        final matchingType = GsaServiceI18N.widgetTypes.firstWhereOrNull(
+          (widgetType) {
+            return widgetType == ancestor.widget.runtimeType;
+          },
+        );
+        if (matchingType != null) {
+          translationReference = matchingType;
+          break;
         }
-        return true;
-      },
-    );
-    for (final ancestor in ancestorElements) {
-      print(ancestor.widget.runtimeType);
+      }
     }
     return translationReference ?? context.findAncestorStateOfType<GsaRouteState>()?.widget.runtimeType;
   }

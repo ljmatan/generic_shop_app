@@ -6,13 +6,24 @@ class _RouteHttpLogDetails extends GsacRoute {
   final GsaApiModelLog log;
 
   @override
-  GsaRouteType get routeType => GsaRoutes.debug;
+  GsaRouteType get routeType {
+    return GsaRoutes.debug;
+  }
 
   @override
-  String get displayName => 'HTTP Log Details';
+  String get displayName {
+    return 'HTTP Log Details';
+  }
 
   @override
-  String get routeId => 'http-log-details';
+  String get routeId {
+    return 'http-log-details';
+  }
+
+  @override
+  bool get translatable {
+    return false;
+  }
 
   @override
   GsaRouteState<_RouteHttpLogDetails> createState() => _RouteHttpLogDetailsState();
