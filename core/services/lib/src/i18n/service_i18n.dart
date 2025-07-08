@@ -15,36 +15,13 @@ class GsaServiceI18N extends GsaService {
 
   static final _instance = GsaServiceI18N._();
 
-  // ignore: public_member_api_docs
+  /// Globally-accessible singleton class instance.
+  ///
   static GsaServiceI18N get instance => _instance() as GsaServiceI18N;
-
-  /// The specified runtime display language.
-  ///
-  GsaServiceI18NLanguage language = GsaServiceI18NLanguage.enUs;
-
-  /// Collection of translated app display values.
-  ///
-  /// The value is represented by the following format:
-  ///
-  /// ```dart
-  /// // Example type definition for the translation content reference.
-  /// ExampleType: {
-  ///   // Identifier for the language the value will be translated into.
-  ///   GsaServiceI18NLanguage.enUk: {
-  ///     // Text is translated from English (US) source,
-  ///     // and identified with a [Map.key] value in this language.
-  ///     'Color': 'Colour',
-  ///   },
-  /// },
-  /// ```
-  ///
-  final _values = <GsaServiceI18NLanguage, Map<Type, Map<String, String?>>>{
-    for (final language in GsaServiceI18NLanguage.values) language: {},
-  };
 
   /// [Type] objects for which the translation is defined for.
   ///
-  static final widgetTypes = GsaWidgets.values.map(
+  static final translatableWidgetTypes = GsaWidgets.values.map(
     (widget) {
       return widget.widgetRuntimeType;
     },
@@ -65,7 +42,7 @@ class GsaServiceI18N extends GsaService {
           return route.routeRuntimeType;
         },
       ),
-    ...widgetTypes,
+    ...translatableWidgetTypes,
   ];
 
   @override
@@ -90,8 +67,6 @@ class GsaServiceI18N extends GsaService {
         }
       }
       for (final translationValue in translationValues) {
-        _values[translationValue.language!] ??= {};
-        _values[translationValue.language!]![translationValue.ancestor!] ??= {};
         _values[translationValue.language!]![translationValue.ancestor!]![translationValue.id] = translationValue.value;
       }
     } else {
@@ -107,6 +82,37 @@ class GsaServiceI18N extends GsaService {
     }
   }
 
+  /// The specified runtime display language.
+  ///
+  GsaServiceI18NLanguage language = GsaServiceI18NLanguage.enUs;
+
+  /// Collection of translated app display values.
+  ///
+  /// The value is represented with the following (example) format:
+  ///
+  /// ```dart
+  /// GsaServiceI18NLanguage.enUs: {
+  ///   ExampleType: {
+  ///     // English (US) values are entered by default.
+  ///     'Color': null,
+  ///   },
+  /// },
+  /// GsaServiceI18NLanguage.enUk: {
+  ///   ExampleType: {
+  ///     // Text is translated from English (US) source,
+  ///     // and identified with a [Map.key] value in this language.
+  ///     'Color': 'Colour',
+  ///   },
+  /// },
+  /// ```
+  ///
+  final _values = <GsaServiceI18NLanguage, Map<Type, Map<String, String?>>>{
+    for (final language in GsaServiceI18NLanguage.values)
+      language: {
+        for (final type in _translatableTypes) type: {},
+      },
+  };
+
   /// Method used for translating text content.
   ///
   /// Method requires an [ancestor] definition for which the translation is defined,
@@ -121,8 +127,6 @@ class GsaServiceI18N extends GsaService {
     final specifiedLanguage = language ?? instance.language;
     final translatedValue = _values[specifiedLanguage]?[ancestor]?[value];
     if (translatedValue == null) {
-      _values[specifiedLanguage] ??= {};
-      _values[specifiedLanguage]![ancestor] ??= {};
       _values[specifiedLanguage]![ancestor]![value] = null;
     }
     Future.delayed(
@@ -143,14 +147,16 @@ class GsaServiceI18N extends GsaService {
             }
           }
         }
-        final cachedTranslationValues = translationValues.map(
-          (translationValue) {
-            return jsonEncode(
-              translationValue.toJson(),
-            );
-          },
-        ).toList();
-        await GsaServiceCacheEntry.translations.setValue(cachedTranslationValues);
+        if (GsaConfig.editMode) {
+          final cachedTranslationValues = translationValues.map(
+            (translationValue) {
+              return jsonEncode(
+                translationValue.toJson(),
+              );
+            },
+          ).toList();
+          await GsaServiceCacheEntry.translations.setValue(cachedTranslationValues);
+        }
       },
     );
     return translatedValue;

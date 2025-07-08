@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -195,7 +194,7 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
         },
       );
       for (final ancestor in ancestorElements) {
-        final matchingType = GsaServiceI18N.widgetTypes.firstWhereOrNull(
+        final matchingType = GsaServiceI18N.translatableWidgetTypes.firstWhereOrNull(
           (widgetType) {
             return widgetType == ancestor.widget.runtimeType;
           },
@@ -206,7 +205,13 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
         }
       }
     }
-    return translationReference ?? context.findAncestorStateOfType<GsaRouteState>()?.widget.runtimeType;
+    if (translationReference == null) {
+      final ancestorRoute = context.findAncestorStateOfType<GsaRouteState>()?.widget;
+      if (ancestorRoute?.translatable == true) {
+        return ancestorRoute.runtimeType;
+      }
+    }
+    return translationReference;
   }
 
   String _translatedContent(String value) {
