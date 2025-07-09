@@ -46,6 +46,7 @@ class _WidgetClientPreview extends StatelessWidget {
                       Expanded(
                         child: GsaWidgetText(
                           '${GsaDataCheckout.instance.orderDraft.client?.personalDetails?.formattedName}',
+                          interpolated: true,
                         ),
                       ),
                     ],
@@ -55,12 +56,14 @@ class _WidgetClientPreview extends StatelessWidget {
                   const SizedBox(height: 8),
                   GsaWidgetText(
                     '${GsaDataCheckout.instance.orderDraft.client?.contactDetails?.personalDetails?.formattedName}',
+                    interpolated: true,
                   ),
                 ],
                 if (client?.contactDetails?.addressDetails?.addressFormatted != null) ...[
                   const SizedBox(height: 8),
                   GsaWidgetText(
                     '${client?.contactDetails?.addressDetails?.addressFormatted}',
+                    interpolated: true,
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 12,

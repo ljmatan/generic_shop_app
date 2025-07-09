@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 part 'extensions/service_i18n_extension_date_time.dart';
+part 'extensions/service_i18n_extension_string.dart';
 
 /// Central access point for the internationalization services.
 ///
@@ -113,6 +116,49 @@ class GsaServiceI18N extends GsaService {
       },
   };
 
+  /// Method for extracting the nearest available reference type for [_values] extraction.
+  ///
+  Type? getTranslationReference(
+    BuildContext context,
+  ) {
+    Type? translationReference;
+    final ancestorElements = <Element>[];
+    if (context.findAncestorWidgetOfExactType<GsaWidgetAppBar>() != null) {
+      context.visitAncestorElements(
+        (element) {
+          if (element.widget is GsaRoute) {
+            return false;
+          }
+          ancestorElements.add(element);
+          return true;
+        },
+      );
+      for (final ancestor in ancestorElements) {
+        final matchingType = GsaServiceI18N.translatableWidgetTypes.firstWhereOrNull(
+          (widgetType) {
+            return widgetType == ancestor.widget.runtimeType;
+          },
+        );
+        if (matchingType != null) {
+          translationReference = matchingType;
+          break;
+        }
+      }
+    }
+    if (translationReference == null) {
+      final GsaRoute? ancestorRoute = ancestorElements.firstWhereOrNull(
+            (element) {
+              return element.runtimeType is GsaRoute;
+            },
+          )?.widget as GsaRoute? ??
+          context.findAncestorStateOfType<GsaRouteState>()?.widget;
+      if (ancestorRoute?.translatable == true) {
+        return ancestorRoute.runtimeType;
+      }
+    }
+    return translationReference;
+  }
+
   /// Method used for translating text content.
   ///
   /// Method requires an [ancestor] definition for which the translation is defined,
@@ -147,7 +193,7 @@ class GsaServiceI18N extends GsaService {
             }
           }
         }
-        if (GsaConfig.editMode) {
+        if (kDebugMode || GsaConfig.editMode) {
           final cachedTranslationValues = translationValues.map(
             (translationValue) {
               return jsonEncode(

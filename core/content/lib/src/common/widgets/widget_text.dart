@@ -183,45 +183,11 @@ class _WidgetTextDisplay extends StatefulWidget {
 }
 
 class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
-  Type? get _translationReference {
-    if (widget.text.translationReference != null) {
-      return widget.text.translationReference;
-    }
-    Type? translationReference;
-    final ancestorElements = <Element>[];
-    if (context.findAncestorWidgetOfExactType<GsaWidgetAppBar>() != null) {
-      context.visitAncestorElements(
-        (element) {
-          if (element.widget is GsaRoute) {
-            return false;
-          }
-          ancestorElements.add(element);
-          return true;
-        },
-      );
-      for (final ancestor in ancestorElements) {
-        final matchingType = GsaServiceI18N.translatableWidgetTypes.firstWhereOrNull(
-          (widgetType) {
-            return widgetType == ancestor.widget.runtimeType;
-          },
-        );
-        if (matchingType != null) {
-          translationReference = matchingType;
-          break;
-        }
-      }
-    }
-    if (translationReference == null) {
-      final ancestorRoute = context.findAncestorStateOfType<GsaRouteState>()?.widget;
-      if (ancestorRoute?.translatable == true) {
-        return ancestorRoute.runtimeType;
-      }
-    }
-    return translationReference;
-  }
-
   String _translatedContent(String value) {
-    final translationReference = widget.text.translationReference ?? _translationReference;
+    final translationReference = widget.text.translationReference ??
+        GsaServiceI18N.instance.getTranslationReference(
+          context,
+        );
     if (translationReference != null) {
       return GsaServiceI18N.instance.translate(
             ancestor: translationReference,
@@ -242,14 +208,20 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
         (widget.text.labels.isNotEmpty
             ? [
                 for (final label in widget.text.labels)
-                  _translatedContent(
-                    label.text,
-                  ),
+                  if (label.interpolated)
+                    label.text
+                  else
+                    _translatedContent(
+                      label.text,
+                    ),
               ]
             : [
-                _translatedContent(
-                  widget.text.label,
-                ),
+                if (widget.text.interpolated)
+                  widget.text.label
+                else
+                  _translatedContent(
+                    widget.text.label,
+                  ),
               ]);
   }
 

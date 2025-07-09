@@ -104,6 +104,10 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                           ),
                       ],
                     1 => [
+                        const GsaWidgetText(
+                          'App logs and debug information are recorded to this list.',
+                        ),
+                        const SizedBox(height: 16),
                         if (GsaServiceLogging.instance.logs.general.isNotEmpty)
                           for (final log in GsaServiceLogging.instance.logs.general.reversed.indexed) ...[
                             if (log.$1 != 0) const SizedBox(height: 10),
@@ -115,6 +119,10 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                           ),
                       ],
                     2 => [
+                        const GsaWidgetText(
+                          'Any encountred exceptions should be recorded to this list.',
+                        ),
+                        const SizedBox(height: 16),
                         if (GsaServiceLogging.instance.logs.error.isNotEmpty)
                           for (final log in GsaServiceLogging.instance.logs.error.reversed.indexed) ...[
                             if (log.$1 != 0) const SizedBox(height: 10),

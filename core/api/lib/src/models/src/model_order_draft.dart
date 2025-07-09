@@ -258,20 +258,18 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
 
   /// User-visible price representation.
   ///
-  String get totalItemPriceFormatted {
+  String? get totalItemPriceFormatted {
     return GsaModelPrice(
-          centum: totalItemPriceCentum,
-        ).formatted ??
-        'N/A';
+      centum: totalItemPriceCentum,
+    ).formatted;
   }
 
   /// User-visible price representation.
   ///
-  String get totalPriceFormatted {
+  String? get totalPriceFormatted {
     return GsaModelPrice(
-          centum: totalPriceCentum,
-        ).formatted ??
-        'N/A';
+      centum: totalPriceCentum,
+    ).formatted;
   }
 
   /// Fetches the current cart item count for a specific sale item.

@@ -38,8 +38,17 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           ),
                         ),
                         const SizedBox(width: 14),
-                        GsaWidgetText(
-                          GsaDataUser.instance.user?.personalDetails?.formattedName ?? 'Login',
+                        GsaWidgetText.rich(
+                          [
+                            if (GsaDataUser.instance.user?.personalDetails?.formattedName != null)
+                              GsaWidgetTextSpan(
+                                GsaDataUser.instance.user!.personalDetails!.formattedName!,
+                                interpolated: true,
+                              ),
+                            const GsaWidgetTextSpan(
+                              'Login',
+                            ),
+                          ],
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
@@ -115,7 +124,9 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                   if (GsaConfig.currencyConversionEnabled)
                     (
                       label: 'Currency',
-                      initialSelectionIndex: GsaModelPriceCurrencyType.values.indexOf(GsaConfig.currency),
+                      initialSelectionIndex: GsaModelPriceCurrencyType.values.indexOf(
+                        GsaConfig.currency,
+                      ),
                       dropdownEntries: [
                         for (final currency in GsaModelPriceCurrencyType.values)
                           GsaWidgetDropdownEntry(
