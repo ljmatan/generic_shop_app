@@ -57,8 +57,18 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
-              child: GsaWidgetText(
-                widget.saleItem.name ?? 'saleItem Details',
+              child: GsaWidgetText.rich(
+                [
+                  if (widget.saleItem.name != null)
+                    GsaWidgetTextSpan(
+                      widget.saleItem.name!,
+                      interpolated: true,
+                    )
+                  else
+                    const GsaWidgetTextSpan(
+                      'Sale Item Details',
+                    ),
+                ],
                 style: const TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 16,
@@ -86,6 +96,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 padding: const EdgeInsets.only(bottom: 12),
                 child: GsaWidgetText(
                   widget.saleItem.amountMeasureFormatted!,
+                  interpolated: true,
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 12,
@@ -99,6 +110,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   widget.saleItem.description!.length > 500
                       ? widget.saleItem.description!.substring(0, 500) + '...'
                       : widget.saleItem.description!,
+                  interpolated: true,
                 ),
               ),
             if (GsaConfig.cartEnabled && widget.saleItem.price != null)
@@ -167,6 +179,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                                   padding: const EdgeInsets.all(8),
                                   child: GsaWidgetText(
                                     '$_cartCount',
+                                    interpolated: true,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w900,
@@ -231,11 +244,22 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                           ),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            child: GsaWidgetText(
-                              'Available Sizes: ' +
-                                  (sortedOptions.length > 1
+                            child: GsaWidgetText.rich(
+                              [
+                                const GsaWidgetTextSpan(
+                                  'Available Sizes',
+                                ),
+                                const GsaWidgetTextSpan(
+                                  ': ',
+                                  interpolated: true,
+                                ),
+                                GsaWidgetTextSpan(
+                                  sortedOptions.length > 1
                                       ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
-                                      : sortedOptions[0].name!),
+                                      : sortedOptions[0].name!,
+                                  interpolated: true,
+                                ),
+                              ],
                               style: const TextStyle(
                                 fontSize: 12,
                               ),
@@ -249,7 +273,9 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: OutlinedButton(
-                  child: const GsaWidgetText('See Available Options'),
+                  child: const GsaWidgetText(
+                    'See Available Options',
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                     GsaRouteSaleItemDetails(widget.saleItem).push();

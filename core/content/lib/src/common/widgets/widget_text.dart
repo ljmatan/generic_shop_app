@@ -18,6 +18,7 @@ class GsaWidgetText extends StatefulWidget {
     this.maxLines = 100,
     this.overflow,
     this.translationReference,
+    this.interpolated = false,
   }) : labels = const [];
 
   /// The [GsaWidgetText] constructor implementing the Flutter SDK [Text.rich] widget.
@@ -30,7 +31,8 @@ class GsaWidgetText extends StatefulWidget {
     this.maxLines = 100,
     this.overflow,
     this.translationReference,
-  }) : label = '';
+  })  : label = '',
+        interpolated = false;
 
   /// The text displayed with this widget.
   ///
@@ -66,6 +68,10 @@ class GsaWidgetText extends StatefulWidget {
   /// Optional method provided for translation purposes.
   ///
   static Future<List<String>>? Function(List<String> text)? translate;
+
+  /// Whether the text value is provided as a variable (and not to be translated).
+  ///
+  final bool interpolated;
 
   @override
   State<GsaWidgetText> createState() {

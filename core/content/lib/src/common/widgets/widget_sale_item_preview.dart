@@ -134,7 +134,8 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                     child: GsaWidgetText(
-                                      '${widget.saleItem.price!.discount!.formatted} EUR',
+                                      '${widget.saleItem.price!.discount!.formatted}',
+                                      interpolated: true,
                                       style: TextStyle(
                                         color: Theme.of(context).colorScheme.secondary,
                                       ),
@@ -152,18 +153,16 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (widget.saleItem.amountMeasureFormatted != null)
-                          GsaWidgetText.rich(
-                            [
-                              GsaWidgetTextSpan(
-                                widget.saleItem.amountMeasureFormatted!,
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
+                          GsaWidgetText(
+                            widget.saleItem.amountMeasureFormatted!,
+                            interpolated: true,
+                            style: const TextStyle(
+                              fontSize: 10,
+                            ),
                           ),
                         GsaWidgetText(
                           widget.saleItem.name ?? 'N/A',
+                          interpolated: true,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -174,6 +173,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           GsaWidgetText(
                             '${widget.saleItem.price!.formatted}' +
                                 (widget.saleItem.price?.discount?.centum != null ? ' ${widget.saleItem.price!.discount!.formatted}' : ''),
+                            interpolated: true,
                             maxLines: 1,
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
@@ -183,13 +183,14 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           GsaWidgetText.rich(
                             [
                               const GsaWidgetTextSpan(
-                                'From ',
+                                'From',
                                 style: TextStyle(
                                   fontSize: 12,
                                 ),
                               ),
                               GsaWidgetTextSpan(
-                                widget.saleItem.startingOptionPriceFormatted() ?? 'N/A',
+                                ' ${widget.saleItem.startingOptionPriceFormatted() ?? 'N/A'}',
+                                interpolated: true,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -209,11 +210,22 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                 (saleItemOption) => saleItemOption.price == null || saleItemOption.name == null,
                               );
                               if (sortedOptions.isEmpty) return const SizedBox();
-                              return GsaWidgetText(
-                                'Sizes: ' +
-                                    (sortedOptions.length > 1
+                              return GsaWidgetText.rich(
+                                [
+                                  const GsaWidgetTextSpan(
+                                    'Sizes',
+                                  ),
+                                  const GsaWidgetTextSpan(
+                                    ': ',
+                                    interpolated: true,
+                                  ),
+                                  GsaWidgetTextSpan(
+                                    sortedOptions.length > 1
                                         ? '${sortedOptions[0].name!} - ${sortedOptions.last.name}'
-                                        : sortedOptions[0].name!),
+                                        : sortedOptions[0].name!,
+                                    interpolated: true,
+                                  ),
+                                ],
                                 style: const TextStyle(
                                   fontSize: 12,
                                 ),
@@ -276,6 +288,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                             ),
                                             child: GsaWidgetText(
                                               '$_cartCount',
+                                              interpolated: true,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: Colors.white,
