@@ -7,7 +7,8 @@ extension GsaServiceI18NString on String {
       return this;
     }
     return GsaServiceI18N.instance.translate(
-          ancestor: translationReference,
+          ancestor: translationReference.ancestor,
+          route: translationReference.route,
           value: this,
         ) ??
         this;

@@ -17,7 +17,6 @@ class GsaWidgetText extends StatefulWidget {
     this.textAlign,
     this.maxLines = 100,
     this.overflow,
-    this.translationReference,
     this.interpolated = false,
   }) : labels = const [];
 
@@ -30,7 +29,6 @@ class GsaWidgetText extends StatefulWidget {
     this.textAlign,
     this.maxLines = 100,
     this.overflow,
-    this.translationReference,
   })  : label = '',
         interpolated = false;
 
@@ -57,13 +55,6 @@ class GsaWidgetText extends StatefulWidget {
   /// Property defining how overflowing text should be handled.
   ///
   final TextOverflow? overflow;
-
-  /// The [Type] with which the translated content is referenced.
-  ///
-  /// The translations are usually referenced against [GsaRoute] types,
-  /// but a custom one can be provided as well.
-  ///
-  final Type? translationReference;
 
   /// Optional method provided for translation purposes.
   ///
@@ -184,13 +175,13 @@ class _WidgetTextDisplay extends StatefulWidget {
 
 class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
   String _translatedContent(String value) {
-    final translationReference = widget.text.translationReference ??
-        GsaServiceI18N.instance.getTranslationReference(
-          context,
-        );
+    final translationReference = GsaServiceI18N.instance.getTranslationReference(
+      context,
+    );
     if (translationReference != null) {
       return GsaServiceI18N.instance.translate(
-            ancestor: translationReference,
+            ancestor: translationReference.ancestor,
+            route: translationReference.route,
             value: value,
           ) ??
           value;

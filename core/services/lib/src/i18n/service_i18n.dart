@@ -22,18 +22,18 @@ class GsaServiceI18N extends GsaService {
   ///
   static GsaServiceI18N get instance => _instance() as GsaServiceI18N;
 
-  /// [Type] objects for which the translation is defined for.
+  /// [Type] widget objects for which the translation is defined for.
   ///
-  static final translatableWidgetTypes = GsaWidgets.values.map(
+  static final _translatableWidgetTypes = GsaWidgets.values.map(
     (widget) {
       return widget.widgetRuntimeType;
     },
   ).toList()
     ..remove(GsaWidgetText);
 
-  /// [Type] objects for which the translation is defined for.
+  /// [Type] route objects for which the translation is defined for.
   ///
-  static final _translatableTypes = <Type>[
+  static final _translatableRouteTypes = [
     ...GsaRoutes.values.map(
       (route) {
         return route.routeRuntimeType;
@@ -45,45 +45,14 @@ class GsaServiceI18N extends GsaService {
           return route.routeRuntimeType;
         },
       ),
-    ...translatableWidgetTypes,
   ];
 
-  @override
-  Future<void> init() async {
-    await super.init();
-    final translations = GsaServiceCacheEntry.translations.value;
-    if (translations is Iterable) {
-      final translationValues = <GsaServiceI18NTranslationValue>[];
-      for (final translationValueEncoded in translations) {
-        try {
-          final translationValueDecoded = jsonDecode(translationValueEncoded);
-          final translationValue = GsaServiceI18NTranslationValue.fromJson(
-            translationValueDecoded,
-          );
-          if (translationValue.ancestor != null && translationValue.language != null) {
-            translationValues.add(translationValue);
-          } else {}
-        } catch (e) {
-          GsaServiceLogging.instance.logError(
-            'Error decoding translation:\n$e',
-          );
-        }
-      }
-      for (final translationValue in translationValues) {
-        _values[translationValue.language!]![translationValue.ancestor!]![translationValue.id] = translationValue.value;
-      }
-    } else {
-      try {
-        final translations = await rootBundle.loadString(
-          'packages/generic_shop_app_services/assets/translations/all.json',
-        );
-      } catch (e) {
-        GsaServiceLogging.instance.logError(
-          'Error decoding asset translation:\n$e',
-        );
-      }
-    }
-  }
+  /// [Type] objects for which the translation is defined for.
+  ///
+  static final _translatableTypes = <Type>[
+    ..._translatableRouteTypes,
+    ..._translatableWidgetTypes,
+  ];
 
   /// The specified runtime display language.
   ///
@@ -109,24 +78,75 @@ class GsaServiceI18N extends GsaService {
   /// },
   /// ```
   ///
-  final _values = <GsaServiceI18NLanguage, Map<Type, Map<String, String?>>>{
+  final _values = <GsaServiceI18NLanguage, Map<Type, Map<String, Map<String, dynamic>?>>>{
     for (final language in GsaServiceI18NLanguage.values)
       language: {
         for (final type in _translatableTypes) type: {},
       },
   };
 
+  @override
+  Future<void> init() async {
+    await super.init();
+    final translations = GsaServiceCacheEntry.translations.value;
+    if (translations is Iterable) {
+      final translationValues = <GsaServiceI18NTranslationValue>[];
+      for (final translationValueEncoded in translations) {
+        try {
+          final translationValueDecoded = jsonDecode(translationValueEncoded);
+          final translationValue = GsaServiceI18NTranslationValue.fromJson(
+            translationValueDecoded,
+          );
+          if (translationValue.ancestor != null && translationValue.language != null) {
+            translationValues.add(translationValue);
+          } else {}
+        } catch (e) {
+          GsaServiceLogging.instance.logError(
+            'Error decoding translation:\n$e',
+          );
+        }
+      }
+      for (final translationValue in translationValues) {
+        if (translationValue.id == null) {
+          continue;
+        }
+        _values[translationValue.language!]![translationValue.ancestor!]![translationValue.id!] = {
+          'value': translationValue.value,
+          'route': translationValue.route,
+        };
+      }
+    } else {
+      try {
+        final translations = await rootBundle.loadString(
+          'packages/generic_shop_app_services/assets/translations/all.json',
+        );
+      } catch (e) {
+        GsaServiceLogging.instance.logError(
+          'Error decoding asset translation:\n$e',
+        );
+      }
+    }
+  }
+
   /// Method for extracting the nearest available reference type for [_values] extraction.
   ///
-  Type? getTranslationReference(
+  ({
+    Type ancestor,
+    Type? route,
+  })? getTranslationReference(
     BuildContext context,
   ) {
-    Type? translationReference;
+    ({
+      Type ancestor,
+      Type? route,
+    })? translationReference;
     final ancestorElements = <Element>[];
     if (context.findAncestorWidgetOfExactType<GsaWidgetAppBar>() != null) {
+      GsaRoute? ancestorRoute;
       context.visitAncestorElements(
         (element) {
           if (element.widget is GsaRoute) {
+            ancestorRoute = element.widget as GsaRoute;
             return false;
           }
           ancestorElements.add(element);
@@ -134,13 +154,16 @@ class GsaServiceI18N extends GsaService {
         },
       );
       for (final ancestor in ancestorElements) {
-        final matchingType = GsaServiceI18N.translatableWidgetTypes.firstWhereOrNull(
+        final matchingType = _translatableWidgetTypes.firstWhereOrNull(
           (widgetType) {
             return widgetType == ancestor.widget.runtimeType;
           },
         );
         if (matchingType != null) {
-          translationReference = matchingType;
+          translationReference = (
+            ancestor: matchingType,
+            route: ancestorRoute.runtimeType,
+          );
           break;
         }
       }
@@ -153,7 +176,10 @@ class GsaServiceI18N extends GsaService {
           )?.widget as GsaRoute? ??
           context.findAncestorStateOfType<GsaRouteState>()?.widget;
       if (ancestorRoute?.translatable == true) {
-        return ancestorRoute.runtimeType;
+        return (
+          ancestor: ancestorRoute.runtimeType,
+          route: null,
+        );
       }
     }
     return translationReference;
@@ -167,13 +193,17 @@ class GsaServiceI18N extends GsaService {
   ///
   String? translate({
     required Type ancestor,
+    Type? route,
     required String value,
     GsaServiceI18NLanguage? language,
   }) {
     final specifiedLanguage = language ?? instance.language;
     final translatedValue = _values[specifiedLanguage]?[ancestor]?[value];
     if (translatedValue == null) {
-      _values[specifiedLanguage]![ancestor]![value] = null;
+      _values[specifiedLanguage]![ancestor]![value] = {
+        'value': null,
+        'route': route,
+      };
     }
     Future.delayed(
       Duration.zero,
@@ -185,9 +215,16 @@ class GsaServiceI18N extends GsaService {
               translationValues.add(
                 GsaServiceI18NTranslationValue._(
                   ancestor: type,
+                  route: translatableValue.value?['route'] == null
+                      ? null
+                      : _translatableTypes.firstWhereOrNull(
+                          (type) {
+                            return type.toString() == translatableValue.value!['route'];
+                          },
+                        ),
                   language: language,
                   id: translatableValue.key,
-                  value: translatableValue.value,
+                  value: translatableValue.value?['value'],
                 ),
               );
             }
@@ -205,7 +242,7 @@ class GsaServiceI18N extends GsaService {
         }
       },
     );
-    return translatedValue;
+    return translatedValue?['value'];
   }
 }
 
@@ -279,6 +316,7 @@ enum GsaServiceI18NLanguage {
 class GsaServiceI18NTranslationValue {
   GsaServiceI18NTranslationValue._({
     required this.ancestor,
+    required this.route,
     required this.language,
     required this.id,
     required this.value,
@@ -288,13 +326,20 @@ class GsaServiceI18NTranslationValue {
   ///
   final Type? ancestor;
 
+  /// Route the [ancestor] is specified with.
+  ///
+  /// If [ancestor] is defined within the [GsaServiceI18N.translatableWidgetTypes],
+  /// this information is appended as well for more thorough definition.
+  ///
+  final Type? route;
+
   /// The specified language of this text value.
   ///
   final GsaServiceI18NLanguage? language;
 
   /// The original (non-translated) value defined for this object.
   ///
-  final String id;
+  final String? id;
 
   /// The text value specified for this object.
   ///
@@ -304,11 +349,20 @@ class GsaServiceI18NTranslationValue {
   ///
   factory GsaServiceI18NTranslationValue.fromJson(Map json) {
     return GsaServiceI18NTranslationValue._(
-      ancestor: GsaServiceI18N._translatableTypes.firstWhereOrNull(
-        (typeId) {
-          return typeId.toString() == json['ancestor'];
-        },
-      ),
+      ancestor: json['ancestor'] == null
+          ? null
+          : GsaServiceI18N._translatableTypes.firstWhereOrNull(
+              (typeId) {
+                return typeId.toString() == json['ancestor'];
+              },
+            ),
+      route: json['route'] == null
+          ? null
+          : GsaServiceI18N._translatableRouteTypes.firstWhereOrNull(
+              (route) {
+                return route.toString() == json['route'];
+              },
+            ),
       language: GsaServiceI18NLanguage.values.firstWhereOrNull(
         (languageEntry) {
           return languageEntry.name == json['language'];
@@ -324,6 +378,7 @@ class GsaServiceI18NTranslationValue {
   Map<String, String?> toJson() {
     return {
       'ancestor': ancestor?.toString(),
+      'route': route?.toString(),
       'language': language?.name,
       'id': id,
       'value': value,
