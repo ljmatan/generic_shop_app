@@ -132,13 +132,13 @@ class GsaServiceI18N extends GsaService {
   ///
   ({
     Type ancestor,
-    Type? route,
+    GsaRoute? route,
   })? getTranslationReference(
     BuildContext context,
   ) {
     ({
       Type ancestor,
-      Type? route,
+      GsaRoute? route,
     })? translationReference;
     final ancestorElements = <Element>[];
     if (context.findAncestorWidgetOfExactType<GsaWidgetAppBar>() != null) {
@@ -162,7 +162,7 @@ class GsaServiceI18N extends GsaService {
         if (matchingType != null) {
           translationReference = (
             ancestor: matchingType,
-            route: ancestorRoute.runtimeType,
+            route: ancestorRoute,
           );
           break;
         }

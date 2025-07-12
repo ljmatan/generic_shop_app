@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Flutter [Text] widget implementation with internationalization and editing features embedded.
@@ -12,7 +11,6 @@ class GsaWidgetText extends StatefulWidget {
   ///
   const GsaWidgetText(
     this.label, {
-    super.key,
     this.style,
     this.textAlign,
     this.maxLines = 100,
@@ -179,15 +177,16 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
       context,
     );
     if (translationReference != null) {
-      return GsaServiceI18N.instance.translate(
-            ancestor: translationReference.ancestor,
-            route: translationReference.route,
-            value: value,
-          ) ??
-          value;
-    } else {
-      return value;
+      if (translationReference.route?.translatable != false) {
+        return GsaServiceI18N.instance.translate(
+              ancestor: translationReference.ancestor,
+              route: translationReference.route.runtimeType,
+              value: value,
+            ) ??
+            value;
+      }
     }
+    return value;
   }
 
   late List<String> _textValues;

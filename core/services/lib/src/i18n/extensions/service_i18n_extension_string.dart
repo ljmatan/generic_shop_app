@@ -6,11 +6,14 @@ extension GsaServiceI18NString on String {
     if (translationReference == null) {
       return this;
     }
-    return GsaServiceI18N.instance.translate(
-          ancestor: translationReference.ancestor,
-          route: translationReference.route,
-          value: this,
-        ) ??
-        this;
+    if (translationReference.route?.translatable != false) {
+      return GsaServiceI18N.instance.translate(
+            ancestor: translationReference.ancestor,
+            route: translationReference.route.runtimeType,
+            value: this,
+          ) ??
+          this;
+    }
+    return this;
   }
 }
