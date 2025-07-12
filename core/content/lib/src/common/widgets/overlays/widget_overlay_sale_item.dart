@@ -119,9 +119,9 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: TextButton(
-                    child: const GsaWidgetText(
+                    child: GsaWidgetText(
                       'Additional Info',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -161,9 +161,9 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const GsaWidgetText(
+                          GsaWidgetText(
                             'Add to Cart',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w900,
                             ),
                           ),
@@ -273,7 +273,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: OutlinedButton(
-                  child: const GsaWidgetText(
+                  child: GsaWidgetText(
                     'See Available Options',
                   ),
                   onPressed: () {

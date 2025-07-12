@@ -90,11 +90,11 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           ),
                         ),
                         const SizedBox(height: 36),
-                        const Align(
+                        Align(
                           alignment: Alignment.centerLeft,
                           child: GsaWidgetText(
                             'Account Details',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                             ),
@@ -155,9 +155,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           const SizedBox(height: 10),
                           GsaWidgetSwitch(
                             key: _termsSwitchKey,
-                            label: const GsaWidgetText(
+                            label: GsaWidgetText(
                               'User Agreement',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -236,9 +236,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                 child: Align(
                                   alignment: Alignment.centerRight,
                                   child: OutlinedButton(
-                                    child: const GsaWidgetText(
+                                    child: GsaWidgetText(
                                       'Register',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -249,11 +249,11 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                   ),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
                                 child: GsaWidgetText(
                                   'or',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                   ),
                                 ),
@@ -263,9 +263,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                               child: Align(
                                 alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
                                 child: OutlinedButton(
-                                  child: const GsaWidgetText(
+                                  child: GsaWidgetText(
                                     'Login',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -304,9 +304,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         if (GsaConfig.guestLoginEnabled) ...[
                           const SizedBox(height: 8),
                           TextButton(
-                            child: const GsaWidgetText(
+                            child: GsaWidgetText(
                               'Continue as Guest',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),
                             ),

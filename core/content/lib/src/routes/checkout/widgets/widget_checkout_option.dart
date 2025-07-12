@@ -245,19 +245,19 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                             ),
                           ),
                           const SizedBox(height: 16),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 12),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
                             child: GsaWidgetText(
                               'Contact',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
-                          const GsaWidgetText(
+                          GsaWidgetText(
                             'Your name, email, and contact number entered during checkout will be shared '
                             'with the vendor and courier for order processing purposes',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 13,
                             ),
@@ -287,17 +287,17 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                             phoneNumberController: _phoneNumberTextController,
                           ),
                           const SizedBox(height: 20),
-                          const GsaWidgetText(
+                          GsaWidgetText(
                             'Address',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           const SizedBox(height: 12),
-                          const GsaWidgetText(
+                          GsaWidgetText(
                             'Your delivery data is essential for completing the checkout process and will be shared '
                             'with the vendor and the courier for the purposes of order fulfillment.',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 13,
                             ),
@@ -364,9 +364,9 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
           child: FloatingActionButton.extended(
             heroTag: null,
             icon: const Icon(Icons.arrow_forward),
-            label: const GsaWidgetText(
+            label: GsaWidgetText(
               'NEXT',
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w700,
               ),
             ),

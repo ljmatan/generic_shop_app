@@ -56,18 +56,18 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                   ),
                 ),
                 const Divider(height: 32),
-                const GsaWidgetText(
+                GsaWidgetText(
                   'A selection of your hand-picked favorites, waiting for the perfect moment. '
                   'Keep track of what inspires you, and be the first to know about restocks, exclusive offers, and price drops.',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                   ),
                 ),
                 const Divider(height: 32),
                 if (GsaServiceBookmarks.instance.bookmarks.isEmpty)
-                  const GsaWidgetText(
+                  GsaWidgetText(
                     'No items found.',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                     ),
                   )

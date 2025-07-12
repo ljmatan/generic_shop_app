@@ -53,7 +53,7 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
           right: 16,
           bottom: 16 + MediaQuery.of(context).padding.bottom,
           child: FilledButton.icon(
-            icon: const GsaWidgetText(
+            icon: GsaWidgetText(
               'Filters',
             ),
             label: const Icon(
@@ -67,8 +67,8 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
                 isScrollControlled: true,
                 showDragHandle: true,
                 builder: (context) {
-                  return const Padding(
-                    padding: EdgeInsets.fromLTRB(26, 0, 26, 16),
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(26, 0, 26, 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -76,7 +76,7 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
                         Flexible(
                           child: GsaWidgetText(
                             'Filters',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: 18,
                             ),
@@ -200,7 +200,7 @@ class _WidgetSearchResultsEntryState extends State<_WidgetSearchResultsEntry> {
                         size: 18,
                       ),
                       const SizedBox(width: 8),
-                      const GsaWidgetText(
+                      GsaWidgetText(
                         'Add to Cart',
                       ),
                       if (_cartCount != null && _cartCount! > 0)

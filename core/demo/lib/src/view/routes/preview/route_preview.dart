@@ -405,7 +405,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                             ),
                             actions: <Widget>[
                               ElevatedButton(
-                                child: const GsaWidgetText('CONFIRM'),
+                                child: GsaWidgetText(
+                                  'CONFIRM',
+                                ),
                                 onPressed: () => Navigator.pop(
                                   context,
                                   colorInput.color,

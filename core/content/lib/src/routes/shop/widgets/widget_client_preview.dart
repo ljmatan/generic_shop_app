@@ -26,14 +26,14 @@ class _WidgetClientPreview extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4),
                         color: Theme.of(context).primaryColor,
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 6,
                           vertical: 2,
                         ),
                         child: GsaWidgetText(
                           'Client',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

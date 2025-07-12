@@ -9,26 +9,42 @@ import 'package:generic_shop_app_services/services.dart';
 class GsaWidgetText extends StatefulWidget {
   /// The default [GsaWidgetText] constructor, implementing the Flutter SDK [Text] widget.
   ///
-  const GsaWidgetText(
+  GsaWidgetText(
     this.label, {
+    super.key,
     this.style,
     this.textAlign,
     this.maxLines = 100,
     this.overflow,
     this.interpolated = false,
-  }) : labels = const [];
+  })  : _key = key,
+        labels = const [];
 
   /// The [GsaWidgetText] constructor implementing the Flutter SDK [Text.rich] widget.
   ///
-  const GsaWidgetText.rich(
+  GsaWidgetText.rich(
     this.labels, {
     super.key,
     this.style,
     this.textAlign,
     this.maxLines = 100,
     this.overflow,
-  })  : label = '',
+  })  : _key = key,
+        label = '',
         interpolated = false;
+
+  /// Key forwarded to this instance by the parent widget.
+  ///
+  final Key? _key;
+
+  /// Unique key applied to this widget instance if no [_key] is specified.
+  ///
+  final _uniqueKey = UniqueKey();
+
+  @override
+  Key? get key {
+    return _key ?? _uniqueKey;
+  }
 
   /// The text displayed with this widget.
   ///

@@ -22,9 +22,9 @@ class _WidgetCategoriesState extends State<_WidgetCategories> {
       children: [
         const GsaWidgetHeadline('Categories'),
         const SizedBox(height: 6),
-        const GsaWidgetText(
+        GsaWidgetText(
           'Shop with ease by exploring our organized category list, tailored to your interests.',
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.grey,
             fontSize: 12,
           ),

@@ -15,13 +15,13 @@ class _WidgetCustomerNoticeState extends State<_WidgetCustomerNotice> {
       children: [
         const GsaWidgetHeadline('Customer Notice'),
         const SizedBox(height: 6),
-        const GsaWidgetText(
+        GsaWidgetText(
           'The information provided on this application is for informational purposes only. '
           'While we strive to ensure the accuracy and reliability of the presented data, '
           'we cannot guarantee its completeness or suitability for any specific purpose.\n\n'
           'All listings on this app belong to third-party providers, and transactions are handled exclusively by them.',
           textAlign: TextAlign.justify,
-          style: TextStyle(
+          style: const TextStyle(
             height: 1.7,
             fontSize: 12,
           ),

@@ -50,27 +50,27 @@ class _GsaRouteRegisterState extends GsaRouteState<GsaRouteRegister> {
               child: ListView(
                 padding: const EdgeInsets.all(20),
                 children: [
-                  const GsaWidgetText(
+                  GsaWidgetText(
                     'Register an Account',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 16,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const GsaWidgetText(
+                  GsaWidgetText(
                     'Registering an account grants you access to exclusive benefits and features.',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: GsaWidgetText(
                       'Account Details',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                       ),
@@ -105,7 +105,9 @@ class _GsaRouteRegisterState extends GsaRouteState<GsaRouteRegister> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: FilledButton(
-                      child: const GsaWidgetText('Continue'),
+                      child: GsaWidgetText(
+                        'Continue',
+                      ),
                       onPressed: () async {},
                     ),
                   ),

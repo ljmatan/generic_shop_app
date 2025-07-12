@@ -260,9 +260,9 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                         },
                                       ).isNotEmpty !=
                                       true
-                              ? const GsaWidgetText(
+                              ? GsaWidgetText(
                                   'INQUIRE',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )

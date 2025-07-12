@@ -25,10 +25,10 @@ class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const GsaWidgetHeadline('Price'),
-            const GsaWidgetText(
+            GsaWidgetText(
               'The total cart price displayed is an estimate and subject to change based on '
               'product availability, taxes, shipping fees, or any other additional expense.',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
               ),

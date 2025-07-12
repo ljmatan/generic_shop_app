@@ -68,10 +68,13 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
         ],
         const SizedBox(height: 10),
         const GsaWidgetHeadline('Cart Items'),
-        const GsaWidgetText(
+        GsaWidgetText(
           'Cart item prices may deviate from actual costs due to factors like promotions, taxes, and occasional errors. '
           'For precise totals, verify the information with the merchant.',
-          style: TextStyle(color: Colors.grey, fontSize: 12),
+          style: const TextStyle(
+            color: Colors.grey,
+            fontSize: 12,
+          ),
         ),
         const SizedBox(height: 16),
         for (final product in GsaDataCheckout.instance.orderDraft.items.indexed)
@@ -147,13 +150,15 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
         ),
         const SizedBox(height: 16),
         FilledButton(
-          child: const GsaWidgetText(
+          child: GsaWidgetText(
             'Confirm Order',
-            style: TextStyle(fontWeight: FontWeight.w600),
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
           ),
           onPressed: _termsAccepted
               ? () async {
-                  GsaWidgetOverlayContentBlocking().openDialog();
+                  const GsaWidgetOverlayContentBlocking().openDialog();
                   await Future.delayed(const Duration(seconds: 2));
                   GsaDataCheckout.instance.clear();
                   Navigator.popUntil(context, (route) => route.isFirst);

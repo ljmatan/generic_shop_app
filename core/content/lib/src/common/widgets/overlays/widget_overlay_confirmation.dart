@@ -48,12 +48,16 @@ class _GsaWidgetOverlayConfirmationState extends State<GsaWidgetOverlayConfirmat
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              child: const GsaWidgetText('NO'),
+              child: GsaWidgetText(
+                'NO',
+              ),
               onPressed: () => Navigator.pop(context, false),
             ),
             const SizedBox(width: 8),
             OutlinedButton(
-              child: const GsaWidgetText('YES'),
+              child: GsaWidgetText(
+                'YES',
+              ),
               onPressed: () => Navigator.pop(context, true),
             ),
           ],

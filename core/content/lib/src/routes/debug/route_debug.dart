@@ -86,7 +86,6 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
           ),
           Expanded(
             child: ListView(
-              key: Key(_selectedTabIndex.toString()),
               padding: Theme.of(context).listViewPadding,
               children: switch (_selectedTabIndex) {
                 0 => [
@@ -96,12 +95,12 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                         _WidgetHttpLogDetails(log.$2),
                       ]
                     else
-                      const GsaWidgetText(
+                      GsaWidgetText(
                         'No entries found.',
                       ),
                   ],
                 1 => [
-                    const GsaWidgetText(
+                    GsaWidgetText(
                       'App logs and debug information are recorded to this list.',
                     ),
                     const SizedBox(height: 16),
@@ -111,12 +110,12 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                         _WidgetAppLogDetails(log.$2),
                       ]
                     else
-                      const GsaWidgetText(
+                      GsaWidgetText(
                         'No entries found.',
                       ),
                   ],
                 2 => [
-                    const GsaWidgetText(
+                    GsaWidgetText(
                       'Any encountred exceptions should be recorded to this list.',
                     ),
                     const SizedBox(height: 16),
@@ -126,13 +125,13 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                         _WidgetAppLogDetails(log.$2),
                       ]
                     else
-                      const GsaWidgetText(
+                      GsaWidgetText(
                         'No entries found.',
                       ),
                   ],
                 3 => [
-                    const GsaWidgetText.rich(
-                      [
+                    GsaWidgetText.rich(
+                      const [
                         GsaWidgetTextSpan(
                           'Below are the currently cached keys and their corresponding values.\n\n',
                         ),
@@ -206,13 +205,13 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                           ],
                         )
                     else
-                      const GsaWidgetText(
+                      GsaWidgetText(
                         'No entries found.',
                       ),
                   ],
                 4 => [
-                    const GsaWidgetText.rich(
-                      [
+                    GsaWidgetText.rich(
+                      const [
                         GsaWidgetTextSpan(
                           'Noted below are active runtime data values.\n\n',
                         ),

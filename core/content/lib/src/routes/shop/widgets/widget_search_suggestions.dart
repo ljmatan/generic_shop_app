@@ -18,11 +18,11 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
       padding: EdgeInsets.zero,
       children: [
         const SizedBox(height: 20),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: GsaWidgetText(
             'Minimum of 3 characters required for search.',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.grey,
               fontSize: 12,
             ),
@@ -77,11 +77,11 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: GsaWidgetText(
                   'Filter products by categories',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 12,
                   ),
@@ -136,9 +136,9 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
               children: [
                 const GsaWidgetHeadline('Search History'),
                 if ((GsaServiceCacheEntry.shopSearchHistory.value as Iterable?)?.isNotEmpty != true)
-                  const GsaWidgetText(
+                  GsaWidgetText(
                     'No search history',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                     ),
                   )

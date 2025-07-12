@@ -175,19 +175,19 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                   ),
                 ],
                 const SizedBox(height: 20),
-                const GsaWidgetText(
+                GsaWidgetText(
                   'The items in your cart are subject to verification and adjustment at the time of checkout. '
                   'We reserve the right to modify or cancel orders based on the availability and pricing.',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 12,
                   ),
                 ),
                 const SizedBox(height: 30),
                 const GsaWidgetHeadline('Promo Code'),
-                const GsaWidgetText(
+                GsaWidgetText(
                   'Enter your promo code here for exclusive discounts and special offers.',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 12,
                   ),

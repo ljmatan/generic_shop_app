@@ -272,11 +272,11 @@ class GsaWidgetDropdownButtonState extends State<GsaWidgetDropdownButton> {
           ],
         ),
         if (_error)
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 8, 20, 0),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
             child: GsaWidgetText(
               'Bitte auswählen',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xffDE1E36),
                 fontSize: 12,
               ),

@@ -169,9 +169,9 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                         padding: const EdgeInsets.symmetric(horizontal: 8),
                                         child: Row(
                                           children: [
-                                            const GsaWidgetText(
+                                            GsaWidgetText(
                                               'Cart',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -286,10 +286,10 @@ class _WidgetHeaderOverlayEmptyCartState extends State<_WidgetHeaderOverlayEmpty
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Flexible(
+          Flexible(
             child: GsaWidgetText(
               'No items added to the cart.',
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 18,
               ),
@@ -310,8 +310,8 @@ class _WidgetHeaderOverlayEmptyCartState extends State<_WidgetHeaderOverlayEmpty
           const SizedBox(height: 16),
           Center(
             child: OutlinedButton(
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: GsaWidgetText('OK'),
               ),
               onPressed: () => Navigator.pop(context),

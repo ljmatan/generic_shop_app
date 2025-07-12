@@ -60,18 +60,18 @@ class _GsaRouteGuestInfoState extends GsaRouteState<GsaRouteGuestInfo> {
                 controller: _scrollController,
                 padding: const EdgeInsets.all(20),
                 children: [
-                  const GsaWidgetText(
+                  GsaWidgetText(
                     'The personal data you provide in the checkout process will be processed and shared with the order provider and any '
                     'affiliated companies for the purpose of completing your transaction and delivering your order.',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 12,
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const GsaWidgetText(
+                  GsaWidgetText(
                     'Personal Details',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 12,
                     ),
@@ -90,9 +90,9 @@ class _GsaRouteGuestInfoState extends GsaRouteState<GsaRouteGuestInfo> {
                       validator: GsaServiceInputValidation.instance.firstName,
                     ),
                   ),
-                  const GsaWidgetText(
+                  GsaWidgetText(
                     'Contact Details',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 12,
                     ),
@@ -135,9 +135,9 @@ class _GsaRouteGuestInfoState extends GsaRouteState<GsaRouteGuestInfo> {
       floatingActionButton: FloatingActionButton.extended(
         heroTag: null,
         icon: const Icon(Icons.check),
-        label: const GsaWidgetText(
+        label: GsaWidgetText(
           'SUBMIT',
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 12,
           ),

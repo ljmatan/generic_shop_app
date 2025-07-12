@@ -1,7 +1,7 @@
 part of '../route_cart.dart';
 
-class _WidgetCartItem extends StatefulWidget {
-  const _WidgetCartItem(
+class GsaRouteCartWidgetCartItem extends StatefulWidget {
+  const GsaRouteCartWidgetCartItem(
     this.cartItem, {
     super.key,
   });
@@ -9,10 +9,12 @@ class _WidgetCartItem extends StatefulWidget {
   final GsaModelSaleItem cartItem;
 
   @override
-  State<_WidgetCartItem> createState() => _WidgetCartItemState();
+  State<GsaRouteCartWidgetCartItem> createState() {
+    return _GsaRouteCartWidgetCartItemState();
+  }
 }
 
-class _WidgetCartItemState extends State<_WidgetCartItem> {
+class _GsaRouteCartWidgetCartItemState extends State<GsaRouteCartWidgetCartItem> {
   Future<void> _removeItem() async {
     final confirmed = await GsaWidgetOverlayConfirmation(
       'Remove "${widget.cartItem.name}" from cart?',

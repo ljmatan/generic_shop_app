@@ -20,9 +20,9 @@ class GsaWidgetTermsConfirmation extends StatelessWidget {
     return GsaWidgetSwitch(
       key: checkboxKey,
       value: value,
-      label: const GsaWidgetText(
+      label: GsaWidgetText(
         'User Agreement',
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.w700,
           fontSize: 12,
         ),

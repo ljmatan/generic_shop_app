@@ -40,11 +40,11 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: GsaWidgetText(
                           'We may share your message and email with our partner companies to help us field your questions and offer support.\n\n'
                           'Your details are used to respond to your inquiries or assist you with the products and services.',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
@@ -76,7 +76,9 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: OutlinedButton(
-                              child: const GsaWidgetText('Send'),
+                              child: GsaWidgetText(
+                                'Send',
+                              ),
                               onPressed: () async {},
                             ),
                           ),

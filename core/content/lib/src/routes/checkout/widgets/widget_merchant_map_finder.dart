@@ -214,11 +214,11 @@ class _WidgetMerchantMapFinderState extends State<_WidgetMerchantMapFinder> {
                                                         ],
                                                       ),
                                                       const SizedBox(height: 10),
-                                                      const GsaWidgetText(
+                                                      GsaWidgetText(
                                                         'A Herbalife Independent Distributor is someone who sells Herbalife '
                                                         'nutrition products like shakes and supplements directly to customers. '
                                                         'Independent Herbalife Distributors are not employed by Herbalife.',
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           color: Colors.grey,
                                                           fontSize: 10,
                                                         ),
@@ -227,9 +227,9 @@ class _WidgetMerchantMapFinderState extends State<_WidgetMerchantMapFinder> {
                                                       SizedBox(
                                                         width: MediaQuery.of(context).size.width,
                                                         child: FilledButton(
-                                                          child: const GsaWidgetText(
+                                                          child: GsaWidgetText(
                                                             'SELECT',
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                               fontWeight: FontWeight.w600,
                                                             ),
                                                           ),

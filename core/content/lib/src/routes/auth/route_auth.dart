@@ -102,9 +102,9 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: OutlinedButton(
-                                child: const GsaWidgetText(
+                                child: GsaWidgetText(
                                   'Register',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -115,11 +115,11 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                               ),
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: GsaWidgetText(
                               'or',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.grey,
                               ),
                             ),
@@ -129,9 +129,9 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                           child: Align(
                             alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
                             child: OutlinedButton(
-                              child: const GsaWidgetText(
+                              child: GsaWidgetText(
                                 'Login',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
@@ -147,9 +147,9 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                     if (GsaConfig.guestLoginEnabled) ...[
                       const SizedBox(height: 8),
                       TextButton(
-                        child: const GsaWidgetText(
+                        child: GsaWidgetText(
                           'Continue as Guest',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
                         ),

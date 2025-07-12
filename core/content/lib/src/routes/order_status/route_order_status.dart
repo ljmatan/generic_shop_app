@@ -40,19 +40,19 @@ class _GsaRouteOrderStatusState extends GsaRouteState<GsaRouteOrderStatus> {
                   ),
                 ),
                 const SizedBox(height: 26),
-                const Center(
+                Center(
                   child: GsaWidgetText(
                     'Order Complete',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 16,
                     ),
                   ),
                 ),
                 const SizedBox(height: 4),
-                const Center(
+                Center(
                   child: GsaWidgetText.rich(
-                    [
+                    const [
                       GsaWidgetTextSpan(
                         'Order ID: ',
                       ),
@@ -63,16 +63,16 @@ class _GsaRouteOrderStatusState extends GsaRouteState<GsaRouteOrderStatus> {
                         ),
                       ),
                     ],
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 12,
                     ),
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Center(
+                Center(
                   child: GsaWidgetText.rich(
-                    [
+                    const [
                       GsaWidgetTextSpan(
                         'Order fullfilment is done by the amazing community of\n\n',
                       ),
@@ -95,7 +95,9 @@ class _GsaRouteOrderStatusState extends GsaRouteState<GsaRouteOrderStatus> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: FilledButton(
-                    child: const GsaWidgetText('HOME'),
+                    child: GsaWidgetText(
+                      'HOME',
+                    ),
                     onPressed: () {
                       Navigator.of(context).popUntil((route) => route.isFirst);
                     },

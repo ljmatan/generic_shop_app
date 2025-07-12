@@ -91,9 +91,9 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const GsaWidgetText(
+          GsaWidgetText(
             'Cookie Notice',
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 18,
             ),
@@ -221,9 +221,9 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: FilledButton(
-              child: const GsaWidgetText(
+              child: GsaWidgetText(
                 'CONFIRM SELECTION',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
@@ -239,9 +239,9 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
-                      child: const GsaWidgetText(
+                      child: GsaWidgetText(
                         'DECLINE OPTIONAL',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
                         ),
@@ -260,9 +260,9 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: TextButton(
-                        child: const GsaWidgetText(
+                        child: GsaWidgetText(
                           'ACCEPT ALL',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w900,
                           ),

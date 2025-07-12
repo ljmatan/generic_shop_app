@@ -33,9 +33,9 @@ class GsaWidgetLogo extends StatelessWidget {
       return SizedBox(
         width: width,
         height: height,
-        child: const Center(
+        child: Center(
           child: GsaWidgetText.rich(
-            [
+            const [
               GsaWidgetTextSpan(
                 'Example ',
                 style: TextStyle(
