@@ -169,7 +169,7 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                           ))
                     .indexed) ...[
                   if (item.$1 != 0) const SizedBox(height: 30),
-                  _WidgetCartItem(
+                  GsaRouteCartWidgetCartItem(
                     item.$2,
                     key: UniqueKey(),
                   ),
