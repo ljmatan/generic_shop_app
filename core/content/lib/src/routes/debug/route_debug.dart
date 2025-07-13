@@ -303,9 +303,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                       ),
                       onDoubleTap: () async {
                         await GsaServiceClipboard.instance.copyToClipboard(
-                          GsaServiceI18N.instance.jsonEncoder.convert(
-                            GsaServiceI18N.instance.translationValuesJsonEncoded,
-                          ),
+                          GsaServiceI18N.instance.translationValuesJsonEncoded,
                         );
                       },
                     ),

@@ -7,6 +7,9 @@ class GsaWidgetTermsConfirmation extends StatelessWidget {
     required this.value,
     required this.onValueChanged,
     this.checkboxKey,
+    this.includeTermsAndConditions = true,
+    this.includePrivacyPolicy = true,
+    this.includeCookieAgreement = false,
   });
 
   final bool value;
@@ -14,6 +17,10 @@ class GsaWidgetTermsConfirmation extends StatelessWidget {
   final Function(bool value) onValueChanged;
 
   final GlobalKey<GsaWidgetSwitchState>? checkboxKey;
+
+  /// Property defining whether a legal document entry is required for agreement display.
+  ///
+  final bool includeTermsAndConditions, includePrivacyPolicy, includeCookieAgreement;
 
   @override
   Widget build(BuildContext context) {

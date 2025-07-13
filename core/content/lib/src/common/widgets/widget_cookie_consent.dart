@@ -15,7 +15,7 @@ class GsaWidgetCookieConsent extends StatefulWidget {
 }
 
 class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
-  final _cookieIds = {
+  final _cookieIds = <GsaServiceCacheEntry, String>{
     GsaServiceCacheEntry.cookieConsentMandatory:
         'Mandatory cookies are required to use our products and are necessary for our sites to work as intended.',
     GsaServiceCacheEntry.cookieConsentFunctional:

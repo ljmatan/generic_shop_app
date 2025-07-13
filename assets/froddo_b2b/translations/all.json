@@ -1,0 +1,3035 @@
+{
+  "enUs": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  },
+  "enIr": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  },
+  "enUk": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  },
+  "de": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  },
+  "it": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  },
+  "fr": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  },
+  "es": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  },
+  "hr": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  },
+  "cz": {
+    "GsaRouteAuth": {},
+    "GsaRouteBookmarks": {},
+    "GsaRouteCamera": {},
+    "GsaRouteCart": {},
+    "GsaRouteChat": {},
+    "GsaRouteCheckout": {},
+    "GsaRouteClients": {},
+    "GsaRouteMerchantContact": {},
+    "GsaRouteCookieConsent": {},
+    "GsaRouteDebug": {},
+    "GsaRouteGuestInfo": {},
+    "GsaRouteHelp": {},
+    "GsaRouteLegalConsent": {},
+    "GsaRouteLicences": {},
+    "GsaRouteLogin": {
+      "Account Details": {
+        "value": null,
+        "route": null
+      },
+      "Login": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaRouteMerchant": {},
+    "GsaRouteOnboarding": {},
+    "GsaRouteOrderStatus": {},
+    "GsaRoutePaymentStatus": {},
+    "GsaRouteRegister": {},
+    "GsaRouteSaleItemDetails": {},
+    "GsaRouteSettings": {},
+    "GsaRouteShop": {},
+    "GsaRouteSplash": {},
+    "GsaRouteUserProfile": {},
+    "GsaRouteWebView": {},
+    "GfbRouteCart": {
+      "Total": {
+        "value": null,
+        "route": null
+      },
+      "Quantity": {
+        "value": null,
+        "route": null
+      },
+      "CHECKOUT": {
+        "value": null,
+        "route": null
+      },
+      "No items added to cart.": {
+        "value": null,
+        "route": null
+      },
+      "Remove": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClientRegister": {
+      "Enter the following details to register a new client.\n\nFields marked with * are mandatory.": {
+        "value": null,
+        "route": null
+      },
+      "Company Info": {
+        "value": null,
+        "route": null
+      },
+      "Fill in the registered company name and VAT number.": {
+        "value": null,
+        "route": null
+      },
+      "Client Details": {
+        "value": null,
+        "route": null
+      },
+      "Provide the client's name, contact info, and any relevant identifiers.": {
+        "value": null,
+        "route": null
+      },
+      "Country*": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Details": {
+        "value": null,
+        "route": null
+      },
+      "Specify where and how the delivery should take place.\n\nMultiple delivery address inputs can be added, each of which will need to be confirmed to proceed.": {
+        "value": null,
+        "route": null
+      },
+      "Add a New Address": {
+        "value": null,
+        "route": null
+      },
+      "Once your input has been verified, you may proceed by tapping on below button.": {
+        "value": null,
+        "route": null
+      },
+      "RECORD CLIENT INPUT": {
+        "value": null,
+        "route": null
+      },
+      "Confirm Address Input": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteClients": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "Register a Client": {
+        "value": null,
+        "route": null
+      },
+      "Browse through the full list of customers you've added to the system.": {
+        "value": null,
+        "route": null
+      },
+      "Personal Details": {
+        "value": null,
+        "route": null
+      },
+      "ID": {
+        "value": null,
+        "route": null
+      },
+      "Email": {
+        "value": null,
+        "route": null
+      },
+      "Vat ID": {
+        "value": null,
+        "route": null
+      },
+      "Phone Number": {
+        "value": null,
+        "route": null
+      },
+      "Delivery Addresses": {
+        "value": null,
+        "route": null
+      },
+      "Address": {
+        "value": null,
+        "route": null
+      },
+      "No Entries Yet": {
+        "value": null,
+        "route": null
+      },
+      "You haven't submitted any client registration requests.\n\nTap below button to start registering a new client.": {
+        "value": null,
+        "route": null
+      },
+      "REGISTER": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "(1)": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteOrders": {
+      "Registered": {
+        "value": null,
+        "route": null
+      },
+      "Pending": {
+        "value": null,
+        "route": null
+      },
+      "This screen displays a complete list of customer orders you've submitted.": {
+        "value": null,
+        "route": null
+      },
+      "Total Orders": {
+        "value": null,
+        "route": null
+      },
+      "Order Sum": {
+        "value": null,
+        "route": null
+      },
+      "Clients": {
+        "value": null,
+        "route": null
+      },
+      "ITEMS": {
+        "value": null,
+        "route": null
+      },
+      "Size": {
+        "value": null,
+        "route": null
+      },
+      "No Orders Found": {
+        "value": null,
+        "route": null
+      },
+      "It looks like you don't have any orders yet.\n\nCreate your first one by selecting a client.": {
+        "value": null,
+        "route": null
+      },
+      "Find Clients": {
+        "value": null,
+        "route": null
+      },
+      "Results for": {
+        "value": null,
+        "route": null
+      },
+      "No results found for": {
+        "value": null,
+        "route": null
+      },
+      "Pending checkout orders are temporarily stored on your device. Use the \"Confirm\" button to manually synchronize all entries with the central database to complete order processing.": {
+        "value": null,
+        "route": null
+      },
+      "(10)": {
+        "value": null,
+        "route": null
+      },
+      "Confirm": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GfbRouteSaleItemDetails": {},
+    "GfbRouteScan": {},
+    "GfbRouteUserProfile": {
+      "Distributor: ": {
+        "value": null,
+        "route": null
+      },
+      "Language: ": {
+        "value": null,
+        "route": null
+      },
+      "Region: ": {
+        "value": null,
+        "route": null
+      },
+      "View Clients": {
+        "value": null,
+        "route": null
+      },
+      "View Orders": {
+        "value": null,
+        "route": null
+      },
+      "Data Download": {
+        "value": null,
+        "route": null
+      },
+      "Latest Download": {
+        "value": null,
+        "route": null
+      },
+      "Status": {
+        "value": null,
+        "route": null
+      },
+      "Download": {
+        "value": null,
+        "route": null
+      },
+      "Scanner Setup": {
+        "value": null,
+        "route": null
+      },
+      "Logout": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetBookmarkButton": {},
+    "GsaWidgetDropdownButton": {},
+    "GsaWidgetDropdownGender": {},
+    "GsaWidgetDropdownMenu<dynamic>": {},
+    "GsaWidgetPhoneNumberInput": {},
+    "GsaWidgetStickyBottomButton": {},
+    "GsaWidgetSwitch": {},
+    "GsaWidgetTermsConfirmation": {},
+    "GsaWidgetTextField": {},
+    "GsaWidgetFlairBlobBackground": {},
+    "GsaWidgetOverlayAlert": {},
+    "GsaWidgetOverlayConfirmation": {},
+    "GsaWidgetOverlayContentBlocking": {},
+    "GsaWidgetOverlayConsent": {},
+    "GsaWidgetOverlaySaleItem": {},
+    "GsaWidgetAppBar": {
+      "Login": {
+        "value": null,
+        "route": null
+      },
+      "User Profile": {
+        "value": null,
+        "route": null
+      },
+      "Client Register": {
+        "value": null,
+        "route": null
+      },
+      "Cart Overview": {
+        "value": null,
+        "route": null
+      }
+    },
+    "GsaWidgetCookieConsent": {},
+    "GsaWidgetError": {},
+    "GsaWidgetHeadline": {},
+    "GsaWidgetImage": {},
+    "GsaWidgetLogo": {},
+    "Widget": {},
+    "GsaWidgetMerchantPreview": {},
+    "GsaWidgetSaleItemCarousel": {},
+    "GsaWidgetSaleItemPreview": {},
+    "GsaWidgetTotalCartPrice": {},
+    "GsaWidgetWebContent": {}
+  }
+}

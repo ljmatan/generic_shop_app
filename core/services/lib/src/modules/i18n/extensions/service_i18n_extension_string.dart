@@ -16,4 +16,16 @@ extension GsaServiceI18NString on String {
     }
     return this;
   }
+
+  String translateFromType({
+    required Type ancestor,
+    GsaRoute? route,
+  }) {
+    return GsaServiceI18N.instance.translate(
+          ancestor: ancestor,
+          route: route.runtimeType,
+          value: this,
+        ) ??
+        this;
+  }
 }

@@ -130,27 +130,27 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   String get displayName {
     switch (this) {
       case GsaServiceCacheEntry.version:
-        return 'Version';
+        return GsaServiceCacheI18N.version.value.display;
       case GsaServiceCacheEntry.translations:
-        return 'Translations';
+        return GsaServiceCacheI18N.translations.value.display;
       case GsaServiceCacheEntry.authenticationToken:
-        return 'Authentication Token';
+        return GsaServiceCacheI18N.authenticationToken.value.display;
       case GsaServiceCacheEntry.guestUserEncodedData:
-        return 'Guest User Encoded Data';
+        return GsaServiceCacheI18N.guestUserEncodedData.value.display;
       case GsaServiceCacheEntry.cookieConsentMandatory:
-        return 'Mandatory Cookies';
+        return GsaServiceCacheI18N.cookieConsentMandatory.value.display;
       case GsaServiceCacheEntry.cookieConsentFunctional:
-        return 'Functional Cookies';
+        return GsaServiceCacheI18N.cookieConsentFunctional.value.display;
       case GsaServiceCacheEntry.cookieConsentStatistical:
-        return 'Statistical Cookies';
+        return GsaServiceCacheI18N.cookieConsentStatistical.value.display;
       case GsaServiceCacheEntry.cookieConsentMarketing:
-        return 'Marketing Cookies';
+        return GsaServiceCacheI18N.cookieConsentMarketing.value.display;
       case GsaServiceCacheEntry.bookmarks:
-        return 'Bookmarks';
+        return GsaServiceCacheI18N.bookmarks.value.display;
       case GsaServiceCacheEntry.shopSearchHistory:
-        return 'Shop Search History';
+        return GsaServiceCacheI18N.shopSearchHistory.value.display;
       case GsaServiceCacheEntry.themeBrightness:
-        return 'Theme Brightness';
+        return GsaServiceCacheI18N.themeBrightness.value.display;
     }
   }
 }

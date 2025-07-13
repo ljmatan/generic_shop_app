@@ -4,6 +4,8 @@ import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
+part 'i18n/i18n.dart';
+
 /// Route providing user authentication options, such as login, registration, or guest user login.
 ///
 class GsaRouteLogin extends GsacRoute {
@@ -62,7 +64,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
       body: Column(
         children: [
           GsaWidgetAppBar(
-            label: widget.displayName,
+            label: GsaRouteLoginI18N.appBarTitle.value.display,
           ),
           Expanded(
             child: Center(
@@ -93,7 +95,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: GsaWidgetText(
-                            'Account Details',
+                            GsaRouteLoginI18N.accountDetailsTitle.value.display,
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
@@ -104,7 +106,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         GsaWidgetTextField(
                           controller: _emailTextController,
                           autofocus: true,
-                          labelText: 'Email',
+                          labelText: GsaRouteLoginI18N.emailInputFieldTitle.value.display,
                           keyboardType: TextInputType.emailAddress,
                           prefixIcon: Icon(
                             Icons.email,
@@ -115,20 +117,14 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         const SizedBox(height: 16),
                         GsaWidgetTextField(
                           controller: _passwordTextController,
-                          labelText: 'Password',
+                          labelText: GsaRouteLoginI18N.passwordInputFieldTitle.value.display,
                           obscureText: true,
                           keyboardType: TextInputType.visiblePassword,
                           prefixIcon: Icon(
                             Icons.lock,
                             color: Theme.of(context).primaryColor,
                           ),
-                          validator: GsaConfig.plugin.passwordValidator ??
-                              (value) {
-                                if (value?.trim().isNotEmpty != true) {
-                                  return 'Please verify your input.';
-                                }
-                                return null;
-                              },
+                          validator: GsaServiceInputValidation.instance.password,
                         ),
                         if (<GsaClient>{}.contains(GsaConfig.plugin.client)) ...[
                           const SizedBox(height: 10),
@@ -141,7 +137,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: GsaWidgetText(
-                                'Forgot password?',
+                                GsaRouteLoginI18N.openForgotPasswordScreenButtonTitle.value.display,
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
                                   decorationColor: Theme.of(context).primaryColor,
@@ -153,78 +149,15 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         ],
                         if (_userAgreementRequired) ...[
                           const SizedBox(height: 10),
-                          GsaWidgetSwitch(
+                          GsaWidgetTermsConfirmation(
                             key: _termsSwitchKey,
-                            label: GsaWidgetText(
-                              'User Agreement',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                            child: GsaWidgetText.rich(
-                              [
-                                const GsaWidgetTextSpan(
-                                  'I understand and agree to the ',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                GsaWidgetTextSpan(
-                                  'terms and conditions',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 12,
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed('terms-and-conditions');
-                                  },
-                                ),
-                                const GsaWidgetTextSpan(
-                                  ', ',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                GsaWidgetTextSpan(
-                                  'cookie policy',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 12,
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed('privacy-policy');
-                                  },
-                                ),
-                                const GsaWidgetTextSpan(
-                                  ', and ',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                GsaWidgetTextSpan(
-                                  'privacy policy',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 12,
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed('cookie-policy');
-                                  },
-                                ),
-                                const GsaWidgetTextSpan(
-                                  '.',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
                             value: _userAgreementAccepted,
-                            onTap: (value) => setState(() => _userAgreementAccepted = value),
+                            includeCookieAgreement: true,
+                            onValueChanged: (value) {
+                              setState(() {
+                                _userAgreementAccepted = value;
+                              });
+                            },
                           ),
                         ],
                         const SizedBox(height: 16),
@@ -237,14 +170,14 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                   alignment: Alignment.centerRight,
                                   child: OutlinedButton(
                                     child: GsaWidgetText(
-                                      'Register',
+                                      GsaRouteLoginI18N.openRegisterScreenButtonTitle.value.display,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                     onPressed: () {
                                       Navigator.popUntil(context, (route) => route.isFirst);
-                                      Navigator.of(context).pushNamed('register');
+                                      const GsaRouteRegister().push();
                                     },
                                   ),
                                 ),
@@ -252,7 +185,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 10),
                                 child: GsaWidgetText(
-                                  'or',
+                                  GsaRouteLoginI18N.authenticationOptionSeparator.value.display,
                                   style: const TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -264,7 +197,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                 alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
                                 child: OutlinedButton(
                                   child: GsaWidgetText(
-                                    'Login',
+                                    GsaRouteLoginI18N.loginButtonTitle.value.display,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -305,7 +238,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           const SizedBox(height: 8),
                           TextButton(
                             child: GsaWidgetText(
-                              'Continue as Guest',
+                              GsaRouteLoginI18N.continueAsGuestButtonTitle.value.display,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),

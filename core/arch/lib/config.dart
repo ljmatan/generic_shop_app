@@ -269,7 +269,10 @@ abstract class GsaPlugin {
 
   /// Method used for validating password input on the user authentication screens.
   ///
-  String? Function(String?)? get passwordValidator {
+  String? Function(
+    String?, {
+    GsaServiceI18NModelTranslatedValue? errorMessage,
+  })? get passwordValidator {
     return null;
   }
 
