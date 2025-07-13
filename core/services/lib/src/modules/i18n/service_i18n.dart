@@ -93,6 +93,15 @@ class GsaServiceI18N extends GsaService {
   @override
   Future<void> init() async {
     await super.init();
+    final systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
+    final matchingLanguage = GsaServiceI18NLanguage.values.firstWhereOrNull(
+      (language) {
+        return language.locale == systemLocale;
+      },
+    );
+    if (matchingLanguage != null) {
+      language = matchingLanguage;
+    }
     final translations = GsaServiceCacheEntry.translations.value;
     if (translations is Iterable) {
       final translationValues = <GsaServiceI18NModelTranslationValue>[];
@@ -122,8 +131,17 @@ class GsaServiceI18N extends GsaService {
       }
     } else {
       try {
-        final translations = await rootBundle.loadString(
+        final translations = await rootBundle
+            .loadString(
           'packages/${GsaConfig.plugin.id}/assets/translations/all.json',
+        )
+            .timeout(
+          const Duration(seconds: 3),
+          onTimeout: () {
+            throw Exception(
+              'Translation asset file read timeout.',
+            );
+          },
         );
       } catch (e) {
         GsaServiceLogging.instance.logError(
@@ -278,6 +296,7 @@ class GsaServiceI18N extends GsaService {
 
   final translatedValues = <List<GsaServiceI18NBaseTranslations>>[
     GsaRouteLoginI18N.values,
+    GsaWidgetCookieConsentI18N.values,
     GsaServiceCacheI18N.values,
   ];
 }
