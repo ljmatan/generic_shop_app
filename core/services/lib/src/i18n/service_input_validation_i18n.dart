@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:generic_shop_app_services/services.dart';
+part of '../modules/input_validation/service_input_validation.dart';
 
 enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
   personalNameInputEmpty(

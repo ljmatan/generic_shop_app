@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:generic_shop_app_services/services.dart';
+part of '../modules/cache/service_cache.dart';
 
 enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
   invalidVersionErrorMessage(

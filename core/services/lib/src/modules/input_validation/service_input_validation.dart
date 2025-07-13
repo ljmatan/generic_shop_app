@@ -1,7 +1,8 @@
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
-import 'package:generic_shop_app_services/src/i18n/service_input_validation_i18n.dart';
 import 'package:generic_shop_app_services/src/modules/i18n/service_i18n.dart';
+
+part '../../i18n/service_input_validation_i18n.dart';
 
 /// User-generated input validation services.
 ///

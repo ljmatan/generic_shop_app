@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
+part 'i18n/widget_cookie_consent_i18n.dart';
+
 /// Visual element containing the required, legal consent
 /// asking for user cookie storage permission.
 ///
@@ -16,14 +18,10 @@ class GsaWidgetCookieConsent extends StatefulWidget {
 
 class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
   final _cookieIds = <GsaServiceCacheEntry, String>{
-    GsaServiceCacheEntry.cookieConsentMandatory:
-        'Mandatory cookies are required to use our products and are necessary for our sites to work as intended.',
-    GsaServiceCacheEntry.cookieConsentFunctional:
-        'Functional cookies enhance the usability and performance of our products by enabling various functionalities.',
-    GsaServiceCacheEntry.cookieConsentStatistical:
-        'Statistical cookies collect anonymous data to analyze and understand how visitors interact with our services.',
-    GsaServiceCacheEntry.cookieConsentMarketing:
-        'Marketing cookies are utilized to tailor advertisements and promotional content to your interests.',
+    GsaServiceCacheEntry.cookieConsentMandatory: GsaWidgetCookieConsentI18N.mandatoryCookiesDescription.value.display,
+    GsaServiceCacheEntry.cookieConsentFunctional: GsaWidgetCookieConsentI18N.functionalCookiesDescription.value.display,
+    GsaServiceCacheEntry.cookieConsentStatistical: GsaWidgetCookieConsentI18N.statisticalCookiesDescription.value.display,
+    GsaServiceCacheEntry.cookieConsentMarketing: GsaWidgetCookieConsentI18N.marketingCookiesDescription.value.display,
   };
 
   late List<bool> _cookieIdConsentStatus;
@@ -92,7 +90,7 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
         mainAxisSize: MainAxisSize.min,
         children: [
           GsaWidgetText(
-            'Cookie Notice',
+            GsaWidgetCookieConsentI18N.title.value.display,
             style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 18,
@@ -222,7 +220,7 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
             width: MediaQuery.of(context).size.width,
             child: FilledButton(
               child: GsaWidgetText(
-                'CONFIRM SELECTION',
+                GsaWidgetCookieConsentI18N.confirmSelectionButtonLabel.value.display,
                 style: const TextStyle(
                   fontSize: 12,
                   color: Colors.white,
@@ -240,7 +238,7 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
                       child: GsaWidgetText(
-                        'DECLINE OPTIONAL',
+                        GsaWidgetCookieConsentI18N.declineOptionalButtonLabel.value.display,
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
@@ -261,7 +259,7 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                       width: MediaQuery.of(context).size.width,
                       child: TextButton(
                         child: GsaWidgetText(
-                          'ACCEPT ALL',
+                          GsaWidgetCookieConsentI18N.acceptAllButtonLabel.value.display,
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w900,

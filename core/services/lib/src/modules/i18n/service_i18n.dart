@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
-import 'package:generic_shop_app_services/src/i18n/service_cache_i18n.dart';
 
 part 'base/service_i18n_base_translations.dart';
 part 'enums/service_i18n_enum_language.dart';

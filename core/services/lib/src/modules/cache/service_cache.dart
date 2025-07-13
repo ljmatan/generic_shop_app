@@ -1,9 +1,9 @@
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_services/services.dart';
-import 'package:generic_shop_app_services/src/i18n/service_cache_i18n.dart';
 import 'package:shared_preferences/shared_preferences.dart' as shared_preferences;
 
+part '../../i18n/service_cache_i18n.dart';
 part 'service_cache_entry.dart';
 part 'service_cache_value.dart';
 

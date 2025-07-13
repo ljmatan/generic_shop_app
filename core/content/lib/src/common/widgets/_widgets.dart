@@ -5,20 +5,8 @@ import 'package:generic_shop_app_content/src/common/widgets/actions/widget_stick
 
 export 'actions/_actions.dart';
 export 'flair/_flair.dart';
+export 'modules/_modules.dart';
 export 'overlays/_overlays.dart';
-export 'widget_app_bar.dart';
-export 'widget_error.dart';
-export 'widget_headline.dart';
-export 'widget_image.dart';
-export 'widget_cookie_consent.dart';
-export 'widget_logo.dart';
-export 'widget_map.dart';
-export 'widget_merchant_preview.dart';
-export 'widget_sale_item_carousel.dart';
-export 'widget_sale_item_preview.dart';
-export 'widget_text.dart';
-export 'widget_total_cart_price.dart';
-export 'widget_web_content.dart';
 
 mixin GsaWidget on Widget {
   GsaWidgets? get widgetRepresentation {

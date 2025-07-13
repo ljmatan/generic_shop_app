@@ -4,7 +4,7 @@ import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
-part 'i18n/i18n.dart';
+part 'i18n/route_login_i18n.dart';
 
 /// Route providing user authentication options, such as login, registration, or guest user login.
 ///
