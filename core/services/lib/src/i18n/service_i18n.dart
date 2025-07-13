@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:convert' as dart_convert;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
@@ -78,7 +79,7 @@ class GsaServiceI18N extends GsaService {
   /// },
   /// ```
   ///
-  final _values = <GsaServiceI18NLanguage, Map<Type, Map<String, Map<String, dynamic>?>>>{
+  final translationEntries = <GsaServiceI18NLanguage, Map<Type, Map<String, Map<String, dynamic>?>>>{
     for (final language in GsaServiceI18NLanguage.values)
       language: {
         for (final type in _translatableTypes) type: {},
@@ -110,7 +111,7 @@ class GsaServiceI18N extends GsaService {
         if (translationValue.id == null) {
           continue;
         }
-        _values[translationValue.language!]![translationValue.ancestor!]![translationValue.id!] = {
+        translationEntries[translationValue.language!]![translationValue.ancestor!]![translationValue.id!] = {
           'value': translationValue.value,
           'route': translationValue.route,
         };
@@ -118,7 +119,7 @@ class GsaServiceI18N extends GsaService {
     } else {
       try {
         final translations = await rootBundle.loadString(
-          'packages/generic_shop_app_services/assets/translations/all.json',
+          'packages/${GsaConfig.plugin.id}/assets/translations/all.json',
         );
       } catch (e) {
         GsaServiceLogging.instance.logError(
@@ -128,7 +129,7 @@ class GsaServiceI18N extends GsaService {
     }
   }
 
-  /// Method for extracting the nearest available reference type for [_values] extraction.
+  /// Method for extracting the nearest available reference type for [translationEntries] extraction.
   ///
   ({
     Type ancestor,
@@ -198,39 +199,41 @@ class GsaServiceI18N extends GsaService {
     GsaServiceI18NLanguage? language,
   }) {
     final specifiedLanguage = language ?? instance.language;
-    final translatedValue = _values[specifiedLanguage]?[ancestor]?[value];
+    final translatedValue = translationEntries[specifiedLanguage]?[ancestor]?[value];
     if (translatedValue == null) {
-      _values[specifiedLanguage]![ancestor]![value] = {
-        'value': null,
-        'route': route,
-      };
+      for (final language in GsaServiceI18NLanguage.values) {
+        translationEntries[language]![ancestor]![value] = {
+          'value': null,
+          'route': route.toString(),
+        };
+      }
     }
-    Future.delayed(
-      Duration.zero,
-      () async {
-        final translationValues = <GsaServiceI18NTranslationValue>[];
-        for (final language in _values.keys) {
-          for (final type in _values[language]!.keys) {
-            for (final translatableValue in _values[language]![type]!.entries) {
-              translationValues.add(
-                GsaServiceI18NTranslationValue._(
-                  ancestor: type,
-                  route: translatableValue.value?['route'] == null
-                      ? null
-                      : _translatableTypes.firstWhereOrNull(
-                          (type) {
-                            return type.toString() == translatableValue.value!['route'];
-                          },
-                        ),
-                  language: language,
-                  id: translatableValue.key,
-                  value: translatableValue.value?['value'],
-                ),
-              );
+    if (kDebugMode || GsaConfig.editMode) {
+      Future.delayed(
+        Duration.zero,
+        () async {
+          final translationValues = <GsaServiceI18NTranslationValue>[];
+          for (final language in translationEntries.keys) {
+            for (final type in translationEntries[language]!.keys) {
+              for (final translatableValue in translationEntries[language]![type]!.entries) {
+                translationValues.add(
+                  GsaServiceI18NTranslationValue._(
+                    ancestor: type,
+                    route: translatableValue.value?['route'] == null
+                        ? null
+                        : _translatableRouteTypes.firstWhereOrNull(
+                            (routeType) {
+                              return routeType.toString() == translatableValue.value?['route'];
+                            },
+                          ),
+                    language: language,
+                    id: translatableValue.key,
+                    value: translatableValue.value?['value'],
+                  ),
+                );
+              }
             }
           }
-        }
-        if (kDebugMode || GsaConfig.editMode) {
           final cachedTranslationValues = translationValues.map(
             (translationValue) {
               return jsonEncode(
@@ -239,10 +242,38 @@ class GsaServiceI18N extends GsaService {
             },
           ).toList();
           await GsaServiceCacheEntry.translations.setValue(cachedTranslationValues);
-        }
+        },
+      );
+    }
+    return translatedValue?['value'];
+  }
+
+  /// JSON encoder that creates multi-line formatted JSON.
+  ///
+  final jsonEncoder = dart_convert.JsonEncoder.withIndent('  ');
+
+  String get translationValuesJsonEncoded {
+    return jsonEncoder.convert(
+      {
+        for (final language in translationEntries.keys)
+          language.name: {
+            if (translationEntries[language] != null)
+              for (final type in translationEntries[language]!.keys)
+                type.toString(): {
+                  if (translationEntries[language]![type] != null)
+                    for (final entry in translationEntries[language]![type]!.entries)
+                      entry.key: {
+                        'value': entry.value?['value'],
+                        'route': entry.value?['route']?.toString(),
+                      },
+                },
+          },
       },
     );
-    return translatedValue?['value'];
+  }
+
+  void translationEntriesFromJson(String encodedJson) {
+    return null;
   }
 }
 

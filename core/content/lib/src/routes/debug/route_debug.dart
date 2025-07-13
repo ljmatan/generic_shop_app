@@ -29,8 +29,6 @@ class GsaRouteDebug extends GsacRoute {
 class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
   int _selectedTabIndex = 0;
 
-  final _jsonEncoder = dart_convert.JsonEncoder.withIndent(' ' * 2);
-
   @override
   Widget view(BuildContext context) {
     return Scaffold(
@@ -165,7 +163,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                                     child: GsaWidgetText(
                                       () {
                                         try {
-                                          return _jsonEncoder.convert(
+                                          return GsaServiceI18N.instance.jsonEncoder.convert(
                                             dart_convert.jsonDecode(
                                               GsaServiceCache.instance
                                                   .valueWithKey(
@@ -175,7 +173,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                                             ),
                                           );
                                         } catch (e) {
-                                          return _jsonEncoder.convert(
+                                          return GsaServiceI18N.instance.jsonEncoder.convert(
                                             GsaServiceCache.instance.valueWithKey(
                                               key.$2,
                                             ),
@@ -191,14 +189,12 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                                 ),
                               ),
                               onDoubleTap: () async {
-                                Clipboard.setData(
-                                  ClipboardData(
-                                    text: GsaServiceCache.instance
-                                        .valueWithKey(
-                                          key.$2,
-                                        )
-                                        .toString(),
-                                  ),
+                                await GsaServiceClipboard.instance.copyToClipboard(
+                                  GsaServiceCache.instance
+                                      .valueWithKey(
+                                        key.$2,
+                                      )
+                                      .toString(),
                                 );
                               },
                             ),
@@ -278,7 +274,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                                 child: SizedBox(
                                   width: MediaQuery.of(context).size.width,
                                   child: GsaWidgetText(
-                                    _jsonEncoder.convert(
+                                    GsaServiceI18N.instance.jsonEncoder.convert(
                                       dataPoint.value,
                                     ),
                                     style: const TextStyle(
@@ -289,11 +285,9 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                               ),
                             ),
                             onDoubleTap: () async {
-                              Clipboard.setData(
-                                ClipboardData(
-                                  text: _jsonEncoder.convert(
-                                    dataPoint.value,
-                                  ),
+                              await GsaServiceClipboard.instance.copyToClipboard(
+                                GsaServiceI18N.instance.jsonEncoder.convert(
+                                  dataPoint.value,
                                 ),
                               );
                             },
@@ -302,7 +296,20 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                       ),
                     ],
                   ],
-                5 => [],
+                5 => [
+                    InkWell(
+                      child: GsaWidgetText(
+                        GsaServiceI18N.instance.translationValuesJsonEncoded,
+                      ),
+                      onDoubleTap: () async {
+                        await GsaServiceClipboard.instance.copyToClipboard(
+                          GsaServiceI18N.instance.jsonEncoder.convert(
+                            GsaServiceI18N.instance.translationValuesJsonEncoded,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 int() => throw UnimplementedError(),
               },
             ),

@@ -53,6 +53,7 @@ class _GsaRouteCartWidgetCartItemState extends State<GsaRouteCartWidgetCartItem>
                         width: 80,
                         height: 80,
                         fit: BoxFit.cover,
+                        cached: true,
                       ),
                     ),
                   ),
@@ -179,7 +180,7 @@ class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmoun
 
   @override
   Widget build(BuildContext context) {
-    if (_cartCount == null) return const SizedBox();
+    if (_cartCount == null || _cartCount! < 1) return const SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

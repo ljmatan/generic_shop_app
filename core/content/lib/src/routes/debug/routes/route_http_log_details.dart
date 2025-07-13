@@ -114,13 +114,10 @@ class _RouteHttpLogDetailsState extends GsaRouteState<_RouteHttpLogDetails> {
                       ),
                     ),
                     onDoubleTap: () async {
-                      await Clipboard.setData(
-                        ClipboardData(
-                          text: httpInformation.value,
+                      await GsaServiceClipboard.instance.copyToClipboard(
+                        GsaServiceI18N.instance.jsonEncoder.convert(
+                          httpInformation.value,
                         ),
-                      );
-                      const GsaWidgetOverlayAlert(
-                        'Data copied to clipboard!',
                       );
                     },
                   ),

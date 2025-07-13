@@ -14,7 +14,7 @@ class GsaWidgetText extends StatefulWidget {
     super.key,
     this.style,
     this.textAlign,
-    this.maxLines = 100,
+    this.maxLines,
     this.overflow,
     this.interpolated = false,
   })  : _key = key,
@@ -27,7 +27,7 @@ class GsaWidgetText extends StatefulWidget {
     super.key,
     this.style,
     this.textAlign,
-    this.maxLines = 100,
+    this.maxLines,
     this.overflow,
   })  : _key = key,
         label = '',
@@ -104,7 +104,7 @@ class _GsaWidgetTextState extends State<GsaWidgetText> {
         style: widget.style,
       ),
       textDirection: TextDirection.ltr,
-      maxLines: 1,
+      maxLines: widget.maxLines,
     )..layout(
         maxWidth: MediaQuery.of(context).size.width,
       );

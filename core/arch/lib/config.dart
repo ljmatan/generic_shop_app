@@ -156,9 +156,11 @@ class GsaConfig {
     GsaServiceBookmarks.instance;
     GsaServiceCache.instance;
     GsaServiceCalendar.instance;
+    GsaServiceClipboard.instance;
     GsaServiceCompress.instance;
     GsaServiceConsent.instance;
     GsaServiceDebug.instance;
+    GsaServiceDeviceInfo.instance;
     GsaServiceEncryption.instance;
     GsaServiceI18N.instance;
     GsaServiceInputValidation.instance;
