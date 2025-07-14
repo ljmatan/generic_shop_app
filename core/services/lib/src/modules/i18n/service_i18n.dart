@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:convert' as dart_convert;
 
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/config.dart';
@@ -230,7 +229,7 @@ class GsaServiceI18N extends GsaService {
         };
       }
     }
-    if (kDebugMode || GsaConfig.editMode) {
+    if (GsaConfig.editMode) {
       Future.delayed(
         Duration.zero,
         () async {
@@ -295,8 +294,13 @@ class GsaServiceI18N extends GsaService {
   }
 
   final translatedValues = <List<GsaServiceI18NBaseTranslations>>[
+    // Routes
     GsaRouteLoginI18N.values,
+    GsaRouteCartI18N.values,
+    // Widgets
     GsaWidgetCookieConsentI18N.values,
+    GsaWidgetOverlayConfirmationI18N.values,
+    // Services
     GsaServiceCacheI18N.values,
     ...GsaConfig.plugin.translations,
   ];

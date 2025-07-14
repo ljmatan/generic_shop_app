@@ -49,10 +49,6 @@ class GsaServiceI18NModelTranslationValue {
           ? null
           : GsaServiceI18N._translatableRouteTypes.firstWhereOrNull(
               (route) {
-                print('Route: "${route.toString()}"');
-                print('"${json['route'].toString()}" ${json['route'].runtimeType}');
-                print('Route: "${route.toString().codeUnits}"');
-                print('"${json['route'].toString().codeUnits}" ${json['route'].runtimeType}');
                 return route.toString() == json['route'] as String;
               },
             ),

@@ -14,6 +14,7 @@ class GsaModelOrderDraft extends _Model {
     this.paymentType,
     this.couponCode,
     this.price,
+    this.note,
   }) : itemCount = [];
 
   /// List of products in the order.
@@ -51,6 +52,10 @@ class GsaModelOrderDraft extends _Model {
   /// Total cart price, including any discount or promo info.
   ///
   GsaModelPrice? price;
+
+  /// Notes or comments provided for this order instance.
+  ///
+  String? note;
 
   // ignore: public_member_api_docs
   factory GsaModelOrderDraft.fromJson(Map json) {

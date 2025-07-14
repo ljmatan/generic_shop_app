@@ -248,14 +248,14 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
             textAlign: widget.text.textAlign,
             style: widget.text.style,
             maxLines: widget.text.maxLines,
-            overflow: widget.text.overflow ?? TextOverflow.ellipsis,
+            overflow: widget.text.overflow,
           )
         : Text(
             _textValues[0],
             style: widget.text.style,
             textAlign: widget.text.textAlign ?? TextAlign.start,
             maxLines: widget.text.maxLines,
-            overflow: widget.text.overflow ?? TextOverflow.ellipsis,
+            overflow: widget.text.overflow,
           );
   }
 }

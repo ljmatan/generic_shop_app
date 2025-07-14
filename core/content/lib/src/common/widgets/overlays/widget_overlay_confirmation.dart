@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_services/services.dart';
+
+part 'i18n/widget_overlay_confirmation_i18n.dart';
 
 /// An overlay widget presented to user to confirm an interaction.
 ///
@@ -10,6 +13,8 @@ class GsaWidgetOverlayConfirmation extends GsaWidgetOverlay {
     this.message, {
     super.key,
     this.additionalContent,
+    this.cancelButtonLabel,
+    this.confirmButtonLabel,
   });
 
   /// User-facing message clarifying the confirmation request.
@@ -19,6 +24,10 @@ class GsaWidgetOverlayConfirmation extends GsaWidgetOverlay {
   /// Additional content displayed below the [message] view section.
   ///
   final Widget? additionalContent;
+
+  /// User-visible labels applied to the view section of this widget.
+  ///
+  final String? cancelButtonLabel, confirmButtonLabel;
 
   @override
   State<GsaWidgetOverlayConfirmation> createState() {
@@ -34,7 +43,7 @@ class _GsaWidgetOverlayConfirmationState extends State<GsaWidgetOverlayConfirmat
       mainAxisSize: MainAxisSize.min,
       children: [
         GsaWidgetText(
-          widget.message ?? 'Confirm?',
+          widget.message ?? GsaWidgetOverlayConfirmationI18N.message.value.display,
           style: const TextStyle(
             fontSize: 16,
           ),
@@ -49,16 +58,20 @@ class _GsaWidgetOverlayConfirmationState extends State<GsaWidgetOverlayConfirmat
           children: [
             TextButton(
               child: GsaWidgetText(
-                'NO',
+                widget.cancelButtonLabel ?? GsaWidgetOverlayConfirmationI18N.cancelButtonLabel.value.display,
               ),
-              onPressed: () => Navigator.pop(context, false),
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
             ),
             const SizedBox(width: 8),
             OutlinedButton(
               child: GsaWidgetText(
-                'YES',
+                widget.confirmButtonLabel ?? GsaWidgetOverlayConfirmationI18N.confirmButtonLabel.value.display,
               ),
-              onPressed: () => Navigator.pop(context, true),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
             ),
           ],
         ),

@@ -20,8 +20,8 @@ class GsaWidgetTextField extends StatefulWidget {
     this.suffixIcon,
     this.labelText,
     this.hintText,
-    this.minLines = 1,
-    this.maxLines = 1,
+    this.minLines,
+    this.maxLines,
     this.onSubmitted,
     this.validator,
     this.displayDeleteButton = true,
@@ -68,7 +68,7 @@ class GsaWidgetTextField extends StatefulWidget {
 
   /// Min and max lines this field is allowed to expand to.
   ///
-  final int minLines, maxLines;
+  final int? minLines, maxLines;
 
   /// Event triggered on keyboard "enter" key / confirmation.
   ///
@@ -277,7 +277,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
       obscureText: _obscureText,
       keyboardType: widget.keyboardType,
       minLines: widget.minLines,
-      maxLines: widget.maxLines,
+      maxLines: _obscureText ? 1 : widget.maxLines,
       textInputAction: widget.textInputAction,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       textAlign: widget.textAlign,
