@@ -298,5 +298,6 @@ class GsaServiceI18N extends GsaService {
     GsaRouteLoginI18N.values,
     GsaWidgetCookieConsentI18N.values,
     GsaServiceCacheI18N.values,
+    ...GsaConfig.plugin.translations,
   ];
 }

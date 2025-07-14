@@ -56,4 +56,9 @@ class GsdPlugin extends GsaPlugin {
   Color? get primaryColor {
     return null;
   }
+
+  @override
+  List<List<GsaServiceI18NBaseTranslations>> get translations {
+    return [];
+  }
 }

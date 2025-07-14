@@ -241,6 +241,8 @@ abstract class GsaPlugin {
   ///
   Color? get primaryColor;
 
+  List<List<GsaServiceI18NBaseTranslations>> get translations;
+
   /// Curated collection of provider document network resource URLs.
   ///
   ({
