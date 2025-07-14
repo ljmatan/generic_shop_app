@@ -4,7 +4,9 @@ import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_content/src/common/widgets/actions/widget_sticky_bottom_button.dart';
 import 'package:generic_shop_app_data/data.dart';
+import 'package:generic_shop_app_services/services.dart';
 
+part 'i18n/route_cart_i18n.dart';
 part 'widgets/widget_cart_item.dart';
 
 /// Route providing the cart / checkout overview and the related data manipulation options.

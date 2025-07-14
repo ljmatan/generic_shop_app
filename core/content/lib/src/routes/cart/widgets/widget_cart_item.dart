@@ -17,7 +17,7 @@ class GsaRouteCartWidgetCartItem extends StatefulWidget {
 class _GsaRouteCartWidgetCartItemState extends State<GsaRouteCartWidgetCartItem> {
   Future<void> _removeItem() async {
     final confirmed = await GsaWidgetOverlayConfirmation(
-      'Remove "${widget.cartItem.name}" from cart?',
+      GsaRouteCartI18N.cartItemEntryRemoveConfirmationDialogText.value.display,
     ).openDialog();
     if (confirmed == true) {
       GsaDataCheckout.instance.orderDraft.removeItem(widget.cartItem);
@@ -206,7 +206,7 @@ class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmoun
                           children: [
                             GsaWidgetText(
                               switch (GsaConfig.plugin.client) {
-                                    GsaClient.froddoB2b => 'Size ',
+                                    GsaClient.froddoB2b => '${GsaRouteCartI18N.cartItemEntrySizeLabel.value.display} ',
                                     _ => '',
                                   } +
                                   '${widget.saleItem.productCode}',
