@@ -215,17 +215,9 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         },
                       ),
                   })
-                    TextButton(
-                      child: GsaWidgetText(
-                        action.label,
-                        style: const TextStyle(
-                          decorationColor: Colors.grey,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                      onPressed: action.onTap,
+                    GsaWidgetButton.text(
+                      label: action.label,
+                      onTap: action.onTap,
                     ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(14, 16, 14, 0),

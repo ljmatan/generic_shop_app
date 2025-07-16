@@ -149,14 +149,9 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
           onValueChanged: (value) => setState(() => _termsAccepted = !_termsAccepted),
         ),
         const SizedBox(height: 16),
-        FilledButton(
-          child: GsaWidgetText(
-            'Confirm Order',
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          onPressed: _termsAccepted
+        GsaWidgetButton.filled(
+          label: 'Confirm Order',
+          onTap: _termsAccepted
               ? () async {
                   const GsaWidgetOverlayContentBlocking().openDialog();
                   await Future.delayed(const Duration(seconds: 2));

@@ -85,7 +85,7 @@ class _GsaRouteOrderStatusState extends GsaRouteState<GsaRouteOrderStatus> {
                       ),
                     ],
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 10,
                     ),
@@ -94,11 +94,9 @@ class _GsaRouteOrderStatusState extends GsaRouteState<GsaRouteOrderStatus> {
                 const SizedBox(height: 20),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: FilledButton(
-                    child: GsaWidgetText(
-                      'HOME',
-                    ),
-                    onPressed: () {
+                  child: GsaWidgetButton.filled(
+                    label: 'HOME',
+                    onTap: () {
                       Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                   ),

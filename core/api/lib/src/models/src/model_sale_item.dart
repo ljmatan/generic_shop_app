@@ -346,4 +346,21 @@ extension GsaModelSaleItemExt on GsaModelSaleItem {
     if (price == null) return null;
     return 'From ${GsaModelPrice(centum: price).formatted}';
   }
+
+  /// Whether this sale item is defined with a price.
+  ///
+  bool get itemPriceExists {
+    return price != null;
+  }
+
+  /// Whether any of the sale item options are defined with a price.
+  ///
+  bool get itemOptionPriceExists {
+    return options?.where(
+          (saleItemOption) {
+            return saleItemOption.price != null;
+          },
+        ).isNotEmpty ==
+        true;
+  }
 }

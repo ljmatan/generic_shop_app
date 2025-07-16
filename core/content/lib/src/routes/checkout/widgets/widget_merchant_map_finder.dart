@@ -182,22 +182,16 @@ class _WidgetMerchantMapFinderState extends State<_WidgetMerchantMapFinder> {
                                                                       ),
                                                                       GsaWidgetText(
                                                                         'Supervisor Level 5',
-                                                                        style: TextStyle(
+                                                                        style: const TextStyle(
                                                                           fontSize: 10,
                                                                         ),
                                                                       ),
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                IconButton(
-                                                                  icon: Transform.flip(
-                                                                    flipX: true,
-                                                                    child: Icon(
-                                                                      Icons.call_outlined,
-                                                                      color: Theme.of(context).primaryColor,
-                                                                    ),
-                                                                  ),
-                                                                  onPressed: merchant.contact?.phoneNumber != null
+                                                                GsaWidgetButton.icon(
+                                                                  icon: Icons.call_outlined,
+                                                                  onTap: merchant.contact?.phoneNumber != null
                                                                       ? () async {
                                                                           await GsaServiceUrlLauncher.instance.launchCall(
                                                                             (merchant.contact?.phoneCountryCode != null
@@ -226,14 +220,9 @@ class _WidgetMerchantMapFinderState extends State<_WidgetMerchantMapFinder> {
                                                       const SizedBox(height: 10),
                                                       SizedBox(
                                                         width: MediaQuery.of(context).size.width,
-                                                        child: FilledButton(
-                                                          child: GsaWidgetText(
-                                                            'SELECT',
-                                                            style: const TextStyle(
-                                                              fontWeight: FontWeight.w600,
-                                                            ),
-                                                          ),
-                                                          onPressed: () {
+                                                        child: GsaWidgetButton.filled(
+                                                          label: 'SELECT',
+                                                          onTap: () {
                                                             Navigator.pop(context);
                                                             widget.goToNextStep();
                                                           },

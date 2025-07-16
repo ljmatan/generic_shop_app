@@ -97,24 +97,9 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                     for (final category in GsaDataSaleItems.instance.categories.indexed)
                       Padding(
                         padding: category.$1 == 0 ? EdgeInsets.zero : const EdgeInsets.only(left: 10),
-                        child: FilledButton(
-                          child: GsaWidgetText(
-                            category.$2.name ?? 'N/A',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            shape: WidgetStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                side: BorderSide(
-                                  color: Colors.grey.withValues(alpha: .2),
-                                ),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
+                        child: GsaWidgetButton.filled(
+                          label: category.$2.name ?? 'N/A',
+                          onTap: () {
                             // TODO.
                           },
                         ),
@@ -152,9 +137,9 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                               searchHistoryEntry.$2,
                             ),
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () async {
+                          GsaWidgetButton.icon(
+                            icon: Icons.close,
+                            onTap: () async {
                               final searchTerms = (GsaServiceCacheEntry.shopSearchHistory.value as Iterable).toList();
                               searchTerms.remove(searchHistoryEntry.$2);
                               try {

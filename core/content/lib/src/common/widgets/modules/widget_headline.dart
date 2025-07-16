@@ -40,11 +40,9 @@ class GsaWidgetHeadline extends StatelessWidget {
               ),
             ),
             if (action != null)
-              TextButton(
-                onPressed: action!.onTap,
-                child: GsaWidgetText(
-                  action!.label,
-                ),
+              GsaWidgetButton.text(
+                label: action!.label,
+                onTap: action!.onTap,
               ),
           ],
         ),

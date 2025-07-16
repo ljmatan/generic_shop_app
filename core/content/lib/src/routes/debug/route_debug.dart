@@ -59,15 +59,10 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                         'STRINGS',
                       }.indexed) ...[
                         if (buttonLabel.$1 != 0) const SizedBox(width: 10),
-                        TextButton(
-                          child: GsaWidgetText(
-                            buttonLabel.$2,
-                            style: TextStyle(
-                              color: _selectedTabIndex == buttonLabel.$1 ? Theme.of(context).primaryColor : Colors.grey,
-                              fontWeight: _selectedTabIndex == buttonLabel.$1 ? null : FontWeight.w300,
-                            ),
-                          ),
-                          onPressed: () {
+                        GsaWidgetButton.text(
+                          label: buttonLabel.$2,
+                          foregroundColor: _selectedTabIndex == buttonLabel.$1 ? Theme.of(context).primaryColor : Colors.grey,
+                          onTap: () {
                             if (_selectedTabIndex != buttonLabel.$1) {
                               setState(() {
                                 _selectedTabIndex = buttonLabel.$1;

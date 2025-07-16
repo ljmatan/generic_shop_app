@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 import 'package:universal_html/html.dart' as html;
 
@@ -228,7 +227,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
         primaryColor: Theme.of(context).primaryColor.value,
       ),
     );
-    if (kIsWeb) {
+    if (1 == 2 && kIsWeb) {
       html.window.history.replaceState(
         null,
         widget.routeType.displayName,

@@ -67,9 +67,9 @@ class _GivRouteUserProfileState extends GsaRouteState<GivRouteUserProfile> {
                               ],
                             ),
                           ),
-                          OutlinedButton(
-                            child: Icon(Icons.edit),
-                            onPressed: () {},
+                          GsaWidgetButton.outlined(
+                            icon: Icons.edit,
+                            onTap: () {},
                           ),
                         ],
                       ),

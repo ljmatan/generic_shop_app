@@ -404,11 +404,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               ),
                             ),
                             actions: <Widget>[
-                              ElevatedButton(
-                                child: GsaWidgetText(
-                                  'CONFIRM',
-                                ),
-                                onPressed: () => Navigator.pop(
+                              GsaWidgetButton.elevated(
+                                label: 'CONFIRM',
+                                onTap: () => Navigator.pop(
                                   context,
                                   colorInput.color,
                                 ),
@@ -434,11 +432,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     const SizedBox(height: 12),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: OutlinedButton(
-                        child: GsaWidgetText(
-                          'INIT ${provider.name.toUpperCase()}',
-                        ),
-                        onPressed: () async {
+                      child: GsaWidgetButton.outlined(
+                        label: 'INIT ${provider.name.toUpperCase()}',
+                        onTap: () async {
                           const GsaWidgetOverlayContentBlocking().openDialog();
                           try {
                             GsaData.clearAll();

@@ -309,12 +309,11 @@ class _WidgetHeaderOverlayEmptyCartState extends State<_WidgetHeaderOverlayEmpty
           ),
           const SizedBox(height: 16),
           Center(
-            child: OutlinedButton(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: GsaWidgetText('OK'),
-              ),
-              onPressed: () => Navigator.pop(context),
+            child: GsaWidgetButton.outlined(
+              label: 'OK',
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ),
           SizedBox(

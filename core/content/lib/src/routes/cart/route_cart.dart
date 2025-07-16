@@ -129,25 +129,11 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                             .indexed)
                           Padding(
                             padding: const EdgeInsets.only(right: 9),
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  _filteredCategoryIds.contains(category.$2.id) ? Theme.of(context).primaryColor : null,
-                                ),
-                              ),
-                              child: GsaWidgetText(
-                                '${category.$2.name} '
-                                '( TODO )',
-                                style: _filteredCategoryIds.contains(category.$2.id)
-                                    ? const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      )
-                                    : const TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                              ),
-                              onPressed: () {
+                            child: GsaWidgetButton.outlined(
+                              label: '${category.$2.name} '
+                                  '( TODO )',
+                              backgroundColor: _filteredCategoryIds.contains(category.$2.id) ? Theme.of(context).primaryColor : null,
+                              onTap: () {
                                 if (category.$2.id != null) {
                                   setState(() {
                                     _filteredCategoryIds.contains(category.$2.id)
@@ -206,13 +192,10 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                         ),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      iconSize: 30,
-                      onPressed: () {},
+                    GsaWidgetButton.icon(
+                      icon: Icons.add,
+                      elementSize: 30,
+                      onTap: () {},
                     ),
                   ],
                 ),

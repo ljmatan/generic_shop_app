@@ -301,20 +301,17 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
-                FilledButton(
-                  child: const Icon(
-                    Icons.chat,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
+                GsaWidgetButton.filled(
+                  icon: Icons.chat,
+                  onTap: () {
                     const GsaRouteMerchantContact().push();
                   },
                 ),
                 if (Theme.of(context).dimensions.smallScreen && Navigator.of(context).canPop()) ...[
                   const SizedBox(height: 10),
-                  FilledButton(
-                    child: const Icon(Icons.apps),
-                    onPressed: () {
+                  GsaWidgetButton.filled(
+                    icon: Icons.apps,
+                    onTap: () {
                       _scaffoldKey.currentState?.openDrawer();
                     },
                   ),

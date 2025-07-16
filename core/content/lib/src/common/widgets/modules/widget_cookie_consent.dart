@@ -218,16 +218,9 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
           const SizedBox(height: 12),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            child: FilledButton(
-              child: GsaWidgetText(
-                GsaWidgetCookieConsentI18N.confirmSelectionButtonLabel.value.display,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              onPressed: () => _acceptSelection(),
+            child: GsaWidgetButton.outlined(
+              label: GsaWidgetCookieConsentI18N.confirmSelectionButtonLabel.value.display,
+              onTap: () => _acceptSelection(),
             ),
           ),
           AnimatedSize(
@@ -236,15 +229,9 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
             child: _cookieIdConsentStatus.every((consentStatus) => consentStatus)
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: TextButton(
-                      child: GsaWidgetText(
-                        GsaWidgetCookieConsentI18N.declineOptionalButtonLabel.value.display,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      onPressed: () => _declineOptional(),
+                    child: GsaWidgetButton.text(
+                      label: GsaWidgetCookieConsentI18N.declineOptionalButtonLabel.value.display,
+                      onTap: () => _declineOptional(),
                     ),
                   )
                 : const SizedBox(),
@@ -257,15 +244,9 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                     padding: const EdgeInsets.only(top: 4),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: TextButton(
-                        child: GsaWidgetText(
-                          GsaWidgetCookieConsentI18N.acceptAllButtonLabel.value.display,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        onPressed: () => _acceptAll(),
+                      child: GsaWidgetButton.text(
+                        label: GsaWidgetCookieConsentI18N.acceptAllButtonLabel.value.display,
+                        onTap: () => _acceptAll(),
                       ),
                     ),
                   )

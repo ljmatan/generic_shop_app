@@ -75,11 +75,9 @@ class _GsaRouteMerchantContactState extends GsaRouteState<GsaRouteMerchantContac
                           const SizedBox(height: 8),
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            child: OutlinedButton(
-                              child: GsaWidgetText(
-                                'Send',
-                              ),
-                              onPressed: () async {},
+                            child: GsaWidgetButton.outlined(
+                              label: 'Send',
+                              onTap: () async {},
                             ),
                           ),
                           SizedBox(

@@ -191,30 +191,10 @@ class _WidgetSearchResultsEntryState extends State<_WidgetSearchResultsEntry> {
               const SizedBox(height: 10),
               SizedBox(
                 height: 48,
-                child: FilledButton(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.shopping_cart,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 8),
-                      GsaWidgetText(
-                        'Add to Cart',
-                      ),
-                      if (_cartCount != null && _cartCount! > 0)
-                        GsaWidgetText(
-                          ' ($_cartCount)',
-                        ),
-                    ],
-                  ),
-                  style: const ButtonStyle(
-                    padding: WidgetStatePropertyAll(
-                      EdgeInsets.zero,
-                    ),
-                  ),
-                  onPressed: () async {
+                child: GsaWidgetButton.filled(
+                  label: 'Add to Cart' + (_cartCount != null && _cartCount! > 0 ? ' ($_cartCount)' : ''),
+                  icon: Icons.shopping_cart,
+                  onTap: () async {
                     if (GsaConfig.plugin.addToCart != null) {
                       await GsaConfig.plugin.addToCart!(
                         context,

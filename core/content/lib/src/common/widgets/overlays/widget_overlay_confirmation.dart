@@ -56,20 +56,16 @@ class _GsaWidgetOverlayConfirmationState extends State<GsaWidgetOverlayConfirmat
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
-              child: GsaWidgetText(
-                widget.cancelButtonLabel ?? GsaWidgetOverlayConfirmationI18N.cancelButtonLabel.value.display,
-              ),
-              onPressed: () {
+            GsaWidgetButton.text(
+              label: widget.cancelButtonLabel ?? GsaWidgetOverlayConfirmationI18N.cancelButtonLabel.value.display,
+              onTap: () {
                 Navigator.pop(context, false);
               },
             ),
             const SizedBox(width: 8),
-            OutlinedButton(
-              child: GsaWidgetText(
-                widget.confirmButtonLabel ?? GsaWidgetOverlayConfirmationI18N.confirmButtonLabel.value.display,
-              ),
-              onPressed: () {
+            GsaWidgetButton.outlined(
+              label: widget.confirmButtonLabel ?? GsaWidgetOverlayConfirmationI18N.confirmButtonLabel.value.display,
+              onTap: () {
                 Navigator.pop(context, true);
               },
             ),

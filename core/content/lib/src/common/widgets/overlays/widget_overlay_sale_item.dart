@@ -118,14 +118,9 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: TextButton(
-                    child: GsaWidgetText(
-                      'Additional Info',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    onPressed: () {
+                  child: GsaWidgetButton.text(
+                    label: 'Additional Info',
+                    onTap: () {
                       Navigator.pop(context);
                       GsaRouteSaleItemDetails(widget.saleItem).push();
                     },
@@ -138,12 +133,10 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   if (_cartCount > 0)
                     Padding(
                       padding: const EdgeInsets.only(right: 10),
-                      child: OutlinedButton(
-                        child: const Icon(
-                          Icons.remove_circle,
-                          size: 18,
-                        ),
-                        onPressed: () {
+                      child: GsaWidgetButton.outlined(
+                        icon: Icons.remove_circle,
+                        elementSize: 18,
+                        onTap: () {
                           // Set checkout data.
                           GsaDataCheckout.instance.orderDraft.decreaseItemCount(widget.saleItem);
                           // Update the overlay state.
@@ -157,8 +150,8 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                       ),
                     ),
                   Expanded(
-                    child: OutlinedButton(
-                      child: Row(
+                    child: GsaWidgetButton.outlined(
+                      labelWidget: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GsaWidgetText(
@@ -191,7 +184,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                             ),
                         ],
                       ),
-                      onPressed: () {
+                      onTap: () {
                         GsaDataCheckout.instance.orderDraft.addItem(
                           saleItem: widget.saleItem,
                         );
@@ -202,12 +195,10 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   if (_cartCount > 0)
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: OutlinedButton(
-                        child: const Icon(
-                          Icons.shopping_cart,
-                          size: 18,
-                        ),
-                        onPressed: () {
+                      child: GsaWidgetButton.outlined(
+                        icon: Icons.shopping_cart,
+                        elementSize: 18,
+                        onTap: () {
                           Navigator.popUntil(context, (route) => route.isFirst);
                           if (!widget.displayedFromCart) {
                             Navigator.popUntil(context, (route) => route.isFirst);
@@ -272,11 +263,9 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: OutlinedButton(
-                  child: GsaWidgetText(
-                    'See Available Options',
-                  ),
-                  onPressed: () {
+                child: GsaWidgetButton.outlined(
+                  label: 'See Available Options',
+                  onTap: () {
                     Navigator.pop(context);
                     GsaRouteSaleItemDetails(widget.saleItem).push();
                   },

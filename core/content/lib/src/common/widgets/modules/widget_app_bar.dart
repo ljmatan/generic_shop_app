@@ -49,7 +49,6 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    final shadowSize = Theme.of(context).dimensions.smallScreen ? .1 : .4;
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Stack(
@@ -80,19 +79,8 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                               widget.label ?? '',
                               textAlign: Theme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
-                                shadows: [
-                                  for (final offset in <Offset>{
-                                    Offset(-shadowSize, -shadowSize),
-                                    Offset(shadowSize, -shadowSize),
-                                    Offset(shadowSize, shadowSize),
-                                    Offset(-shadowSize, shadowSize),
-                                  })
-                                    Shadow(
-                                      offset: offset,
-                                      color: Colors.black,
-                                    ),
-                                ],
-                              ),
+                                    shadows: Theme.of(context).outlineShadows,
+                                  ),
                             ),
                           ),
                         ),
@@ -101,24 +89,11 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                             left: 0,
                             top: 0,
                             bottom: 0,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.chevron_left,
-                                color: Theme.of(context).appBarTheme.titleTextStyle?.color,
-                                shadows: [
-                                  for (final offset in <Offset>{
-                                    Offset(-shadowSize, -shadowSize),
-                                    Offset(shadowSize, -shadowSize),
-                                    Offset(shadowSize, shadowSize),
-                                    Offset(-shadowSize, shadowSize),
-                                  })
-                                    Shadow(
-                                      offset: offset,
-                                      color: Colors.black,
-                                    ),
-                                ],
-                              ),
-                              onPressed: () => widget.onBackPressed == null
+                            child: GsaWidgetButton.icon(
+                              icon: Icons.chevron_left,
+                              foregroundColor: Theme.of(context).appBarTheme.titleTextStyle?.color,
+                              outlined: true,
+                              onTap: () => widget.onBackPressed == null
                                   ? _canPop
                                       ? Navigator.pop(context)
                                       : null

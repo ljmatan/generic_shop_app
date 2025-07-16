@@ -101,14 +101,9 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                           Expanded(
                             child: Align(
                               alignment: Alignment.centerRight,
-                              child: OutlinedButton(
-                                child: GsaWidgetText(
-                                  'Register',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                onPressed: () {
+                              child: GsaWidgetButton.outlined(
+                                label: 'Register',
+                                onTap: () {
                                   Navigator.popUntil(context, (route) => route.isFirst);
                                   const GsaRouteRegister().push();
                                 },
@@ -128,14 +123,9 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                         Expanded(
                           child: Align(
                             alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
-                            child: OutlinedButton(
-                              child: GsaWidgetText(
-                                'Login',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              onPressed: () {
+                            child: GsaWidgetButton.outlined(
+                              label: 'Login',
+                              onTap: () {
                                 Navigator.popUntil(context, (route) => route.isFirst);
                                 const GsaRouteLogin().push();
                               },
@@ -146,14 +136,9 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                     ),
                     if (GsaConfig.guestLoginEnabled) ...[
                       const SizedBox(height: 8),
-                      TextButton(
-                        child: GsaWidgetText(
-                          'Continue as Guest',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        onPressed: () {
+                      GsaWidgetButton.text(
+                        label: 'Continue as Guest',
+                        onTap: () {
                           Navigator.of(context).popUntil((route) => route.isFirst);
                           const GsaRouteShop().push(replacement: true);
                         },

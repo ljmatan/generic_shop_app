@@ -57,9 +57,9 @@ class _GsaWidgetErrorState extends State<GsaWidgetError> {
           ),
           const SizedBox(height: 14),
           if (widget.retry != null)
-            OutlinedButton(
-              child: GsaWidgetText(widget.retryLabel ?? 'Retry'),
-              onPressed: () => widget.retry!(),
+            GsaWidgetButton.outlined(
+              label: widget.retryLabel ?? 'Retry',
+              onTap: () => widget.retry!(),
             ),
         ],
       ),

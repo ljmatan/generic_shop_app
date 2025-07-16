@@ -136,7 +136,7 @@ class GsaTheme {
 
   InputDecorationTheme get _inputDecorationTheme {
     return InputDecorationTheme(
-      contentPadding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
       isDense: true,
       filled: true,
       fillColor: _brightness == Brightness.light ? const Color(0xffF0F3F5) : const Color(0xffb3b3b3),
@@ -440,6 +440,11 @@ extension GsaThemeExt on ThemeData {
     return Size(screenSpecs.size!.width / screenSpecs.ratio!, screenSpecs.size!.height / screenSpecs.ratio!);
   }
 
+  double get elementScale {
+    if (GsaRoute.navigatorKey.currentContext == null) return 1;
+    return MediaQuery.of(GsaRoute.navigatorKey.currentContext!).textScaler.scale(1);
+  }
+
   /// Getter method defining available screen dimensions.
   ///
   ({
@@ -459,12 +464,20 @@ extension GsaThemeExt on ThemeData {
     );
   }
 
+  double get listViewHorizontalPadding {
+    return dimensions.smallScreen ? 20 : 26;
+  }
+
+  double get listViewVerticalPadding {
+    return dimensions.smallScreen ? 24 : 30;
+  }
+
   /// Default padding specified for [ListView] and other such elements.
   ///
   EdgeInsets get listViewPadding {
     return EdgeInsets.symmetric(
-      horizontal: dimensions.smallScreen ? 20 : 26,
-      vertical: dimensions.smallScreen ? 24 : 30,
+      horizontal: listViewHorizontalPadding,
+      vertical: listViewVerticalPadding,
     );
   }
 
@@ -475,6 +488,30 @@ extension GsaThemeExt on ThemeData {
       horizontal: dimensions.smallScreen ? 16 : 20,
       vertical: dimensions.smallScreen ? 12 : 16,
     );
+  }
+
+  double get outlineWidth {
+    return dimensions.smallScreen ? .1 : .4;
+  }
+
+  List<Shadow> get outlineShadows {
+    final width = outlineWidth;
+    return [
+      for (final offset in <Offset>{
+        Offset(-width, -width),
+        Offset(width, -width),
+        Offset(width, width),
+        Offset(-width, width),
+      })
+        Shadow(
+          offset: offset,
+          color: Colors.black,
+        ),
+    ];
+  }
+
+  double get actionElementHeight {
+    return 48 * elementScale;
   }
 
   /// Maximum specified width for overlay and inline elements.

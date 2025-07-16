@@ -128,23 +128,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         ),
                         if (<GsaClient>{}.contains(GsaConfig.plugin.client)) ...[
                           const SizedBox(height: 10),
-                          TextButton(
-                            style: const ButtonStyle(
-                              padding: WidgetStatePropertyAll(
-                                EdgeInsets.zero,
-                              ),
-                            ),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: GsaWidgetText(
-                                GsaRouteLoginI18N.openForgotPasswordScreenButtonTitle.value.display,
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                            ),
-                            onPressed: () {},
+                          GsaWidgetButton.text(
+                            label: GsaRouteLoginI18N.openForgotPasswordScreenButtonTitle.value.display,
+                            onTap: () {},
                           ),
                         ],
                         if (_userAgreementRequired) ...[
@@ -168,14 +154,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.centerRight,
-                                  child: OutlinedButton(
-                                    child: GsaWidgetText(
-                                      GsaRouteLoginI18N.openRegisterScreenButtonTitle.value.display,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    onPressed: () {
+                                  child: GsaWidgetButton.outlined(
+                                    label: GsaRouteLoginI18N.openRegisterScreenButtonTitle.value.display,
+                                    onTap: () {
                                       Navigator.popUntil(context, (route) => route.isFirst);
                                       const GsaRouteRegister().push();
                                     },
@@ -195,14 +176,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                             Expanded(
                               child: Align(
                                 alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
-                                child: OutlinedButton(
-                                  child: GsaWidgetText(
-                                    GsaRouteLoginI18N.loginButtonTitle.value.display,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  onPressed: () async {
+                                child: GsaWidgetButton.outlined(
+                                  label: GsaRouteLoginI18N.loginButtonTitle.value.display,
+                                  onTap: () async {
                                     final formsValidated = _formKey.currentState?.validate() == true;
                                     final termsValidated = _userAgreementRequired ? _termsSwitchKey.currentState?.validate() == true : true;
                                     if (formsValidated && termsValidated) {
@@ -236,14 +212,9 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         ),
                         if (GsaConfig.guestLoginEnabled) ...[
                           const SizedBox(height: 8),
-                          TextButton(
-                            child: GsaWidgetText(
-                              GsaRouteLoginI18N.continueAsGuestButtonTitle.value.display,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            onPressed: () {
+                          GsaWidgetButton.text(
+                            label: GsaRouteLoginI18N.continueAsGuestButtonTitle.value.display,
+                            onTap: () {
                               const GsaRouteShop().push(replacement: true);
                             },
                           ),

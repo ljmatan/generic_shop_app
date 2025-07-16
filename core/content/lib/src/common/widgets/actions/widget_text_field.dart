@@ -252,7 +252,10 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
   }
 
   final _buttonFocusNode = FocusNode(
+    skipTraversal: true,
     canRequestFocus: false,
+    descendantsAreTraversable: false,
+    descendantsAreFocusable: false,
   );
 
   late bool _obscureText;
@@ -269,91 +272,91 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _textController,
-      focusNode: _focusNode,
-      enabled: widget.enabled,
-      autofocus: widget.autofocus,
-      obscureText: _obscureText,
-      keyboardType: widget.keyboardType,
-      minLines: widget.minLines,
-      maxLines: _obscureText ? 1 : widget.maxLines,
-      textInputAction: widget.textInputAction,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      textAlign: widget.textAlign,
-      decoration: InputDecoration(
-        contentPadding: widget.contentPadding ?? Theme.of(context).inputDecorationTheme.contentPadding,
-        fillColor: GsaWidgetTextField.themeProperties.fillColor(
-          Theme.of(context).brightness,
-          _focusNode,
-          _textController,
+    return SizedBox(
+      height: Theme.of(context).actionElementHeight,
+      child: TextFormField(
+        controller: _textController,
+        focusNode: _focusNode,
+        enabled: widget.enabled,
+        autofocus: widget.autofocus,
+        obscureText: _obscureText,
+        keyboardType: widget.keyboardType,
+        minLines: widget.minLines,
+        maxLines: _obscureText ? 1 : widget.maxLines,
+        textInputAction: widget.textInputAction,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        textAlign: widget.textAlign,
+        decoration: InputDecoration(
+          contentPadding: widget.contentPadding ?? Theme.of(context).inputDecorationTheme.contentPadding,
+          fillColor: GsaWidgetTextField.themeProperties.fillColor(
+            Theme.of(context).brightness,
+            _focusNode,
+            _textController,
+          ),
+          border: GsaWidgetTextField.themeProperties.border(
+            _focusNode,
+            _textController,
+          ),
+          focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
+            Theme.of(context).primaryColor,
+          ),
+          enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
+            _focusNode,
+            _textController,
+          ),
+          disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
+            _textController,
+          ),
+          errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
+          focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
+          prefixIcon: widget.prefixIcon != null
+              ? SizedBox(
+                  width: 48,
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: widget.prefixIcon!,
+                  ),
+                )
+              : null,
+          suffix: widget.suffix,
+          suffixIcon: _obscureText == true || _focusNode.hasFocus && _textController.text.isNotEmpty == true && widget.displayDeleteButton
+              ? GsaWidgetButton.icon(
+                  icon: widget.obscureText == true ? Icons.visibility : Icons.close,
+                  foregroundColor: _obscureText ? const Color(0xff63747E) : Theme.of(context).primaryColor,
+                  elementSize: 18,
+                  focusNode: _buttonFocusNode,
+                  onTap: widget.obscureText == true
+                      ? () => setState(() => _obscureText = !_obscureText)
+                      : () {
+                          _textController.clear();
+                          if (widget.onControllerCleared != null) {
+                            widget.onControllerCleared!();
+                          }
+                        },
+                )
+              : widget.suffixIcon != null
+                  ? SizedBox(
+                      width: 48,
+                      height: MediaQuery.of(context).size.height,
+                      child: Center(
+                        child: widget.suffixIcon!,
+                      ),
+                    )
+                  : null,
+          hintText: widget.hintText,
+          labelText: widget.labelText,
+          labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
+            _focusNode,
+            _textController,
+          ),
         ),
-        border: GsaWidgetTextField.themeProperties.border(
-          _focusNode,
-          _textController,
-        ),
-        focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
-          Theme.of(context).primaryColor,
-        ),
-        enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
-          _focusNode,
-          _textController,
-        ),
-        disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
-          _textController,
-        ),
-        errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
-        focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
-        prefixIcon: widget.prefixIcon != null
-            ? SizedBox(
-                width: 48,
-                height: 48,
-                child: Center(
-                  child: widget.prefixIcon!,
-                ),
-              )
-            : null,
-        suffix: widget.suffix,
-        suffixIcon:
-            widget.obscureText == true || _focusNode.hasFocus && _textController.text.isNotEmpty == true && widget.displayDeleteButton
-                ? IconButton(
-                    icon: Icon(
-                      widget.obscureText == true ? Icons.visibility : Icons.close,
-                      color: _obscureText ? const Color(0xff63747E) : Theme.of(context).primaryColor,
-                    ),
-                    iconSize: 18,
-                    focusNode: _buttonFocusNode,
-                    onPressed: widget.obscureText == true
-                        ? () => setState(() => _obscureText = !_obscureText)
-                        : () {
-                            _textController.clear();
-                            if (widget.onControllerCleared != null) {
-                              widget.onControllerCleared!();
-                            }
-                          },
-                  )
-                : widget.suffixIcon != null
-                    ? SizedBox(
-                        width: 48,
-                        height: 48,
-                        child: Center(
-                          child: widget.suffixIcon!,
-                        ),
-                      )
-                    : null,
-        hintText: widget.hintText,
-        labelText: widget.labelText,
-        labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
-          _focusNode,
-          _textController,
-        ),
+        style: GsaWidgetTextField.themeProperties.textStyle(),
+        autocorrect: false,
+        enableSuggestions: false,
+        validator: widget.validator,
+        onFieldSubmitted: widget.onSubmitted,
+        onTap: widget.onTap != null ? () => widget.onTap!() : null,
       ),
-      style: GsaWidgetTextField.themeProperties.textStyle(),
-      autocorrect: false,
-      enableSuggestions: false,
-      validator: widget.validator,
-      onFieldSubmitted: widget.onSubmitted,
-      onTap: widget.onTap != null ? () => widget.onTap!() : null,
     );
   }
 

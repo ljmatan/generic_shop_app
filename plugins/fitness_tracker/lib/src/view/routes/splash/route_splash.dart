@@ -43,14 +43,9 @@ class _GftRouteSplashState extends GsaRouteState<GftRouteSplash> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
-                FilledButton(
-                  child: GsaWidgetText(
-                    'Get Started',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () {
+                GsaWidgetButton.filled(
+                  label: 'Get Started',
+                  onTap: () {
                     const GftRouteOnboarding().push(
                       replacement: true,
                     );

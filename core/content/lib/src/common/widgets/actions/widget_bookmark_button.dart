@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// A button providing bookmarking / favorite functionalities.
@@ -57,8 +58,8 @@ class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
     if (!GsaConfig.bookmarksEnabled) return const SizedBox();
     if (widget.saleItem.id == null) return const SizedBox();
     return widget.child == null
-        ? IconButton(
-            icon: _bookmarked
+        ? GsaWidgetButton.icon(
+            iconWidget: _bookmarked
                 ? Icon(
                     Icons.favorite,
                     color: Theme.of(context).primaryColor,
@@ -67,7 +68,7 @@ class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
                     Icons.favorite_outline,
                     color: Colors.grey,
                   ),
-            onPressed: () async {
+            onTap: () async {
               await _onBookmarkStateChange();
             },
           )

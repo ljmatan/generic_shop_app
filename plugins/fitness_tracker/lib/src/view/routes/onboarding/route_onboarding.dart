@@ -103,17 +103,15 @@ class _GftRouteOnboardingState extends GsaRouteState<GftRouteOnboarding> {
                     ),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: FilledButton(
-                        child: GsaWidgetText(
-                          switch (value) {
-                            0 || 1 || 2 || 3 || 4 => 'Next Step',
-                            5 => 'Finish',
-                            int() => throw UnimplementedError(
-                                'Onboarding screen index $value not implemented.',
-                              ),
-                          },
-                        ),
-                        onPressed: switch (value) {
+                      child: GsaWidgetButton.filled(
+                        label: switch (value) {
+                          0 || 1 || 2 || 3 || 4 => 'Next Step',
+                          5 => 'Finish',
+                          int() => throw UnimplementedError(
+                              'Onboarding screen index $value not implemented.',
+                            ),
+                        },
+                        onTap: switch (value) {
                           0 => _trainee.goal == null
                               ? null
                               : () {

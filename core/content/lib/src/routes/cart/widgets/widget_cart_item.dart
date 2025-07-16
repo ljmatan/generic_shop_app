@@ -180,7 +180,9 @@ class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmoun
 
   @override
   Widget build(BuildContext context) {
-    if (_cartCount == null || _cartCount! < 1) return const SizedBox();
+    if (_cartCount == null || _cartCount! < 1 && widget.cartItem.allowZeroCartCount != true) {
+      return const SizedBox();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

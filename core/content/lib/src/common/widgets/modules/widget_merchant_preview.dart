@@ -56,9 +56,9 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       for (int i = 0; i < 3; i++)
-                        ElevatedButton(
-                          child: const Icon(Icons.abc),
-                          onPressed: () {},
+                        GsaWidgetButton.elevated(
+                          icon: Icons.abc,
+                          onTap: () {},
                         ),
                     ],
                   ),
@@ -114,8 +114,8 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                             2 => const EdgeInsets.only(left: 5),
                             int() => throw UnimplementedError(),
                           },
-                          child: OutlinedButton(
-                            child: Stack(
+                          child: GsaWidgetButton.elevated(
+                            labelWidget: Stack(
                               alignment: Alignment.center,
                               children: [
                                 SizedBox(
@@ -153,7 +153,7 @@ class GsaWidgetMerchantPreview extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            onPressed: action.$2.onTap,
+                            onTap: action.$2.onTap,
                           ),
                         ),
                       ),

@@ -47,7 +47,7 @@ class GsaDataCheckout extends GsaData {
 
   @override
   void notifyListeners() {
-    notifierCartUpdate.value = orderDraft.totalItemCount;
+    notifierCartUpdate.value = orderDraft.totalItemCount ?? 0;
     super.notifyListeners();
   }
 }

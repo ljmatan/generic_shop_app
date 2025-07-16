@@ -140,9 +140,27 @@ extension GsaModelOrderDraftInfoExt on GsaModelOrderDraft {
 
   /// Total number of all sale items in the cart.
   ///
-  int get totalItemCount {
-    int count = 0;
+  int? get totalItemCount {
+    int? count;
     for (final itemCountEntry in itemCount) {
+      count ??= 0;
+      count += itemCountEntry.count;
+    }
+    return count;
+  }
+
+  /// Total number of all sale item options in the cart.
+  ///
+  /// Returns null if no item options have been added to the cart.
+  ///
+  int? get totalItemOptionCount {
+    int? count;
+    for (final itemCountEntry in itemCount.where(
+      (itemCount) {
+        return itemCount.optionId != null;
+      },
+    )) {
+      count ??= 0;
       count += itemCountEntry.count;
     }
     return count;
@@ -644,7 +662,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
     required GsaModelSaleItem saleItem,
     required int newCount,
   }) {
-    if (newCount < 1) {
+    if (newCount < 1 && saleItem.allowZeroCartCount != true) {
       removeItem(saleItem);
     } else {
       addItem(
@@ -663,7 +681,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
     required int optionIndex,
     required int newCount,
   }) {
-    if (newCount < 1) {
+    if (newCount < 1 && saleItem.allowZeroCartCount != true) {
       removeItemOption(
         saleItem: saleItem,
         optionIndex: optionIndex,

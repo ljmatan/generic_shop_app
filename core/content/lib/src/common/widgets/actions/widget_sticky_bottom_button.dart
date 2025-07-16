@@ -34,11 +34,9 @@ class GsaWidgetStickyBottomButton extends StatelessWidget {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: FilledButton(
-            child: GsaWidgetText(
-              label,
-            ),
-            onPressed: onTap,
+          child: GsaWidgetButton.filled(
+            label: label,
+            onTap: onTap,
           ),
         ),
       ),

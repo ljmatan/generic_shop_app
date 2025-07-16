@@ -223,7 +223,7 @@ class GsaServiceI18N extends GsaService {
     final translatedValue = translationEntries[specifiedLanguage]?[ancestor]?[value];
     if (translatedValue == null) {
       for (final language in GsaServiceI18NLanguage.values) {
-        translationEntries[language]![ancestor]![value] = {
+        translationEntries[language]?[ancestor]?[value] = {
           'value': null,
           'route': route.toString(),
         };

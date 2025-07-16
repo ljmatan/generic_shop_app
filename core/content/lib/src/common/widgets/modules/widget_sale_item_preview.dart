@@ -238,69 +238,13 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                       const SizedBox(height: 10),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: OutlinedButton(
-                          style: ButtonStyle(
-                            backgroundColor: _cartCount == 0
-                                ? WidgetStatePropertyAll(
-                                    Theme.of(context).primaryColor,
-                                  )
-                                : null,
-                            side: _cartCount == 0
-                                ? null
-                                : WidgetStatePropertyAll(
-                                    BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                          ),
-                          child: widget.saleItem.price == null &&
-                                  widget.saleItem.options?.where(
-                                        (saleItemOption) {
-                                          return saleItemOption.price != null;
-                                        },
-                                      ).isNotEmpty !=
-                                      true
-                              ? GsaWidgetText(
-                                  'INQUIRE',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.shopping_cart,
-                                      color: _cartCount == 0 ? Colors.white : null,
-                                    ),
-                                    if (_cartCount != null && _cartCount != 0)
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 6),
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            color: Theme.of(context).primaryColor,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10,
-                                              vertical: 4,
-                                            ),
-                                            child: GsaWidgetText(
-                                              '$_cartCount',
-                                              interpolated: true,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                          onPressed: () async {
+                        child: GsaWidgetButton.outlined(
+                          backgroundColor: _cartCount == 0 ? Theme.of(context).primaryColor : null,
+                          foregroundColor: _cartCount == 0 ? null : Theme.of(context).primaryColor,
+                          label: !widget.saleItem.itemPriceExists && !widget.saleItem.itemOptionPriceExists ? 'INQUIRE' : '$_cartCount',
+                          icon: !widget.saleItem.itemPriceExists && !widget.saleItem.itemOptionPriceExists ? null : Icons.shopping_cart,
+                          interpolatedText: widget.saleItem.itemPriceExists || widget.saleItem.itemOptionPriceExists,
+                          onTap: () async {
                             if (GsaConfig.plugin.addToCart != null) {
                               await GsaConfig.plugin.addToCart!(
                                 context,
