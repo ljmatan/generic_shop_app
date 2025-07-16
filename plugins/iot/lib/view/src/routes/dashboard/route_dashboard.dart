@@ -123,20 +123,11 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                               dimension: 16,
                               child: CircularProgressIndicator(),
                             )
-                          : OutlinedButton.icon(
-                              label: GsaWidgetText(
-                                'REFRESH',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.refresh,
-                                color: Colors.white,
-                              ),
-                              onPressed: () async {
+                          : GsaWidgetButton.outlined(
+                              label: 'REFRESH',
+                              icon: Icons.refresh,
+                              foregroundColor: Colors.white,
+                              onTap: () async {
                                 setButtonState(() => _refreshingAtmosphereInfo = true);
                                 try {
                                   final airStatus = await GiotApiEsp32Mcu.instance.getAtmosphereStatus();

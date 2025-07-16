@@ -56,9 +56,9 @@ class _WidgetInputWeightState extends State<_WidgetInputWeight> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconButton.filled(
-                            icon: Icon(Icons.remove),
-                            onPressed: widget.trainee.weightKilograms == 40
+                          GsaWidgetButton.filled(
+                            icon: Icons.remove,
+                            onTap: widget.trainee.weightKilograms == 40
                                 ? null
                                 : () {
                                     final currentWeight = widget.trainee.weightKilograms!;
@@ -83,9 +83,9 @@ class _WidgetInputWeightState extends State<_WidgetInputWeight> {
                               ],
                             ),
                           ),
-                          IconButton.filled(
-                            icon: Icon(Icons.add),
-                            onPressed: widget.trainee.weightKilograms == 160
+                          GsaWidgetButton.filled(
+                            icon: Icons.add,
+                            onTap: widget.trainee.weightKilograms == 160
                                 ? null
                                 : () {
                                     final currentWeight = widget.trainee.weightKilograms!;

@@ -182,11 +182,9 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                   valueListenable: _optionSelectionNotifier,
                                   builder: (context, value, child) {
                                     if (value?.price == null) {
-                                      return FilledButton.icon(
-                                        onPressed: () {},
-                                        label: GsaWidgetText(
-                                          'Inquire',
-                                        ),
+                                      return GsaWidgetButton.filled(
+                                        label: 'Inquire',
+                                        onTap: () {},
                                       );
                                     }
                                     return GsaWidgetText(
@@ -296,18 +294,11 @@ class _GivRouteSaleItemDetailsState extends GsaRouteState<GivRouteSaleItemDetail
                                   padding: const EdgeInsets.symmetric(horizontal: 20),
                                   child: SizedBox(
                                     width: MediaQuery.of(context).size.width,
-                                    child: FilledButton.tonalIcon(
-                                      icon: Icon(
-                                        Icons.shopping_bag,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      label: GsaWidgetText(
-                                        'Add to Cart',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      onPressed: () {},
+                                    child: GsaWidgetButton.filled(
+                                      label: 'Add to Cart',
+                                      icon: Icons.shopping_bag,
+                                      tonal: true,
+                                      onTap: () {},
                                     ),
                                   ),
                                 ),
