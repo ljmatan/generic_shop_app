@@ -260,13 +260,6 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
               widget.foregroundColor!,
             )
           : null,
-      side: widget._type == _GsaWidgetButtonType.outlined && widget.foregroundColor != null
-          ? WidgetStatePropertyAll(
-              BorderSide(
-                color: widget.foregroundColor!,
-              ),
-            )
-          : null,
     );
     return SizedBox(
       height: Theme.of(context).actionElementHeight,

@@ -219,6 +219,8 @@ class GsaWidgetTextField extends StatefulWidget {
 }
 
 class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
+  final _formFieldKey = UniqueKey();
+
   late TextEditingController _textController;
 
   bool _externalTextUpdate = false;
@@ -260,6 +262,8 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
 
   late bool _obscureText;
 
+  late double _horizontalPadding;
+
   @override
   void initState() {
     super.initState();
@@ -268,7 +272,10 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusNodeUpdate);
     _obscureText = widget.obscureText;
+    _horizontalPadding = ((widget.contentPadding ?? GsaTheme.instance.data.inputDecorationTheme.contentPadding)?.horizontal ?? 0) / 2;
   }
+
+  String? _errorText;
 
   bool get _suffixAutoImplemented {
     return _obscureText == true || _focusNode.hasFocus && _textController.text.isNotEmpty == true && widget.displayDeleteButton;
@@ -276,108 +283,145 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Theme.of(context).actionElementHeight * (widget.maxLines ?? widget.minLines ?? 1),
-      child: TextFormField(
-        controller: _textController,
-        focusNode: _focusNode,
-        enabled: widget.enabled,
-        autofocus: widget.autofocus,
-        obscureText: _obscureText,
-        keyboardType: widget.keyboardType,
-        minLines: widget.minLines,
-        maxLines: _obscureText ? 1 : widget.maxLines,
-        textInputAction: widget.textInputAction,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        textAlign: widget.textAlign,
-        textAlignVertical: TextAlignVertical.center,
-        decoration: InputDecoration(
-          fillColor: GsaWidgetTextField.themeProperties.fillColor(
-            Theme.of(context).brightness,
-            _focusNode,
-            _textController,
-          ),
-          border: GsaWidgetTextField.themeProperties.border(
-            _focusNode,
-            _textController,
-          ),
-          focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
-            Theme.of(context).primaryColor,
-          ),
-          enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
-            _focusNode,
-            _textController,
-          ),
-          disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
-            _textController,
-          ),
-          errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
-          focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
-          prefix: widget.prefix,
-          prefixIconConstraints: widget.prefixIcon == null
-              ? const BoxConstraints(
-                  minWidth: 0,
-                  maxWidth: 0,
-                )
-              : null,
-          prefixIcon: widget.prefixIcon != null
-              ? SizedBox(
-                  width: 48,
-                  height: MediaQuery.of(context).size.height,
-                  child: Center(
-                    child: widget.prefixIcon!,
-                  ),
-                )
-              : SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                ),
-          suffix: widget.suffix,
-          suffixIconConstraints: widget.suffixIcon != null || _suffixAutoImplemented
-              ? null
-              : const BoxConstraints(
-                  minWidth: 0,
-                  maxWidth: 0,
-                ),
-          suffixIcon: widget.suffixIcon != null
-              ? SizedBox(
-                  width: 48,
-                  height: MediaQuery.of(context).size.height,
-                  child: Center(
-                    child: widget.suffixIcon!,
-                  ),
-                )
-              : _suffixAutoImplemented
-                  ? GsaWidgetButton.icon(
-                      icon: widget.obscureText == true ? Icons.visibility : Icons.close,
-                      foregroundColor: _obscureText ? const Color(0xff63747E) : Theme.of(context).primaryColor,
-                      elementSize: 18,
-                      focusNode: _buttonFocusNode,
-                      onTap: widget.obscureText == true
-                          ? () => setState(() => _obscureText = !_obscureText)
-                          : () {
-                              _textController.clear();
-                              if (widget.onControllerCleared != null) {
-                                widget.onControllerCleared!();
-                              }
-                            },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: Theme.of(context).actionElementHeight * (widget.maxLines ?? widget.minLines ?? 1),
+          child: TextFormField(
+            controller: _textController,
+            focusNode: _focusNode,
+            enabled: widget.enabled,
+            autofocus: widget.autofocus,
+            obscureText: _obscureText,
+            keyboardType: widget.keyboardType,
+            minLines: widget.minLines,
+            maxLines: _obscureText ? 1 : widget.maxLines,
+            textInputAction: widget.textInputAction,
+            textAlign: widget.textAlign,
+            textAlignVertical: TextAlignVertical.center,
+            decoration: InputDecoration(
+              contentPadding: widget.contentPadding,
+              fillColor: GsaWidgetTextField.themeProperties.fillColor(
+                Theme.of(context).brightness,
+                _focusNode,
+                _textController,
+              ),
+              border: GsaWidgetTextField.themeProperties.border(
+                _focusNode,
+                _textController,
+              ),
+              focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
+                Theme.of(context).primaryColor,
+              ),
+              enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
+                _focusNode,
+                _textController,
+              ),
+              disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
+                _textController,
+              ),
+              errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
+              focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
+              prefix: widget.prefix,
+              prefixIconConstraints: widget.prefixIcon == null
+                  ? BoxConstraints(
+                      minWidth: _horizontalPadding,
+                      maxWidth: _horizontalPadding,
+                    )
+                  : null,
+              prefixIcon: widget.prefixIcon != null
+                  ? SizedBox(
+                      width: 48,
+                      height: MediaQuery.of(context).size.height,
+                      child: Center(
+                        child: widget.prefixIcon!,
+                      ),
                     )
                   : SizedBox(
                       height: MediaQuery.of(context).size.height,
                     ),
-          hintText: widget.hintText,
-          labelText: widget.labelText,
-          labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
-            _focusNode,
-            _textController,
+              suffix: widget.suffix,
+              suffixIconConstraints: widget.suffixIcon != null || _suffixAutoImplemented
+                  ? null
+                  : BoxConstraints(
+                      minWidth: _horizontalPadding,
+                      maxWidth: _horizontalPadding,
+                    ),
+              suffixIcon: widget.suffixIcon != null
+                  ? SizedBox(
+                      width: 48,
+                      height: MediaQuery.of(context).size.height,
+                      child: Center(
+                        child: widget.suffixIcon!,
+                      ),
+                    )
+                  : _suffixAutoImplemented
+                      ? GsaWidgetButton.icon(
+                          icon: widget.obscureText == true ? Icons.visibility : Icons.close,
+                          foregroundColor: _obscureText ? const Color(0xff63747E) : Theme.of(context).primaryColor,
+                          elementSize: 18,
+                          focusNode: _buttonFocusNode,
+                          onTap: widget.obscureText == true
+                              ? () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                }
+                              : () {
+                                  _textController.clear();
+                                  if (widget.onControllerCleared != null) {
+                                    widget.onControllerCleared!();
+                                  }
+                                },
+                        )
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                        ),
+              hintText: widget.hintText,
+              labelText: widget.labelText,
+              labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
+                _focusNode,
+                _textController,
+              ),
+            ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: widget.validator == null
+                ? null
+                : (value) {
+                    final errorText = widget.validator!(value);
+                    if (_errorText != errorText) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        setState(() {
+                          _errorText = errorText;
+                        });
+                      });
+                    }
+                    return errorText;
+                  },
+            errorBuilder: (context, errorText) {
+              return const SizedBox();
+            },
+            onFieldSubmitted: widget.onSubmitted,
+            style: GsaWidgetTextField.themeProperties.textStyle(context),
+            autocorrect: false,
+            enableSuggestions: false,
+            onTap: widget.onTap != null ? () => widget.onTap!() : null,
           ),
         ),
-        style: GsaWidgetTextField.themeProperties.textStyle(context),
-        autocorrect: false,
-        enableSuggestions: false,
-        validator: widget.validator,
-        onFieldSubmitted: widget.onSubmitted,
-        onTap: widget.onTap != null ? () => widget.onTap!() : null,
-      ),
+        if (_errorText != null) ...[
+          const SizedBox(height: 4),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: _horizontalPadding,
+            ),
+            child: Text(
+              _errorText!,
+              style: Theme.of(context).inputDecorationTheme.errorStyle,
+            ),
+          ),
+        ],
+      ],
     );
   }
 

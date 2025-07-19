@@ -151,7 +151,6 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
       initialSelection: _initialSelection,
       expandedInsets: EdgeInsets.zero,
       textStyle: GsaWidgetTextField.themeProperties.textStyle(context),
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       menuStyle: Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(
             minimumSize: WidgetStatePropertyAll(
               Size(
@@ -214,10 +213,11 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
         }
       },
       textInputAction: TextInputAction.done,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: widget.validator != null
           ? (value) {
-              if (value is String) {
-                return widget.validator!(value);
+              if (value is String || value == null) {
+                return widget.validator!(value as String?);
               } else {
                 return 'DropdownMenuFormField.validator not set with proper type.';
               }

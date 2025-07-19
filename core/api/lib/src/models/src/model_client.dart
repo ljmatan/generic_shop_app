@@ -9,10 +9,10 @@ class GsaModelClient extends _Model {
     super.id,
     super.originId,
     super.categoryId,
-    required this.personalDetails,
-    required this.contactDetails,
-    required this.deliveryAddresses,
-    required this.invoiceAddresses,
+    this.personalDetails,
+    this.contactDetails,
+    this.deliveryAddresses,
+    this.invoiceAddresses,
     this.originData,
   });
 

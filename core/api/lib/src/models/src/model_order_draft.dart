@@ -723,13 +723,16 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
 
   /// Clears the order by removing all of the items and personal details from the order draft.
   ///
-  void clear() {
+  void clear({
+    bool clearClientInfo = true,
+  }) {
     items.clear();
     itemCount.clear();
-    client = null;
     deliveryType = null;
     paymentType = null;
     couponCode = null;
     price = null;
+    if (clearClientInfo) client = null;
+    GsaDataCheckout.instance.notifyListeners();
   }
 }
