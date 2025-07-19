@@ -234,6 +234,8 @@ class GsaTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
           shape: WidgetStatePropertyAll(
             _roundedRectangleBorder,
           ),
@@ -256,6 +258,8 @@ class GsaTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
           shape: WidgetStatePropertyAll(
             _roundedRectangleBorder,
           ),
@@ -278,6 +282,8 @@ class GsaTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
           ),
@@ -293,6 +299,12 @@ class GsaTheme {
           foregroundColor: WidgetStatePropertyAll(
             _brightness == Brightness.light ? null : Colors.white,
           ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
         ),
       ),
       scaffoldBackgroundColor: _brightness == Brightness.light ? Colors.white : const Color(0xff121212),
@@ -510,8 +522,13 @@ extension GsaThemeExt on ThemeData {
     ];
   }
 
+  double get defaultTextSize {
+    return textTheme.bodyMedium?.fontSize ?? kDefaultFontSize;
+  }
+
   double get actionElementHeight {
-    return 48 * elementScale;
+    final textSize = defaultTextSize;
+    return (kMinInteractiveDimension - textSize) + textSize * elementScale;
   }
 
   /// Maximum specified width for overlay and inline elements.

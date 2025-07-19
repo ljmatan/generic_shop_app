@@ -39,16 +39,11 @@ class GsaWidgetAppBar extends StatefulWidget {
 class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
   /// Whether this widget can invoke the [Navigator.pop] method.
   ///
-  bool get _canPop {
-    try {
-      return Navigator.of(context).canPop();
-    } catch (e) {
-      return false;
-    }
-  }
+  bool? _canPop;
 
   @override
   Widget build(BuildContext context) {
+    _canPop ??= Navigator.of(context).canPop();
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Stack(
@@ -66,14 +61,14 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
-                            padding: widget.showBackButton && (_canPop || widget.onBackPressed != null)
-                                ? const EdgeInsets.symmetric(
+                            padding: widget.showBackButton && (_canPop == true || widget.onBackPressed != null)
+                                ? EdgeInsets.symmetric(
                                     horizontal: 56,
-                                    vertical: 14,
+                                    vertical: 14 * Theme.of(context).elementScale,
                                   )
-                                : const EdgeInsets.symmetric(
+                                : EdgeInsets.symmetric(
                                     horizontal: 16,
-                                    vertical: 14,
+                                    vertical: 14 * Theme.of(context).elementScale,
                                   ),
                             child: GsaWidgetText(
                               widget.label ?? '',
@@ -84,7 +79,7 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                             ),
                           ),
                         ),
-                        if (widget.showBackButton && (_canPop || widget.onBackPressed != null))
+                        if (widget.showBackButton && (_canPop == true || widget.onBackPressed != null))
                           Positioned(
                             left: 0,
                             top: 0,
@@ -94,7 +89,7 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                               foregroundColor: Theme.of(context).appBarTheme.titleTextStyle?.color,
                               outlined: true,
                               onTap: () => widget.onBackPressed == null
-                                  ? _canPop
+                                  ? _canPop == true
                                       ? Navigator.pop(context)
                                       : null
                                   : widget.onBackPressed!(),

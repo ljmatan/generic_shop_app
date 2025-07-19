@@ -52,14 +52,10 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
         Positioned(
           right: 16,
           bottom: 16 + MediaQuery.of(context).padding.bottom,
-          child: FilledButton.icon(
-            icon: GsaWidgetText(
-              'Filters',
-            ),
-            label: const Icon(
-              Icons.tune,
-            ),
-            onPressed: () {
+          child: GsaWidgetButton.filled(
+            label: 'Filters',
+            icon: Icons.tune,
+            onTap: () {
               FocusManager.instance.primaryFocus?.unfocus();
               FocusScope.of(context).unfocus();
               showModalBottomSheet(

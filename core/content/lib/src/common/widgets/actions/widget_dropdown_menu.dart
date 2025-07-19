@@ -150,7 +150,7 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
       menuHeight: widget.height,
       initialSelection: _initialSelection,
       expandedInsets: EdgeInsets.zero,
-      textStyle: GsaWidgetTextField.themeProperties.textStyle(),
+      textStyle: GsaWidgetTextField.themeProperties.textStyle(context),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       menuStyle: Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(
             minimumSize: WidgetStatePropertyAll(

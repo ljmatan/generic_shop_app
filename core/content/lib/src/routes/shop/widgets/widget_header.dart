@@ -55,17 +55,11 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            IconButton.filled(
-                              icon: Icon(
-                                Navigator.of(context).canPop() ? Icons.chevron_left : Icons.menu,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              style: const ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  Colors.white,
-                                ),
-                              ),
-                              onPressed: Navigator.of(context).canPop()
+                            GsaWidgetButton.filled(
+                              icon: Navigator.of(context).canPop() ? Icons.chevron_left : Icons.menu,
+                              backgroundColor: Colors.white,
+                              foregroundColor: Theme.of(context).primaryColor,
+                              onTap: Navigator.of(context).canPop()
                                   ? () {
                                       Navigator.pop(context);
                                     }
@@ -73,17 +67,11 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                       _openDrawer();
                                     },
                             ),
-                            IconButton.filled(
-                              icon: Icon(
-                                GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              style: const ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  Colors.white,
-                                ),
-                              ),
-                              onPressed: GsaConfig.cartEnabled
+                            GsaWidgetButton.filled(
+                              icon: GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
+                              backgroundColor: Colors.white,
+                              foregroundColor: Theme.of(context).primaryColor,
+                              onTap: GsaConfig.cartEnabled
                                   ? () {
                                       _openCartPage();
                                     }
@@ -116,17 +104,11 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                         child: Row(
                           children: [
                             if (Navigator.of(context).canPop()) ...[
-                              IconButton.filled(
-                                icon: Icon(
-                                  Icons.chevron_left,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                style: const ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    Colors.white,
-                                  ),
-                                ),
-                                onPressed: () {
+                              GsaWidgetButton.filled(
+                                icon: Icons.chevron_left,
+                                backgroundColor: Colors.white,
+                                foregroundColor: Theme.of(context).primaryColor,
+                                onTap: () {
                                   Navigator.pop(context);
                                 },
                               ),
@@ -164,27 +146,12 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                 Stack(
                                   clipBehavior: Clip.none,
                                   children: [
-                                    IconButton.filled(
-                                      icon: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                                        child: Row(
-                                          children: [
-                                            GsaWidgetText(
-                                              'Cart',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Icon(
-                                              GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
-                                              color: Colors.white,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onPressed: GsaConfig.cartEnabled
+                                    GsaWidgetButton.filled(
+                                      label: 'Cart',
+                                      icon: GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Theme.of(context).primaryColor,
+                                      onTap: GsaConfig.cartEnabled
                                           ? () {
                                               _openCartPage();
                                             }
@@ -196,12 +163,12 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                   ],
                                 ),
                                 const SizedBox(width: 16),
-                                IconButton.filled(
-                                  icon: const Icon(
-                                    Icons.menu,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () => _openDrawer(),
+                                GsaWidgetButton.filled(
+                                  icon: Icons.menu,
+                                  foregroundColor: Colors.white,
+                                  onTap: () {
+                                    _openDrawer();
+                                  },
                                 ),
                               ],
                             ),
