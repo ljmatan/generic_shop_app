@@ -1,7 +1,14 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart' as shared_preferences;
+import 'package:sembast/sembast.dart' as sembast;
+import 'package:sembast_web/sembast_web.dart' as sembast_web;
+import 'package:sembast/sembast_io.dart' as sembast_io;
+import 'package:sembast/utils/database_utils.dart' as sembast_utils;
 
 part '../../i18n/service_cache_i18n.dart';
 part 'service_cache_entry.dart';
@@ -31,9 +38,31 @@ class GsaServiceCache extends GsaService {
   ///
   static const int _version = 0;
 
+  /// Whether the implementation is relying on
+  /// [sembast_web](https://pub.dev/packages/sembast_web)
+  /// as opposed to the [https://pub.dev/packages/shared_preferences] package.
+  ///
+  /// The shared_preferences implementation might run into
+  /// [QuotaExceededError](https://developer.mozilla.org/en-US/docs/Web/API/QuotaExceededError),
+  /// which is why a database integration is preferred.
+  ///
+  static bool database = kIsWeb || kIsWasm;
+
   /// Entrypoint to the methods and properties provided by the shared_preferences package.
   ///
   shared_preferences.SharedPreferencesWithCache? _sharedPreferences;
+
+  /// A class to manage database storage for cache services.
+  ///
+  sembast.Database? _db;
+
+  /// A pointer to a database store.
+  ///
+  sembast.StoreRef? _dbStorage;
+
+  /// Runtime collection of values retrieved from the secure storage.
+  ///
+  Map<int, String>? _dbStorageEntries;
 
   /// Initialises the [_sharedPreferences] property and handle data cache versions.
   ///
@@ -43,9 +72,33 @@ class GsaServiceCache extends GsaService {
   @override
   Future<void> init() async {
     await super.init();
-    _sharedPreferences = await shared_preferences.SharedPreferencesWithCache.create(
-      cacheOptions: shared_preferences.SharedPreferencesWithCacheOptions(),
-    );
+    const timeoutDuration = Duration(seconds: 10);
+    const timeoutMessage = 'Failed to initialise cache service within alloted timeframe.';
+    if (database) {
+      _dbStorage = sembast.intMapStoreFactory.store();
+      _db = await sembast_web.databaseFactoryWeb.openDatabase('gsaCache').timeout(
+        timeoutDuration,
+        onTimeout: () {
+          throw Exception(timeoutMessage);
+        },
+      );
+      final entries = await _dbStorage!.find(_db!);
+      _dbStorageEntries = {};
+      for (final entry in entries) {
+        if (entry.key != null && entry.value != null) {
+          _dbStorageEntries![entry.key as int] = entry.value!.toString();
+        }
+      }
+    } else {
+      _sharedPreferences = await shared_preferences.SharedPreferencesWithCache.create(
+        cacheOptions: shared_preferences.SharedPreferencesWithCacheOptions(),
+      ).timeout(
+        timeoutDuration,
+        onTimeout: () {
+          throw Exception(timeoutMessage);
+        },
+      );
+    }
   }
 
   /// Event triggered on user cookie acknowledgement.
@@ -54,29 +107,30 @@ class GsaServiceCache extends GsaService {
     final version = GsaServiceCacheEntry.version.value as int?;
     // If the cached version is different than the current [_version], handle logic for updating cached values.
     if (_version != version) {
-      switch (version) {
+      if (version == null) {
         /// If the cached [version] argument is `null`, the user hasn't previously acknowledged cache service consent.
         ///
         /// Once the user has given their consent, default values defined for [GsaServiceCacheEntry] objects are recorded to device storage.
         ///
-        case null:
-          for (final cacheId in GsaServiceCacheEntry.values) {
-            if (cacheId.defaultValue != null) {
-              try {
-                cacheId.setValue(cacheId.defaultValue);
-              } catch (e) {
-                GsaServiceLogging.instance.logError('Error setting default cache value: $e');
-              }
+        for (final cacheId in GsaServiceCacheEntry.values) {
+          if (cacheId.defaultValue != null) {
+            try {
+              cacheId.setValue(cacheId.defaultValue);
+            } catch (e) {
+              GsaServiceLogging.instance.logError('Error setting default cache value: $e');
             }
           }
-
-        /// Here we can add logic for handling cached values if is a newer version of cache manager
-        /// for every new version add a new case
-        case _version:
-          // Version is up-to-date.
-          break;
-        default:
-          throw '${GsaServiceCacheI18N.invalidVersionErrorMessage.value.display}: $version';
+        }
+      } else {
+        switch (version) {
+          /// Here we can add logic for handling cached values if is a newer version of cache manager
+          /// for every new version add a new case
+          case _version:
+            // Version is up-to-date.
+            break;
+          default:
+            throw '${GsaServiceCacheI18N.invalidVersionErrorMessage.value.display}: $version';
+        }
       }
     }
   }
@@ -91,35 +145,56 @@ class GsaServiceCache extends GsaService {
     GsaServiceCacheEntry.cookieConsentStatistical,
   };
 
+  /// Collection of cached value keys stored to the user device.
+  ///
+  Set<String>? get cachedKeys {
+    if (database) {
+      return _dbStorageEntries?.keys.map(
+        (intKey) {
+          return intKey.toString();
+        },
+      ).toSet();
+    } else {
+      return _sharedPreferences?.keys;
+    }
+  }
+
   /// Removes all cache data from the device storage,
   /// except for the keys noted under the [persistent] list.
   ///
   Future<void> clearData({
     bool clearPersistent = false,
   }) async {
-    if (_sharedPreferences != null) {
-      for (var key in _sharedPreferences!.keys) {
-        if (clearPersistent ||
-            persistent
-                .where(
-                  (cacheId) => cacheId.name == key,
+    for (var key in cachedKeys ?? <String>[]) {
+      if (clearPersistent ||
+          persistent
+              .where(
+                (cacheId) => cacheId.name == key,
+              )
+              .isEmpty) {
+        if (database) {
+          if (_db != null && int.tryParse(key) != null) {
+            await _dbStorage
+                ?.record(
+                  int.parse(key),
                 )
-                .isEmpty) {
+                .delete(_db!);
+          }
+        } else {
           await _sharedPreferences?.remove(key);
         }
       }
     }
   }
 
-  /// Collection of cached value keys stored to the user device.
-  ///
-  Set<String>? get cachedKeys {
-    return _sharedPreferences?.keys;
-  }
-
   /// Returns a value associated with the specified [key].
   ///
   dynamic valueWithKey(String key) {
-    return _sharedPreferences?.get(key);
+    if (database) {
+      // TODO?
+      return null;
+    } else {
+      return _sharedPreferences?.get(key);
+    }
   }
 }

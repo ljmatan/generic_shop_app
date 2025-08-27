@@ -43,7 +43,11 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    _canPop ??= Navigator.of(context).canPop();
+    try {
+      _canPop ??= Navigator.of(context).canPop();
+    } catch (e) {
+      _canPop = false;
+    }
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Stack(

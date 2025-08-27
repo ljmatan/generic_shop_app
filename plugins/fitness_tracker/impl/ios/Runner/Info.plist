@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This information will be used to deliver personalized ads to you.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera permission is required in order to enable QR code scanning.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone permission is required in order to enable full camera functionality.</string>
 </dict>
 </plist>

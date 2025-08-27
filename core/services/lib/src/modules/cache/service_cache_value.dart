@@ -21,6 +21,19 @@ abstract mixin class GsaServiceCacheValue {
     }
   }
 
+  /// Integer identifier derived from the [_cacheId] value.
+  ///
+  /// Used with the `sembast` database mode.
+  ///
+  int get _cacheIdInt {
+    String hex = utf8.encode(_cacheId).map(
+      (b) {
+        return b.toRadixString(16).padLeft(2, '0');
+      },
+    ).join();
+    return int.parse(hex, radix: 16);
+  }
+
   /// The specified data type for this cache value.
   ///
   Type get dataType;
@@ -49,15 +62,56 @@ abstract mixin class GsaServiceCacheValue {
     if (!enabled) return null;
     switch (dataType) {
       case const (int):
-        return GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId) ?? defaultValue;
+        if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+          final value = GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt];
+          if (value?.isNotEmpty == true) {
+            return int.tryParse(value!);
+          } else {
+            return defaultValue;
+          }
+        } else {
+          final value = GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId);
+          return value ?? defaultValue;
+        }
       case const (bool):
-        return GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId) ?? defaultValue;
+        if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+          final value = GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt];
+          if (value?.isNotEmpty == true) {
+            return bool.tryParse(value!);
+          } else {
+            return defaultValue;
+          }
+        } else {
+          final value = GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId);
+          return value ?? defaultValue;
+        }
       case const (String):
-        return GsaServiceCache.instance._sharedPreferences?.getString(_cacheId) ?? defaultValue;
+        if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+          final value = GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt];
+          if (value != null) {
+            return value;
+          } else {
+            return defaultValue;
+          }
+        } else {
+          final value = GsaServiceCache.instance._sharedPreferences?.getString(_cacheId);
+          return value ?? defaultValue;
+        }
       case const (Iterable<String>):
       case const (List<String>):
       case const (Set<String>):
-        return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId) ?? defaultValue;
+        if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+          final value = GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt];
+          if (value?.isNotEmpty == true) {
+            final decodedValue = jsonDecode(value!);
+            return List<String>.from(decodedValue);
+          } else {
+            return defaultValue;
+          }
+        } else {
+          final value = GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
+          return value ?? defaultValue;
+        }
       default:
         throw 'Value get method not implemented for $dataType with $_cacheId.';
     }
@@ -67,20 +121,8 @@ abstract mixin class GsaServiceCacheValue {
   ///
   dynamic get decrypted {
     if (!enabled || !secure) return null;
-    switch (dataType) {
-      case const (int):
-        return GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId);
-      case const (bool):
-        return GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId);
-      case const (String):
-        return GsaServiceCache.instance._sharedPreferences?.getString(_cacheId);
-      case const (Iterable<String>):
-      case const (List<String>):
-      case const (Set<String>):
-        return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
-      default:
-        throw 'Value get method not implemented for $dataType with $_cacheId.';
-    }
+    // TODO
+    return value;
   }
 
   /// Records the given value to the device storage.
@@ -102,18 +144,54 @@ abstract mixin class GsaServiceCacheValue {
     if (enabled) {
       switch (dataType) {
         case const (int):
-          await GsaServiceCache.instance._sharedPreferences?.setInt(_cacheId, value);
+          if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+            final stringValue = (value as int).toString();
+            await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).put(
+                  GsaServiceCache.instance._db!,
+                  stringValue,
+                );
+            GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt] = stringValue;
+          } else {
+            await GsaServiceCache.instance._sharedPreferences?.setInt(_cacheId, value);
+          }
           break;
         case const (bool):
-          await GsaServiceCache.instance._sharedPreferences?.setBool(_cacheId, value);
+          if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+            final stringValue = (value as bool).toString();
+            await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).put(
+                  GsaServiceCache.instance._db!,
+                  stringValue,
+                );
+            GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt] = stringValue;
+          } else {
+            await GsaServiceCache.instance._sharedPreferences?.setBool(_cacheId, value);
+          }
           break;
         case const (String):
-          await GsaServiceCache.instance._sharedPreferences?.setString(_cacheId, value);
+          if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+            await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).put(
+                  GsaServiceCache.instance._db!,
+                  value as String,
+                );
+            GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt] = value;
+          } else {
+            await GsaServiceCache.instance._sharedPreferences?.setString(_cacheId, value);
+          }
           break;
         case const (Iterable<String>):
         case const (List<String>):
         case const (Set<String>):
-          await GsaServiceCache.instance._sharedPreferences?.setStringList(_cacheId, value.toList());
+          final listValue = (value as Iterable<String>).toList();
+          if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+            final encodedValue = jsonEncode(listValue);
+            await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).put(
+                  GsaServiceCache.instance._db!,
+                  encodedValue,
+                );
+            GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt] = encodedValue;
+          } else {
+            await GsaServiceCache.instance._sharedPreferences?.setStringList(_cacheId, listValue);
+          }
           break;
         default:
           throw 'Value set method not implemented for $dataType with $this.';
@@ -124,7 +202,14 @@ abstract mixin class GsaServiceCacheValue {
   /// Removes the given value for this instance from the given storage.
   ///
   Future<void> removeValue() async {
-    await GsaServiceCache.instance._sharedPreferences?.remove(_cacheId);
+    if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+      await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).delete(
+            GsaServiceCache.instance._db!,
+          );
+      GsaServiceCache.instance._dbStorageEntries?.remove(_cacheIdInt);
+    } else {
+      await GsaServiceCache.instance._sharedPreferences?.remove(_cacheId);
+    }
   }
 
   /// User-visible name for this cache data instance.

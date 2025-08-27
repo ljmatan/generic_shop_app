@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-
-import 'package:universal_html/html.dart' as html;
 
 /// Type identifier for the [GsaRoute] objects.
 ///
@@ -227,13 +224,6 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
         primaryColor: Theme.of(context).primaryColor.value,
       ),
     );
-    if (1 == 2 && kIsWeb) {
-      html.window.history.replaceState(
-        null,
-        widget.routeType.displayName,
-        '/${widget.routeId}',
-      );
-    }
   }
 
   /// The amount of time the user has seen this screen content.

@@ -34,10 +34,13 @@ class GsaState extends State<Gsa> {
         }
 
         if (snapshot.hasError) {
-          return Material(
-            child: Center(
-              child: GsaWidgetError(
-                snapshot.error.toString(),
+          return Directionality(
+            textDirection: TextDirection.ltr,
+            child: Material(
+              child: Center(
+                child: GsaWidgetError(
+                  snapshot.error.toString(),
+                ),
               ),
             ),
           );
