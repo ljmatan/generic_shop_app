@@ -63,6 +63,26 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"
+    },
+    {
+      "name": "froddo_b2b",
+      "cwd": "plugins/froddo_b2b/impl",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "froddo_b2b (profile mode)",
+      "cwd": "plugins/froddo_b2b/impl",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "froddo_b2b (release mode)",
+      "cwd": "plugins/froddo_b2b/impl",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
     }
   ]
 }

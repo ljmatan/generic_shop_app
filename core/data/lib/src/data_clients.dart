@@ -18,14 +18,14 @@ class GsaDataClients extends GsaData {
   Future<void> init({
     List<GsaModelClient>? clients,
   }) async {
-    clear();
+    await clear();
     if (clients != null) {
       instance.collection.addAll(clients);
     }
   }
 
   @override
-  void clear() {
+  Future<void> clear() async {
     collection.clear();
   }
 }

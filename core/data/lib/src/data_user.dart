@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -26,12 +25,12 @@ class GsaDataUser extends GsaData {
   Future<void> init({
     GsaModelUser? user,
   }) async {
-    clear();
+    await clear();
     instance.user = user;
   }
 
   @override
-  void clear() {
+  Future<void> clear() async {
     user = null;
   }
 

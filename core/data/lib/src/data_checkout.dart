@@ -32,11 +32,11 @@ class GsaDataCheckout extends GsaData {
 
   @override
   Future<void> init() async {
-    clear();
+    await clear();
   }
 
   @override
-  void clear() {
+  Future<void> clear() async {
     orderDraft.clear();
     notifyListeners();
   }

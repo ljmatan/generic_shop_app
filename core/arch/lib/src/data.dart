@@ -87,7 +87,7 @@ abstract class GsaData {
 
   /// Removes any associated data from the device storage and runtime memory.
   ///
-  void clear();
+  Future<void> clear();
 
   /// Invokes the [init] method on all of the active subclass instances.
   ///
@@ -99,9 +99,9 @@ abstract class GsaData {
 
   /// Invokes the [clear] method on each of the active observable instance.
   ///
-  static void clearAll() {
+  static Future<void> clearAll() async {
     for (final observable in _observables) {
-      observable.clear();
+      await observable.clear();
     }
   }
 }

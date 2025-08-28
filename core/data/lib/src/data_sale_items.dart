@@ -27,7 +27,7 @@ class GsaDataSaleItems extends GsaData {
   List<GsaModelSaleItem> paymentOptions = [];
 
   @override
-  void clear() {
+  Future<void> clear() async {
     collection.clear();
     categories.clear();
   }
@@ -39,7 +39,7 @@ class GsaDataSaleItems extends GsaData {
     List<GsaModelSaleItem>? deliveryOptions,
     List<GsaModelSaleItem>? paymentOptions,
   }) async {
-    clear();
+    await clear();
     if (categories != null) instance.categories.addAll(categories);
     if (saleItems != null) instance.collection.addAll(saleItems);
     if (deliveryOptions != null) instance.deliveryOptions.addAll(deliveryOptions);

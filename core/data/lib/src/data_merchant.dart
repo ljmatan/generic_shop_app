@@ -22,12 +22,12 @@ class GsaDataMerchant extends GsaData {
   Future<void> init({
     GsaModelMerchant? merchant,
   }) async {
-    clear();
+    await clear();
     instance.merchant = merchant;
   }
 
   @override
-  void clear() {
+  Future<void> clear() async {
     merchant = null;
   }
 }

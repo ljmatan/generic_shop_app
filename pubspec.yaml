@@ -1,0 +1,19 @@
+name: generic_shop_app
+
+publish_to: none
+
+environment:
+  sdk: ^3.9.0
+
+workspace:
+  - core/api
+  - core/arch
+  - core/content 
+  - core/data 
+  - core/demo 
+  - core/services
+  - plugins/fitness_tracker
+  - plugins/froddo_b2b
+  - plugins/iot
+  - plugins/ivancica
+  - plugins/trading
