@@ -187,6 +187,8 @@ class GsaTheme {
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      focusColor: Colors.transparent,
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: _inputDecorationTheme,
         menuStyle: MenuStyle(
@@ -234,12 +236,16 @@ class GsaTheme {
       ),
       expansionTileTheme: ExpansionTileThemeData(
         tilePadding: EdgeInsets.zero,
+        childrenPadding: EdgeInsets.zero,
+        backgroundColor: Colors.transparent,
         expandedAlignment: Alignment.centerLeft,
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
           splashFactory: NoSplash.splashFactory,
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(
+            Colors.transparent,
+          ),
           shape: WidgetStatePropertyAll(
             _roundedRectangleBorder,
           ),
@@ -263,7 +269,9 @@ class GsaTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
           splashFactory: NoSplash.splashFactory,
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(
+            Colors.transparent,
+          ),
           shape: WidgetStatePropertyAll(
             _roundedRectangleBorder,
           ),
@@ -287,7 +295,9 @@ class GsaTheme {
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           splashFactory: NoSplash.splashFactory,
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(
+            Colors.transparent,
+          ),
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
           ),
@@ -308,7 +318,9 @@ class GsaTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           splashFactory: NoSplash.splashFactory,
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(
+            Colors.transparent,
+          ),
         ),
       ),
       scaffoldBackgroundColor: _brightness == Brightness.light ? Colors.white : const Color(0xff121212),

@@ -229,7 +229,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                     : const SizedBox()
                 : GsaWidgetText(
                     '${widget.label}',
-                    interpolated: widget.interpolatedText,
+                    isInterpolated: widget.interpolatedText,
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       color: widget.foregroundColor,

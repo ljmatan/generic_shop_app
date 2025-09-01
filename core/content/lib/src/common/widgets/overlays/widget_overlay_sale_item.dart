@@ -96,7 +96,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 padding: const EdgeInsets.only(bottom: 12),
                 child: GsaWidgetText(
                   widget.saleItem.amountMeasureFormatted!,
-                  interpolated: true,
+                  isInterpolated: true,
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 12,
@@ -110,7 +110,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   widget.saleItem.description!.length > 500
                       ? widget.saleItem.description!.substring(0, 500) + '...'
                       : widget.saleItem.description!,
-                  interpolated: true,
+                  isInterpolated: true,
                 ),
               ),
             if (GsaConfig.cartEnabled && widget.saleItem.price != null)
@@ -172,7 +172,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                                   padding: const EdgeInsets.all(8),
                                   child: GsaWidgetText(
                                     '$_cartCount',
-                                    interpolated: true,
+                                    isInterpolated: true,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w900,

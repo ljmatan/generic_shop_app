@@ -15,8 +15,26 @@ class GsaRouteCookieConsent extends GsacRoute {
 class _GsaRouteCookieConsentState extends GsaRouteState<GsaRouteCookieConsent> {
   @override
   Widget view(BuildContext context) {
-    return const Scaffold(
-      body: GsaWidgetCookieConsent(),
+    return Scaffold(
+      body: Column(
+        children: [
+          GsaWidgetAppBar(
+            label: widget.displayName,
+          ),
+          Expanded(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: Theme.of(context).listViewPadding,
+                  child: const GsaWidgetCookieConsent(
+                    isHeightConstrained: false,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

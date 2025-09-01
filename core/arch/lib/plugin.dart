@@ -17,14 +17,10 @@ enum GsaPluginClient {
 /// application architecture, which may be based off of various client integrations.
 ///
 abstract class GsaPlugin {
-  /// Widget constructor with body ensuring [GsaConfig.plugin] information setup on initialisation.
+  /// Marks this plugin instance as the active application client.
   ///
-  GsaPlugin() {
-    try {
-      GsaConfig.plugin;
-    } catch (e) {
-      GsaConfig.plugin = this;
-    }
+  void configureClient() {
+    GsaConfig.plugin = this;
   }
 
   /// The client specified for this plugin integration.

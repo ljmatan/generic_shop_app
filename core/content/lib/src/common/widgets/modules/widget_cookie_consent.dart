@@ -11,7 +11,14 @@ part 'i18n/widget_cookie_consent_i18n.dart';
 class GsaWidgetCookieConsent extends StatefulWidget {
   /// Default, unnamed widget constructor.
   ///
-  const GsaWidgetCookieConsent({super.key});
+  const GsaWidgetCookieConsent({
+    super.key,
+    this.isHeightConstrained = true,
+  });
+
+  /// Whether the cookie menu is constrained in height.
+  ///
+  final bool isHeightConstrained;
 
   @override
   State<GsaWidgetCookieConsent> createState() => _GsaWidgetCookieConsentState();
@@ -132,7 +139,7 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
           const Divider(height: 0),
           ConstrainedBox(
             constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * .6,
+              maxHeight: widget.isHeightConstrained ? MediaQuery.of(context).size.height * .6 : double.infinity,
             ),
             child: SingleChildScrollView(
               controller: _scrollController,

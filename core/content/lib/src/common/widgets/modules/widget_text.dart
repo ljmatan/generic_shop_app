@@ -16,7 +16,8 @@ class GsaWidgetText extends StatefulWidget {
     this.textAlign,
     this.maxLines,
     this.overflow,
-    this.interpolated = false,
+    this.isConstrained = false,
+    this.isInterpolated = false,
   })  : _key = key,
         labels = const [];
 
@@ -29,9 +30,10 @@ class GsaWidgetText extends StatefulWidget {
     this.textAlign,
     this.maxLines,
     this.overflow,
+    this.isConstrained = false,
   })  : _key = key,
         label = '',
-        interpolated = false;
+        isInterpolated = false;
 
   /// Key forwarded to this instance by the parent widget.
   ///
@@ -74,9 +76,13 @@ class GsaWidgetText extends StatefulWidget {
   ///
   static Future<List<String>>? Function(List<String> text)? translate;
 
+  /// Whether the widget will be automatically sized according to the parent constraints.
+  ///
+  final bool isConstrained;
+
   /// Whether the text value is provided as a variable (and not to be translated).
   ///
-  final bool interpolated;
+  final bool isInterpolated;
 
   @override
   State<GsaWidgetText> createState() {
@@ -222,7 +228,7 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
                     ),
               ]
             : [
-                if (widget.text.interpolated)
+                if (widget.text.isInterpolated)
                   widget.text.label
                 else
                   _translatedContent(

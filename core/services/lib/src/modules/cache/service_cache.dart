@@ -151,7 +151,7 @@ class GsaServiceCache extends GsaService {
     }
     // Clear cookies according to user consent status.
     for (final cacheEntry in _cacheEntries) {
-      if (cacheEntry.isFunctionalCookie && !GsaServiceConsent.instance.consentStatus.functionalCookies()) {
+      if (cacheEntry.isFunctionalCookie && GsaServiceConsent.instance.consentStatus.functionalCookies() != true) {
         await cacheEntry.removeValue();
       }
     }

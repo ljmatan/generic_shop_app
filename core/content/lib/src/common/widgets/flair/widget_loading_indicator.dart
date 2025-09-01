@@ -34,28 +34,31 @@ class _GsaWidgetLoadingIndicatorState extends State<GsaWidgetLoadingIndicator> w
     return AnimatedBuilder(
       animation: _controller,
       builder: (_, __) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-            3,
-            (i) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 6),
-                child: Transform.translate(
-                  offset: Offset(0, _dotOffset(i)),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: SizedBox(
-                      width: 16,
-                      height: 16,
+        return Directionality(
+          textDirection: TextDirection.ltr,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(
+              3,
+              (i) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: Transform.translate(
+                    offset: Offset(0, _dotOffset(i)),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: SizedBox(
+                        width: 16,
+                        height: 16,
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         );
       },

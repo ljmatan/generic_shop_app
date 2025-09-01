@@ -45,7 +45,7 @@ abstract mixin class GsaServiceCacheValue {
   /// Method checking for the functional cookie permission type and status.
   ///
   bool get _isFunctionalCookieEnabled {
-    return !isFunctionalCookie || GsaServiceConsent.instance.consentStatus.functionalCookies();
+    return !isFunctionalCookie || GsaServiceConsent.instance.consentStatus.functionalCookies() == true;
   }
 
   /// A default value assigned to this cache item on initial app setup.

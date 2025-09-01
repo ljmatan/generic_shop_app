@@ -29,6 +29,7 @@ dependencies:
   zxing2: ^0.2.4
   image: ^4.5.4
   cached_network_image: ^3.4.1
+  flutter_auto_size_text: ^4.1.0
 
 dev_dependencies:
   flutter_test:

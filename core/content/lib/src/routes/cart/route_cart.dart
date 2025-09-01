@@ -87,7 +87,7 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                                 builder: (context, value, child) {
                                   return GsaWidgetText(
                                     GsaDataCheckout.instance.orderDraft.totalItemPriceFormatted ?? 'N/A',
-                                    interpolated: true,
+                                    isInterpolated: true,
                                     style: const TextStyle(
                                       decoration: TextDecoration.underline,
                                       fontWeight: FontWeight.w700,

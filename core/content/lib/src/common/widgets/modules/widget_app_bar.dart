@@ -98,7 +98,7 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                             bottom: 0,
                             right: 16,
                             child: GsaWidgetLogo(
-                              width: 100,
+                              width: 200,
                               height: MediaQuery.of(context).size.height,
                             ),
                           ),

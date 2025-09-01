@@ -219,8 +219,6 @@ class GsaWidgetTextField extends StatefulWidget {
 }
 
 class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
-  final _formFieldKey = UniqueKey();
-
   late TextEditingController _textController;
 
   bool _externalTextUpdate = false;

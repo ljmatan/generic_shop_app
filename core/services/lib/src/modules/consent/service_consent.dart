@@ -40,7 +40,12 @@ class GsaServiceConsent extends GsaService {
 
   /// Property with which all of the defined consent statuses can be accessed.
   ///
-  final consentStatus = (
+  final ({
+    bool? Function() functionalCookies,
+    bool? Function() mandatoryCookies,
+    bool? Function() marketingCookies,
+    bool? Function() statisticalCookies,
+  }) consentStatus = (
     mandatoryCookies: () => GsaServiceCacheEntry.cookieConsentMandatory.value,
     marketingCookies: () => GsaServiceCacheEntry.cookieConsentMarketing.value,
     functionalCookies: () => GsaServiceCacheEntry.cookieConsentFunctional.value,

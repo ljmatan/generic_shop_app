@@ -135,7 +135,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                     child: GsaWidgetText(
                                       '${widget.saleItem.price!.discount!.formatted}',
-                                      interpolated: true,
+                                      isInterpolated: true,
                                       style: TextStyle(
                                         color: Theme.of(context).colorScheme.secondary,
                                       ),
@@ -155,14 +155,14 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                         if (widget.saleItem.amountMeasureFormatted != null)
                           GsaWidgetText(
                             widget.saleItem.amountMeasureFormatted!,
-                            interpolated: true,
+                            isInterpolated: true,
                             style: const TextStyle(
                               fontSize: 10,
                             ),
                           ),
                         GsaWidgetText(
                           widget.saleItem.name ?? 'N/A',
-                          interpolated: true,
+                          isInterpolated: true,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -173,7 +173,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           GsaWidgetText(
                             '${widget.saleItem.price!.formatted}' +
                                 (widget.saleItem.price?.discount?.centum != null ? ' ${widget.saleItem.price!.discount!.formatted}' : ''),
-                            interpolated: true,
+                            isInterpolated: true,
                             maxLines: 1,
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
