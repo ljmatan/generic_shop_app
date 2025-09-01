@@ -190,7 +190,7 @@ class _GsaRouteCameraState extends GsaRouteState<GsaRouteCamera> with WidgetsBin
                 if (code.isNotEmpty) {
                   GsaServiceLogging.instance.logGeneral(code);
                   switch (GsaConfig.plugin.client) {
-                    case GsaClient.froddoB2b:
+                    case GsaPluginClient.froddoB2b:
                       final saleItem = GsaDataSaleItems.instance.collection.firstWhereOrNull(
                         (saleItem) {
                           return saleItem.productCode == code;
@@ -260,7 +260,7 @@ class _GsaRouteCameraState extends GsaRouteState<GsaRouteCamera> with WidgetsBin
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: GsaWidgetLoadingIndicator(),
                   );
                 }
 

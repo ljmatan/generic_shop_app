@@ -28,7 +28,7 @@ class GsaState extends State<Gsa> {
         if (snapshot.connectionState != ConnectionState.done) {
           return const Material(
             child: Center(
-              child: CircularProgressIndicator(),
+              child: GsaWidgetLoadingIndicator(),
             ),
           );
         }

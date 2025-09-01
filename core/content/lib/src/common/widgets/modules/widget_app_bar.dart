@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 /// Application toolbar / navigation bar / app bar implementation.
@@ -52,7 +53,15 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
       child: IntrinsicHeight(
         child: Stack(
           children: [
-            const GsaWidgetFlairBlobBackground(count: 12),
+            if (GsaConfig.plugin.theme.animatedAppBar != false)
+              const GsaWidgetFlairBlobBackground(count: 12)
+            else
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: SizedBox.expand(),
+              ),
             Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top,
@@ -78,11 +87,21 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                               widget.label ?? '',
                               textAlign: Theme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
-                                    shadows: Theme.of(context).outlineShadows,
+                                    shadows: GsaConfig.plugin.theme.animatedAppBar != false ? Theme.of(context).outlineShadows : null,
                                   ),
                             ),
                           ),
                         ),
+                        if (Theme.of(context).dimensions.largeScreen && GsaConfig.plugin.theme.logoImagePath != null)
+                          Positioned(
+                            top: 0,
+                            bottom: 0,
+                            right: 16,
+                            child: GsaWidgetLogo(
+                              width: 100,
+                              height: MediaQuery.of(context).size.height,
+                            ),
+                          ),
                         if (widget.showBackButton && (_canPop == true || widget.onBackPressed != null))
                           Positioned(
                             left: 0,
@@ -91,7 +110,7 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                             child: GsaWidgetButton.icon(
                               icon: Icons.chevron_left,
                               foregroundColor: Theme.of(context).appBarTheme.titleTextStyle?.color,
-                              outlined: true,
+                              outlined: GsaConfig.plugin.theme.animatedAppBar,
                               onTap: () => widget.onBackPressed == null
                                   ? _canPop == true
                                       ? Navigator.pop(context)

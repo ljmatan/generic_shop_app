@@ -36,12 +36,6 @@ class GsaApiSaleItems extends GsaApi {
   @override
   String get protocol => 'http';
 
-  @override
-  String get identifier => 'sale-items';
-
-  @override
-  int get version => 0;
-
   /// Registers the given sale item data to the system.
   ///
   /// Returns the newly-created sale item ID on successful response.

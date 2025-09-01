@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -17,11 +18,31 @@ class GsaWidgetCookieConsent extends StatefulWidget {
 }
 
 class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
-  final _cookieIds = <GsaServiceCacheEntry, String>{
-    GsaServiceCacheEntry.cookieConsentMandatory: GsaWidgetCookieConsentI18N.mandatoryCookiesDescription.value.display,
-    GsaServiceCacheEntry.cookieConsentFunctional: GsaWidgetCookieConsentI18N.functionalCookiesDescription.value.display,
-    GsaServiceCacheEntry.cookieConsentStatistical: GsaWidgetCookieConsentI18N.statisticalCookiesDescription.value.display,
-    GsaServiceCacheEntry.cookieConsentMarketing: GsaWidgetCookieConsentI18N.marketingCookiesDescription.value.display,
+  final _cookieIds = <({
+    bool enabled,
+    GsaServiceCacheEntry cacheEntry,
+    String label,
+  })>{
+    (
+      enabled: GsaConfig.plugin.enabledCookieTypes.mandatory,
+      cacheEntry: GsaServiceCacheEntry.cookieConsentMandatory,
+      label: GsaWidgetCookieConsentI18N.mandatoryCookiesDescription.value.display,
+    ),
+    (
+      enabled: GsaConfig.plugin.enabledCookieTypes.functional,
+      cacheEntry: GsaServiceCacheEntry.cookieConsentFunctional,
+      label: GsaWidgetCookieConsentI18N.functionalCookiesDescription.value.display,
+    ),
+    (
+      enabled: GsaConfig.plugin.enabledCookieTypes.statistical,
+      cacheEntry: GsaServiceCacheEntry.cookieConsentStatistical,
+      label: GsaWidgetCookieConsentI18N.statisticalCookiesDescription.value.display,
+    ),
+    (
+      enabled: GsaConfig.plugin.enabledCookieTypes.marketing,
+      cacheEntry: GsaServiceCacheEntry.cookieConsentMarketing,
+      label: GsaWidgetCookieConsentI18N.marketingCookiesDescription.value.display,
+    ),
   };
 
   late List<bool> _cookieIdConsentStatus;
@@ -29,9 +50,13 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
   @override
   void initState() {
     super.initState();
-    _cookieIdConsentStatus = [
-      for (final cookieId in _cookieIds.entries) cookieId.key == GsaServiceCacheEntry.cookieConsentMandatory || cookieId.key.value == true,
-    ];
+    _cookieIdConsentStatus = _cookieIds.map(
+      (cookieId) {
+        final isMandatory = cookieId.cacheEntry == GsaServiceCacheEntry.cookieConsentMandatory;
+        final userAccepted = cookieId.cacheEntry.value == true;
+        return cookieId.enabled && (isMandatory || userAccepted);
+      },
+    ).toList();
   }
 
   final _scrollController = ScrollController();
@@ -42,11 +67,15 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.fastOutSlowIn,
     );
-    setState(() {
-      for (int i = 0; i < _cookieIdConsentStatus.length; i++) {
-        _cookieIdConsentStatus[i] = true;
-      }
-    });
+    setState(
+      () {
+        for (int i = 0; i < _cookieIdConsentStatus.length; i++) {
+          if (_cookieIds.elementAt(i).enabled) {
+            _cookieIdConsentStatus[i] = true;
+          }
+        }
+      },
+    );
   }
 
   Future<void> _declineOptional() async {
@@ -55,13 +84,16 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.fastOutSlowIn,
     );
-    setState(() {
-      for (int i = 0; i < _cookieIdConsentStatus.length; i++) {
-        if (_cookieIds.entries.elementAt(i).key != GsaServiceCacheEntry.cookieConsentMandatory) {
-          _cookieIdConsentStatus[i] = false;
+    setState(
+      () {
+        for (int i = 0; i < _cookieIdConsentStatus.length; i++) {
+          final cookie = _cookieIds.elementAt(i);
+          if (cookie.enabled && cookie.cacheEntry != GsaServiceCacheEntry.cookieConsentMandatory) {
+            _cookieIdConsentStatus[i] = false;
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   Future<void> _acceptSelection() async {
@@ -72,8 +104,8 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
         curve: Curves.fastOutSlowIn,
       );
     } else {
-      for (final id in _cookieIds.entries.indexed) {
-        await id.$2.key.setValue(_cookieIdConsentStatus[id.$1]);
+      for (final id in _cookieIds.indexed) {
+        await id.$2.cacheEntry.setValue(_cookieIdConsentStatus[id.$1]);
       }
       GsaServiceConsent.instance.onConsentStatusChanged();
       Navigator.pop(context);
@@ -112,18 +144,15 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                   const SizedBox(height: 20),
                   GsaWidgetText.rich(
                     [
-                      const GsaWidgetTextSpan(
-                        'We use cookies and similar technologies to help provide and improve content.\n\n'
-                        'You have control over the optional cookies that we use, '
-                        'and you can review or change your choices at any time.\n\n'
-                        'Learn more about cookies and how we use them by reviewing our ',
-                        style: TextStyle(
+                      GsaWidgetTextSpan(
+                        GsaWidgetCookieConsentI18N.descriptionIntro.value.display,
+                        style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 12,
                         ),
                       ),
                       GsaWidgetTextSpan(
-                        'Cookie Policy',
+                        GsaWidgetCookieConsentI18N.descriptionCookiePolicyLink.value.display,
                         style: const TextStyle(
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w700,
@@ -136,13 +165,14 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                       ),
                       const GsaWidgetTextSpan(
                         ', ',
+                        interpolated: true,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 12,
                         ),
                       ),
                       GsaWidgetTextSpan(
-                        'Privacy Policy',
+                        GsaWidgetCookieConsentI18N.descriptionPrivacyPolicyLink.value.display,
                         style: const TextStyle(
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w700,
@@ -154,14 +184,30 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                         },
                       ),
                       const GsaWidgetTextSpan(
-                        ', and ',
+                        ', ',
+                        interpolated: true,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 12,
                         ),
                       ),
                       GsaWidgetTextSpan(
-                        'Terms and Conditions',
+                        GsaWidgetCookieConsentI18N.descriptionAddition.value.display,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const GsaWidgetTextSpan(
+                        ' ',
+                        interpolated: true,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                      GsaWidgetTextSpan(
+                        GsaWidgetCookieConsentI18N.descriptionTermsAndConditionsLink.value.display,
                         style: const TextStyle(
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w700,
@@ -174,6 +220,7 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                       ),
                       const GsaWidgetTextSpan(
                         '.',
+                        interpolated: true,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 12,
@@ -182,30 +229,34 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  for (final cookieId in _cookieIds.entries.indexed)
+                  for (final cookieId in _cookieIds.indexed)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: GsaWidgetSwitch(
                         label: GsaWidgetText(
-                          cookieId.$2.key.displayName,
-                          style: const TextStyle(
+                          cookieId.$2.cacheEntry.displayName,
+                          style: TextStyle(
+                            color: cookieId.$2.enabled ? null : Colors.grey,
                             fontWeight: FontWeight.w700,
                             fontSize: 12,
                           ),
                         ),
                         child: GsaWidgetText(
-                          cookieId.$2.value,
-                          style: const TextStyle(
+                          cookieId.$2.label,
+                          style: TextStyle(
+                            color: cookieId.$2.enabled ? null : Colors.grey,
                             fontWeight: FontWeight.w300,
                             fontSize: 10,
                           ),
                         ),
-                        enabled: cookieId.$2.key != GsaServiceCacheEntry.cookieConsentMandatory,
+                        enabled: cookieId.$2.enabled && cookieId.$2.cacheEntry != GsaServiceCacheEntry.cookieConsentMandatory,
                         value: _cookieIdConsentStatus[cookieId.$1],
                         onTap: (value) {
-                          setState(() {
-                            _cookieIdConsentStatus[cookieId.$1] = !_cookieIdConsentStatus[cookieId.$1];
-                          });
+                          setState(
+                            () {
+                              _cookieIdConsentStatus[cookieId.$1] = !_cookieIdConsentStatus[cookieId.$1];
+                            },
+                          );
                         },
                       ),
                     ),
@@ -226,7 +277,11 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
           AnimatedSize(
             duration: const Duration(milliseconds: 400),
             curve: Curves.fastEaseInToSlowEaseOut,
-            child: _cookieIdConsentStatus.every((consentStatus) => consentStatus)
+            child: _cookieIdConsentStatus.indexed.every(
+              (consentStatus) {
+                return consentStatus.$2 || !_cookieIds.elementAt(consentStatus.$1).enabled;
+              },
+            )
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: GsaWidgetButton.text(
@@ -239,7 +294,11 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
           AnimatedSize(
             duration: const Duration(milliseconds: 400),
             curve: Curves.fastEaseInToSlowEaseOut,
-            child: _cookieIdConsentStatus.any((consentStatus) => !consentStatus)
+            child: _cookieIdConsentStatus.indexed.any(
+              (consentStatus) {
+                return !consentStatus.$2 && _cookieIds.elementAt(consentStatus.$1).enabled;
+              },
+            )
                 ? Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: SizedBox(

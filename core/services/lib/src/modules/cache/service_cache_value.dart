@@ -38,6 +38,16 @@ abstract mixin class GsaServiceCacheValue {
   ///
   Type get dataType;
 
+  /// Whether this cache entry is defined as a functional cookie.
+  ///
+  bool get isFunctionalCookie;
+
+  /// Method checking for the functional cookie permission type and status.
+  ///
+  bool get _isFunctionalCookieEnabled {
+    return !isFunctionalCookie || GsaServiceConsent.instance.consentStatus.functionalCookies();
+  }
+
   /// A default value assigned to this cache item on initial app setup.
   ///
   dynamic get defaultValue {
@@ -46,23 +56,25 @@ abstract mixin class GsaServiceCacheValue {
 
   /// Whether the value is enabled for retrieval.
   ///
-  bool get enabled {
+  bool get isEnabled {
     return true;
   }
 
   /// Whether the value should be encrypted before being recorded to the device storage.
   ///
-  bool get secure {
+  bool get isSecure {
     return false;
   }
 
   /// Retrieves the cached data (if exists) according to the specified [dataType].
   ///
   dynamic get value {
-    if (!enabled) return null;
+    if (!isEnabled || !_isFunctionalCookieEnabled) {
+      return null;
+    }
     switch (dataType) {
       case const (int):
-        if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+        if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
           final value = GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt];
           if (value?.isNotEmpty == true) {
             return int.tryParse(value!);
@@ -74,7 +86,7 @@ abstract mixin class GsaServiceCacheValue {
           return value ?? defaultValue;
         }
       case const (bool):
-        if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+        if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
           final value = GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt];
           if (value?.isNotEmpty == true) {
             return bool.tryParse(value!);
@@ -86,7 +98,7 @@ abstract mixin class GsaServiceCacheValue {
           return value ?? defaultValue;
         }
       case const (String):
-        if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+        if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
           final value = GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt];
           if (value != null) {
             return value;
@@ -100,7 +112,7 @@ abstract mixin class GsaServiceCacheValue {
       case const (Iterable<String>):
       case const (List<String>):
       case const (Set<String>):
-        if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+        if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
           final value = GsaServiceCache.instance._dbStorageEntries?[_cacheIdInt];
           if (value?.isNotEmpty == true) {
             final decodedValue = jsonDecode(value!);
@@ -120,7 +132,7 @@ abstract mixin class GsaServiceCacheValue {
   /// Retrieves the cached data (if exists) according to the specified [dataType].
   ///
   dynamic get decrypted {
-    if (!enabled || !secure) return null;
+    if (!isEnabled || !isSecure) return null;
     // TODO
     return value;
   }
@@ -141,10 +153,10 @@ abstract mixin class GsaServiceCacheValue {
         }.contains(dataType)) {
       throw 'Incorrect value type ${value.runtimeType} given for $_cacheId.';
     }
-    if (enabled) {
+    if (isEnabled && _isFunctionalCookieEnabled) {
       switch (dataType) {
         case const (int):
-          if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+          if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
             final stringValue = (value as int).toString();
             await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).put(
                   GsaServiceCache.instance._db!,
@@ -156,7 +168,7 @@ abstract mixin class GsaServiceCacheValue {
           }
           break;
         case const (bool):
-          if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+          if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
             final stringValue = (value as bool).toString();
             await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).put(
                   GsaServiceCache.instance._db!,
@@ -168,7 +180,7 @@ abstract mixin class GsaServiceCacheValue {
           }
           break;
         case const (String):
-          if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+          if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
             await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).put(
                   GsaServiceCache.instance._db!,
                   value as String,
@@ -182,7 +194,7 @@ abstract mixin class GsaServiceCacheValue {
         case const (List<String>):
         case const (Set<String>):
           final listValue = (value as Iterable<String>).toList();
-          if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+          if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
             final encodedValue = jsonEncode(listValue);
             await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).put(
                   GsaServiceCache.instance._db!,
@@ -202,7 +214,7 @@ abstract mixin class GsaServiceCacheValue {
   /// Removes the given value for this instance from the given storage.
   ///
   Future<void> removeValue() async {
-    if (GsaServiceCache.database && GsaServiceCache.instance._db != null) {
+    if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
       await GsaServiceCache.instance._dbStorage?.record(_cacheIdInt).delete(
             GsaServiceCache.instance._db!,
           );

@@ -197,7 +197,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               ),
                             ],
                           ),
-                        if (GsaConfig.plugin.client == GsaClient.froddoB2c && widget.saleItem.options?.isNotEmpty == true)
+                        if (GsaConfig.plugin.client == GsaPluginClient.froddoB2c && widget.saleItem.options?.isNotEmpty == true)
                           Builder(
                             builder: (context) {
                               final sortedOptions = List.from(widget.saleItem.options!)

@@ -34,12 +34,6 @@ class GsaApiMerchants extends GsaApi {
   @override
   String get protocol => 'http';
 
-  @override
-  String get identifier => 'merchants';
-
-  @override
-  int get version => 0;
-
   /// Registers a merchant instance into the system database.
   ///
   Future<String> register({required String name}) async {

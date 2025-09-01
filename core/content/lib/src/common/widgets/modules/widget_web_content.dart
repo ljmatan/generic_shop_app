@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 /// Widget integrating system WebView components for web content display.
@@ -53,7 +54,7 @@ class _GsaWidgetWebContentState extends State<GsaWidgetWebContent> {
   Widget build(BuildContext context) {
     return _loading
         ? const Center(
-            child: CircularProgressIndicator(),
+            child: GsaWidgetLoadingIndicator(),
           )
         : WebViewWidget(controller: _controller);
   }

@@ -36,7 +36,7 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: GsaWidgetLoadingIndicator(),
             );
           }
           if (snapshot.hasError) {
@@ -121,7 +121,7 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                       return _refreshingAtmosphereInfo
                           ? SizedBox.square(
                               dimension: 16,
-                              child: CircularProgressIndicator(),
+                              child: GsaWidgetLoadingIndicator(),
                             )
                           : GsaWidgetButton.outlined(
                               label: 'REFRESH',

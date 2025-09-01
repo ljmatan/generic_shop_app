@@ -22,7 +22,7 @@ dependencies:
   generic_shop_app_content:
     path: ../../core/content
   collection: ^1.19.0
-  flutter_svg: ^2.0.17
+  flutter_svg: ^2.2.0
   barcode: ^2.2.9
 
 dev_dependencies:

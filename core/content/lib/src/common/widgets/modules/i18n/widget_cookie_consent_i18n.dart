@@ -16,17 +16,94 @@ enum GsaWidgetCookieConsentI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Upozornění na soubory cookie',
     ),
   ),
-  description(
+  descriptionIntro(
     GsaServiceI18NModelTranslatedValue(
-      'Cookie Notice',
-      enIe: 'Cookie Notice',
-      enGb: 'Cookie Notice',
-      de: 'Hinweis zu Cookies',
-      it: 'Avviso sui cookie',
-      fr: 'Avis sur les cookies',
-      es: 'Aviso de cookies',
-      hr: 'Obavijest o kolačićima',
-      cz: 'Upozornění na soubory cookie',
+      'We use cookies and similar technologies to help provide and improve content.\n\n'
+      'You have control over the optional cookies that we use, '
+      'and you can review or change your choices at any time.\n\n'
+      'Learn more about cookies and how we use them by reviewing our ',
+      enIe: 'We use cookies and similar technologies to help provide and improve content.\n\n'
+          'You have control over the optional cookies that we use, '
+          'and you can review or change your choices at any time.\n\n'
+          'Learn more about cookies and how we use them by reviewing our ',
+      enGb: 'We use cookies and similar technologies to help provide and improve content.\n\n'
+          'You have control over the optional cookies that we use, '
+          'and you can review or change your choices at any time.\n\n'
+          'Learn more about cookies and how we use them by reviewing our ',
+      de: 'Wir verwenden Cookies und ähnliche Technologien, um Inhalte bereitzustellen und zu verbessern.\n\n'
+          'Sie können die optionalen Cookies, die wir verwenden, selbst verwalten '
+          'und Ihre Einstellungen jederzeit überprüfen oder ändern.\n\n'
+          'Erfahren Sie mehr über Cookies und deren Verwendung in unserer ',
+      it: 'Utilizziamo cookie e tecnologie simili per fornire e migliorare i contenuti.\n\n'
+          'Puoi gestire i cookie opzionali che utilizziamo e rivedere o modificare le tue scelte in qualsiasi momento.\n\n'
+          'Scopri di più sui cookie e sul loro utilizzo consultando la nostra ',
+      fr: 'Nous utilisons des cookies et des technologies similaires pour fournir et améliorer le contenu.\n\n'
+          'Vous pouvez contrôler les cookies optionnels que nous utilisons '
+          'et revoir ou modifier vos choix à tout moment.\n\n'
+          'En savoir plus sur les cookies et leur utilisation en consultant notre ',
+      es: 'Utilizamos cookies y tecnologías similares para ayudar a proporcionar y mejorar el contenido.\n\n'
+          'Tienes control sobre las cookies opcionales que usamos y puedes revisar o cambiar tus elecciones en cualquier momento.\n\n'
+          'Obtén más información sobre las cookies y cómo las usamos revisando nuestra ',
+      hr: 'Koristimo kolačiće i slične tehnologije kako bismo poboljšali sadržaj.\n\n'
+          'Imate kontrolu nad neobaveznih kolačićima koje koristimo '
+          'i možete pregledati ili promijeniti svoje postavke u bilo kojem trenutku.\n\n'
+          'Saznajte više o kolačićima i njihovoj upotrebi pregledom naše ',
+      cz: 'Používáme cookies a podobné technologie, abychom poskytovali a zlepšovali obsah.\n\n'
+          'Máte kontrolu nad volitelnými cookies, které používáme, '
+          'a můžete své volby kdykoli zkontrolovat nebo změnit.\n\n'
+          'Zjistěte více o cookies a jejich použití v naší ',
+    ),
+  ),
+  descriptionCookiePolicyLink(
+    GsaServiceI18NModelTranslatedValue(
+      'Cookie Policy',
+      enIe: 'Cookie Policy',
+      enGb: 'Cookie Policy',
+      de: 'Cookie-Richtlinie',
+      it: 'Informativa sui cookie',
+      fr: 'Politique de cookies',
+      es: 'Política de cookies',
+      hr: 'Politika kolačića',
+      cz: 'Zásady používání cookies',
+    ),
+  ),
+  descriptionPrivacyPolicyLink(
+    GsaServiceI18NModelTranslatedValue(
+      'Privacy Policy',
+      enIe: 'Privacy Policy',
+      enGb: 'Privacy Policy',
+      de: 'Datenschutzrichtlinie',
+      it: 'Informativa sulla privacy',
+      fr: 'Politique de confidentialité',
+      es: 'Política de privacidad',
+      hr: 'Pravila privatnosti',
+      cz: 'Zásady ochrany osobních údajů',
+    ),
+  ),
+  descriptionAddition(
+    GsaServiceI18NModelTranslatedValue(
+      'and',
+      enIe: 'and',
+      enGb: 'and',
+      de: 'und',
+      it: 'e',
+      fr: 'et',
+      es: 'y',
+      hr: 'i',
+      cz: 'a',
+    ),
+  ),
+  descriptionTermsAndConditionsLink(
+    GsaServiceI18NModelTranslatedValue(
+      'Terms and Conditions',
+      enIe: 'Terms and Conditions',
+      enGb: 'Terms and Conditions',
+      de: 'Allgemeine Geschäftsbedingungen',
+      it: 'Termini e condizioni',
+      fr: 'Conditions générales',
+      es: 'Términos y condiciones',
+      hr: 'Uvjeti korištenja',
+      cz: 'Obchodní podmínky',
     ),
   ),
   confirmSelectionButtonLabel(
@@ -87,8 +164,8 @@ enum GsaWidgetCookieConsentI18N implements GsaServiceI18NBaseTranslations {
       enIe: 'Functional cookies enhance the usability and performance of our products by enabling various functionalities.',
       enGb: 'Functional cookies enhance the usability and performance of our products by enabling various functionalities.',
       de: 'Funktionale Cookies verbessern die Benutzerfreundlichkeit und Leistung unserer Produkte durch verschiedene Funktionen.',
-      it: 'I cookie funzionali migliorano l’usabilità e le prestazioni dei nostri prodotti abilitando varie funzionalità.',
-      fr: 'Les cookies fonctionnels améliorent l’utilisabilité et les performances de nos produits en activant diverses fonctionnalités.',
+      it: 'I cookie funzionali migliorano l\'usabilità e le prestazioni dei nostri prodotti abilitando varie funzionalità.',
+      fr: 'Les cookies fonctionnels améliorent l\'utilisabilité et les performances de nos produits en activant diverses fonctionnalités.',
       es: 'Las cookies funcionales mejoran la usabilidad y el rendimiento de nuestros productos al habilitar varias funcionalidades.',
       hr: 'Funkcionalni kolačići poboljšavaju upotrebljivost i performanse naših proizvoda omogućavanjem različitih funkcionalnosti.',
       cz: 'Funkční soubory cookie zvyšují použitelnost a výkon našich produktů povolením různých funkcí.',
@@ -114,7 +191,7 @@ enum GsaWidgetCookieConsentI18N implements GsaServiceI18NBaseTranslations {
       enGb: 'Marketing cookies are utilized to tailor advertisements and promotional content to your interests.',
       de: 'Marketing-Cookies werden verwendet, um Werbung und Werbeinhalte an Ihre Interessen anzupassen.',
       it: 'I cookie di marketing vengono utilizzati per personalizzare annunci pubblicitari e contenuti promozionali in base ai tuoi interessi.',
-      fr: 'Les cookies marketing sont utilisés pour adapter les publicités et les contenus promotionnels à vos centres d’intérêt.',
+      fr: 'Les cookies marketing sont utilisés pour adapter les publicités et les contenus promotionnels à vos centres d\'intérêt.',
       es: 'Las cookies de marketing se utilizan para personalizar los anuncios y el contenido promocional según tus intereses.',
       hr: 'Marketinški kolačići koriste se za prilagodbu oglasa i promotivnog sadržaja vašim interesima.',
       cz: 'Marketingové soubory cookie se používají k přizpůsobení reklam a propagačního obsahu vašim zájmům.',

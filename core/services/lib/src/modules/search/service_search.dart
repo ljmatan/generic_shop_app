@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 
 /// On-device search services used for filtering results with the given parameters.
@@ -15,15 +16,17 @@ class GsaServiceSearch extends GsaService {
     searchTerm = searchTerm.trim().replaceAll('  ', ' ').toLowerCase();
     for (final character in searchTerm.split('').indexed) {
       try {
-        final existingExcluded = _excludedCharacters.firstWhere(
+        final existingExcluded = _excludedCharacters.firstWhereOrNull(
           (excludedChar) {
             return excludedChar.chracter == character.$2;
           },
         );
-        searchTerm = searchTerm.replaceAll(
-          character.$2,
-          existingExcluded.replacement,
-        );
+        if (existingExcluded != null) {
+          searchTerm = searchTerm.replaceAll(
+            character.$2,
+            existingExcluded.replacement,
+          );
+        }
       } catch (e) {
         continue;
       }

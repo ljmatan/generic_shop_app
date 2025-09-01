@@ -201,7 +201,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
         barrierDismissible: false,
         builder: (context) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: GsaWidgetLoadingIndicator(),
           );
         },
       );

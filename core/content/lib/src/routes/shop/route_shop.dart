@@ -194,7 +194,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                       } else {
                         if (_searchFuture == null || searchResponse.connectionState != ConnectionState.done) {
                           return const Center(
-                            child: CircularProgressIndicator(),
+                            child: GsaWidgetLoadingIndicator(),
                           );
                         }
                         if (searchResponse.hasError || searchResponse.data?.isNotEmpty != true) {
@@ -216,8 +216,8 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                             vertical: Theme.of(context).listViewPadding.vertical / 2,
                           ),
                           children: [
-                            if (<GsaClient>{
-                                  GsaClient.froddoB2b,
+                            if (<GsaPluginClient>{
+                                  GsaPluginClient.froddoB2b,
                                 }.contains(GsaConfig.plugin.client) &&
                                 GsaDataCheckout.instance.orderDraft.client != null) ...[
                               Padding(
@@ -229,8 +229,8 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                               const SizedBox(height: 16),
                             ],
                             if (GsaDataUser.instance.authenticated &&
-                                !<GsaClient>{
-                                  GsaClient.froddoB2b,
+                                !<GsaPluginClient>{
+                                  GsaPluginClient.froddoB2b,
                                 }.contains(
                                   GsaConfig.plugin.client,
                                 )) ...[

@@ -26,8 +26,8 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (!<GsaClient>{
-                  GsaClient.froddoB2b,
+                if (!<GsaPluginClient>{
+                  GsaPluginClient.froddoB2b,
                 }.contains(GsaConfig.plugin.client)) ...[
                   InkWell(
                     child: Row(

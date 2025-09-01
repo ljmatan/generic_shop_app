@@ -212,7 +212,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 ],
               )
             else ...[
-              if (GsaConfig.plugin.client == GsaClient.froddoB2c)
+              if (GsaConfig.plugin.client == GsaPluginClient.froddoB2c)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Builder(

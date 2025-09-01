@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 /// Utility methods for interacting with the system's clipboard.

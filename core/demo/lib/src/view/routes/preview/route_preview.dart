@@ -76,7 +76,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
-    _primaryColor = GsaConfig.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
+    _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
   }
 
   @override
@@ -259,8 +259,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                             _navigatorKey = GlobalKey<NavigatorState>();
                             GsaRoute.navigatorKey = _navigatorKey;
                             _routeDropdownKey = UniqueKey();
-                            _primaryColor = GsaConfig.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                            _fontFamily = GsaConfig.plugin.fontFamily ?? _fontFamily;
+                            _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
+                            _fontFamily = GsaConfig.plugin.theme.fontFamily ?? _fontFamily;
                           },
                         );
                       } catch (e) {
@@ -449,8 +449,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               _navigatorKey = GlobalKey<NavigatorState>();
                               GsaRoute.navigatorKey = _navigatorKey;
                               _routeDropdownKey = UniqueKey();
-                              _primaryColor = GsaConfig.plugin.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                              _fontFamily = GsaConfig.plugin.fontFamily ?? _fontFamily;
+                              _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
+                              _fontFamily = GsaConfig.plugin.theme.fontFamily ?? _fontFamily;
                             });
                           } catch (e) {
                             Navigator.pop(context);

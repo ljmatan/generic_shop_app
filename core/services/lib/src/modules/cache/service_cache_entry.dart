@@ -105,6 +105,34 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   }
 
   @override
+  bool get isFunctionalCookie {
+    switch (this) {
+      case GsaServiceCacheEntry.version:
+        return false;
+      case GsaServiceCacheEntry.translations:
+        return true;
+      case GsaServiceCacheEntry.authenticationToken:
+        return false;
+      case GsaServiceCacheEntry.guestUserEncodedData:
+        return true;
+      case GsaServiceCacheEntry.cookieConsentMandatory:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentFunctional:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentStatistical:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentMarketing:
+        return false;
+      case GsaServiceCacheEntry.bookmarks:
+        return true;
+      case GsaServiceCacheEntry.shopSearchHistory:
+        return true;
+      case GsaServiceCacheEntry.themeBrightness:
+        return true;
+    }
+  }
+
+  @override
   get defaultValue {
     switch (this) {
       case GsaServiceCacheEntry.version:
@@ -115,7 +143,7 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   }
 
   @override
-  bool get secure {
+  bool get isSecure {
     switch (this) {
       case GsaServiceCacheEntry.authenticationToken:
         return true;

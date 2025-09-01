@@ -46,7 +46,7 @@ class GsaServiceCache extends GsaService {
   /// [QuotaExceededError](https://developer.mozilla.org/en-US/docs/Web/API/QuotaExceededError),
   /// which is why a database integration is preferred.
   ///
-  static bool database = kIsWeb || kIsWasm;
+  bool database = kIsWeb || kIsWasm;
 
   /// Entrypoint to the methods and properties provided by the shared_preferences package.
   ///
@@ -101,6 +101,22 @@ class GsaServiceCache extends GsaService {
     }
   }
 
+  /// Collection of cache value entries specified for the app instance.
+  ///
+  /// May be edited during the runtime to ensure correct data propagation and handling.
+  ///
+  final _cacheEntries = <GsaServiceCacheValue>[
+    ...GsaServiceCacheEntry.values,
+  ];
+
+  /// Registers client cache entries for cookie value adjustment.
+  ///
+  void registerCacheEntries(
+    List<GsaServiceCacheValue> values,
+  ) {
+    _cacheEntries.addAll(values);
+  }
+
   /// Event triggered on user cookie acknowledgement.
   ///
   Future<void> onCookieConsentAcknowledged() async {
@@ -131,6 +147,12 @@ class GsaServiceCache extends GsaService {
           default:
             throw '${GsaServiceCacheI18N.invalidVersionErrorMessage.value.display}: $version';
         }
+      }
+    }
+    // Clear cookies according to user consent status.
+    for (final cacheEntry in _cacheEntries) {
+      if (cacheEntry.isFunctionalCookie && !GsaServiceConsent.instance.consentStatus.functionalCookies()) {
+        await cacheEntry.removeValue();
       }
     }
   }

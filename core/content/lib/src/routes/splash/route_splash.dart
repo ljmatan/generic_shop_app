@@ -72,7 +72,7 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: GsaWidgetLoadingIndicator(),
             );
           }
           if (snapshot.hasError) {

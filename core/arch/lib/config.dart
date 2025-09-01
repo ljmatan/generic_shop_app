@@ -6,6 +6,8 @@ import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
 
+part 'plugin.dart';
+
 /// Project-level configuration methods and properties.
 ///
 class GsaConfig {
@@ -179,125 +181,5 @@ class GsaConfig {
     GsaDataSaleItems.instance;
     GsaDataUser.instance;
     await GsaData.initAll();
-  }
-}
-
-/// A collection of application client integration identifiers.
-///
-/// Used primarily for identifying of the current client during the app runtime.
-///
-enum GsaClient {
-  demo,
-  fitnessTracker,
-  froddoB2b,
-  froddoB2c;
-}
-
-/// The application client implementations base service definitions.
-///
-/// These definitions are required to be implemented in order to comply with the
-/// application architecture, which may be based off of various client integrations.
-///
-abstract class GsaPlugin {
-  /// Widget constructor with body ensuring [GsaConfig.plugin] information setup on initialisation.
-  ///
-  GsaPlugin() {
-    try {
-      GsaConfig.plugin;
-    } catch (e) {
-      GsaConfig.plugin = this;
-    }
-  }
-
-  /// The client specified for this plugin integration.
-  ///
-  GsaClient get client;
-
-  /// The identifier for the plugin project specified in the `pubspec.yaml` file.
-  ///
-  String get id;
-
-  /// Method implemented for managing and initialisationv of the application resources.
-  ///
-  Future<void> init();
-
-  /// App screen specified for display after the splash and user consent screens.
-  ///
-  GsaRoute Function() get initialRoute;
-
-  /// A collection of routes specific to the plugin implementation.
-  ///
-  List<GsaRouteType>? get routes;
-
-  /// The specified plugin display font family.
-  ///
-  String? get fontFamily;
-
-  /// Asset or network path of the plugin client logo image.
-  ///
-  String? get logoImagePath;
-
-  /// The background color for major parts of the app (toolbars, tab bars, etc.).
-  ///
-  Color? get primaryColor;
-
-  List<List<GsaServiceI18NBaseTranslations>> get translations;
-
-  /// Curated collection of provider document network resource URLs.
-  ///
-  ({
-    String? termsAndConditions,
-    String? privacyPolicy,
-    String? cookieNotice,
-    String? helpAndFaq,
-  })? get documentUrls {
-    return null;
-  }
-
-  /// Widget specified for display above the [MaterialApp.builder.child] object.
-  ///
-  Widget? get overlayBuilder {
-    return null;
-  }
-
-  /// Method used with login screen implementations for logging in a user with [username] and [password].
-  ///
-  Future<void> Function({
-    required String username,
-    required String password,
-  })? get loginWithUsernameAndPassword {
-    return null;
-  }
-
-  /// Method used for validating password input on the user authentication screens.
-  ///
-  String? Function(
-    String?, {
-    GsaServiceI18NModelTranslatedValue? errorMessage,
-  })? get passwordValidator {
-    return null;
-  }
-
-  /// Used for product purchase intent registration.
-  ///
-  Future<void> Function(
-    BuildContext context, {
-    required GsaModelSaleItem item,
-  })? get addToCart {
-    return null;
-  }
-
-  /// Method optionally implemented for starting the checkout process from the cart page.
-  ///
-  Future<void> Function(
-    BuildContext context,
-  )? get startCheckout {
-    return null;
-  }
-
-  /// Method implemented for retrieving promotional content displayed on the dashboard.
-  ///
-  Future<List<GsaModelPromoBanner>> Function()? get getPromoBanners {
-    return null;
   }
 }

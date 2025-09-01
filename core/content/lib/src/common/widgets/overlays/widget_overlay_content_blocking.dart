@@ -8,7 +8,12 @@ class GsaWidgetOverlayContentBlocking extends GsaWidgetOverlay {
   ///
   const GsaWidgetOverlayContentBlocking({
     super.key,
+    this.displayLoadingIndicator = true,
   });
+
+  /// Whether to display a loading indicator at the center of the widget contents.
+  ///
+  final bool displayLoadingIndicator;
 
   @override
   bool get customBuilder => true;
@@ -20,19 +25,27 @@ class GsaWidgetOverlayContentBlocking extends GsaWidgetOverlay {
   bool get barrierDismissible => false;
 
   @override
-  State<GsaWidgetOverlayContentBlocking> createState() => _GsaWidgetOverlayContentBlockingState();
+  State<GsaWidgetOverlayContentBlocking> createState() {
+    return _GsaWidgetOverlayContentBlockingState();
+  }
 }
 
 class _GsaWidgetOverlayContentBlockingState extends State<GsaWidgetOverlayContentBlocking> {
   @override
   Widget build(BuildContext context) {
-    return const PopScope(
+    return PopScope(
       canPop: false,
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white70,
         ),
-        child: SizedBox.expand(),
+        child: SizedBox.expand(
+          child: widget.displayLoadingIndicator
+              ? const Center(
+                  child: GsaWidgetLoadingIndicator(),
+                )
+              : null,
+        ),
       ),
     );
   }

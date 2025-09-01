@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_api/api.dart';
@@ -121,29 +122,33 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        for (final category in GsaDataCheckout.instance.orderDraft.items
-                            .map(
-                              (saleItem) =>
-                                  GsaDataSaleItems.instance.categories.firstWhere((category) => category.id == saleItem.categoryId),
-                            )
-                            .indexed)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 9),
-                            child: GsaWidgetButton.outlined(
-                              label: '${category.$2.name} '
-                                  '( TODO )',
-                              backgroundColor: _filteredCategoryIds.contains(category.$2.id) ? Theme.of(context).primaryColor : null,
-                              onTap: () {
-                                if (category.$2.id != null) {
-                                  setState(() {
-                                    _filteredCategoryIds.contains(category.$2.id)
-                                        ? _filteredCategoryIds.remove(category.$2.id)
-                                        : _filteredCategoryIds.add(category.$2.id!);
-                                  });
-                                }
+                        for (final category in GsaDataCheckout.instance.orderDraft.items.map(
+                          (saleItem) {
+                            return GsaDataSaleItems.instance.categories.firstWhereOrNull(
+                              (category) {
+                                return category.id == saleItem.categoryId;
                               },
+                            );
+                          },
+                        ).indexed)
+                          if (category.$2 != null)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 9),
+                              child: GsaWidgetButton.outlined(
+                                label: '${category.$2!.name} '
+                                    '( TODO )',
+                                backgroundColor: _filteredCategoryIds.contains(category.$2!.id) ? Theme.of(context).primaryColor : null,
+                                onTap: () {
+                                  if (category.$2!.id != null) {
+                                    setState(() {
+                                      _filteredCategoryIds.contains(category.$2!.id)
+                                          ? _filteredCategoryIds.remove(category.$2!.id)
+                                          : _filteredCategoryIds.add(category.$2!.id!);
+                                    });
+                                  }
+                                },
+                              ),
                             ),
-                          ),
                       ],
                     ),
                   ),

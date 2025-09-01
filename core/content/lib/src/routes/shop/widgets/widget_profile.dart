@@ -77,7 +77,7 @@ class _WidgetProfile extends StatelessWidget {
       ),
       onTap: () {
         const GsaRouteUserProfile().push(
-          replacement: GsaConfig.plugin.client == GsaClient.froddoB2b,
+          replacement: GsaConfig.plugin.client == GsaPluginClient.froddoB2b,
         );
       },
     );

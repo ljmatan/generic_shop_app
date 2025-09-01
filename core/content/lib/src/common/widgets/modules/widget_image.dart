@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:generic_shop_app_services/services.dart';
 
 /// The image file type specified for image file byte display with the [GsaWidgetImage]
 ///
@@ -177,7 +178,9 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
         height: widget.height,
         child: widget.shadows != null
             ? DecoratedBox(
-                decoration: BoxDecoration(boxShadow: widget.shadows),
+                decoration: BoxDecoration(
+                  boxShadow: widget.shadows,
+                ),
                 child: _GsaWidgetImageBuilder(
                   widget: widget,
                 ),
@@ -187,8 +190,11 @@ class _GsaWidgetImageState extends State<GsaWidgetImage> {
               ),
       );
     } catch (e) {
-      debugPrint('$e');
-      return SizedBox(width: widget.width, height: widget.height);
+      GsaServiceLogging.instance.logError('$e');
+      return SizedBox(
+        width: widget.width,
+        height: widget.height,
+      );
     }
   }
 }
@@ -202,117 +208,136 @@ class _GsaWidgetImageBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return widget.inputString != null
-        ? widget.type == GsaWidgetImageByteType.standard
-            ? Image.memory(
-                base64Decode(widget.inputString!),
-                width: widget.width,
-                height: widget.height,
-                color: widget.colorFilter,
-                fit: widget.fit,
-                alignment: widget.alignment,
-              )
-            : SvgPicture.string(
-                widget.inputString!,
-                width: widget.width,
-                height: widget.height,
-                colorFilter: widget.colorFilter == null
-                    ? null
-                    : ColorFilter.mode(
-                        widget.colorFilter!,
-                        BlendMode.srcIn,
-                      ),
-                fit: widget.fit,
-                alignment: widget.alignment,
-              )
-        : widget.bytes.isNotEmpty == true
-            ? widget.type == GsaWidgetImageByteType.standard
-                ? Image.memory(
-                    Uint8List.fromList(widget.bytes),
-                    width: widget.width,
-                    height: widget.height,
-                    color: widget.colorFilter,
-                    fit: widget.fit,
-                    alignment: widget.alignment,
-                  )
-                : SvgPicture.memory(
-                    Uint8List.fromList(widget.bytes),
-                    width: widget.width,
-                    height: widget.height,
-                    colorFilter: widget.colorFilter == null
-                        ? null
-                        : ColorFilter.mode(
-                            widget.colorFilter!,
-                            BlendMode.srcIn,
-                          ),
-                    fit: widget.fit,
-                    alignment: widget.alignment,
-                  )
-            : widget.path.endsWith('.svg')
-                ? widget._networkImage == true
-                    ? SvgPicture.network(
-                        widget.path,
-                        width: widget.width,
-                        height: widget.height,
-                        colorFilter: widget.colorFilter == null
-                            ? null
-                            : ColorFilter.mode(
-                                widget.colorFilter!,
-                                BlendMode.srcIn,
-                              ),
-                        fit: widget.fit,
-                        alignment: widget.alignment,
-                      )
-                    : widget.path == GsaWidgetImage._placeholderAssetPath
-                        ? SizedBox(
-                            width: widget.width,
-                            height: widget.height,
-                            child: Center(
-                              child: Icon(
-                                Icons.broken_image_outlined,
-                                color: Colors.grey,
-                                size: (((widget.width ?? 0) > (widget.height ?? 0) ? widget.height : widget.width) ?? 0) / 1.5,
-                              ),
-                            ),
-                          )
-                        : SvgPicture.asset(
-                            widget.path,
-                            width: widget.width,
-                            height: widget.height,
-                            colorFilter: widget.colorFilter == null
-                                ? null
-                                : ColorFilter.mode(
-                                    widget.colorFilter!,
-                                    BlendMode.srcIn,
-                                  ),
-                            fit: widget.fit,
-                            alignment: widget.alignment,
-                          )
-                : widget._networkImage == true
-                    ? widget.cached
-                        ? CachedNetworkImage(
-                            imageUrl: widget.path,
-                            width: widget.width,
-                            height: widget.height,
-                            color: widget.colorFilter,
-                            fit: widget.fit,
-                            alignment: widget.alignment as Alignment,
-                          )
-                        : Image.network(
-                            widget.path,
-                            width: widget.width,
-                            height: widget.height,
-                            color: widget.colorFilter,
-                            fit: widget.fit,
-                            alignment: widget.alignment,
-                          )
-                    : Image.asset(
-                        widget.path,
-                        width: widget.width,
-                        height: widget.height,
-                        color: widget.colorFilter,
-                        fit: widget.fit,
-                        alignment: widget.alignment,
-                      );
+    if (widget.inputString != null) {
+      if (widget.type == GsaWidgetImageByteType.standard) {
+        return Image.memory(
+          base64Decode(widget.inputString!),
+          width: widget.width,
+          height: widget.height,
+          color: widget.colorFilter,
+          fit: widget.fit,
+          alignment: widget.alignment,
+        );
+      } else {
+        return SvgPicture.string(
+          widget.inputString!,
+          width: widget.width,
+          height: widget.height,
+          colorFilter: widget.colorFilter == null
+              ? null
+              : ColorFilter.mode(
+                  widget.colorFilter!,
+                  BlendMode.srcIn,
+                ),
+          fit: widget.fit,
+          alignment: widget.alignment,
+        );
+      }
+    }
+    if (widget.bytes.isNotEmpty) {
+      if (widget.type == GsaWidgetImageByteType.standard) {
+        return Image.memory(
+          Uint8List.fromList(widget.bytes),
+          width: widget.width,
+          height: widget.height,
+          color: widget.colorFilter,
+          fit: widget.fit,
+          alignment: widget.alignment,
+        );
+      } else {
+        return SvgPicture.memory(
+          Uint8List.fromList(widget.bytes),
+          width: widget.width,
+          height: widget.height,
+          colorFilter: widget.colorFilter == null
+              ? null
+              : ColorFilter.mode(
+                  widget.colorFilter!,
+                  BlendMode.srcIn,
+                ),
+          fit: widget.fit,
+          alignment: widget.alignment,
+        );
+      }
+    }
+    if (widget.path.isNotEmpty) {
+      if (widget.path.endsWith('.svg')) {
+        if (widget._networkImage) {
+          return SvgPicture.network(
+            widget.path,
+            width: widget.width,
+            height: widget.height,
+            colorFilter: widget.colorFilter == null
+                ? null
+                : ColorFilter.mode(
+                    widget.colorFilter!,
+                    BlendMode.srcIn,
+                  ),
+            fit: widget.fit,
+            alignment: widget.alignment,
+          );
+        } else if (widget.path == GsaWidgetImage._placeholderAssetPath) {
+          return SizedBox(
+            width: widget.width,
+            height: widget.height,
+            child: Center(
+              child: Icon(
+                Icons.broken_image_outlined,
+                color: Colors.grey,
+                size: (((widget.width ?? 0) > (widget.height ?? 0) ? widget.height : widget.width) ?? 0) / 1.5,
+              ),
+            ),
+          );
+        } else {
+          return SvgPicture.asset(
+            widget.path,
+            width: widget.width,
+            height: widget.height,
+            colorFilter: widget.colorFilter == null
+                ? null
+                : ColorFilter.mode(
+                    widget.colorFilter!,
+                    BlendMode.srcIn,
+                  ),
+            fit: widget.fit,
+            alignment: widget.alignment,
+          );
+        }
+      }
+      if (widget._networkImage == true) {
+        if (widget.cached) {
+          return CachedNetworkImage(
+            imageUrl: widget.path,
+            width: widget.width,
+            height: widget.height,
+            color: widget.colorFilter,
+            fit: widget.fit,
+            alignment: widget.alignment as Alignment,
+          );
+        } else {
+          Image.network(
+            widget.path,
+            width: widget.width,
+            height: widget.height,
+            color: widget.colorFilter,
+            fit: widget.fit,
+            alignment: widget.alignment,
+          );
+        }
+      }
+    } else {
+      return Image.asset(
+        widget.path,
+        width: widget.width,
+        height: widget.height,
+        color: widget.colorFilter,
+        fit: widget.fit,
+        alignment: widget.alignment,
+      );
+    }
+    return SizedBox(
+      width: widget.width,
+      height: widget.height,
+    );
   }
 }

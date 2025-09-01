@@ -17,8 +17,8 @@ class GftPlugin extends GsaPlugin {
   static final instance = GftPlugin._();
 
   @override
-  GsaClient get client {
-    return GsaClient.fitnessTracker;
+  GsaPluginClient get client {
+    return GsaPluginClient.fitnessTracker;
   }
 
   @override
@@ -42,18 +42,19 @@ class GftPlugin extends GsaPlugin {
   }
 
   @override
-  String? get fontFamily {
-    return 'packages/$id/Open Sans';
+  GsaPluginCookies get enabledCookieTypes {
+    return GsaPluginCookies(
+      marketing: false,
+      statistical: false,
+    );
   }
 
   @override
-  String? get logoImagePath {
-    return null;
-  }
-
-  @override
-  Color? get primaryColor {
-    return const Color(0xff10467c);
+  GsaPluginTheme get theme {
+    return GsaPluginTheme(
+      fontFamily: 'packages/$id/Open Sans',
+      primaryColor: const Color(0xff10467c),
+    );
   }
 
   @override

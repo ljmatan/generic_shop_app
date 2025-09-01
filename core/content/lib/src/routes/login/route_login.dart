@@ -27,13 +27,13 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
 
   final _emailTextController = TextEditingController(
         text: switch (GsaConfig.plugin.client) {
-          GsaClient.froddoB2b => kDebugMode ? 'hyper@hyper.hr' : null,
+          GsaPluginClient.froddoB2b => kDebugMode ? 'hyper@hyper.hr' : null,
           _ => null,
         },
       ),
       _passwordTextController = TextEditingController(
         text: switch (GsaConfig.plugin.client) {
-          GsaClient.froddoB2b => kDebugMode ? '1234' : null,
+          GsaPluginClient.froddoB2b => kDebugMode ? '1234' : null,
           _ => null,
         },
       );
@@ -126,7 +126,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                           ),
                           validator: GsaServiceInputValidation.instance.password,
                         ),
-                        if (<GsaClient>{}.contains(GsaConfig.plugin.client)) ...[
+                        if (<GsaPluginClient>{}.contains(GsaConfig.plugin.client)) ...[
                           const SizedBox(height: 10),
                           GsaWidgetButton.text(
                             label: GsaRouteLoginI18N.openForgotPasswordScreenButtonTitle.value.display,

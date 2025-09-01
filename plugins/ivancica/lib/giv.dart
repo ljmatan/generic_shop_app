@@ -23,8 +23,8 @@ class GivPlugin extends GsaPlugin {
   static final instance = GivPlugin._();
 
   @override
-  GsaClient get client {
-    return GsaClient.froddoB2c;
+  GsaPluginClient get client {
+    return GsaPluginClient.froddoB2c;
   }
 
   @override
@@ -60,18 +60,20 @@ class GivPlugin extends GsaPlugin {
   }
 
   @override
-  String? get fontFamily {
-    return 'packages/$id/Merriweather Sans';
+  GsaPluginCookies get enabledCookieTypes {
+    return GsaPluginCookies(
+      marketing: false,
+      statistical: false,
+    );
   }
 
   @override
-  String? get logoImagePath {
-    return 'packages/$id/assets/ivancica/svg/logo.svg';
-  }
-
-  @override
-  Color? get primaryColor {
-    return const Color(0xff8DC63F);
+  GsaPluginTheme get theme {
+    return GsaPluginTheme(
+      fontFamily: 'packages/$id/Merriweather Sans',
+      logoImagePath: 'packages/$id/assets/ivancica/svg/logo.svg',
+      primaryColor: const Color(0xff8DC63F),
+    );
   }
 
   @override

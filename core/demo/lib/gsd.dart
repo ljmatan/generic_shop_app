@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_demo/gsd.dart';
 import 'package:generic_shop_app_services/services.dart';
@@ -18,8 +17,8 @@ class GsdPlugin extends GsaPlugin {
   static final instance = GsdPlugin._();
 
   @override
-  GsaClient get client {
-    return GsaClient.demo;
+  GsaPluginClient get client {
+    return GsaPluginClient.demo;
   }
 
   @override
@@ -43,18 +42,11 @@ class GsdPlugin extends GsaPlugin {
   }
 
   @override
-  String? get fontFamily {
-    return null;
-  }
-
-  @override
-  String? get logoImagePath {
-    return null;
-  }
-
-  @override
-  Color? get primaryColor {
-    return null;
+  GsaPluginCookies get enabledCookieTypes {
+    return GsaPluginCookies(
+      marketing: true,
+      statistical: true,
+    );
   }
 
   @override

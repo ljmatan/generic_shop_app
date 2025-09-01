@@ -114,8 +114,8 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                               ),
                               const SizedBox(width: 10),
                             ],
-                            if (!<GsaClient>{
-                              GsaClient.froddoB2b,
+                            if (!<GsaPluginClient>{
+                              GsaPluginClient.froddoB2b,
                             }.contains(GsaConfig.plugin.client))
                               CircleAvatar(
                                 radius: 20,

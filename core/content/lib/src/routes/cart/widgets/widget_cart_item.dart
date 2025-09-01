@@ -208,7 +208,7 @@ class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmoun
                           children: [
                             GsaWidgetText(
                               switch (GsaConfig.plugin.client) {
-                                    GsaClient.froddoB2b => '${GsaRouteCartI18N.cartItemEntrySizeLabel.value.display} ',
+                                    GsaPluginClient.froddoB2b => '${GsaRouteCartI18N.cartItemEntrySizeLabel.value.display} ',
                                     _ => '',
                                   } +
                                   '${widget.saleItem.productCode}',

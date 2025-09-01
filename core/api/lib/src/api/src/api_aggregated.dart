@@ -26,12 +26,6 @@ class GsaApiAggregated extends GsaApi {
   @override
   String get protocol => 'http';
 
-  @override
-  String get identifier => 'aggregated';
-
-  @override
-  int get version => 0;
-
   Future<int> getDataVersion() async {
     final response = await get(GsaEndpointsAggregated.getDataVersion.path);
     final currentVersion = response['version'];

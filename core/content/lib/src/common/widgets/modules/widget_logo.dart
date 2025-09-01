@@ -12,48 +12,31 @@ class GsaWidgetLogo extends StatelessWidget {
   ///
   const GsaWidgetLogo({
     super.key,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
   });
 
   /// Logo graphic display dimensions.
   ///
-  final double width, height;
+  final double? width, height;
 
   @override
   Widget build(BuildContext context) {
-    final logoImagePath = GsaConfig.plugin.logoImagePath;
+    final logoImagePath = GsaConfig.plugin.theme.logoImagePath;
     if (logoImagePath != null) {
-      return (logoImagePath.startsWith('assets') || logoImagePath.startsWith('packages') ? GsaWidgetImage.asset : GsaWidgetImage.network)(
-        logoImagePath,
-        width: width,
-        height: height,
-      );
-    } else if (GsaConfig.mockBuild) {
-      return SizedBox(
-        width: width,
-        height: height,
-        child: Center(
-          child: GsaWidgetText.rich(
-            const [
-              GsaWidgetTextSpan(
-                'Example ',
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 18,
-                ),
-              ),
-              GsaWidgetTextSpan(
-                'LOGO',
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+      if (logoImagePath.startsWith('assets') || logoImagePath.startsWith('packages')) {
+        return GsaWidgetImage.asset(
+          logoImagePath,
+          width: width,
+          height: height,
+        );
+      } else {
+        return GsaWidgetImage.network(
+          logoImagePath,
+          width: width,
+          height: height,
+        );
+      }
     }
     return SizedBox(
       width: width,

@@ -30,12 +30,6 @@ class GsaApiOrders extends GsaApi {
   @override
   String get protocol => 'http';
 
-  @override
-  String get identifier => 'orders';
-
-  @override
-  int get version => 0;
-
   /// Registers a given [order] to the system.
   ///
   /// This is not an endpoint which should tipically be used by the clients,

@@ -34,12 +34,6 @@ class GsaApiUsers extends GsaApi {
   @override
   String get protocol => 'http';
 
-  @override
-  String get identifier => 'users';
-
-  @override
-  int get version => 0;
-
   /// Register a user instance to the system.
   ///
   Future<String> register({

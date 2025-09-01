@@ -99,8 +99,8 @@ class GsaTheme {
     if (primaryColor != null) {
       return primaryColor!;
     }
-    if (GsaConfig.plugin.primaryColor != null) {
-      return GsaConfig.plugin.primaryColor!;
+    if (GsaConfig.plugin.theme.primaryColor != null) {
+      return GsaConfig.plugin.theme.primaryColor!;
     }
     if (_brightness == Brightness.light) {
       return const Color(0xffDAB1DA);
@@ -131,7 +131,7 @@ class GsaTheme {
   }
 
   String? get _fontFamily {
-    return fontFamily ?? GsaConfig.plugin.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
+    return fontFamily ?? GsaConfig.plugin.theme.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
   }
 
   InputDecorationTheme get _inputDecorationTheme {
@@ -231,6 +231,10 @@ class GsaTheme {
       dividerTheme: const DividerThemeData(
         thickness: .4,
         space: .4,
+      ),
+      expansionTileTheme: ExpansionTileThemeData(
+        tilePadding: EdgeInsets.zero,
+        expandedAlignment: Alignment.centerLeft,
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
