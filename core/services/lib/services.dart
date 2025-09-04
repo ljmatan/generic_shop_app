@@ -23,6 +23,7 @@ export 'src/modules/logging/service_logging.dart';
 export 'src/modules/mock/service_mock.dart';
 export 'src/modules/permissions/service_permissions.dart';
 export 'src/modules/share/service_share.dart';
+export 'src/modules/ssl_override/service_ssl_override.dart';
 export 'src/modules/search/service_search.dart';
 export 'src/modules/tracking/service_tracking.dart';
 export 'src/modules/url_launcher/service_url_launcher.dart';

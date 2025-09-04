@@ -1,6 +1,9 @@
 froddo_b2b/*
 !froddo_b2b/.gitkeep
 !froddo_b2b/setup.sh
+froddo_b2c/*
+!froddo_b2c/.gitkeep
+!froddo_b2c/setup.sh
 trading/*
 !trading/.gitkeep
 !trading/setup.sh

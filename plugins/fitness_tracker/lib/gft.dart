@@ -27,11 +27,6 @@ class GftPlugin extends GsaPlugin {
   }
 
   @override
-  Future<void> init() async {
-    // Do nothing.
-  }
-
-  @override
   GsaRoute Function() get initialRoute {
     return () => const GftRouteSplash();
   }
@@ -44,6 +39,7 @@ class GftPlugin extends GsaPlugin {
   @override
   GsaPluginCookies get enabledCookieTypes {
     return GsaPluginCookies(
+      functional: true,
       marketing: false,
       statistical: false,
     );

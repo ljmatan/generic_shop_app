@@ -16,6 +16,19 @@ enum GsaWidgetCookieConsentI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Upozornění na soubory cookie',
     ),
   ),
+  description(
+    GsaServiceI18NModelTranslatedValue(
+      'Cookie Notice',
+      enIe: 'Cookie Notice',
+      enGb: 'Cookie Notice',
+      de: 'Hinweis zu Cookies',
+      it: 'Avviso sui cookie',
+      fr: 'Avis sur les cookies',
+      es: 'Aviso de cookies',
+      hr: 'Obavijest o kolačićima',
+      cz: 'Upozornění na soubory cookie',
+    ),
+  ),
   descriptionIntro(
     GsaServiceI18NModelTranslatedValue(
       'We use cookies and similar technologies to help provide and improve content.\n\n'
@@ -164,8 +177,8 @@ enum GsaWidgetCookieConsentI18N implements GsaServiceI18NBaseTranslations {
       enIe: 'Functional cookies enhance the usability and performance of our products by enabling various functionalities.',
       enGb: 'Functional cookies enhance the usability and performance of our products by enabling various functionalities.',
       de: 'Funktionale Cookies verbessern die Benutzerfreundlichkeit und Leistung unserer Produkte durch verschiedene Funktionen.',
-      it: 'I cookie funzionali migliorano l\'usabilità e le prestazioni dei nostri prodotti abilitando varie funzionalità.',
-      fr: 'Les cookies fonctionnels améliorent l\'utilisabilité et les performances de nos produits en activant diverses fonctionnalités.',
+      it: 'I cookie funzionali migliorano l’usabilità e le prestazioni dei nostri prodotti abilitando varie funzionalità.',
+      fr: 'Les cookies fonctionnels améliorent l’utilisabilité et les performances de nos produits en activant diverses fonctionnalités.',
       es: 'Las cookies funcionales mejoran la usabilidad y el rendimiento de nuestros productos al habilitar varias funcionalidades.',
       hr: 'Funkcionalni kolačići poboljšavaju upotrebljivost i performanse naših proizvoda omogućavanjem različitih funkcionalnosti.',
       cz: 'Funkční soubory cookie zvyšují použitelnost a výkon našich produktů povolením různých funkcí.',
@@ -191,7 +204,7 @@ enum GsaWidgetCookieConsentI18N implements GsaServiceI18NBaseTranslations {
       enGb: 'Marketing cookies are utilized to tailor advertisements and promotional content to your interests.',
       de: 'Marketing-Cookies werden verwendet, um Werbung und Werbeinhalte an Ihre Interessen anzupassen.',
       it: 'I cookie di marketing vengono utilizzati per personalizzare annunci pubblicitari e contenuti promozionali in base ai tuoi interessi.',
-      fr: 'Les cookies marketing sont utilisés pour adapter les publicités et les contenus promotionnels à vos centres d\'intérêt.',
+      fr: 'Les cookies marketing sont utilisés pour adapter les publicités et les contenus promotionnels à vos centres d’intérêt.',
       es: 'Las cookies de marketing se utilizan para personalizar los anuncios y el contenido promocional según tus intereses.',
       hr: 'Marketinški kolačići koriste se za prilagodbu oglasa i promotivnog sadržaja vašim interesima.',
       cz: 'Marketingové soubory cookie se používají k přizpůsobení reklam a propagačního obsahu vašim zájmům.',

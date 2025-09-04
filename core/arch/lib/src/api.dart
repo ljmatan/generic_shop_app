@@ -176,22 +176,45 @@ abstract class GsaApi {
   ///
   Future<dynamic> _httpRequest(
     Future<http.Response> Function() request, {
+    required Uri uri,
+    required String method,
+    required dynamic requestBody,
+    required Map<String, String> requestHeaders,
     required bool decodedResponse,
     bool retry = false,
     bool throws = true,
   }) async {
     final requestTime = DateTime.now();
     try {
-      final response = await request().timeout(_timeoutDuration);
-      final uri = Uri.parse('${response.request?.url}');
-      dynamic decodedRequestBody, decodedResponseBody;
+      http.Response? response;
       try {
-        decodedRequestBody = dart_convert.jsonDecode(
-          dart_convert.utf8.decode((response.request as http.Request?)!.bodyBytes),
+        response = await request().timeout(
+          _timeoutDuration,
         );
       } catch (e) {
-        // Do nothing.
+        try {
+          _log(
+            GsaApiModelLog(
+              statusCode: -1,
+              requestTime: requestTime,
+              responseTime: DateTime.now(),
+              url: uri.toString(),
+              method: method,
+              requestBody: requestBody,
+              responseBody: <String, dynamic>{
+                'errorType': e.runtimeType.toString(),
+                'message': '$e',
+              },
+              requestHeaders: requestHeaders,
+              responseHeaders: <String, String>{},
+            ),
+          );
+        } catch (e) {
+          // Do nothing.
+        }
+        rethrow;
       }
+      dynamic decodedResponseBody;
       try {
         decodedResponseBody = dart_convert.jsonDecode(response.body);
       } catch (e) {
@@ -204,8 +227,8 @@ abstract class GsaApi {
             requestTime: requestTime,
             responseTime: DateTime.now(),
             url: uri.toString(),
-            method: '${response.request?.method}',
-            requestBody: (decodedRequestBody ?? <String, dynamic>{}),
+            method: method,
+            requestBody: requestBody,
             responseBody: decodedResponseBody ?? <String, dynamic>{},
             requestHeaders: response.request?.headers ?? <String, String>{},
             responseHeaders: response.headers,
@@ -226,6 +249,10 @@ abstract class GsaApi {
             }
             return await _httpRequest(
               request,
+              uri: uri,
+              method: method,
+              requestBody: requestBody,
+              requestHeaders: requestHeaders,
               decodedResponse: decodedResponse,
               retry: false,
             );
@@ -299,11 +326,17 @@ abstract class GsaApi {
     bool throws = true,
     bool retry = true,
   }) async {
+    final uri = Uri.parse('$url$endpoint');
+    final requestHeaders = headers..addAll(additionalHeaders);
     return await _httpRequest(
       () async => http.get(
-        Uri.parse('$url$endpoint'),
-        headers: headers..addAll(additionalHeaders),
+        uri,
+        headers: requestHeaders,
       ),
+      uri: uri,
+      method: 'GET',
+      requestBody: null,
+      requestHeaders: requestHeaders,
       decodedResponse: decodedResponse,
       throws: throws,
       retry: retry,
@@ -320,12 +353,18 @@ abstract class GsaApi {
     bool throws = true,
     bool retry = true,
   }) async {
+    final uri = Uri.parse('$url$endpoint');
+    final requestHeaders = headers..addAll(additionalHeaders);
     return await _httpRequest(
       () async => http.post(
-        Uri.parse('$url$endpoint'),
-        headers: headers..addAll(additionalHeaders),
+        uri,
+        headers: requestHeaders,
         body: dart_convert.jsonEncode(body),
       ),
+      uri: uri,
+      method: 'POST',
+      requestBody: body,
+      requestHeaders: requestHeaders,
       decodedResponse: decodedResponse,
       throws: throws,
       retry: retry,
@@ -342,12 +381,18 @@ abstract class GsaApi {
     bool throws = true,
     bool retry = true,
   }) async {
+    final uri = Uri.parse('$url$endpoint');
+    final requestHeaders = headers..addAll(additionalHeaders);
     return await _httpRequest(
       () async => http.put(
-        Uri.parse('$url$endpoint'),
-        headers: headers..addAll(additionalHeaders),
+        uri,
+        headers: requestHeaders,
         body: dart_convert.jsonEncode(body),
       ),
+      uri: uri,
+      method: 'PUT',
+      requestBody: body,
+      requestHeaders: requestHeaders,
       decodedResponse: decodedResponse,
       throws: throws,
       retry: retry,
@@ -364,12 +409,18 @@ abstract class GsaApi {
     bool throws = true,
     bool retry = true,
   }) async {
+    final uri = Uri.parse('$url$endpoint');
+    final requestHeaders = headers..addAll(additionalHeaders);
     return await _httpRequest(
       () async => http.patch(
-        Uri.parse('$url$endpoint'),
-        headers: headers..addAll(additionalHeaders),
+        uri,
+        headers: requestHeaders,
         body: dart_convert.jsonEncode(body),
       ),
+      uri: uri,
+      method: 'PATCH',
+      requestBody: body,
+      requestHeaders: requestHeaders,
       decodedResponse: decodedResponse,
       throws: throws,
       retry: retry,
@@ -386,12 +437,18 @@ abstract class GsaApi {
     bool throws = true,
     bool retry = true,
   }) async {
+    final uri = Uri.parse('$url$endpoint');
+    final requestHeaders = headers..addAll(additionalHeaders);
     return await _httpRequest(
       () async => http.delete(
-        Uri.parse('$url$endpoint'),
-        headers: headers..addAll(additionalHeaders),
-        body: body,
+        uri,
+        headers: requestHeaders,
+        body: dart_convert.jsonEncode(body),
       ),
+      uri: uri,
+      method: 'DELETE',
+      requestBody: body,
+      requestHeaders: requestHeaders,
       decodedResponse: decodedResponse,
       throws: throws,
       retry: retry,

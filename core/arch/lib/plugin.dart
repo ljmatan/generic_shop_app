@@ -31,9 +31,44 @@ abstract class GsaPlugin {
   ///
   String get id;
 
-  /// Method implemented for managing and initialisationv of the application resources.
+  /// Method implemented for managing and initialisation of the application resources.
   ///
-  Future<void> init();
+  /// The method is called by the [init] method, and it's invocation won't be repeated if
+  /// the [loadData] method call is unsuccessful.
+  ///
+  /// Used for setting up the plugin services and other relevant application resources.
+  ///
+  Future<void> setupService() async {}
+
+  /// Method used for fetching runtime data from the backend or any other relevant sources.
+  ///
+  /// The method is called by the [init] method,
+  /// and is separated from the [setupService] method in order to differentiate it as a
+  /// "likely throwable" function.
+  ///
+  Future<void> fetchData() async {}
+
+  /// Property defining whether the [setupService] method has been executed successfully.
+  ///
+  bool _setupExecuted = false;
+
+  /// Method invoked on the application splash screen.
+  ///
+  /// Invokes the [setupService] and [fetchData] method,
+  /// while verifying the [setupService] method is not invoked multiple times if not necessary.
+  ///
+  /// [forceSetup] parameter can be optionally included in order to invoke the [setupService] method
+  /// on each of the [init] function call.
+  ///
+  Future<void> init([
+    bool forceSetup = false,
+  ]) async {
+    if (forceSetup || !_setupExecuted) {
+      await setupService();
+      _setupExecuted = true;
+    }
+    await fetchData();
+  }
 
   /// App screen specified for display after the splash and user consent screens.
   ///
@@ -123,15 +158,18 @@ class GsaPluginCookies {
   /// marking the cookie requirement with [bool] values.
   ///
   GsaPluginCookies({
-    this.mandatory = true,
-    this.functional = true,
+    required this.functional,
     required this.marketing,
     required this.statistical,
   });
 
+  bool get mandatory {
+    return true;
+  }
+
   /// Cookie category identifier.
   ///
-  final bool mandatory, functional, marketing, statistical;
+  final bool functional, marketing, statistical;
 }
 
 /// Theme customisation options for client integrations.

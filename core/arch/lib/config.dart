@@ -145,7 +145,7 @@ class GsaConfig {
   /// GsaConfig.currencyConversionEnabled = false;
   /// ```
   ///
-  static bool currencyConversionEnabled = true;
+  static bool currencyConversionEnabled = false;
 
   /// Initialise the runtime resources with the specified parameters.
   ///
@@ -171,6 +171,7 @@ class GsaConfig {
     GsaServiceMock.instance;
     GsaServicePermissions.instance;
     GsaServiceShare.instance;
+    GsaServiceSslOverride.instance;
     GsaServiceSearch.instance;
     GsaServiceTracking.instance;
     GsaServiceUrlLauncher.instance;

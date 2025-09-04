@@ -182,6 +182,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                     final formsValidated = _formKey.currentState?.validate() == true;
                                     final termsValidated = _userAgreementRequired ? _termsSwitchKey.currentState?.validate() == true : true;
                                     if (formsValidated && termsValidated) {
+                                      FocusScope.of(context).unfocus();
                                       const GsaWidgetOverlayContentBlocking().openDialog();
                                       try {
                                         if (GsaConfig.plugin.loginWithUsernameAndPassword == null) {

@@ -27,7 +27,7 @@ class GsdPlugin extends GsaPlugin {
   }
 
   @override
-  Future<void> init() async {
+  Future<void> setupService() async {
     await GsaServiceCache.instance.clearData();
   }
 
@@ -44,6 +44,7 @@ class GsdPlugin extends GsaPlugin {
   @override
   GsaPluginCookies get enabledCookieTypes {
     return GsaPluginCookies(
+      functional: true,
       marketing: true,
       statistical: true,
     );

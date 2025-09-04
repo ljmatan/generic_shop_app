@@ -23,19 +23,19 @@ dependencies:
     path: ../services
   generic_shop_app_content:
     path: ../content
-  generic_shop_app_ivancica:
-    path: ../../plugins/ivancica
   generic_shop_app_fitness_tracker:
     path: ../../plugins/fitness_tracker
   generic_shop_app_froddo_b2b:
     path: ../../plugins/froddo_b2b
+  generic_shop_app_froddo_b2c:
+    path: ../../plugins/froddo_b2c
   device_frame_plus: ^1.5.0
   flutter_colorpicker: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
