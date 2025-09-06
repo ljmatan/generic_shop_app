@@ -19,6 +19,14 @@
 # Flag o - Set the exit status of the pipeline is the exit status of the last command
 set -euo pipefail
 
+# Redirect stdout and stderr to a file
+output_log_file() {
+    LOG_FILE="$PROJECT_DIR/temp/run.log"
+    # Remove old log file if it exists
+    [ -f "$LOG_FILE" ] && rm -f "$LOG_FILE"
+    exec > >(tee -a "$LOG_FILE") 2>&1
+}
+
 # Define relevant directory locations and latest build version numbers.
 setup_dev_env() {
     # Declare the working directory path.
@@ -42,6 +50,8 @@ setup_dev_env() {
     PROJECT_DIR="${PROJECT_DIR%?}"
     SCRIPT_DIR="$PROJECT_DIR/scripts"
     TEMP_DIR="$PROJECT_DIR/temp"
+
+    output_log_file
 
     # Export ENV variables for build versioning.
     if [[ -z "${GSA_IDENTIFIER-}" || $0 == ".source-env.sh" ]]; then
@@ -70,11 +80,6 @@ exit_runner() {
 # Run the environment setup script to gather relevant directory locations.
 setup_dev_env
 
-# Redirect stdout and stderr to a file
-LOG_FILE="$PROJECT_DIR/temp/run.log"
-# Remove old log file if it exists
-[ -f "$LOG_FILE" ] && rm -f "$LOG_FILE"
-exec > >(tee -a "$LOG_FILE") 2>&1
 
 # Change working directory to the "scripts" directory.
 cd $SCRIPT_DIR
