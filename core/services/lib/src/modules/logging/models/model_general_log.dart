@@ -37,7 +37,7 @@ class GsaServiceLoggingModelAppLog {
       })>? callerFrames;
 
   factory GsaServiceLoggingModelAppLog.fromStackTrace(
-    String message, {
+    String? message, {
     StackTrace? parentStackTrace,
   }) {
     final stackTrace = GsaServiceDebug.instance.getStackTrace();
@@ -51,7 +51,7 @@ class GsaServiceLoggingModelAppLog {
           );
     return GsaServiceLoggingModelAppLog._(
       time: DateTime.now(),
-      message: message,
+      message: message ?? 'N/A.',
       package: stackTrace.package,
       fileName: stackTrace.fileName,
       className: stackTrace.className,

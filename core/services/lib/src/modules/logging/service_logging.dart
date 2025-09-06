@@ -27,17 +27,8 @@ class GsaServiceLogging extends GsaService {
   final logs = (
     general: <GsaServiceLoggingModelAppLog>[],
     error: <GsaServiceLoggingModelAppLog>[],
+    method: <GsaServiceLoggingModelAppLog>[],
   );
-
-  void _logGeneral(GsaServiceLoggingModelAppLog log) {
-    logs.general.add(log);
-    if (kDebugMode) print('New log:\n${log.message}');
-  }
-
-  void _logError(GsaServiceLoggingModelAppLog log) {
-    logs.error.add(log);
-    if (kDebugMode) print('An error occurred:\n${log.message}');
-  }
 
   /// Logs any given message.
   ///
@@ -47,7 +38,8 @@ class GsaServiceLogging extends GsaService {
   }) {
     try {
       final log = GsaServiceLoggingModelAppLog.fromStackTrace(message);
-      _logGeneral(log);
+      logs.general.add(log);
+      if (kDebugMode) print('New log:\n${log.message}');
     } catch (e) {
       // Do nothing, service is disabled.
     }
@@ -61,7 +53,19 @@ class GsaServiceLogging extends GsaService {
   }) {
     try {
       final log = GsaServiceLoggingModelAppLog.fromStackTrace(message);
-      _logError(log);
+      logs.error.add(log);
+      if (kDebugMode) print('An error occurred:\n${log.message}');
+    } catch (e) {
+      // Do nothing, service is disabled.
+    }
+  }
+
+  /// Method implement for logging any app method calls.
+  ///
+  void logMethod() {
+    try {
+      final log = GsaServiceLoggingModelAppLog.fromStackTrace(null);
+      logs.method.add(log);
     } catch (e) {
       // Do nothing, service is disabled.
     }

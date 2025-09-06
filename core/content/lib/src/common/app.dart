@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 /// The default application builder,
@@ -18,7 +17,7 @@ class Gsa extends StatefulWidget {
 class GsaState extends State<Gsa> {
   /// Property holding the value of the runtime resource allocation method.
   ///
-  final _initFuture = GsaConfig.init();
+  Future<void> _initFuture = GsaConfig.init();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +39,11 @@ class GsaState extends State<Gsa> {
               child: Center(
                 child: GsaWidgetError(
                   snapshot.error.toString(),
+                  retry: () {
+                    setState(() {
+                      _initFuture = GsaConfig.init();
+                    });
+                  },
                 ),
               ),
             ),

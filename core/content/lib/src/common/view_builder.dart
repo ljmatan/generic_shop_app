@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_services/services.dart';
 
 /// A builder for inserting widgets above the [Navigator].
 ///
@@ -32,10 +32,10 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Handle platform theme brightness changes.
-    if (GsaTheme.instance.brightness == null) {
+    if (GsaServiceCacheEntry.themeBrightness.value == null) {
       final systemBrightness = MediaQuery.of(context).platformBrightness;
-      if (systemBrightness != GsaTheme.instance.platformBrightness) {
-        GsaTheme.instance.platformBrightness = systemBrightness;
+      if (systemBrightness != GsaTheme.instance.brightness) {
+        GsaTheme.instance.brightness = systemBrightness;
         context.findAncestorStateOfType<GsaState>()?.setState(() {});
       }
     }

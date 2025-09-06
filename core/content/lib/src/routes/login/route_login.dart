@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
@@ -73,7 +72,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                   maxWidth: Theme.of(context).maxOverlayInlineWidth,
                 ),
                 child: SingleChildScrollView(
-                  padding: Theme.of(context).listViewPadding,
+                  padding: Theme.of(context).paddings.listView(),
                   child: Form(
                     key: _formKey,
                     child: Column(

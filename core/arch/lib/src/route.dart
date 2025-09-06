@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_services/services.dart';
 
 /// Type identifier for the [GsaRoute] objects.
 ///
@@ -174,7 +175,7 @@ abstract class GsaRoute extends StatefulWidget {
 /// (1) can be read synchronously when the widget is built and
 /// (2) might change during the lifetime of the widget.
 ///
-abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAware, WidgetsBindingObserver {
+abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAware, WidgetsBindingObserver, GsaMethods {
   /// Currently visible route state instance.
   ///
   GsaRouteState<GsaRoute> get presentingRoute => GsaRoute.presenting;
@@ -382,6 +383,11 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
     super.didPopNext();
     _setUrlPath();
     _visible = true;
+  }
+
+  @override
+  void logUsage([StackTrace? current]) {
+    GsaServiceLogging.instance.logMethod();
   }
 }
 

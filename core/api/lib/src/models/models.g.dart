@@ -170,6 +170,7 @@ GsaModelOrderDraft _$GsaModelOrderDraftFromJson(Map<String, dynamic> json) =>
       price: json['price'] == null
           ? null
           : GsaModelPrice.fromJson(json['price'] as Map<String, dynamic>),
+      note: json['note'] as String?,
     )
       ..originUrl = json['originUrl'] as String?
       ..deleted = json['deleted'] as bool?
@@ -218,6 +219,7 @@ Map<String, dynamic> _$GsaModelOrderDraftToJson(GsaModelOrderDraft instance) =>
       'orderProcessor': instance.orderProcessor?.toJson(),
       'couponCode': instance.couponCode,
       'price': instance.price?.toJson(),
+      'note': instance.note,
     };
 
 GsaModelOrderDraftItemCount _$GsaModelOrderDraftItemCountFromJson(
@@ -686,6 +688,7 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) =>
           .toList(),
       deliveryTimeMilliseconds:
           (json['deliveryTimeMilliseconds'] as num?)?.toInt(),
+      condition: json['condition'] as String?,
       informationList: (json['informationList'] as List<dynamic>?)
           ?.map((e) => _$recordConvert(
                 e,
@@ -704,8 +707,7 @@ GsaModelSaleItem _$GsaModelSaleItemFromJson(Map<String, dynamic> json) =>
     )
       ..deleted = json['deleted'] as bool?
       ..logs =
-          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..condition = json['condition'] as String?;
+          (json['logs'] as List<dynamic>?)?.map((e) => e as String).toList();
 
 Map<String, dynamic> _$GsaModelSaleItemToJson(GsaModelSaleItem instance) =>
     <String, dynamic>{

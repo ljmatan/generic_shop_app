@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 
 /// Application toolbar / navigation bar / app bar implementation.
@@ -87,7 +86,7 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                               widget.label ?? '',
                               textAlign: Theme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
-                                    shadows: GsaConfig.plugin.theme.animatedAppBar != false ? Theme.of(context).outlineShadows : null,
+                                    shadows: GsaConfig.plugin.theme.animatedAppBar != false ? Theme.of(context).outline.shadows() : null,
                                   ),
                             ),
                           ),

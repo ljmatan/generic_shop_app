@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/gsac.dart';
-import 'package:generic_shop_app_content/src/common/widgets/actions/widget_sticky_bottom_button.dart';
 
 export 'actions/_actions.dart';
 export 'flair/_flair.dart';

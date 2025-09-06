@@ -1,8 +1,180 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_services/services.dart';
+
+/// Defines standardized text styles..
+///
+/// This enum enforces a **typography system** that ensures consistent sizing,
+/// weight, and color usage across the app.
+///
+/// Each variant corresponds to a semantic role in UI design, not just a font size.
+/// This way, design intent is preserved.
+///
+enum GsaWidgetTextStyles {
+  /// Small supporting text, often used for secondary labels or helper messages.
+  ///
+  /// Example: Timestamp under a message.
+  ///
+  small,
+
+  /// Default text for paragraphs or regular content.
+  ///
+  /// Example: Body copy, form inputs, basic UI text.
+  ///
+  regular,
+
+  /// Slightly larger than [regular] for emphasis.
+  ///
+  /// Example: Emphasized content, secondary section text.
+  ///
+  medium,
+
+  /// Larger body text, often used for buttons or emphasized labels.
+  ///
+  /// Example: Settings menu items.
+  ///
+  large,
+
+  /// A page or section title.
+  ///
+  /// Example: "Account Settings" heading.
+  ///
+  title,
+
+  /// Subtitle or secondary heading.
+  ///
+  /// Example: Subsection label under a title.
+  ///
+  subtitle,
+
+  /// Very small text, typically de-emphasized.
+  ///
+  /// Example: Captions under images or icons.
+  ///
+  caption,
+
+  /// Text style used for actionable buttons.
+  ///
+  /// Example: "SUBMIT", "SAVE".
+  ///
+  button,
+
+  /// Prominent heading text, larger than [title].
+  ///
+  /// Example: Section headers, dashboard labels.
+  ///
+  headline,
+
+  /// Very large display text, for emphasis or branding.
+  ///
+  /// Example: Onboarding hero text, welcome screens.
+  ///
+  display,
+
+  /// Error messages or validation feedback.
+  ///
+  /// Example: "Password is too short".
+  ///
+  error,
+
+  /// Styled for hyperlinks or clickable text.
+  ///
+  /// Example: "Terms and Conditions".
+  ///
+  url;
+
+  /// Retrieve the value of a [TextStyle] for this [GsaWidgetTextStyle] entry.
+  ///
+  TextStyle get value {
+    switch (this) {
+      case GsaWidgetTextStyles.small:
+        return const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+          height: 1.2,
+        );
+
+      case GsaWidgetTextStyles.regular:
+        return const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          height: 1.4,
+        );
+
+      case GsaWidgetTextStyles.medium:
+        return const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          height: 1.4,
+        );
+
+      case GsaWidgetTextStyles.large:
+        return const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          height: 1.4,
+        );
+
+      case GsaWidgetTextStyles.title:
+        return const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          height: 1.3,
+        );
+
+      case GsaWidgetTextStyles.subtitle:
+        return const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Color(0xFF666666),
+        );
+
+      case GsaWidgetTextStyles.caption:
+        return const TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w300,
+          color: Color(0xFF999999),
+        );
+
+      case GsaWidgetTextStyles.button:
+        return const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 1.25,
+        );
+
+      case GsaWidgetTextStyles.headline:
+        return const TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        );
+
+      case GsaWidgetTextStyles.display:
+        return const TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+          height: 1.1,
+        );
+
+      case GsaWidgetTextStyles.error:
+        return const TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
+          color: Color(0xFFD32F2F),
+        );
+
+      case GsaWidgetTextStyles.url:
+        return const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: Color(0xFF1976D2),
+          decoration: TextDecoration.underline,
+        );
+    }
+  }
+}
 
 /// Flutter [Text] widget implementation with internationalization and editing features embedded.
 ///
@@ -121,8 +293,12 @@ class _GsaWidgetTextState extends State<GsaWidgetText> {
   Key _textWidgetKey = UniqueKey();
 
   void _rebuildOnLanguageUpdate() {
-    setState(() {
-      _textWidgetKey = UniqueKey();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _textWidgetKey = UniqueKey();
+        });
+      }
     });
   }
 
@@ -195,18 +371,22 @@ class _WidgetTextDisplay extends StatefulWidget {
 
 class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
   String _translatedContent(String value) {
-    final translationReference = GsaServiceI18N.instance.getTranslationReference(
-      context,
-    );
-    if (translationReference != null) {
-      if (translationReference.route?.translatable != false) {
-        return GsaServiceI18N.instance.translate(
-              ancestor: translationReference.ancestor,
-              route: translationReference.route.runtimeType,
-              value: value,
-            ) ??
-            value;
+    try {
+      final translationReference = GsaServiceI18N.instance.getTranslationReference(
+        context,
+      );
+      if (translationReference != null) {
+        if (translationReference.route?.translatable != false) {
+          return GsaServiceI18N.instance.translate(
+                ancestor: translationReference.ancestor,
+                route: translationReference.route.runtimeType,
+                value: value,
+              ) ??
+              value;
+        }
       }
+    } catch (e) {
+      // Do nothing.
     }
     return value;
   }

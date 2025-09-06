@@ -51,5 +51,7 @@
 	<string>Camera permission is required in order to enable QR code scanning.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone permission is required in order to enable full camera functionality.</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

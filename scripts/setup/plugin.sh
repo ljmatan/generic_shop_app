@@ -14,7 +14,7 @@ REPO_DIR=$1
 
 # Define the project repository location.
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-PROJECT_DIR="$SCRIPT_DIR/.."
+PROJECT_DIR="$SCRIPT_DIR/../.."
 
 # Define the plugin name.
 PLUGIN_ID="${REPO_DIR#https://github.com/ljmatan/generic_shop_app_}"

@@ -11,7 +11,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/config.dart';
+import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:json_annotation/json_annotation.dart';
 

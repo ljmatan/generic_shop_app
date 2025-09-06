@@ -4,25 +4,12 @@ import 'dart:ui' as dart_ui;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// The default theme configuration for the application project.
 ///
 class GsaTheme {
-  /// Default, unnamed constructor.
-  ///
-  /// Can be used for specifying a custom [plugin] definition,
-  /// and otherwise, the global [instance] property may be accessed.
-  ///
-  GsaTheme({
-    this.platform,
-    this.brightness,
-    this.primaryColor,
-    this.fontFamily,
-  });
-
   /// Private constructor defined for [instance] property initialisation.
   ///
   /// The constructor fetches and applies cached theme data and applies.
@@ -30,39 +17,30 @@ class GsaTheme {
   GsaTheme._() {
     final cachedBrightnessName = GsaServiceCacheEntry.themeBrightness.value;
     if (cachedBrightnessName != null) {
-      brightness = Brightness.values.firstWhereOrNull(
+      final cachedBrightness = Brightness.values.firstWhereOrNull(
         (brightness) {
           return brightness.name == cachedBrightnessName;
         },
       );
+      if (cachedBrightness != null) {
+        brightness = cachedBrightness;
+      }
     }
   }
-
-  /// The platform that user interaction should adapt to target.
-  ///
-  TargetPlatform? platform;
-
-  /// Custom-defined theme [Brightness], describes the contrast of a theme or color palette.
-  ///
-  Brightness? brightness;
-
-  /// Color definition for overriding the set defaults.
-  ///
-  Color? primaryColor;
-
-  /// Specified display font family.
-  ///
-  String? fontFamily;
 
   /// Globally-accessible class instance.
   ///
   static final instance = GsaTheme._();
 
+  /// The platform that user interaction should adapt to target.
+  ///
+  TargetPlatform? platform;
+
   /// The setting indicating the current brightness mode of the host platform.
   ///
   /// If the platform has no preference, the value defaults to [Brightness.light].
   ///
-  Brightness platformBrightness = dart_ui.PlatformDispatcher.instance.platformBrightness;
+  Brightness brightness = dart_ui.PlatformDispatcher.instance.platformBrightness;
 
   /// Border radius value applied to elements such as [Card], [OutlinedButton], etc.
   ///
@@ -91,18 +69,11 @@ class GsaTheme {
     );
   }
 
-  Brightness get _brightness {
-    return brightness ?? platformBrightness;
-  }
-
   Color get _primaryColor {
-    if (primaryColor != null) {
-      return primaryColor!;
-    }
     if (GsaConfig.plugin.theme.primaryColor != null) {
       return GsaConfig.plugin.theme.primaryColor!;
     }
-    if (_brightness == Brightness.light) {
+    if (brightness == Brightness.light) {
       return const Color(0xffDAB1DA);
     } else {
       return const Color(0xff63183f);
@@ -116,7 +87,7 @@ class GsaTheme {
     final newHue = (hsl.hue + hueShift) % 360;
     final baseLightness = hsl.lightness;
     final lightnessJitter = (random.nextDouble() * 0.1) - 0.05;
-    final adjustedLightness = _brightness == Brightness.dark
+    final adjustedLightness = brightness == Brightness.dark
         ? (baseLightness * 1.1 + lightnessJitter).clamp(0.2, 0.9)
         : (baseLightness * 0.9 + lightnessJitter).clamp(0.2, 0.9);
     final saturationJitter = (random.nextDouble() * 0.2) - 0.1;
@@ -130,8 +101,8 @@ class GsaTheme {
     return adjusted.toColor();
   }
 
-  String? get _fontFamily {
-    return fontFamily ?? GsaConfig.plugin.theme.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
+  String? get fontFamily {
+    return GsaConfig.plugin.theme.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
   }
 
   InputDecorationTheme get _inputDecorationTheme {
@@ -139,12 +110,12 @@ class GsaTheme {
       contentPadding: const EdgeInsets.symmetric(horizontal: 20),
       isDense: true,
       filled: true,
-      fillColor: _brightness == Brightness.light ? const Color(0xffF0F3F5) : const Color(0xffb3b3b3),
+      fillColor: brightness == Brightness.light ? const Color(0xffF0F3F5) : const Color(0xffb3b3b3),
       border: OutlineInputBorder(
         borderRadius: borderRadius,
       ),
       labelStyle: TextStyle(
-        color: _brightness == Brightness.light ? null : Colors.white,
+        color: brightness == Brightness.light ? null : Colors.white,
         fontWeight: FontWeight.w600,
         fontSize: 12,
       ),
@@ -154,11 +125,11 @@ class GsaTheme {
       ),
       errorMaxLines: 1000,
       helperStyle: TextStyle(
-        color: _brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
+        color: brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
         fontSize: 10,
       ),
       hintStyle: TextStyle(
-        color: _brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
+        color: brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
       ),
     );
   }
@@ -171,7 +142,7 @@ class GsaTheme {
     return RoundedRectangleBorder(
       borderRadius: borderRadius,
       side: BorderSide(
-        color: _brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
+        color: brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
       ),
     );
   }
@@ -181,9 +152,9 @@ class GsaTheme {
   ThemeData get data {
     return ThemeData(
       platform: platform,
-      brightness: _brightness,
+      brightness: brightness,
       primaryColor: _primaryColor,
-      fontFamily: _fontFamily,
+      fontFamily: fontFamily,
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
@@ -200,7 +171,7 @@ class GsaTheme {
         ),
       ),
       inputDecorationTheme: _inputDecorationTheme,
-      textTheme: _brightness == Brightness.light
+      textTheme: brightness == Brightness.light
           ? TextTheme(
               bodySmall: TextStyle(
                 color: Colors.grey.shade600,
@@ -229,7 +200,7 @@ class GsaTheme {
                 color: _primaryColor,
               ),
             ),
-      dividerColor: _brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
+      dividerColor: brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
       dividerTheme: const DividerThemeData(
         thickness: .4,
         space: .4,
@@ -253,16 +224,16 @@ class GsaTheme {
             _inputDecorationThemePadding,
           ),
           iconColor: WidgetStatePropertyAll(
-            _brightness == Brightness.light ? null : Colors.white,
+            brightness == Brightness.light ? null : Colors.white,
           ),
           textStyle: WidgetStatePropertyAll(
             TextStyle(
-              color: _brightness == Brightness.light ? null : Colors.white,
+              color: brightness == Brightness.light ? null : Colors.white,
               fontWeight: FontWeight.w700,
             ),
           ),
           foregroundColor: WidgetStatePropertyAll(
-            _brightness == Brightness.light ? null : Colors.white,
+            brightness == Brightness.light ? null : Colors.white,
           ),
         ),
       ),
@@ -279,16 +250,16 @@ class GsaTheme {
             _inputDecorationThemePadding,
           ),
           iconColor: WidgetStatePropertyAll(
-            _brightness == Brightness.light ? null : Colors.white,
+            brightness == Brightness.light ? null : Colors.white,
           ),
           textStyle: WidgetStatePropertyAll(
             TextStyle(
-              color: _brightness == Brightness.light ? null : Colors.white,
+              color: brightness == Brightness.light ? null : Colors.white,
               fontWeight: FontWeight.w700,
             ),
           ),
           foregroundColor: WidgetStatePropertyAll(
-            _brightness == Brightness.light ? null : Colors.white,
+            brightness == Brightness.light ? null : Colors.white,
           ),
         ),
       ),
@@ -302,16 +273,16 @@ class GsaTheme {
             _inputDecorationThemePadding,
           ),
           iconColor: WidgetStatePropertyAll(
-            _brightness == Brightness.light ? null : Colors.white,
+            brightness == Brightness.light ? null : Colors.white,
           ),
           textStyle: WidgetStatePropertyAll(
             TextStyle(
-              color: _brightness == Brightness.light ? null : Colors.white,
+              color: brightness == Brightness.light ? null : Colors.white,
               fontWeight: FontWeight.w700,
             ),
           ),
           foregroundColor: WidgetStatePropertyAll(
-            _brightness == Brightness.light ? null : Colors.white,
+            brightness == Brightness.light ? null : Colors.white,
           ),
         ),
       ),
@@ -323,45 +294,41 @@ class GsaTheme {
           ),
         ),
       ),
-      scaffoldBackgroundColor: _brightness == Brightness.light ? Colors.white : const Color(0xff121212),
-      colorScheme: _brightness == Brightness.light
+      scaffoldBackgroundColor: brightness == Brightness.light ? Colors.white : const Color(0xff121212),
+      colorScheme: brightness == Brightness.light
           ? ColorScheme(
-              brightness: _brightness,
+              brightness: brightness,
               primary: _primaryColor,
               onPrimary: Colors.white,
               secondary: _secondaryColor,
               onSecondary: Colors.white,
               error: Colors.red.shade300,
               onError: Colors.white,
-              background: Colors.white,
-              onBackground: Colors.grey.shade300,
               surface: Colors.white,
-              onSurface: const Color(0xff121212),
+              onSurface: Colors.grey.shade300,
               surfaceTint: Colors.white,
             )
           : ColorScheme(
-              brightness: _brightness,
+              brightness: brightness,
               primary: _primaryColor,
               onPrimary: Colors.grey,
               secondary: _secondaryColor,
               onSecondary: Colors.grey,
               error: Colors.red.shade300,
               onError: Colors.white,
-              background: const Color(0xff333333),
-              onBackground: Colors.grey.shade400,
-              surface: Colors.black,
-              onSurface: Colors.white,
+              surface: const Color(0xff333333),
+              onSurface: Colors.grey.shade400,
               surfaceTint: const Color(0xff212121),
             ),
       iconTheme: IconThemeData(
-        color: _brightness == Brightness.light ? null : Colors.white,
+        color: brightness == Brightness.light ? null : Colors.white,
         applyTextScaling: true,
       ),
       appBarTheme: AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.light,
         ),
-        color: _primaryColor,
+        backgroundColor: _primaryColor,
         shape: Border(
           bottom: BorderSide(
             color: Colors.grey.shade200,
@@ -372,14 +339,14 @@ class GsaTheme {
           applyTextScaling: true,
         ),
         titleTextStyle: TextStyle(
-          fontFamily: _fontFamily,
+          fontFamily: fontFamily,
           color: Colors.white,
           fontSize: 18,
         ),
       ),
       cardTheme: CardThemeData(
         elevation: 0,
-        color: _brightness == Brightness.light ? Colors.white : const Color(0xff212121),
+        color: brightness == Brightness.light ? Colors.white : const Color(0xff212121),
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: borderRadius,
@@ -414,7 +381,7 @@ class GsaTheme {
   /// Specifies a preference for the style of the system overlays.
   ///
   SystemUiOverlayStyle get systemUiOverlayStyle {
-    return _brightness == Brightness.light
+    return brightness == Brightness.light
         ? const SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             statusBarBrightness: Brightness.light,
@@ -442,7 +409,8 @@ extension GsaThemeExt on ThemeData {
   /// [size] -> The current dimensions of the rectangle as last reported by the platform
   /// into which scenes rendered in this view are drawn.
   ///
-  /// [ratio] -> The number of device pixels for each logical pixel for the screen this view is displayed on.
+  /// [ratio] -> The number of device pixels for each logical pixel for the screen
+  /// this view is displayed on.
   ///
   ({
     Size? size,
@@ -468,6 +436,8 @@ extension GsaThemeExt on ThemeData {
     return Size(screenSpecs.size!.width / screenSpecs.ratio!, screenSpecs.size!.height / screenSpecs.ratio!);
   }
 
+  /// Scale at which the regular elements are being sized.
+  ///
   double get elementScale {
     if (GsaRoute.navigatorKey.currentContext == null) return 1;
     return MediaQuery.of(GsaRoute.navigatorKey.currentContext!).textScaler.scale(1);
@@ -492,59 +462,55 @@ extension GsaThemeExt on ThemeData {
     );
   }
 
-  double get listViewHorizontalPadding {
-    return dimensions.smallScreen ? 20 : 26;
-  }
-
-  double get listViewVerticalPadding {
-    return dimensions.smallScreen ? 24 : 30;
-  }
-
-  /// Default padding specified for [ListView] and other such elements.
+  /// Default font size applied to [Text] widgets.
   ///
-  EdgeInsets get listViewPadding {
-    return EdgeInsets.symmetric(
-      horizontal: listViewHorizontalPadding,
-      vertical: listViewVerticalPadding,
-    );
-  }
-
-  /// Default padding specified for [Card] elements.
-  ///
-  EdgeInsets get cardPadding {
-    return EdgeInsets.symmetric(
-      horizontal: dimensions.smallScreen ? 16 : 20,
-      vertical: dimensions.smallScreen ? 12 : 16,
-    );
-  }
-
-  double get outlineWidth {
-    return dimensions.smallScreen ? .1 : .4;
-  }
-
-  List<Shadow> get outlineShadows {
-    final width = outlineWidth;
-    return [
-      for (final offset in <Offset>{
-        Offset(-width, -width),
-        Offset(width, -width),
-        Offset(width, width),
-        Offset(-width, width),
-      })
-        Shadow(
-          offset: offset,
-          color: Colors.black,
-        ),
-    ];
-  }
-
   double get defaultTextSize {
     return textTheme.bodyMedium?.fontSize ?? kDefaultFontSize;
   }
 
+  /// Default height of "action-type" elements (e.g., buttons).
+  ///
   double get actionElementHeight {
     final textSize = defaultTextSize;
     return (kMinInteractiveDimension - textSize) + textSize * elementScale;
+  }
+
+  /// Default element padding values.
+  ///
+  ({
+    double Function() cardHorizontal,
+    double Function() cardVertical,
+    EdgeInsets Function() card,
+    double Function() listViewHorizontal,
+    double Function() listViewVertical,
+    EdgeInsets Function() listView,
+  }) get paddings {
+    return (
+      cardHorizontal: () {
+        return dimensions.smallScreen ? 16 : 20;
+      },
+      cardVertical: () {
+        return dimensions.smallScreen ? 12 : 16;
+      },
+      card: () {
+        return EdgeInsets.symmetric(
+          horizontal: paddings.cardHorizontal(),
+          vertical: paddings.cardVertical(),
+        );
+      },
+      listViewHorizontal: () {
+        return dimensions.smallScreen ? 20 : 26;
+      },
+      listViewVertical: () {
+        return dimensions.smallScreen ? 24 : 30;
+      },
+      listView: () {
+        return EdgeInsets.symmetric(
+          horizontal: paddings.listViewHorizontal(),
+          vertical: paddings.listViewVertical(),
+        );
+      },
+    );
   }
 
   /// Maximum specified width for overlay and inline elements.
@@ -574,5 +540,33 @@ extension GsaThemeExt on ThemeData {
       ).textScaler,
     )..layout();
     return textPainter.size;
+  }
+
+  /// Specifications for element (e.g., [Text] or [Icon] widget) outline.
+  ///
+  ({
+    double Function() width,
+    List<Shadow> Function() shadows,
+  }) get outline {
+    return (
+      width: () {
+        return dimensions.smallScreen ? .1 : .4;
+      },
+      shadows: () {
+        final width = outline.width();
+        return [
+          for (final offset in <Offset>{
+            Offset(-width, -width),
+            Offset(width, -width),
+            Offset(width, width),
+            Offset(-width, width),
+          })
+            Shadow(
+              offset: offset,
+              color: Colors.black,
+            ),
+        ];
+      },
+    );
   }
 }

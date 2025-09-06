@@ -513,13 +513,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  generic_shop_app_ivancica:
+  generic_shop_app_froddo_b2c:
     dependency: transitive
     description:
-      path: "../../../plugins/ivancica"
+      path: "../../../plugins/froddo_b2c"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.0.1"
   generic_shop_app_services:
     dependency: transitive
     description:
@@ -1429,5 +1429,5 @@ packages:
     source: hosted
     version: "0.2.4"
 sdks:
-  dart: ">=3.8.1 <4.0.0"
+  dart: ">=3.9.0 <4.0.0"
   flutter: ">=3.29.0"

@@ -13,7 +13,7 @@
 
 # Define script and project directory locations.
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-PROJECT_DIR="$SCRIPT_DIR/.."
+PROJECT_DIR="$SCRIPT_DIR/../.."
 
 # Build the frontend project documentation.
 cd $PROJECT_DIR

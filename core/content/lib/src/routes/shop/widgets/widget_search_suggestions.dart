@@ -35,7 +35,7 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
             child: InkWell(
               child: Card(
                 child: Padding(
-                  padding: Theme.of(context).cardPadding,
+                  padding: Theme.of(context).paddings.card(),
                   child: Row(
                     children: [
                       Expanded(

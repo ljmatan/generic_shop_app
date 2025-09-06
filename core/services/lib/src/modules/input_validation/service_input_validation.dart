@@ -1,4 +1,3 @@
-import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_architecture/gsar.dart';
 import 'package:generic_shop_app_services/src/modules/i18n/service_i18n.dart';
 

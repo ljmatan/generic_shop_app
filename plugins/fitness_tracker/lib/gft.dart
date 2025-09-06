@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/config.dart';
 import 'package:generic_shop_app_fitness_tracker/gft.dart';
 import 'package:generic_shop_app_services/services.dart';
 

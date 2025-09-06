@@ -16,8 +16,8 @@ class ModelGiotFirebaseDatabaseStatus {
       );
 
   Map<String, dynamic> toJson() => {
-        "temperature": temperature,
-        "humidity": humidity,
+        'temperature': temperature,
+        'humidity': humidity,
       };
 }
 
@@ -29,11 +29,11 @@ class ModelGiotFirebaseDatabaseHeating {
   });
 
   factory ModelGiotFirebaseDatabaseHeating.fromJson(Map<String, dynamic> json) => ModelGiotFirebaseDatabaseHeating(
-        rules: json["rules"] == null ? null : ModelGiotFirebaseDatabaseHeatingRules.fromJson(json["rules"]),
+        rules: json['rules'] == null ? null : ModelGiotFirebaseDatabaseHeatingRules.fromJson(json['rules']),
       );
 
   Map<String, dynamic> toJson() => {
-        "rules": rules?.toJson(),
+        'rules': rules?.toJson(),
       };
 }
 
@@ -47,13 +47,13 @@ class ModelGiotFirebaseDatabaseHeatingRules {
   });
 
   factory ModelGiotFirebaseDatabaseHeatingRules.fromJson(Map<String, dynamic> json) => ModelGiotFirebaseDatabaseHeatingRules(
-        maxTimeOnHourly: json["max_time_on_hourly"],
-        minTemperature: json["min_temperature"],
+        maxTimeOnHourly: json['max_time_on_hourly'],
+        minTemperature: json['min_temperature'],
       );
 
   Map<String, dynamic> toJson() => {
-        "max_time_on_hourly": maxTimeOnHourly,
-        "min_temperature": minTemperature,
+        'max_time_on_hourly': maxTimeOnHourly,
+        'min_temperature': minTemperature,
       };
 }
 
@@ -65,11 +65,11 @@ class ModelGiotFirebaseDatabaseIrrigation {
   });
 
   factory ModelGiotFirebaseDatabaseIrrigation.fromJson(Map<String, dynamic> json) => ModelGiotFirebaseDatabaseIrrigation(
-        rules: json["rules"] == null ? null : ModelGiotFirebaseDatabaseIrrigationRules.fromJson(json["rules"]),
+        rules: json['rules'] == null ? null : ModelGiotFirebaseDatabaseIrrigationRules.fromJson(json['rules']),
       );
 
   Map<String, dynamic> toJson() => {
-        "rules": rules?.toJson(),
+        'rules': rules?.toJson(),
       };
 }
 
@@ -89,19 +89,19 @@ class ModelGiotFirebaseDatabaseIrrigationRules {
   });
 
   factory ModelGiotFirebaseDatabaseIrrigationRules.fromJson(Map<String, dynamic> json) => ModelGiotFirebaseDatabaseIrrigationRules(
-        cycleRepeatTime: json["cycle_repeat_time"],
-        cycleTimeOffsetMinutes: json["cycle_time_offset_minutes"],
-        cycleTimeSeconds: json["cycle_time_seconds"],
-        pauseTimeSeconds: json["pause_time_seconds"],
-        enabled: json["enabled"],
+        cycleRepeatTime: json['cycle_repeat_time'],
+        cycleTimeOffsetMinutes: json['cycle_time_offset_minutes'],
+        cycleTimeSeconds: json['cycle_time_seconds'],
+        pauseTimeSeconds: json['pause_time_seconds'],
+        enabled: json['enabled'],
       );
 
   Map<String, dynamic> toJson() => {
-        "cycle_repeat_time": cycleRepeatTime,
-        "cycle_time_offset_minutes": cycleTimeOffsetMinutes,
-        "cycle_time_seconds": cycleTimeSeconds,
-        "pause_time_seconds": pauseTimeSeconds,
-        "enabled": enabled,
+        'cycle_repeat_time': cycleRepeatTime,
+        'cycle_time_offset_minutes': cycleTimeOffsetMinutes,
+        'cycle_time_seconds': cycleTimeSeconds,
+        'pause_time_seconds': pauseTimeSeconds,
+        'enabled': enabled,
       };
 }
 
@@ -113,11 +113,11 @@ class ModelGiotFirebaseDatabaseLights {
   });
 
   factory ModelGiotFirebaseDatabaseLights.fromJson(Map<String, dynamic> json) => ModelGiotFirebaseDatabaseLights(
-        rules: json["rules"] == null ? null : ModelGiotFirebaseDatabaseLightsRules.fromJson(json["rules"]),
+        rules: json['rules'] == null ? null : ModelGiotFirebaseDatabaseLightsRules.fromJson(json['rules']),
       );
 
   Map<String, dynamic> toJson() => {
-        "rules": rules?.toJson(),
+        'rules': rules?.toJson(),
       };
 }
 
@@ -129,11 +129,11 @@ class ModelGiotFirebaseDatabaseLightsRules {
   });
 
   factory ModelGiotFirebaseDatabaseLightsRules.fromJson(Map<String, dynamic> json) => ModelGiotFirebaseDatabaseLightsRules(
-        dailyOnTimeHours: json["daily_on_time_hours"],
+        dailyOnTimeHours: json['daily_on_time_hours'],
       );
 
   Map<String, dynamic> toJson() => {
-        "daily_on_time_hours": dailyOnTimeHours,
+        'daily_on_time_hours': dailyOnTimeHours,
       };
 }
 
@@ -145,11 +145,11 @@ class ModelGiotFirebaseDatabaseVentilation {
   });
 
   factory ModelGiotFirebaseDatabaseVentilation.fromJson(Map<String, dynamic> json) => ModelGiotFirebaseDatabaseVentilation(
-        rules: json["rules"] == null ? null : ModelGiotFirebaseDatabaseVentilationRules.fromJson(json["rules"]),
+        rules: json['rules'] == null ? null : ModelGiotFirebaseDatabaseVentilationRules.fromJson(json['rules']),
       );
 
   Map<String, dynamic> toJson() => {
-        "rules": rules?.toJson(),
+        'rules': rules?.toJson(),
       };
 }
 
@@ -167,16 +167,16 @@ class ModelGiotFirebaseDatabaseVentilationRules {
   });
 
   factory ModelGiotFirebaseDatabaseVentilationRules.fromJson(Map<String, dynamic> json) => ModelGiotFirebaseDatabaseVentilationRules(
-        cycleRepeatTime: json["cycle_repeat_time"],
-        cycleTimeOffsetMinutes: json["cycle_time_offset_minutes"],
-        cycleTimeSeconds: json["cycle_time_seconds"],
-        pauseTimeSeconds: json["pause_time_seconds"],
+        cycleRepeatTime: json['cycle_repeat_time'],
+        cycleTimeOffsetMinutes: json['cycle_time_offset_minutes'],
+        cycleTimeSeconds: json['cycle_time_seconds'],
+        pauseTimeSeconds: json['pause_time_seconds'],
       );
 
   Map<String, dynamic> toJson() => {
-        "cycle_repeat_time": cycleRepeatTime,
-        "cycle_time_offset_minutes": cycleTimeOffsetMinutes,
-        "cycle_time_seconds": cycleTimeSeconds,
-        "pause_time_seconds": pauseTimeSeconds,
+        'cycle_repeat_time': cycleRepeatTime,
+        'cycle_time_offset_minutes': cycleTimeOffsetMinutes,
+        'cycle_time_seconds': cycleTimeSeconds,
+        'pause_time_seconds': pauseTimeSeconds,
       };
 }

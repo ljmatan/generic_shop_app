@@ -190,7 +190,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
 
   late Widget? _icon;
 
-  late Widget _label;
+  late Widget? _label;
 
   late ButtonStyle _buttonStyle;
 
@@ -202,44 +202,46 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
 
   @override
   Widget build(BuildContext context) {
-    _icon = SizedBox(
-      height: Theme.of(context).actionElementHeight,
-      child: Center(
-        widthFactor: 1,
-        child: widget.iconWidget ??
-            (widget.icon != null
-                ? Icon(
-                    widget.icon,
-                    color: widget.foregroundColor,
-                    size: widget.elementSize,
-                    shadows: widget.outlined == true ? Theme.of(context).outlineShadows : null,
-                  )
-                : null),
-      ),
-    );
-    _label = SizedBox(
-      height: Theme.of(context).actionElementHeight,
-      child: Center(
-        widthFactor: 1,
-        child: widget.labelWidget != null
-            ? widget.labelWidget!
-            : widget.label == null
-                ? widget.iconWidget != null
-                    ? widget.iconWidget!
-                    : const SizedBox()
-                : GsaWidgetText(
-                    '${widget.label}',
-                    isInterpolated: widget.interpolatedText,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: widget.foregroundColor,
-                      fontSize: widget.elementSize,
-                      shadows: widget.outlined == true ? Theme.of(context).outlineShadows : null,
-                      decoration: widget._type == _GsaWidgetButtonType.text ? TextDecoration.underline : null,
-                    ),
-                  ),
-      ),
-    );
+    _icon = widget.iconWidget == null && widget.icon == null
+        ? null
+        : SizedBox(
+            height: Theme.of(context).actionElementHeight,
+            child: Center(
+              widthFactor: 1,
+              child: widget.iconWidget ??
+                  (widget.icon != null
+                      ? Icon(
+                          widget.icon,
+                          color: widget.foregroundColor,
+                          size: widget.elementSize,
+                          shadows: widget.outlined == true ? Theme.of(context).outline.shadows() : null,
+                        )
+                      : null),
+            ),
+          );
+    _label = widget.labelWidget == null && widget.label == null
+        ? null
+        : SizedBox(
+            height: Theme.of(context).actionElementHeight,
+            child: Center(
+              widthFactor: 1,
+              child: widget.labelWidget != null
+                  ? widget.labelWidget!
+                  : widget.label == null
+                      ? const SizedBox()
+                      : GsaWidgetText(
+                          '${widget.label}',
+                          isInterpolated: widget.interpolatedText,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: widget.foregroundColor,
+                            fontSize: widget.elementSize,
+                            shadows: widget.outlined == true ? Theme.of(context).outline.shadows() : null,
+                            decoration: widget._type == _GsaWidgetButtonType.text ? TextDecoration.underline : null,
+                          ),
+                        ),
+            ),
+          );
     _buttonStyle = ButtonStyle(
       shape: widget.rounded
           ? WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -273,8 +275,8 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                     onPressed: widget.onTap,
                   )
                 : FilledButton.tonalIcon(
-                    label: _label,
-                    icon: _icon,
+                    label: _label ?? _icon!,
+                    icon: _label == null ? null : _icon,
                     style: _buttonStyle,
                     focusNode: _focusNode,
                     onPressed: widget.onTap,
@@ -287,8 +289,8 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                     onPressed: widget.onTap,
                   )
                 : FilledButton.icon(
-                    label: _label,
-                    icon: _icon,
+                    label: _label ?? _icon!,
+                    icon: _label == null ? null : _icon,
                     style: _buttonStyle,
                     focusNode: _focusNode,
                     onPressed: widget.onTap,
@@ -301,8 +303,8 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                 onPressed: widget.onTap,
               )
             : OutlinedButton.icon(
-                label: _label,
-                icon: _icon,
+                label: _label ?? _icon!,
+                icon: _label == null ? null : _icon,
                 style: _buttonStyle,
                 focusNode: _focusNode,
                 onPressed: widget.onTap,
@@ -315,22 +317,22 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                 onPressed: widget.onTap,
               )
             : ElevatedButton.icon(
-                label: _label,
-                icon: _icon,
+                label: _label ?? _icon!,
+                icon: _label == null ? null : _icon,
                 style: _buttonStyle,
                 focusNode: _focusNode,
                 onPressed: widget.onTap,
               ),
         _GsaWidgetButtonType.text => _icon == null
             ? TextButton(
-                child: _label,
+                child: _label ?? const SizedBox(),
                 style: _buttonStyle,
                 focusNode: _focusNode,
                 onPressed: widget.onTap,
               )
             : TextButton.icon(
-                label: _label,
-                icon: _icon,
+                label: _label ?? _icon!,
+                icon: _label == null ? null : _icon,
                 style: _buttonStyle,
                 focusNode: _focusNode,
                 onPressed: widget.onTap,

@@ -3,12 +3,12 @@ import 'dart:ui' as dart_ui;
 import 'package:flutter/material.dart';
 import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' as colorpicker;
-import 'package:generic_shop_app_architecture/config.dart';
-import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_demo/gsd.dart';
+import 'package:generic_shop_app_fitness_tracker/gft.dart';
 
 part 'misc/misc_navigator_observer.dart';
 part 'misc/misc_scroll_behaviour.dart';
+part 'widgets/widget_device_preview.dart';
 
 class GsdRoutePreview extends GsdRoute {
   /// Default, unnamed widget constructor.
@@ -59,12 +59,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   late _NavigatorObserver _navigatorObserver;
 
-  bool _darkTheme = false;
-
-  late Color _primaryColor;
-
-  String _fontFamily = 'Quicksand';
-
   @override
   void initState() {
     super.initState();
@@ -76,7 +70,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
-    _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
   }
 
   @override
@@ -88,51 +81,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
-                child: MediaQuery(
-                  data: MediaQueryData(
-                    size: _device.screenSize,
-                    devicePixelRatio: _device.pixelRatio,
-                    textScaler: GsaTheme.instance.textScaler(
-                      context,
-                      _device.screenSize.width,
-                    ),
-                  ),
-                  child: device_frame.DeviceFrame(
-                    device: _device,
-                    screen: Theme(
-                      data: GsaTheme(
-                        platform: _platform,
-                        brightness: _darkTheme ? Brightness.dark : Brightness.light,
-                        primaryColor: _primaryColor,
-                        fontFamily: _fontFamily,
-                      ).data,
-                      child: ScrollConfiguration(
-                        behavior: const _TouchScrollBehavior(),
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Navigator(
-                            key: _navigatorKey,
-                            observers: [
-                              _navigatorObserver,
-                            ],
-                            initialRoute: _routes[_routeIndex].routeId,
-                            onDidRemovePage: (page) {
-                              _onNavigatorChange();
-                            },
-                            onGenerateRoute: (settings) {
-                              return MaterialPageRoute(
-                                builder: (_) => _routes
-                                    .firstWhere(
-                                      (route) => route.routeId == settings.name,
-                                    )
-                                    .widget(),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                child: _WidgetDevicePreview(
+                  state: this,
                 ),
               ),
             ),
@@ -172,7 +122,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                         ),
                     ],
                     initialSelection: _platform,
-                    width: MediaQuery.of(context).size.width * .25 - 40,
                     onSelected: (value) {
                       if (value == null) {
                         throw Exception(
@@ -230,12 +179,24 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     enableFilter: false,
                     enableSearch: false,
                     initialSelection: GsaConfig.plugin,
-                    width: MediaQuery.of(context).size.width * .25 - 40,
                     dropdownMenuEntries: [
-                      for (final provider in [])
+                      for (final provider in {
+                        (
+                          id: GsaPluginClient.fitnessTracker,
+                          value: GftPlugin.instance,
+                        ),
+                        (
+                          id: GsaPluginClient.froddoB2b,
+                          value: GftPlugin.instance,
+                        ),
+                        (
+                          id: GsaPluginClient.froddoB2c,
+                          value: GftPlugin.instance,
+                        ),
+                      })
                         DropdownMenuEntry(
-                          label: provider.name,
-                          value: provider,
+                          label: provider.id.name,
+                          value: provider.value,
                         ),
                     ],
                     onSelected: (value) async {
@@ -259,8 +220,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                             _navigatorKey = GlobalKey<NavigatorState>();
                             GsaRoute.navigatorKey = _navigatorKey;
                             _routeDropdownKey = UniqueKey();
-                            _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                            _fontFamily = GsaConfig.plugin.theme.fontFamily ?? _fontFamily;
+                            // TODO: Set theme
                           },
                         );
                       } catch (e) {
@@ -278,7 +238,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     enableFilter: false,
                     enableSearch: false,
                     initialSelection: _routeIndex,
-                    width: MediaQuery.of(context).size.width * .25 - 40,
                     dropdownMenuEntries: [
                       for (final route in _routes.indexed)
                         DropdownMenuEntry(
@@ -338,7 +297,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                   GsaWidgetDropdownMenu<String>(
                     labelText: 'Font Family',
                     width: MediaQuery.of(context).size.width * .25 - 40,
-                    initialSelection: _fontFamily,
+                    initialSelection: GsaTheme.instance.fontFamily,
                     dropdownMenuEntries: [
                       for (final fontId in <String>{
                         'Comic Neue',
@@ -357,22 +316,25 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           'The specified font family value must not be null.',
                         );
                       }
-                      setState(() => _fontFamily = value);
+                      // TODO: Set font family
+                      // setState(() => _fontFamily = value);
                     },
                   ),
                   const SizedBox(height: 16),
                   GsaWidgetSwitch(
-                    value: _darkTheme,
+                    value: false, // TODO: Update
                     child: GsaWidgetText('Dark Theme'),
                     onTap: (value) {
-                      setState(() => _darkTheme = value);
+                      // TODO: Set theme
+                      // setState(() => _darkTheme = value);
                     },
                   ),
                   for (final colorInput in {
                     (
                       label: 'Primary Color',
-                      color: _primaryColor,
-                      onColorChanged: (Color value) => _primaryColor = value,
+                      color: Theme.of(context).primaryColor,
+                      // TODO: Set color.
+                      onColorChanged: (Color value) => null, // _primaryColor = value,
                     ),
                   }) ...[
                     const SizedBox(height: 20),
@@ -449,8 +411,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               _navigatorKey = GlobalKey<NavigatorState>();
                               GsaRoute.navigatorKey = _navigatorKey;
                               _routeDropdownKey = UniqueKey();
-                              _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                              _fontFamily = GsaConfig.plugin.theme.fontFamily ?? _fontFamily;
+                              // TODO: Set below.
+                              // _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
+                              // _fontFamily = GsaConfig.plugin.theme.fontFamily ?? _fontFamily;
                             });
                           } catch (e) {
                             Navigator.pop(context);

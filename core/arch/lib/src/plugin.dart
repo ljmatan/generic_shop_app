@@ -163,6 +163,8 @@ class GsaPluginCookies {
     required this.statistical,
   });
 
+  /// Mandatory cookie category, always active.
+  ///
   bool get mandatory {
     return true;
   }

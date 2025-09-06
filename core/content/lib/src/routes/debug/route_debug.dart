@@ -54,6 +54,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                         'HTTP (${GsaApi.logs.length})',
                         'EVENT (${GsaServiceLogging.instance.logs.general.length})',
                         'ERROR (${GsaServiceLogging.instance.logs.error.length})',
+                        'METHOD (${GsaServiceLogging.instance.logs.method.length})',
                         'CACHE (${GsaServiceCache.instance.cachedKeys?.length})',
                         'DATA',
                         'STRINGS',
@@ -79,7 +80,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
           ),
           Expanded(
             child: ListView(
-              padding: Theme.of(context).listViewPadding,
+              padding: Theme.of(context).paddings.listView(),
               children: switch (_selectedTabIndex) {
                 0 => [
                     if (GsaApi.logs.isNotEmpty)
@@ -123,6 +124,21 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                       ),
                   ],
                 3 => [
+                    GsaWidgetText(
+                      'App method calls should be recorded to this list.',
+                    ),
+                    const SizedBox(height: 16),
+                    if (GsaServiceLogging.instance.logs.method.isNotEmpty)
+                      for (final log in GsaServiceLogging.instance.logs.method.reversed.indexed) ...[
+                        if (log.$1 != 0) const SizedBox(height: 10),
+                        _WidgetAppLogDetails(log.$2),
+                      ]
+                    else
+                      GsaWidgetText(
+                        'No entries found.',
+                      ),
+                  ],
+                4 => [
                     GsaWidgetText.rich(
                       const [
                         GsaWidgetTextSpan(
@@ -200,7 +216,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                         'No entries found.',
                       ),
                   ],
-                4 => [
+                5 => [
                     GsaWidgetText.rich(
                       const [
                         GsaWidgetTextSpan(
@@ -291,7 +307,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                       ),
                     ],
                   ],
-                5 => [
+                6 => [
                     InkWell(
                       child: GsaWidgetText(
                         GsaServiceI18N.instance.translationValuesJsonEncoded,

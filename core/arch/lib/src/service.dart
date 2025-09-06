@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:generic_shop_app_content/gsac.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// This abstract class defines a globally-accessible service with various Flutter APIs
 /// such as currency conversion, caching, logging, user authentication, and internationalization.
 ///
-abstract class GsaService {
+abstract class GsaService with GsaMethods {
   /// Default [GsaService] constructor, recording this instance to the list of [_observables].
   ///
   GsaService() {
@@ -105,4 +106,9 @@ abstract class GsaService {
   /// List of active subclassed instances.
   ///
   static final _observables = <GsaService>[];
+
+  @override
+  void logUsage([StackTrace? current]) {
+    GsaServiceLogging.instance.logMethod();
+  }
 }
