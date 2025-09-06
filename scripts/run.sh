@@ -44,7 +44,7 @@ setup_dev_env() {
     TEMP_DIR="$PROJECT_DIR/temp"
 
     # Export ENV variables for build versioning.
-    if [[ -z "${GSA_VERSION-}" || $0 == ".source-env.sh" ]]; then
+    if [[ -z "${GSA_IDENTIFIER-}" || $0 == ".source-env.sh" ]]; then
     echo
     # Define the library version number.
     export GSA_BUILD_VERSION="$(date +%Y.%m.%d)"
@@ -53,8 +53,8 @@ setup_dev_env() {
     export GSA_BUILD_NUMBER="$(sh $SCRIPT_DIR/generate/build-number.sh)"
     echo "GSA_BUILD_NUMBER $GSA_BUILD_NUMBER"
     # Export library and app version numbers.
-    export GSA_VERSION="$GSA_BUILD_VERSION.$GSA_BUILD_NUMBER"
-    echo "GSA_VERSION $GSA_VERSION"
+    export GSA_IDENTIFIER="$GSA_BUILD_VERSION.$GSA_BUILD_NUMBER"
+    echo "GSA_IDENTIFIER $GSA_IDENTIFIER"
     fi
 }
 
@@ -69,6 +69,12 @@ exit_runner() {
 
 # Run the environment setup script to gather relevant directory locations.
 setup_dev_env
+
+# Redirect stdout and stderr to a file
+LOG_FILE="$PROJECT_DIR/temp/run.log"
+# Remove old log file if it exists
+[ -f "$LOG_FILE" ] && rm -f "$LOG_FILE"
+exec > >(tee -a "$LOG_FILE") 2>&1
 
 # Change working directory to the "scripts" directory.
 cd $SCRIPT_DIR
