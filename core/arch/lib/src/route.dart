@@ -138,9 +138,19 @@ abstract class GsaRoute extends StatefulWidget {
   ///
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  /// Object holding the state of the [Navigator] widget.
+  /// Object holding the state of the [Navigator] widget,
+  /// assigned as a replacement for the default [navigatorKey], with [push] method usage.
+  ///
+  /// This value is set by the `core/demo` project in order to enable navigation
+  /// within the device preview module.
   ///
   static GlobalKey<NavigatorState>? navigatorKeyOverride;
+
+  /// The build context in which the widget with this key builds.
+  ///
+  static BuildContext? get navigatorContext {
+    return (navigatorKeyOverride ?? navigatorKey).currentContext;
+  }
 
   /// Navigates to the given route using the [Navigator.push] method.
   ///

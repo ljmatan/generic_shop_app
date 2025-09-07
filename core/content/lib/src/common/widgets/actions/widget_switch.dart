@@ -22,7 +22,7 @@ class GsaWidgetSwitch extends StatefulWidget {
 
   final bool rebuild;
 
-  final Function(bool) onTap;
+  final Function(bool newValue) onTap;
 
   @override
   GsaWidgetSwitchState createState() => GsaWidgetSwitchState();

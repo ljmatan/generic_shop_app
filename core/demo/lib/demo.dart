@@ -33,7 +33,7 @@ class GsdPlugin extends GsaPlugin {
 
   @override
   GsaRoute Function() get initialRoute {
-    return () => const GsdRoutePreview();
+    return () => const GsdRouteDashboard();
   }
 
   @override

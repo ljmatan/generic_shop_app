@@ -59,6 +59,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   late _NavigatorObserver _navigatorObserver;
 
+  late GsaTheme _theme;
+
   @override
   void initState() {
     super.initState();
@@ -70,6 +72,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
+    _theme = GsaTheme(
+      platform: _platform,
+    );
   }
 
   @override
@@ -77,21 +82,11 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     return Scaffold(
       body: Row(
         children: [
-          Expanded(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: _WidgetDevicePreview(
-                  state: this,
-                ),
-              ),
-            ),
-          ),
           DecoratedBox(
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border(
-                left: BorderSide(
+                right: BorderSide(
                   color: Theme.of(context).dividerColor,
                 ),
               ),
@@ -99,10 +94,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
             child: SizedBox(
               width: MediaQuery.of(context).size.width * .25,
               child: ListView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 24,
-                ),
+                padding: Theme.of(context).paddings.listView(),
                 children: [
                   GsaWidgetText(
                     'Device',
@@ -220,7 +212,9 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                             _navigatorKey = GlobalKey<NavigatorState>();
                             GsaRoute.navigatorKeyOverride = _navigatorKey;
                             _routeDropdownKey = UniqueKey();
-                            // TODO: Set theme
+                            _theme = GsaTheme(
+                              platform: _platform,
+                            );
                           },
                         );
                       } catch (e) {
@@ -316,25 +310,26 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                           'The specified font family value must not be null.',
                         );
                       }
-                      // TODO: Set font family
-                      // setState(() => _fontFamily = value);
+                      setState(() {
+                        _theme.fontFamily = value;
+                      });
                     },
                   ),
                   const SizedBox(height: 16),
                   GsaWidgetSwitch(
-                    value: false, // TODO: Update
+                    value: _theme.brightness == Brightness.dark,
                     child: GsaWidgetText('Dark Theme'),
-                    onTap: (value) {
-                      // TODO: Set theme
-                      // setState(() => _darkTheme = value);
+                    onTap: (newValue) {
+                      setState(() {
+                        _theme.brightness = newValue ? Brightness.dark : Brightness.light;
+                      });
                     },
                   ),
                   for (final colorInput in {
                     (
                       label: 'Primary Color',
                       color: Theme.of(context).primaryColor,
-                      // TODO: Set color.
-                      onColorChanged: (Color value) => null, // _primaryColor = value,
+                      onColorChanged: (Color value) => _theme.primaryColor = value,
                     ),
                   }) ...[
                     const SizedBox(height: 20),
@@ -411,9 +406,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               _navigatorKey = GlobalKey<NavigatorState>();
                               GsaRoute.navigatorKeyOverride = _navigatorKey;
                               _routeDropdownKey = UniqueKey();
-                              // TODO: Set below.
-                              // _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                              // _fontFamily = GsaConfig.plugin.theme.fontFamily ?? _fontFamily;
+                              _theme.primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
+                              _theme.fontFamily = GsaConfig.plugin.theme.fontFamily ?? _theme.fontFamily;
                             });
                           } catch (e) {
                             Navigator.pop(context);
@@ -426,6 +420,16 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                     ),
                   ],
                 ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: _WidgetDevicePreview(
+                  state: this,
+                ),
               ),
             ),
           ),

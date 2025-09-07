@@ -5,6 +5,7 @@ export 'src/api.dart';
 export 'src/client.dart';
 export 'src/cookies.dart';
 export 'src/documents.dart';
+export 'src/routes.dart';
 export 'src/theme.dart';
 
 /// The application client implementations base service definitions.

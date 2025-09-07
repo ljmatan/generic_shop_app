@@ -1,0 +1,3 @@
+class GsaPluginRoutes {
+  GsaPluginRoutes();
+}

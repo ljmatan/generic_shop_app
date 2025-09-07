@@ -20,28 +20,31 @@ class _WidgetDevicePreview extends StatelessWidget {
       ),
       child: device_frame.DeviceFrame(
         device: state._device,
-        screen: ScrollConfiguration(
-          behavior: const _TouchScrollBehavior(),
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: Navigator(
-              key: state._navigatorKey,
-              observers: [
-                state._navigatorObserver,
-              ],
-              initialRoute: state._routes[state._routeIndex].routeId,
-              onDidRemovePage: (page) {
-                state._onNavigatorChange();
-              },
-              onGenerateRoute: (settings) {
-                return MaterialPageRoute(
-                  builder: (_) => state._routes
-                      .firstWhere(
-                        (route) => route.routeId == settings.name,
-                      )
-                      .widget(),
-                );
-              },
+        screen: Theme(
+          data: state._theme.data,
+          child: ScrollConfiguration(
+            behavior: const _TouchScrollBehavior(),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Navigator(
+                key: state._navigatorKey,
+                observers: [
+                  state._navigatorObserver,
+                ],
+                initialRoute: state._routes[state._routeIndex].routeId,
+                onDidRemovePage: (page) {
+                  state._onNavigatorChange();
+                },
+                onGenerateRoute: (settings) {
+                  return MaterialPageRoute(
+                    builder: (_) => state._routes
+                        .firstWhere(
+                          (route) => route.routeId == settings.name,
+                        )
+                        .widget(),
+                  );
+                },
+              ),
             ),
           ),
         ),

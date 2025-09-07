@@ -1,22 +1,24 @@
-import 'package:generic_shop_app_demo/src/view/routes/components/route_components.dart';
-import 'package:generic_shop_app_demo/src/view/routes/preview/route_preview.dart';
-import 'package:generic_shop_app_architecture/arch.dart';
+import 'package:generic_shop_app_demo/demo.dart';
 
 export 'package:generic_shop_app_architecture/arch.dart';
 
 export 'components/route_components.dart';
+export 'dashboard/route_dashboard.dart';
 export 'preview/route_preview.dart';
 
 /// Collection of Route objects implemented by the "Generic Shop App" project.
 ///
 enum GsdRoutes implements GsaRouteType {
   components,
+  dashboard,
   preview;
 
   @override
   GsaRoute Function([dynamic args]) get widget {
     switch (this) {
       case GsdRoutes.components:
+        return ([args]) => const GsdRouteComponents();
+      case GsdRoutes.dashboard:
         return ([args]) => const GsdRouteComponents();
       case GsdRoutes.preview:
         return ([args]) => const GsdRoutePreview();
@@ -28,6 +30,8 @@ enum GsdRoutes implements GsaRouteType {
     switch (this) {
       case GsdRoutes.components:
         return GsdRouteComponents;
+      case GsdRoutes.dashboard:
+        return GsdRouteDashboard;
       case GsdRoutes.preview:
         return GsdRoutePreview;
     }
