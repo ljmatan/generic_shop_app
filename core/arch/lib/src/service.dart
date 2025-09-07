@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 /// This abstract class defines a globally-accessible service with various Flutter APIs
 /// such as currency conversion, caching, logging, user authentication, and internationalization.

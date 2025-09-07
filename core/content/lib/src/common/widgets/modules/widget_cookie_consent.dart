@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 part 'i18n/widget_cookie_consent_i18n.dart';
 

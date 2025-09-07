@@ -5,7 +5,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 part 'base/service_i18n_base_translations.dart';
 part 'enums/service_i18n_enum_language.dart';

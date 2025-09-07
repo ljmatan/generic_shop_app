@@ -1,8 +1,6 @@
 import 'dart:math';
 
-import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
-import 'package:generic_shop_app_data/data.dart';
 
 /// Service implemented for incorporating mock or fake data into the application.
 ///

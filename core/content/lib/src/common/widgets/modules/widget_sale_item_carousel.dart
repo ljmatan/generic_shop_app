@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_content/content.dart';
 
 /// Horizontally scrollable list of sale items.

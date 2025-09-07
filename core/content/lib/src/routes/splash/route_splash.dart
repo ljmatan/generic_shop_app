@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 /// Route dislaying all of the logged information, implemented for debugging purposes.
 ///

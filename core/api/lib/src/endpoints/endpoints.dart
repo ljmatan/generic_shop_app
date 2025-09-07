@@ -1,6 +1,6 @@
 /// Various server HTTP API endpoint definitions.
 
-library endpoints;
+library;
 
 import 'package:generic_shop_app_architecture/arch.dart';
 

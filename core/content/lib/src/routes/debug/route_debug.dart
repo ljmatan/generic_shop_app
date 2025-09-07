@@ -3,8 +3,6 @@ import 'dart:convert' as dart_convert;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 part 'widgets/widget_logs.dart';
 part 'widgets/widget_log_details_app.dart';

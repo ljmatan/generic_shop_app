@@ -2,10 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 /// Screen displaying user bookmark list (or wishlist), enabling further processing options.
 ///

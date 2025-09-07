@@ -1,5 +1,4 @@
 import 'package:generic_shop_app_architecture/arch.dart';
-import 'package:generic_shop_app_services/src/modules/i18n/service_i18n.dart';
 
 part '../../i18n/service_input_validation_i18n.dart';
 

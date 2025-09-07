@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 /// Type identifier for the [GsaRoute] objects.
 ///
@@ -139,13 +138,17 @@ abstract class GsaRoute extends StatefulWidget {
   ///
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+  /// Object holding the state of the [Navigator] widget.
+  ///
+  static GlobalKey<NavigatorState>? navigatorKeyOverride;
+
   /// Navigates to the given route using the [Navigator.push] method.
   ///
   Future<dynamic> push({
     BuildContext? context,
     bool replacement = false,
   }) async {
-    context ??= navigatorKey.currentContext;
+    context ??= (navigatorKeyOverride ?? navigatorKey).currentContext;
     if (context != null) {
       final route = MaterialPageRoute<void>(
         builder: (BuildContext context) => this,

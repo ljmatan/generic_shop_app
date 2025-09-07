@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_services/services.dart';
 
 part 'widgets/widget_banner.dart';
 part 'widgets/widget_bookmarks.dart';

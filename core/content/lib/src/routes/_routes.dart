@@ -4,7 +4,6 @@
 
 library;
 
-import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_content/content.dart';
 
 export 'package:generic_shop_app_architecture/arch.dart';

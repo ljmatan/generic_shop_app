@@ -1,6 +1,5 @@
 import 'package:generic_shop_app_fitness_tracker/src/data/src/data_trainee.dart';
 import 'package:generic_shop_app_fitness_tracker/src/view/routes/_routes.dart';
-import 'package:generic_shop_app_content/content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

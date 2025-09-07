@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/content.dart';
-import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_api/api.dart';
 
 /// Overlay view displaying sale item details and containing associated cart functionalities.
 ///

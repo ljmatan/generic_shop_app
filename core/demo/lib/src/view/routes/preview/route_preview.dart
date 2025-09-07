@@ -66,7 +66,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
       ...GsaRoutes.values,
       if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
     ];
-    GsaRoute.navigatorKey = _navigatorKey;
+    GsaRoute.navigatorKeyOverride = _navigatorKey;
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
@@ -218,7 +218,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                               if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
                             ];
                             _navigatorKey = GlobalKey<NavigatorState>();
-                            GsaRoute.navigatorKey = _navigatorKey;
+                            GsaRoute.navigatorKeyOverride = _navigatorKey;
                             _routeDropdownKey = UniqueKey();
                             // TODO: Set theme
                           },
@@ -254,7 +254,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                       setState(() {
                         _routeIndex = value;
                         _navigatorKey = GlobalKey<NavigatorState>();
-                        GsaRoute.navigatorKey = _navigatorKey;
+                        GsaRoute.navigatorKeyOverride = _navigatorKey;
                       });
                     },
                   ),
@@ -409,7 +409,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
                                 if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
                               ];
                               _navigatorKey = GlobalKey<NavigatorState>();
-                              GsaRoute.navigatorKey = _navigatorKey;
+                              GsaRoute.navigatorKeyOverride = _navigatorKey;
                               _routeDropdownKey = UniqueKey();
                               // TODO: Set below.
                               // _primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
