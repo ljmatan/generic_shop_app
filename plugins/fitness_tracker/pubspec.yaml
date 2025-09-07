@@ -15,14 +15,6 @@ dependencies:
     sdk: flutter
   generic_shop_app_architecture:
     path: ../../core/arch
-  generic_shop_app_api:
-    path: ../../core/api
-  generic_shop_app_data:
-    path: ../../core/data
-  generic_shop_app_services:
-    path: ../../core/services
-  generic_shop_app_content:
-    path: ../../core/content
 
 dev_dependencies:
   flutter_test:

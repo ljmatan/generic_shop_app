@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 import 'package:iot/api/src/api_esp32_mcu.dart';
 import 'package:iot/api/src/api_firebase.dart';
 

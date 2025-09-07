@@ -1,7 +1,6 @@
 import 'package:generic_shop_app_demo/demo.dart';
-import 'package:generic_shop_app_services/services.dart';
 
-export 'package:generic_shop_app_content/content.dart';
+export 'package:generic_shop_app_architecture/arch.dart';
 
 export 'src/services/_services.dart';
 export 'src/view/_view.dart';

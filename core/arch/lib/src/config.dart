@@ -1,12 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app_api/api.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
-import 'package:generic_shop_app_data/data.dart';
-import 'package:generic_shop_app_services/services.dart';
-
-part 'plugin.dart';
 
 /// Project-level configuration methods and properties.
 ///

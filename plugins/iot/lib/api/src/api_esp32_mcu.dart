@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 import 'package:iot/api/src/api_firebase.dart';
 import 'package:iot/models/src/model_firebase_realtime_iot.dart';
 
