@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 
 /// General-purpose widget for displaying of the error text, providing optional handling mechanism.
 ///

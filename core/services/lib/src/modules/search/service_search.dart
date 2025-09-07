@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 
 /// On-device search services used for filtering results with the given parameters.
 ///

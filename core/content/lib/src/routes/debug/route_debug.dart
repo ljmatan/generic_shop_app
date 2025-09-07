@@ -2,12 +2,17 @@ import 'dart:convert' as dart_convert;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
 
-part 'widgets/widget_app_log_details.dart';
-part 'widgets/widget_http_log_details.dart';
+part 'widgets/widget_logs.dart';
+part 'widgets/widget_log_details_app.dart';
+part 'widgets/widget_log_details_cache.dart';
+part 'widgets/widget_log_details_data.dart';
+part 'widgets/widget_log_details_http.dart';
+part 'widgets/widget_log_details_route.dart';
+
 part 'routes/route_http_log_details.dart';
 
 /// Route integrated with development / debugging features.
@@ -55,6 +60,7 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
                         'EVENT (${GsaServiceLogging.instance.logs.general.length})',
                         'ERROR (${GsaServiceLogging.instance.logs.error.length})',
                         'METHOD (${GsaServiceLogging.instance.logs.method.length})',
+                        'ROUTES (${GsaRoute.observables.length})',
                         'CACHE (${GsaServiceCache.instance.cachedKeys?.length})',
                         'DATA',
                         'STRINGS',
@@ -79,249 +85,116 @@ class _GsaRouteDebugState extends GsaRouteState<GsaRouteDebug> {
             ),
           ),
           Expanded(
-            child: ListView(
-              padding: Theme.of(context).paddings.listView(),
-              children: switch (_selectedTabIndex) {
-                0 => [
-                    if (GsaApi.logs.isNotEmpty)
-                      for (final log in GsaApi.logs.reversed.indexed) ...[
-                        if (log.$1 != 0) const SizedBox(height: 10),
-                        _WidgetHttpLogDetails(log.$2),
-                      ]
-                    else
-                      GsaWidgetText(
-                        'No entries found.',
-                      ),
-                  ],
-                1 => [
-                    GsaWidgetText(
-                      'App logs and debug information are recorded to this list.',
-                    ),
-                    const SizedBox(height: 16),
-                    if (GsaServiceLogging.instance.logs.general.isNotEmpty)
-                      for (final log in GsaServiceLogging.instance.logs.general.reversed.indexed) ...[
-                        if (log.$1 != 0) const SizedBox(height: 10),
-                        _WidgetAppLogDetails(log.$2),
-                      ]
-                    else
-                      GsaWidgetText(
-                        'No entries found.',
-                      ),
-                  ],
-                2 => [
-                    GsaWidgetText(
-                      'Any encountred exceptions should be recorded to this list.',
-                    ),
-                    const SizedBox(height: 16),
-                    if (GsaServiceLogging.instance.logs.error.isNotEmpty)
-                      for (final log in GsaServiceLogging.instance.logs.error.reversed.indexed) ...[
-                        if (log.$1 != 0) const SizedBox(height: 10),
-                        _WidgetAppLogDetails(log.$2),
-                      ]
-                    else
-                      GsaWidgetText(
-                        'No entries found.',
-                      ),
-                  ],
-                3 => [
-                    GsaWidgetText(
-                      'App method calls should be recorded to this list.',
-                    ),
-                    const SizedBox(height: 16),
-                    if (GsaServiceLogging.instance.logs.method.isNotEmpty)
-                      for (final log in GsaServiceLogging.instance.logs.method.reversed.indexed) ...[
-                        if (log.$1 != 0) const SizedBox(height: 10),
-                        _WidgetAppLogDetails(log.$2),
-                      ]
-                    else
-                      GsaWidgetText(
-                        'No entries found.',
-                      ),
-                  ],
-                4 => [
-                    GsaWidgetText.rich(
-                      const [
-                        GsaWidgetTextSpan(
-                          'Below are the currently cached keys and their corresponding values.\n\n',
-                        ),
-                        GsaWidgetTextSpan(
-                          'You can double tap on a value to copy it to the clipboard.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    if (GsaServiceCache.instance.cachedKeys != null)
-                      for (final key in GsaServiceCache.instance.cachedKeys!.indexed)
-                        ExpansionTile(
-                          title: GsaWidgetText(
-                            key.$2,
-                          ),
-                          tilePadding: EdgeInsets.zero,
-                          children: [
-                            InkWell(
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade800,
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6),
-                                  child: SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: GsaWidgetText(
-                                      () {
-                                        try {
-                                          return GsaServiceI18N.instance.jsonEncoder.convert(
-                                            dart_convert.jsonDecode(
-                                              GsaServiceCache.instance
-                                                  .valueWithKey(
-                                                    key.$2,
-                                                  )
-                                                  .toString(),
-                                            ),
-                                          );
-                                        } catch (e) {
-                                          return GsaServiceI18N.instance.jsonEncoder.convert(
-                                            GsaServiceCache.instance.valueWithKey(
-                                              key.$2,
-                                            ),
-                                          );
-                                        }
-                                      }(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              onDoubleTap: () async {
-                                await GsaServiceClipboard.instance.copyToClipboard(
-                                  GsaServiceCache.instance
-                                      .valueWithKey(
-                                        key.$2,
-                                      )
-                                      .toString(),
-                                );
-                              },
-                            ),
-                          ],
-                        )
-                    else
-                      GsaWidgetText(
-                        'No entries found.',
-                      ),
-                  ],
-                5 => [
-                    GsaWidgetText.rich(
-                      const [
-                        GsaWidgetTextSpan(
-                          'Noted below are active runtime data values.\n\n',
-                        ),
-                        GsaWidgetTextSpan(
-                          'You can double tap on a value to copy it to the clipboard.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    for (final dataPoint in <({
+            child: switch (_selectedTabIndex) {
+              0 => _WidgetLogs<GsaApiModelLog>(
+                  label: 'HTTP Network Calls',
+                  collection: GsaApi.logs.reversed,
+                  itemBuilder: (item) {
+                    return _WidgetLogDetailsHttp(item);
+                  },
+                ),
+              1 => _WidgetLogs<GsaServiceLoggingModelAppLog>(
+                  label: 'App logs and debug information.',
+                  collection: GsaServiceLogging.instance.logs.general.reversed,
+                  itemBuilder: (item) {
+                    return _WidgetLogDetailsApp(item);
+                  },
+                ),
+              2 => _WidgetLogs<GsaServiceLoggingModelAppLog>(
+                  label: 'Any encountred exceptions or errors.',
+                  collection: GsaServiceLogging.instance.logs.error.reversed,
+                  itemBuilder: (item) {
+                    return _WidgetLogDetailsApp(item);
+                  },
+                ),
+              3 => _WidgetLogs<GsaServiceLoggingModelAppLog>(
+                  label: 'App method calls recorded by the app.',
+                  collection: GsaServiceLogging.instance.logs.method.reversed,
+                  itemBuilder: (item) {
+                    return _WidgetLogDetailsApp(item);
+                  },
+                ),
+              4 => _WidgetLogs<GsaRouteState<GsaRoute>>(
+                  label: 'Routes being observed for navigation events.',
+                  collection: GsaRoute.observables.reversed,
+                  itemBuilder: (item) {
+                    return _WidgetLogDetailsRoute(item);
+                  },
+                ),
+              5 => _WidgetLogs<String>(
+                  label: 'Cache keys and their corresponding values.',
+                  hint: 'Double tap a value to copy it to the clipboard.',
+                  collection: GsaServiceCache.instance.cachedKeys,
+                  itemBuilder: (item) {
+                    return _WidgetLogDetailsCache(item);
+                  },
+                ),
+              6 => _WidgetLogs<
+                    ({
                       String label,
                       Map? value,
-                    })>{
-                      (
-                        label: 'User',
-                        value: GsaDataUser.instance.user?.toJson(),
-                      ),
-                      (
-                        label: 'Merchant',
-                        value: GsaDataMerchant.instance.merchant?.toJson(),
-                      ),
-                      (
-                        label: 'Clients',
-                        value: {
-                          'collection': GsaDataClients.instance.collection.map(
-                            (client) {
-                              return client.toJson();
-                            },
-                          ).toList(),
-                        },
-                      ),
-                      (
-                        label: 'Sale Items',
-                        value: {
-                          'collection': GsaDataSaleItems.instance.collection.map(
-                            (saleItem) {
-                              return saleItem.toJson();
-                            },
-                          ).toList(),
-                        },
-                      ),
-                      (
-                        label: 'Checkout',
-                        value: GsaDataCheckout.instance.orderDraft.toJson(),
-                      ),
-                    }) ...[
-                      ExpansionTile(
-                        title: GsaWidgetText(
-                          dataPoint.label,
-                        ),
-                        tilePadding: EdgeInsets.zero,
-                        children: [
-                          InkWell(
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade800,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(6),
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: GsaWidgetText(
-                                    GsaServiceI18N.instance.jsonEncoder.convert(
-                                      dataPoint.value,
-                                    ),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            onDoubleTap: () async {
-                              await GsaServiceClipboard.instance.copyToClipboard(
-                                GsaServiceI18N.instance.jsonEncoder.convert(
-                                  dataPoint.value,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ],
-                6 => [
-                    InkWell(
-                      child: GsaWidgetText(
-                        GsaServiceI18N.instance.translationValuesJsonEncoded,
-                      ),
-                      onDoubleTap: () async {
-                        await GsaServiceClipboard.instance.copyToClipboard(
-                          GsaServiceI18N.instance.translationValuesJsonEncoded,
-                        );
+                    })>(
+                  label: 'Active runtime data values.',
+                  hint: 'Double tap a value to copy it to the clipboard.',
+                  collection: {
+                    (
+                      label: 'User',
+                      value: GsaDataUser.instance.user?.toJson(),
+                    ),
+                    (
+                      label: 'Merchant',
+                      value: GsaDataMerchant.instance.merchant?.toJson(),
+                    ),
+                    (
+                      label: 'Clients',
+                      value: {
+                        'collection': GsaDataClients.instance.collection.map(
+                          (client) {
+                            return client.toJson();
+                          },
+                        ).toList(),
                       },
                     ),
+                    (
+                      label: 'Sale Items',
+                      value: {
+                        'collection': GsaDataSaleItems.instance.collection.map(
+                          (saleItem) {
+                            return saleItem.toJson();
+                          },
+                        ).toList(),
+                      },
+                    ),
+                    (
+                      label: 'Checkout',
+                      value: GsaDataCheckout.instance.orderDraft.toJson(),
+                    ),
+                  },
+                  itemBuilder: (item) {
+                    return _WidgetLogDetailsData(item);
+                  },
+                ),
+              7 => _WidgetLogs<String>(
+                  label: 'Translatable strings and their current values.',
+                  hint: 'Double tap a value to copy it to the clipboard.',
+                  collection: [
+                    GsaServiceI18N.instance.translationValuesJsonEncoded,
                   ],
-                int() => throw UnimplementedError(),
-              },
-            ),
+                  itemBuilder: (item) => InkWell(
+                    child: GsaWidgetText(
+                      item,
+                    ),
+                    onDoubleTap: () async {
+                      await GsaServiceClipboard.instance.copyToClipboard(
+                        GsaServiceI18N.instance.translationValuesJsonEncoded,
+                      );
+                    },
+                  ),
+                ),
+              int() => throw UnimplementedError(
+                  'Index $_selectedTabIndex not implemented with debug route tabs.',
+                ),
+            },
           ),
         ],
       ),

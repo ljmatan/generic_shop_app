@@ -2,7 +2,7 @@
 
 library endpoints;
 
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 
 part 'src/endpoints_aggregated.dart';
 part 'src/endpoints_merchants.dart';

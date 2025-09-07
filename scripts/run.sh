@@ -100,9 +100,9 @@ menu_select_dir() {
       dir="${DIRS[$i]}"
       echo "$((i+1))) $dir"
       # Display directory documentation
-      dir_doc_file="${dir}/_${dir}.md"
-      if [ -f "$dir_doc_file" ]; then
-          sed 's/^/   /' "$dir_doc_file"
+      DIR_DOC_FILE="${dir}/_${dir}.md"
+      if [ -f "$DIR_DOC_FILE" ]; then
+          sed 's/^/   /' "$DIR_DOC_FILE"
       else
           echo "   No documentation found (.md)"
       fi
@@ -123,7 +123,7 @@ menu_select_dir() {
 
 # Displays script documentation from top file comments.
 show_script_doc() {
-    local script="$1"
+    local SCRIPT="$1"
     local title="$2"
     local found=0
     local capturing=0
@@ -156,7 +156,7 @@ show_script_doc() {
             # Stop capturing at first non-# line after starting
             [[ $capturing -eq 1 ]] && break
         fi
-    done < "$script"
+    done < "$SCRIPT"
 
     if [[ $found -eq 0 ]]; then
         echo "   No documentation found."

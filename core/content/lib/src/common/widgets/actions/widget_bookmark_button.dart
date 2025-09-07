@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_api/api.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// A button providing bookmarking / favorite functionalities.

@@ -1,6 +1,6 @@
 import 'dart:io' as dart_io;
 
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 
 /// This class facilitates overriding [HttpClient] in order to accept invalid SSL certificates.
 ///

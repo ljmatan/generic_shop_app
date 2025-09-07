@@ -1,7 +1,7 @@
 part of '../route_debug.dart';
 
-class _WidgetAppLogDetails extends StatelessWidget {
-  const _WidgetAppLogDetails(
+class _WidgetLogDetailsApp extends StatelessWidget {
+  const _WidgetLogDetailsApp(
     this.log,
   );
 

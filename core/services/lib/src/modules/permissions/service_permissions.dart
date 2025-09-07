@@ -1,4 +1,4 @@
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 import 'package:permission_handler/permission_handler.dart' as permission_handler;
 
 /// Service implemented for operating system permission handling.

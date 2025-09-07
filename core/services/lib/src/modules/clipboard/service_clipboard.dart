@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 
 /// Utility methods for interacting with the system's clipboard.
 ///

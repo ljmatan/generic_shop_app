@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart' as camera;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 import 'package:generic_shop_app_data/data.dart';
 import 'package:generic_shop_app_services/services.dart';
 import 'package:image/image.dart' as imglib;

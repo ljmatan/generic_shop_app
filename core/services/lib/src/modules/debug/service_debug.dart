@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 
 /// Debugging services used for development purposes.
 ///

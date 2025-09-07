@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 /// Service responsible for opening external apps via specified addresses.

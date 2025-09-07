@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_demo/gsd.dart';
+import 'package:generic_shop_app_demo/demo.dart';
 
 void main() {
   GsdPlugin.instance.configureClient();

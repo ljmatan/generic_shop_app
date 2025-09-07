@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 
 /// The default application builder,
 /// class name name standing for "**G**eneric **S**hop **A**pp".

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Route providing user authentication options, such as login, registration, or guest user login.

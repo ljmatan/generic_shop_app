@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_fitness_tracker/gft.dart';
+import 'package:generic_shop_app_fitness_tracker/fitness_tracker.dart';
 import 'package:generic_shop_app_services/services.dart';
 
-export 'package:generic_shop_app_content/gsac.dart';
+export 'package:generic_shop_app_content/content.dart';
 
 export 'src/view/_view.dart';
 

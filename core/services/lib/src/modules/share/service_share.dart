@@ -2,7 +2,7 @@ import 'dart:io' as dart_io;
 import 'dart:typed_data' as dart_typed_data;
 
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:share_plus/share_plus.dart' as share_plus;

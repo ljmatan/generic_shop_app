@@ -1,9 +1,9 @@
 import 'package:generic_shop_app_fitness_tracker/src/view/routes/dashboard/route_dashboard.dart';
 import 'package:generic_shop_app_fitness_tracker/src/view/routes/onboarding/route_onboarding.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 import 'package:generic_shop_app_fitness_tracker/src/view/routes/splash/route_splash.dart';
 
-export 'package:generic_shop_app_architecture/gsar.dart';
+export 'package:generic_shop_app_architecture/arch.dart';
 
 export 'dashboard/route_dashboard.dart';
 export 'onboarding/route_onboarding.dart';

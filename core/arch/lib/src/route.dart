@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:generic_shop_app_content/gsac.dart';
+import 'package:generic_shop_app_content/content.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 /// Type identifier for the [GsaRoute] objects.
@@ -103,7 +103,7 @@ abstract class GsaRoute extends StatefulWidget {
 
   /// Collection of [GsaRouteState] subclass instances or [State] object references.
   ///
-  static final _observables = <GsaRouteState>[];
+  static final observables = <GsaRouteState>[];
 
   /// Currently-active route state object.
   ///
@@ -116,7 +116,7 @@ abstract class GsaRoute extends StatefulWidget {
   /// ```
   ///
   static T? state<T>() {
-    return _observables.firstWhereOrNull(
+    return observables.firstWhereOrNull(
       (observable) {
         return observable.runtimeType == T;
       },
@@ -126,14 +126,14 @@ abstract class GsaRoute extends StatefulWidget {
   /// Invokes the [setState] method in all of the [GsaRouteState] subclass instances.
   ///
   static void rebuildAll() {
-    for (final observer in _observables) {
+    for (final observer in observables) {
       observer.rebuild();
     }
   }
 
   /// Currently visible route state instance.
   ///
-  static GsaRouteState<GsaRoute> get presenting => _observables.last;
+  static GsaRouteState<GsaRoute> get presenting => observables.last;
 
   /// Object holding the state of the [Navigator] widget.
   ///
@@ -280,7 +280,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
   @mustCallSuper
   void initState() {
     super.initState();
-    GsaRoute._observables.add(this);
+    GsaRoute.observables.add(this);
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final modalRoute = ModalRoute.of(context);
@@ -333,7 +333,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
     }
     GsaRoute.navigatorObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
-    GsaRoute._observables.remove(this);
+    GsaRoute.observables.remove(this);
     super.dispose();
   }
 

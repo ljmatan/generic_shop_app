@@ -1,5 +1,5 @@
 import 'package:generic_shop_app_api/api.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 
 /// API endpoint call and handling implementation references.
 ///

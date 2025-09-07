@@ -1,7 +1,7 @@
 part of '../route_debug.dart';
 
-class _WidgetHttpLogDetails extends StatelessWidget {
-  const _WidgetHttpLogDetails(this.log);
+class _WidgetLogDetailsHttp extends StatelessWidget {
+  const _WidgetLogDetailsHttp(this.log);
 
   final GsaApiModelLog log;
 

@@ -2,7 +2,7 @@ import 'dart:convert' as dart_convert;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 import 'package:generic_shop_app_services/services.dart';
 
 part 'models/model_general_log.dart';

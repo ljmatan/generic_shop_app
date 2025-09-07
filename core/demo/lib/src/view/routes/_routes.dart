@@ -1,8 +1,8 @@
 import 'package:generic_shop_app_demo/src/view/routes/components/route_components.dart';
 import 'package:generic_shop_app_demo/src/view/routes/preview/route_preview.dart';
-import 'package:generic_shop_app_architecture/gsar.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 
-export 'package:generic_shop_app_architecture/gsar.dart';
+export 'package:generic_shop_app_architecture/arch.dart';
 
 export 'components/route_components.dart';
 export 'preview/route_preview.dart';
