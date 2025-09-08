@@ -22,8 +22,7 @@ class GsaWidgetSaleItemPreview extends StatefulWidget {
 
   /// Specified widget preview height.
   ///
-  static final previewHeight =
-      300.0 - (GsaConfig.cartEnabled ? 0 : 48 * GsaTheme.instance.textScaler(GsaRoute.navigatorKey.currentContext!).scale(1));
+  static final previewHeight = 300.0;
 
   @override
   State<GsaWidgetSaleItemPreview> createState() => _GsaWidgetSaleItemPreviewState();
@@ -194,7 +193,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                               ),
                             ],
                           ),
-                        if (GsaConfig.plugin.client == GsaPluginClient.froddoB2c && widget.saleItem.options?.isNotEmpty == true)
+                        if (GsaPlugin.of(context).client == GsaPluginClient.froddoB2c && widget.saleItem.options?.isNotEmpty == true)
                           Builder(
                             builder: (context) {
                               final sortedOptions = List.from(widget.saleItem.options!)
@@ -231,7 +230,7 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           ),
                       ],
                     ),
-                    if (GsaConfig.cartEnabled) ...[
+                    if (GsaPlugin.of(context).features.cart) ...[
                       const SizedBox(height: 10),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
@@ -242,13 +241,13 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                           icon: !widget.saleItem.itemPriceExists && !widget.saleItem.itemOptionPriceExists ? null : Icons.shopping_cart,
                           interpolatedText: widget.saleItem.itemPriceExists || widget.saleItem.itemOptionPriceExists,
                           onTap: () async {
-                            if (GsaConfig.plugin.addToCart != null) {
-                              await GsaConfig.plugin.addToCart!(
+                            if (GsaPlugin.of(context).api?.addToCart != null) {
+                              await GsaPlugin.of(context).api!.addToCart!(
                                 context,
                                 item: widget.saleItem,
                               );
                             } else {
-                              debugPrint('GsaConfig.plugin.addToCart not defined.');
+                              debugPrint('GsaPlugin.of(context).addToCart not defined.');
                             }
                           },
                         ),

@@ -26,7 +26,8 @@ class _GsaRouteCookieConsentState extends GsaRouteState<GsaRouteCookieConsent> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: Theme.of(context).paddings.listView(),
-                  child: const GsaWidgetCookieConsent(
+                  child: GsaWidgetCookieConsent(
+                    plugin: GsaPlugin.of(context),
                     isHeightConstrained: false,
                   ),
                 ),

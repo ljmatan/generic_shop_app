@@ -17,17 +17,28 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
   ///
   bool _readyToInitialise = GsaServiceConsent.instance.hasMandatoryConsent;
 
+  /// Whether the plugin service setup method has been executed successfully.
+  ///
+  /// The method would normally not fail, so in case of initialisation retry,
+  /// it will not be called again.
+  ///
+  bool _serviceSetupComplete = false;
+
   /// Function implemented for application runtime setup.
   ///
   Future<void> _initialise() async {
-    await GsaConfig.plugin.init();
+    if (!_serviceSetupComplete) {
+      await GsaPlugin.of(context).setupService();
+      _serviceSetupComplete = true;
+    }
+    await GsaPlugin.of(context).init();
     Future.delayed(
       Duration.zero,
       () {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute<void>(
             builder: (BuildContext context) {
-              return GsaConfig.plugin.initialRoute();
+              return GsaPlugin.of(context).routes.initialRoute();
             },
           ),
           (route) => false,

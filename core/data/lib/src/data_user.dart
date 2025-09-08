@@ -33,22 +33,23 @@ class GsaDataUser extends GsaData {
 
   /// Logs out the user and deletes any relevant application data.
   ///
-  Future<void> logout([BuildContext? context]) async {
-    context ??= GsaRoute.navigatorKey.currentContext;
-    if (context != null) {
-      const GsaWidgetOverlayContentBlocking().openDialog();
+  Future<void> logout() async {
+    final context = GsaRoute.navigatorContext;
+    if (context == null) {
+      throw Exception(
+        'GsaDataUser.logout must be called within a valid widget tree context.',
+      );
     }
+    const GsaWidgetOverlayContentBlocking().openDialog();
     try {
       await GsaServiceCache.instance.clearData();
       GsaData.clearAll();
     } catch (e) {
-      if (context != null) {
-        Navigator.pop(context);
-      }
+      Navigator.pop(context);
       GsaWidgetOverlayAlert(
         '$e',
       ).openDialog();
     }
-    GsaConfig.plugin.initialRoute().push(replacement: true);
+    GsaPlugin.of(context).routes.initialRoute().push(replacement: true);
   }
 }

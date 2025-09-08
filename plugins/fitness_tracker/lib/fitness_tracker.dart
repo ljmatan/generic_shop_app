@@ -8,11 +8,12 @@ export 'src/view/_view.dart';
 /// Generic Shop App Fitness Tracker.
 ///
 class GftPlugin extends GsaPlugin {
-  GftPlugin._();
-
-  /// Globally-accessible class instance.
+  /// Constructs a Generic Shop App Fitness Tracker plugin.
   ///
-  static final instance = GftPlugin._();
+  const GftPlugin({
+    super.key,
+    required super.child,
+  });
 
   @override
   GsaPluginClient get client {
@@ -25,13 +26,11 @@ class GftPlugin extends GsaPlugin {
   }
 
   @override
-  GsaRoute Function() get initialRoute {
-    return () => const GftRouteSplash();
-  }
-
-  @override
-  List<GsaRouteType> get routes {
-    return GftRoutes.values;
+  GsaPluginRoutes get routes {
+    return GsaPluginRoutes(
+      values: GftRoutes.values,
+      initialRoute: () => const GftRouteSplash(),
+    );
   }
 
   @override
@@ -49,10 +48,5 @@ class GftPlugin extends GsaPlugin {
       fontFamily: 'packages/$id/Open Sans',
       primaryColor: const Color(0xff10467c),
     );
-  }
-
-  @override
-  List<List<GsaServiceI18NBaseTranslations>> get translations {
-    return [];
   }
 }

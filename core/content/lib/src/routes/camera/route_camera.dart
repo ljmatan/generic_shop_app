@@ -186,7 +186,7 @@ class _GsaRouteCameraState extends GsaRouteState<GsaRouteCamera> with WidgetsBin
                 final code = result.text.trim();
                 if (code.isNotEmpty) {
                   GsaServiceLogging.instance.logGeneral(code);
-                  switch (GsaConfig.plugin.client) {
+                  switch (GsaPlugin.of(context).client) {
                     case GsaPluginClient.froddoB2b:
                       final saleItem = GsaDataSaleItems.instance.collection.firstWhereOrNull(
                         (saleItem) {

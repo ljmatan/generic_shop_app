@@ -191,13 +191,13 @@ class _WidgetSearchResultsEntryState extends State<_WidgetSearchResultsEntry> {
                   label: 'Add to Cart' + (_cartCount != null && _cartCount! > 0 ? ' ($_cartCount)' : ''),
                   icon: Icons.shopping_cart,
                   onTap: () async {
-                    if (GsaConfig.plugin.addToCart != null) {
-                      await GsaConfig.plugin.addToCart!(
+                    if (GsaPlugin.of(context).api?.addToCart != null) {
+                      await GsaPlugin.of(context).api!.addToCart!(
                         context,
                         item: widget.saleItem,
                       );
                     } else {
-                      debugPrint('GsaConfig.plugin.addToCart not defined.');
+                      debugPrint('GsaPlugin.of(context).addToCart not defined.');
                     }
                   },
                 ),

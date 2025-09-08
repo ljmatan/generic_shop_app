@@ -22,7 +22,7 @@ class _GsaRouteCartWidgetCartItemState extends State<GsaRouteCartWidgetCartItem>
     if (confirmed == true) {
       GsaDataCheckout.instance.orderDraft.removeItem(widget.cartItem);
       if (GsaDataCheckout.instance.orderDraft.items.isEmpty) {
-        Navigator.pop(GsaRoute.navigatorKey.currentContext ?? context);
+        Navigator.pop(GsaRoute.navigatorContext ?? context);
       }
     }
   }
@@ -207,7 +207,7 @@ class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmoun
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             GsaWidgetText(
-                              switch (GsaConfig.plugin.client) {
+                              switch (GsaPlugin.of(context).client) {
                                     GsaPluginClient.froddoB2b => '${GsaRouteCartI18N.cartItemEntrySizeLabel.value.display} ',
                                     _ => '',
                                   } +

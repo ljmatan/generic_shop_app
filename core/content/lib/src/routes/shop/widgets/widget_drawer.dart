@@ -28,7 +28,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
               children: [
                 if (!<GsaPluginClient>{
                   GsaPluginClient.froddoB2b,
-                }.contains(GsaConfig.plugin.client)) ...[
+                }.contains(GsaPlugin.of(context).client)) ...[
                   InkWell(
                     child: Row(
                       children: [
@@ -121,7 +121,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         ),
                     ],
                   ),
-                  if (GsaConfig.currencyConversionEnabled)
+                  if (GsaPlugin.of(context).features.currencyConversion)
                     (
                       label: 'Currency',
                       initialSelectionIndex: GsaModelPriceCurrencyType.values.indexOf(
@@ -183,7 +183,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           Navigator.pushNamed(context, 'contact');
                         },
                       ),
-                    if (GsaConfig.plugin.documentUrls?.helpAndFaq != null)
+                    if (GsaPlugin.of(context).documentUrls?.helpAndFaq != null)
                       (
                         label: 'Help & FAQ',
                         onTap: () {
@@ -198,7 +198,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         const GsaRouteLicences().push();
                       },
                     ),
-                    if (GsaConfig.plugin.documentUrls?.termsAndConditions != null)
+                    if (GsaPlugin.of(context).documentUrls?.termsAndConditions != null)
                       (
                         label: 'Terms and Conditions',
                         onTap: () {
@@ -206,7 +206,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           Navigator.pushNamed(context, 'privacy-policy');
                         },
                       ),
-                    if (GsaConfig.plugin.documentUrls?.privacyPolicy != null)
+                    if (GsaPlugin.of(context).documentUrls?.privacyPolicy != null)
                       (
                         label: 'Privacy Policy',
                         onTap: () {

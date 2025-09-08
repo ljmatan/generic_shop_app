@@ -1,4 +1,4 @@
-import 'dart:ui';
+part of '../plugin.dart';
 
 /// Theme customisation options for client integrations.
 ///

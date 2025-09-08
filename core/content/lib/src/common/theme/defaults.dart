@@ -19,8 +19,8 @@ extension _GsaThemeDefaults on GsaTheme {
   }
 
   Color get _primaryColor {
-    if (GsaConfig.plugin.theme.primaryColor != null) {
-      return GsaConfig.plugin.theme.primaryColor!;
+    if (plugin?.theme.primaryColor != null) {
+      return plugin!.theme.primaryColor!;
     }
     if (brightness == Brightness.light) {
       return const Color(0xffDAB1DA);
@@ -51,7 +51,7 @@ extension _GsaThemeDefaults on GsaTheme {
   }
 
   String get _fontFamily {
-    return GsaConfig.plugin.theme.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
+    return plugin?.theme.fontFamily ?? 'packages/generic_shop_app_content/Quicksand';
   }
 
   SystemUiOverlayStyle get _systemUiOverlayStyle {

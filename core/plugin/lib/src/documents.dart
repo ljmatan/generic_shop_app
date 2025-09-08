@@ -1,3 +1,5 @@
+part of '../plugin.dart';
+
 /// Curated collection of plugin document resources.
 ///
 class GsaPluginDocuments {
@@ -17,11 +19,19 @@ class GsaPluginDocuments {
     this.helpAndFaq,
   });
 
+  /// Legal document specifying the terms and conditions of app usage.
+  ///
   final String? termsAndConditions;
 
+  /// Legal document specifying the app's privacy policy.
+  ///
   final String? privacyPolicy;
 
+  /// Legal document specifying the app's cookie notice.
+  ///
   final String? cookieNotice;
 
+  /// Help and FAQ document for user assistance.
+  ///
   final String? helpAndFaq;
 }

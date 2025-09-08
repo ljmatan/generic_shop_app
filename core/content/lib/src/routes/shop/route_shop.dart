@@ -204,7 +204,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                   )
                 : Column(
                     children: [
-                      if (GsaConfig.authenticationEnabled && !GsaDataUser.instance.authenticated) const _WidgetBanner(),
+                      if (GsaPlugin.of(context).features.authentication && !GsaDataUser.instance.authenticated) const _WidgetBanner(),
                       Expanded(
                         child: ListView(
                           controller: _scrollController,
@@ -214,7 +214,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                           children: [
                             if (<GsaPluginClient>{
                                   GsaPluginClient.froddoB2b,
-                                }.contains(GsaConfig.plugin.client) &&
+                                }.contains(GsaPlugin.of(context).client) &&
                                 GsaDataCheckout.instance.orderDraft.client != null) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
@@ -228,7 +228,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                                 !<GsaPluginClient>{
                                   GsaPluginClient.froddoB2b,
                                 }.contains(
-                                  GsaConfig.plugin.client,
+                                  GsaPlugin.of(context).client,
                                 )) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
@@ -238,7 +238,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                               ),
                               const SizedBox(height: 16),
                             ],
-                            if (GsaConfig.bookmarksEnabled) ...[
+                            if (GsaPlugin.of(context).features.bookmarks) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: Theme.of(context).paddings.listView().horizontal / 2,

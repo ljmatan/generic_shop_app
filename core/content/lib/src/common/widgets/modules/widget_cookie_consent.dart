@@ -11,8 +11,11 @@ class GsaWidgetCookieConsent extends StatefulWidget {
   ///
   const GsaWidgetCookieConsent({
     super.key,
+    required this.plugin,
     this.isHeightConstrained = true,
   });
+
+  final GsaPlugin plugin;
 
   /// Whether the cookie menu is constrained in height.
   ///
@@ -23,38 +26,40 @@ class GsaWidgetCookieConsent extends StatefulWidget {
 }
 
 class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
-  final _cookieIds = <({
-    bool enabled,
-    GsaServiceCacheEntry cacheEntry,
-    String label,
-  })>{
-    (
-      enabled: GsaConfig.plugin.enabledCookieTypes.mandatory,
-      cacheEntry: GsaServiceCacheEntry.cookieConsentMandatory,
-      label: GsaWidgetCookieConsentI18N.mandatoryCookiesDescription.value.display,
-    ),
-    (
-      enabled: GsaConfig.plugin.enabledCookieTypes.functional,
-      cacheEntry: GsaServiceCacheEntry.cookieConsentFunctional,
-      label: GsaWidgetCookieConsentI18N.functionalCookiesDescription.value.display,
-    ),
-    (
-      enabled: GsaConfig.plugin.enabledCookieTypes.statistical,
-      cacheEntry: GsaServiceCacheEntry.cookieConsentStatistical,
-      label: GsaWidgetCookieConsentI18N.statisticalCookiesDescription.value.display,
-    ),
-    (
-      enabled: GsaConfig.plugin.enabledCookieTypes.marketing,
-      cacheEntry: GsaServiceCacheEntry.cookieConsentMarketing,
-      label: GsaWidgetCookieConsentI18N.marketingCookiesDescription.value.display,
-    ),
-  };
+  late Set<
+      ({
+        bool enabled,
+        GsaServiceCacheEntry cacheEntry,
+        String label,
+      })> _cookieIds;
 
   late List<bool> _cookieIdConsentStatus;
 
   @override
   void initState() {
     super.initState();
+    _cookieIds = {
+      (
+        enabled: widget.plugin.enabledCookieTypes.mandatory,
+        cacheEntry: GsaServiceCacheEntry.cookieConsentMandatory,
+        label: GsaWidgetCookieConsentI18N.mandatoryCookiesDescription.value.display,
+      ),
+      (
+        enabled: widget.plugin.enabledCookieTypes.functional,
+        cacheEntry: GsaServiceCacheEntry.cookieConsentFunctional,
+        label: GsaWidgetCookieConsentI18N.functionalCookiesDescription.value.display,
+      ),
+      (
+        enabled: widget.plugin.enabledCookieTypes.statistical,
+        cacheEntry: GsaServiceCacheEntry.cookieConsentStatistical,
+        label: GsaWidgetCookieConsentI18N.statisticalCookiesDescription.value.display,
+      ),
+      (
+        enabled: widget.plugin.enabledCookieTypes.marketing,
+        cacheEntry: GsaServiceCacheEntry.cookieConsentMarketing,
+        label: GsaWidgetCookieConsentI18N.marketingCookiesDescription.value.display,
+      ),
+    };
     _cookieIdConsentStatus = _cookieIds.map(
       (cookieId) {
         final isMandatory = cookieId.cacheEntry == GsaServiceCacheEntry.cookieConsentMandatory;

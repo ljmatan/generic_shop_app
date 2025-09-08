@@ -52,7 +52,7 @@ class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
 
   @override
   Widget build(BuildContext context) {
-    if (!GsaConfig.bookmarksEnabled) return const SizedBox();
+    if (!GsaPlugin.of(context).features.bookmarks) return const SizedBox();
     if (widget.saleItem.id == null) return const SizedBox();
     return widget.child == null
         ? GsaWidgetButton.icon(

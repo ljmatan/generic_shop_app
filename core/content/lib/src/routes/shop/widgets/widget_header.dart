@@ -68,10 +68,10 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                     },
                             ),
                             GsaWidgetButton.filled(
-                              icon: GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
+                              icon: GsaPlugin.of(context).features.cart ? Icons.shopping_cart : Icons.favorite,
                               backgroundColor: Colors.white,
                               foregroundColor: Theme.of(context).primaryColor,
-                              onTap: GsaConfig.cartEnabled
+                              onTap: GsaPlugin.of(context).features.cart
                                   ? () {
                                       _openCartPage();
                                     }
@@ -116,7 +116,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                             ],
                             if (!<GsaPluginClient>{
                               GsaPluginClient.froddoB2b,
-                            }.contains(GsaConfig.plugin.client))
+                            }.contains(GsaPlugin.of(context).client))
                               CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.white,
@@ -148,10 +148,10 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                                   children: [
                                     GsaWidgetButton.filled(
                                       label: 'Cart',
-                                      icon: GsaConfig.cartEnabled ? Icons.shopping_cart : Icons.favorite,
+                                      icon: GsaPlugin.of(context).features.cart ? Icons.shopping_cart : Icons.favorite,
                                       backgroundColor: Colors.white,
                                       foregroundColor: Theme.of(context).primaryColor,
-                                      onTap: GsaConfig.cartEnabled
+                                      onTap: GsaPlugin.of(context).features.cart
                                           ? () {
                                               _openCartPage();
                                             }
@@ -195,8 +195,9 @@ class _WidgetHeaderCartButtonCount extends StatelessWidget {
       right: 0,
       child: IgnorePointer(
         child: ValueListenableBuilder(
-          valueListenable:
-              GsaConfig.cartEnabled ? GsaDataCheckout.instance.notifierCartUpdate : GsaServiceBookmarks.instance.notifierBookmarkCount,
+          valueListenable: GsaPlugin.of(context).features.cart
+              ? GsaDataCheckout.instance.notifierCartUpdate
+              : GsaServiceBookmarks.instance.notifierBookmarkCount,
           builder: (context, cartItemCount, child) {
             if (cartItemCount == 0) return const SizedBox();
             return Transform.translate(

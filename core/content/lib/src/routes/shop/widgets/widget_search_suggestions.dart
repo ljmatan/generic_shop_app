@@ -28,7 +28,7 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
             ),
           ),
         ),
-        if (GsaConfig.bookmarksEnabled) ...[
+        if (GsaPlugin.of(context).features.bookmarks) ...[
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -10,11 +10,12 @@ export 'src/view/_view.dart';
 /// The class implementes resources required for the plugin to function.
 ///
 class GsdPlugin extends GsaPlugin {
-  GsdPlugin._();
-
-  /// Globally-accessible class instance.
+  /// Constructs a demo / mock plugin instance.
   ///
-  static final instance = GsdPlugin._();
+  const GsdPlugin({
+    super.key,
+    required super.child,
+  });
 
   @override
   GsaPluginClient get client {
@@ -27,18 +28,11 @@ class GsdPlugin extends GsaPlugin {
   }
 
   @override
-  Future<void> setupService() async {
-    await GsaServiceCache.instance.clearData();
-  }
-
-  @override
-  GsaRoute Function() get initialRoute {
-    return () => const GsdRouteDashboard();
-  }
-
-  @override
-  List<GsaRouteType>? get routes {
-    return null;
+  GsaPluginRoutes get routes {
+    return GsaPluginRoutes(
+      values: GsdRoutes.values,
+      initialRoute: () => GsdRouteDashboard(),
+    );
   }
 
   @override
@@ -48,10 +42,5 @@ class GsdPlugin extends GsaPlugin {
       marketing: true,
       statistical: true,
     );
-  }
-
-  @override
-  List<List<GsaServiceI18NBaseTranslations>> get translations {
-    return [];
   }
 }

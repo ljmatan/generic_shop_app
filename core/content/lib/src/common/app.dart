@@ -6,9 +6,18 @@ import 'package:generic_shop_app_content/content.dart';
 ///
 class Gsa extends StatefulWidget {
   /// Entrypoint to the Flutter SDK application services,
-  /// integrating a [State] object which implements the [MaterialApp] and [Navigator] widgets as root objects.
+  /// integrating a [State] object which implements the
+  /// [MaterialApp] and [Navigator] widgets as root objects.
   ///
-  const Gsa({super.key});
+  const Gsa({
+    super.key,
+    this.globalNavigatorKey = true,
+  });
+
+  /// Whether this app root widget is specified with a
+  /// global navigator key instance [GsaRoute.navigatorKey].
+  ///
+  final bool globalNavigatorKey;
 
   @override
   State<Gsa> createState() => GsaState();
@@ -51,20 +60,36 @@ class GsaState extends State<Gsa> {
         }
 
         return MaterialApp(
-          navigatorKey: GsaRoute.navigatorKey,
+          navigatorKey: widget.globalNavigatorKey ? GsaRoute.navigatorKey : null,
           debugShowCheckedModeBanner: false,
           builder: (context, child) => GsaViewBuilder(child!),
           navigatorObservers: [GsaRoute.navigatorObserver],
           home: const GsaRouteSplash(),
-          theme: GsaTheme.instance.data,
+          theme: (() {
+            try {
+              return GsaTheme.instance.data;
+            } catch (e) {
+              return GsaTheme(
+                plugin: GsaPlugin.of(context),
+              ).data;
+            }
+          })(),
           onGenerateRoute: (settings) {
             return MaterialPageRoute(
               builder: (_) {
                 late GsaRouteType route;
                 try {
-                  route = GsaConfig.plugin.routes!.firstWhere((route) => route.routeId == settings.name);
+                  route = GsaPlugin.of(context).routes.values.firstWhere(
+                    (route) {
+                      return route.routeId == settings.name;
+                    },
+                  );
                 } catch (e) {
-                  route = GsaRoutes.values.firstWhere((route) => route.routeId == settings.name);
+                  route = GsaRoutes.values.firstWhere(
+                    (route) {
+                      return route.routeId == settings.name;
+                    },
+                  );
                 }
                 return route.widget();
               },

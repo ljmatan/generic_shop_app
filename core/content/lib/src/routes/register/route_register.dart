@@ -18,7 +18,13 @@ class GsaRouteRegister extends GsacRoute {
 
   @override
   bool get enabled {
-    return GsaConfig.authenticationEnabled && GsaConfig.registrationEnabled;
+    if (GsaRoute.navigatorContext == null) {
+      throw Exception(
+        'Navigator context not available.',
+      );
+    }
+    return GsaPlugin.of(GsaRoute.navigatorContext!).features.authentication &&
+        GsaPlugin.of(GsaRoute.navigatorContext!).features.registration;
   }
 
   @override
@@ -84,7 +90,12 @@ class _GsaRouteRegisterState extends GsaRouteState<GsaRouteRegister> {
                   GsaWidgetTextField(
                     controller: _passwordTextController,
                     labelText: 'Password',
-                    validator: GsaServiceInputValidation.instance.password,
+                    validator: (value) {
+                      return GsaServiceInputValidation.instance.password(
+                        context,
+                        input: value,
+                      );
+                    },
                   ),
                   const SizedBox(height: 12),
                   GsaWidgetTextField(

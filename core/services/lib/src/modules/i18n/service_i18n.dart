@@ -41,13 +41,13 @@ class GsaServiceI18N extends GsaService {
         return route.routeRuntimeType;
       },
     ),
-    if (GsaConfig.plugin.routes != null)
-      ...GsaConfig.plugin.routes!.map(
-        (route) {
-          return route.routeRuntimeType;
-        },
-      ),
   ];
+
+  /// Configures the translatable route types from any client implementation.
+  ///
+  void setPluginTranslatableRouteTypes(Iterable<Type> routeTypes) {
+    _translatableRouteTypes.addAll(routeTypes);
+  }
 
   /// [Type] objects for which the translation is defined for.
   ///
@@ -127,24 +127,25 @@ class GsaServiceI18N extends GsaService {
         };
       }
     } else {
-      try {
-        final translations = await rootBundle
-            .loadString(
-          'packages/${GsaConfig.plugin.id}/assets/translations/all.json',
-        )
-            .timeout(
-          const Duration(seconds: 3),
-          onTimeout: () {
-            throw Exception(
-              'Translation asset file read timeout.',
-            );
-          },
-        );
-      } catch (e) {
-        GsaServiceLogging.instance.logError(
-          'Error decoding asset translation:\n$e',
-        );
-      }
+      // TODO: Fix
+      // try {
+      //   final translations = await rootBundle
+      //       .loadString(
+      //     'packages/${GsaPlugin.of(context).id}/assets/translations/all.json',
+      //   )
+      //       .timeout(
+      //     const Duration(seconds: 3),
+      //     onTimeout: () {
+      //       throw Exception(
+      //         'Translation asset file read timeout.',
+      //       );
+      //     },
+      //   );
+      // } catch (e) {
+      //   GsaServiceLogging.instance.logError(
+      //     'Error decoding asset translation:\n$e',
+      //   );
+      // }
     }
   }
 
@@ -300,6 +301,9 @@ class GsaServiceI18N extends GsaService {
     GsaWidgetOverlayConfirmationI18N.values,
     // Services
     GsaServiceCacheI18N.values,
-    ...GsaConfig.plugin.translations,
   ];
+
+  void setPluginTranslatedValues(List<List<GsaServiceI18NBaseTranslations>> values) {
+    translatedValues.addAll(values);
+  }
 }

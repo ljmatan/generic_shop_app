@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/content.dart';
 
-part 'data_ext.dart';
 part 'defaults.dart';
+part 'ext_data.dart';
+part 'ext_theme.dart';
 part 'text_styles.dart';
 
 /// The default theme configuration for the application project.
@@ -19,6 +20,7 @@ class GsaTheme {
   /// the constructor fetches and applies any default or cached theme choices.
   ///
   GsaTheme({
+    required this.plugin,
     this.platform,
     Brightness? brightness,
     Color? primaryColor,
@@ -37,11 +39,20 @@ class GsaTheme {
     this.borderRadius = borderRadius ?? _borderRadius;
     this.inputDecorationTheme = inputDecorationTheme ?? _inputDecorationTheme;
     this.roundedRectangleBorder = roundedRectangleBorder ?? _roundedRectangleBorder;
+    try {
+      instance;
+    } catch (e) {
+      instance = this;
+    }
   }
 
   /// Globally-accessible class instance.
   ///
-  static final instance = GsaTheme();
+  static late GsaTheme instance;
+
+  /// The application client implementation.
+  ///
+  GsaPlugin plugin;
 
   /// The platform that user interaction should adapt to target.
   ///
@@ -239,7 +250,7 @@ class GsaTheme {
               error: Colors.red.shade300,
               onError: Colors.white,
               surface: Colors.white,
-              onSurface: Colors.grey,
+              onSurface: Colors.grey.shade200,
               surfaceTint: Colors.white,
             )
           : ColorScheme(
@@ -248,7 +259,7 @@ class GsaTheme {
               onPrimary: Colors.grey,
               secondary: secondaryColor,
               onSecondary: Colors.grey,
-              error: Colors.red.shade300,
+              error: Colors.red.shade700,
               onError: Colors.white,
               surface: const Color(0xff333333),
               onSurface: Colors.grey.shade300,

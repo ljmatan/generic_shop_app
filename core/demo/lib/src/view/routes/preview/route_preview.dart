@@ -5,10 +5,14 @@ import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' as colorpicker;
 import 'package:generic_shop_app_demo/demo.dart';
 import 'package:generic_shop_app_fitness_tracker/fitness_tracker.dart';
+import 'package:generic_shop_app_froddo_b2b/froddo_b2b.dart';
+import 'package:generic_shop_app_froddo_b2c/froddo_b2c.dart';
 
 part 'misc/misc_navigator_observer.dart';
 part 'misc/misc_scroll_behaviour.dart';
 part 'widgets/widget_device_preview.dart';
+part 'widgets/widget_menu_section.dart';
+part 'widgets/widget_menu.dart';
 
 class GsdRoutePreview extends GsdRoute {
   /// Default, unnamed widget constructor.
@@ -31,13 +35,43 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   device_frame.DeviceInfo _device = device_frame.Devices.ios.iPhone12;
 
-  GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+  void _setPlatform(
+    TargetPlatform value,
+  ) {
+    setState(() {
+      _platform = value;
+      _device = device_frame.Devices.all.firstWhere(
+        (device) {
+          return device.identifier.platform == value;
+        },
+      );
+    });
+  }
+
+  late GsaPluginClient _pluginClient;
 
   int _routeIndex = 0;
 
   Key _routeDropdownKey = UniqueKey();
 
   late List<GsaRouteType> _routes;
+
+  void _setClient(GsaPluginClient value) {
+    setState(() {
+      _pluginClient = value;
+      _routeIndex = 0;
+      _routes = [
+        ...GsaRoutes.values,
+        ...GsaPlugin.of(context).routes.values,
+      ];
+      GsaRoute.navigatorKey = GlobalKey<NavigatorState>();
+      _routeDropdownKey = UniqueKey();
+      _theme = GsaTheme(
+        plugin: GsaPlugin.of(context),
+        platform: _platform,
+      );
+    });
+  }
 
   void _onNavigatorChange() {
     WidgetsBinding.instance.addPostFrameCallback(
@@ -59,20 +93,28 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   late _NavigatorObserver _navigatorObserver;
 
+  final _appOptions = GsaPluginFeatures();
+
   late GsaTheme _theme;
 
   @override
   void initState() {
     super.initState();
+    if (GsaRoute.navigatorContext == null) {
+      throw Exception('GsaRoute.navigatorContext is null.');
+    }
+    final plugin = GsaPlugin.of(GsaRoute.navigatorContext!);
+    _pluginClient = plugin.client;
     _routes = [
       ...GsaRoutes.values,
-      if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
+      ...plugin.routes.values,
     ];
-    GsaRoute.navigatorKeyOverride = _navigatorKey;
+    GsaRoute.navigatorKey = GlobalKey<NavigatorState>();
     _navigatorObserver = _NavigatorObserver(
       _onNavigatorChange,
     );
     _theme = GsaTheme(
+      plugin: plugin,
       platform: _platform,
     );
   }
@@ -82,353 +124,20 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     return Scaffold(
       body: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                right: BorderSide(
-                  color: Theme.of(context).dividerColor,
-                ),
-              ),
-            ),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * .25,
-              child: ListView(
-                padding: Theme.of(context).paddings.listView(),
-                children: [
-                  GsaWidgetText(
-                    'Device',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const Divider(height: 20),
-                  const SizedBox(height: 16),
-                  GsaWidgetDropdownMenu<TargetPlatform>(
-                    labelText: 'Platform',
-                    enableFilter: false,
-                    enableSearch: false,
-                    dropdownMenuEntries: [
-                      for (final platform in _platforms)
-                        DropdownMenuEntry(
-                          label: platform.name,
-                          value: platform,
-                        ),
-                    ],
-                    initialSelection: _platform,
-                    onSelected: (value) {
-                      if (value == null) {
-                        throw Exception(
-                          'Target platform value must not be null.',
-                        );
-                      }
-                      setState(() {
-                        _platform = value;
-                        _device = device_frame.Devices.all.firstWhere(
-                          (device) {
-                            return device.identifier.platform == value;
-                          },
-                        );
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  GsaWidgetDropdownMenu<device_frame.DeviceInfo>(
-                    labelText: 'Model',
-                    enableFilter: false,
-                    enableSearch: false,
-                    dropdownMenuEntries: [
-                      for (final device in device_frame.Devices.all.where(
-                        (device) {
-                          return device.identifier.platform == _platform;
-                        },
-                      ))
-                        DropdownMenuEntry(
-                          label: device.name,
-                          value: device,
-                        ),
-                    ],
-                    initialSelection: _device,
-                    width: MediaQuery.of(context).size.width * .25 - 40,
-                    onSelected: (value) {
-                      if (value == null) {
-                        throw Exception(
-                          'Device value must not be null.',
-                        );
-                      }
-                      setState(() {
-                        _device = value;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  GsaWidgetText(
-                    'Client',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const Divider(height: 20),
-                  const SizedBox(height: 16),
-                  GsaWidgetDropdownMenu<GsaPlugin>(
-                    labelText: 'Provider',
-                    enableFilter: false,
-                    enableSearch: false,
-                    initialSelection: GsaConfig.plugin,
-                    dropdownMenuEntries: [
-                      for (final provider in {
-                        (
-                          id: GsaPluginClient.fitnessTracker,
-                          value: GftPlugin.instance,
-                        ),
-                        (
-                          id: GsaPluginClient.froddoB2b,
-                          value: GftPlugin.instance,
-                        ),
-                        (
-                          id: GsaPluginClient.froddoB2c,
-                          value: GftPlugin.instance,
-                        ),
-                      })
-                        DropdownMenuEntry(
-                          label: provider.id.name,
-                          value: provider.value,
-                        ),
-                    ],
-                    onSelected: (value) async {
-                      if (value == null) {
-                        throw Exception(
-                          'The specified provider value must not be null.',
-                        );
-                      }
-                      const GsaWidgetOverlayContentBlocking().openDialog();
-                      try {
-                        await GsaConfig.plugin.init();
-                        Navigator.pop(context);
-                        setState(
-                          () {
-                            GsaConfig.plugin = value;
-                            _routeIndex = 0;
-                            _routes = [
-                              ...GsaRoutes.values,
-                              if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
-                            ];
-                            _navigatorKey = GlobalKey<NavigatorState>();
-                            GsaRoute.navigatorKeyOverride = _navigatorKey;
-                            _routeDropdownKey = UniqueKey();
-                            _theme = GsaTheme(
-                              platform: _platform,
-                            );
-                          },
-                        );
-                      } catch (e) {
-                        Navigator.pop(context);
-                        GsaWidgetOverlayAlert(
-                          '$e',
-                        ).openDialog();
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  GsaWidgetDropdownMenu(
-                    key: _routeDropdownKey,
-                    labelText: 'Route',
-                    enableFilter: false,
-                    enableSearch: false,
-                    initialSelection: _routeIndex,
-                    dropdownMenuEntries: [
-                      for (final route in _routes.indexed)
-                        DropdownMenuEntry(
-                          label: route.$2.displayName,
-                          value: route.$1,
-                        ),
-                    ],
-                    onSelected: (value) {
-                      if (value == null) {
-                        throw Exception(
-                          'The specified route value must not be null.',
-                        );
-                      }
-                      setState(() {
-                        _routeIndex = value;
-                        _navigatorKey = GlobalKey<NavigatorState>();
-                        GsaRoute.navigatorKeyOverride = _navigatorKey;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  GsaWidgetText(
-                    'Options',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const Divider(height: 20),
-                  GsaWidgetSwitch(
-                    value: GsaConfig.cartEnabled,
-                    child: GsaWidgetText('Checkout'),
-                    onTap: (value) {
-                      setState(() => GsaConfig.cartEnabled = value);
-                    },
-                  ),
-                  const Divider(height: 20),
-                  GsaWidgetSwitch(
-                    value: GsaConfig.registrationEnabled,
-                    child: GsaWidgetText('Registration'),
-                    onTap: (value) {
-                      setState(() => GsaConfig.registrationEnabled = value);
-                    },
-                  ),
-                  const Divider(height: 20),
-                  GsaWidgetSwitch(
-                    value: GsaConfig.guestLoginEnabled,
-                    child: GsaWidgetText('Guest Login'),
-                    onTap: (value) {
-                      setState(() => GsaConfig.guestLoginEnabled = value);
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  GsaWidgetText(
-                    'Theme',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const Divider(height: 20),
-                  const SizedBox(height: 16),
-                  GsaWidgetDropdownMenu<String>(
-                    labelText: 'Font Family',
-                    width: MediaQuery.of(context).size.width * .25 - 40,
-                    initialSelection: GsaTheme.instance.fontFamily,
-                    dropdownMenuEntries: [
-                      for (final fontId in <String>{
-                        'Comic Neue',
-                        'Quicksand',
-                        'Merriweather Sans',
-                        'Open Sans',
-                      })
-                        DropdownMenuEntry(
-                          label: fontId,
-                          value: fontId,
-                        ),
-                    ],
-                    onSelected: (value) {
-                      if (value == null) {
-                        throw Exception(
-                          'The specified font family value must not be null.',
-                        );
-                      }
-                      setState(() {
-                        _theme.fontFamily = value;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  GsaWidgetSwitch(
-                    value: _theme.brightness == Brightness.dark,
-                    child: GsaWidgetText('Dark Theme'),
-                    onTap: (newValue) {
-                      setState(() {
-                        _theme.brightness = newValue ? Brightness.dark : Brightness.light;
-                      });
-                    },
-                  ),
-                  for (final colorInput in {
-                    (
-                      label: 'Primary Color',
-                      color: Theme.of(context).primaryColor,
-                      onColorChanged: (Color value) => _theme.primaryColor = value,
-                    ),
-                  }) ...[
-                    const SizedBox(height: 20),
-                    InkWell(
-                      child: GsaWidgetTextField(
-                        labelText: colorInput.label,
-                        enabled: false,
-                        prefix: GsaWidgetText(
-                          '#',
-                        ),
-                        suffixIcon: Icon(
-                          Icons.circle,
-                          color: colorInput.color,
-                        ),
-                      ),
-                      onTap: () async {
-                        final result = await showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: GsaWidgetText(
-                              colorInput.label,
-                            ),
-                            content: SingleChildScrollView(
-                              child: colorpicker.ColorPicker(
-                                pickerColor: colorInput.color,
-                                onColorChanged: colorInput.onColorChanged,
-                                enableAlpha: false,
-                                hexInputBar: true,
-                              ),
-                            ),
-                            actions: <Widget>[
-                              GsaWidgetButton.elevated(
-                                label: 'CONFIRM',
-                                onTap: () => Navigator.pop(
-                                  context,
-                                  colorInput.color,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                        if (result == null) {
-                          colorInput.onColorChanged(colorInput.color);
-                        } else {
-                          setState(() {});
-                        }
-                      },
-                    ),
-                  ],
-                  const SizedBox(height: 20),
-                  GsaWidgetText(
-                    'Data',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const Divider(height: 20),
-                  for (final provider in []) ...[
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: GsaWidgetButton.outlined(
-                        label: 'INIT ${provider.name.toUpperCase()}',
-                        onTap: () async {
-                          const GsaWidgetOverlayContentBlocking().openDialog();
-                          try {
-                            GsaData.clearAll();
-                            await GsaConfig.plugin.init();
-                            Navigator.pop(context);
-                            setState(() {
-                              _routeIndex = 0;
-                              _routes = [
-                                ...GsaRoutes.values,
-                                if (GsaConfig.plugin.routes != null) ...GsaConfig.plugin.routes!,
-                              ];
-                              _navigatorKey = GlobalKey<NavigatorState>();
-                              GsaRoute.navigatorKeyOverride = _navigatorKey;
-                              _routeDropdownKey = UniqueKey();
-                              _theme.primaryColor = GsaConfig.plugin.theme.primaryColor ?? GsaTheme.instance.data.primaryColor;
-                              _theme.fontFamily = GsaConfig.plugin.theme.fontFamily ?? _theme.fontFamily;
-                            });
-                          } catch (e) {
-                            Navigator.pop(context);
-                            GsaWidgetOverlayAlert(
-                              '$e',
-                            ).openDialog();
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
+          _WidgetMenu(
+            state: this,
           ),
           Expanded(
             child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: _WidgetDevicePreview(
-                  state: this,
+              child: InteractiveViewer(
+                trackpadScrollCausesScale: true,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  child: SizedBox.expand(
+                    child: _WidgetDevicePreview(
+                      state: this,
+                    ),
+                  ),
                 ),
               ),
             ),

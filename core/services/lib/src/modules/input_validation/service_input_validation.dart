@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 
 part '../../i18n/service_input_validation_i18n.dart';
@@ -76,15 +77,18 @@ class GsaServiceInputValidation extends GsaService {
   ///
   /// Must be at least 8 characters long, and must include an uppercase letter, lowercase letter, and a number.
   ///
-  String? password(String? input) {
+  String? password(
+    BuildContext context, {
+    required String? input,
+  }) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
       return GsaServiceInputValidationI18N.passwordInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
-    if (GsaConfig.plugin.passwordValidator != null) {
-      return GsaConfig.plugin.passwordValidator!(trimmed);
+    if (GsaPlugin.of(context).api?.passwordValidator != null) {
+      return GsaPlugin.of(context).api!.passwordValidator!(trimmed);
     }
     return null;
   }

@@ -110,7 +110,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   isInterpolated: true,
                 ),
               ),
-            if (GsaConfig.cartEnabled && widget.saleItem.price != null)
+            if (GsaPlugin.of(context).features.cart && widget.saleItem.price != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: SizedBox(
@@ -124,7 +124,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                   ),
                 ),
               ),
-            if (GsaConfig.cartEnabled && widget.saleItem.price != null)
+            if (GsaPlugin.of(context).features.cart && widget.saleItem.price != null)
               Row(
                 children: [
                   if (_cartCount > 0)
@@ -209,7 +209,7 @@ class _GsaWidgetOverlaySaleItemState extends State<GsaWidgetOverlaySaleItem> {
                 ],
               )
             else ...[
-              if (GsaConfig.plugin.client == GsaPluginClient.froddoB2c)
+              if (GsaPlugin.of(context).client == GsaPluginClient.froddoB2c)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Builder(

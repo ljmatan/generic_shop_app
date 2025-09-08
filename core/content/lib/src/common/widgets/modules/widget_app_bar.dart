@@ -52,7 +52,7 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
       child: IntrinsicHeight(
         child: Stack(
           children: [
-            if (GsaConfig.plugin.theme.animatedAppBar != false)
+            if (GsaPlugin.of(context).theme.animatedAppBar != false)
               const GsaWidgetFlairBlobBackground(count: 12)
             else
               DecoratedBox(
@@ -86,12 +86,13 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                               widget.label ?? '',
                               textAlign: Theme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
-                                    shadows: GsaConfig.plugin.theme.animatedAppBar != false ? Theme.of(context).outline.shadows() : null,
+                                    shadows:
+                                        GsaPlugin.of(context).theme.animatedAppBar != false ? Theme.of(context).outline.shadows() : null,
                                   ),
                             ),
                           ),
                         ),
-                        if (Theme.of(context).dimensions.largeScreen && GsaConfig.plugin.theme.logoImagePath != null)
+                        if (Theme.of(context).dimensions.largeScreen && GsaPlugin.of(context).theme.logoImagePath != null)
                           Positioned(
                             top: 0,
                             bottom: 0,
@@ -109,7 +110,7 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                             child: GsaWidgetButton.icon(
                               icon: Icons.chevron_left,
                               foregroundColor: Theme.of(context).appBarTheme.titleTextStyle?.color,
-                              outlined: GsaConfig.plugin.theme.animatedAppBar,
+                              outlined: GsaPlugin.of(context).theme.animatedAppBar,
                               onTap: () => widget.onBackPressed == null
                                   ? _canPop == true
                                       ? Navigator.pop(context)

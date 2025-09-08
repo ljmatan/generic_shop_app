@@ -125,7 +125,8 @@ class _GsaRouteBookmarksState extends GsaRouteState<GsaRouteBookmarks> {
                                                     ),
                                                   ),
                                                 ),
-                                              if (GsaConfig.plugin.client == GsaPluginClient.froddoB2c && item.options?.isNotEmpty == true)
+                                              if (GsaPlugin.of(context).client == GsaPluginClient.froddoB2c &&
+                                                  item.options?.isNotEmpty == true)
                                                 Padding(
                                                   padding: const EdgeInsets.only(bottom: 2),
                                                   child: Builder(

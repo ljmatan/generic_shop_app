@@ -10,7 +10,12 @@ class GsaRouteUserProfile extends GsacRoute {
 
   @override
   bool get enabled {
-    return GsaConfig.authenticationEnabled;
+    if (GsaRoute.navigatorContext == null) {
+      throw Exception(
+        'Navigator context not available.',
+      );
+    }
+    return GsaPlugin.of(GsaRoute.navigatorContext!).features.authentication;
   }
 
   @override

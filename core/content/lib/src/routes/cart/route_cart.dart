@@ -283,8 +283,8 @@ class _GsaRouteCartState extends GsaRouteState<GsaRouteCart> {
                     curve: Curves.fastOutSlowIn,
                   );
                 } else {
-                  if (GsaConfig.plugin.startCheckout != null) {
-                    GsaConfig.plugin.startCheckout!(context);
+                  if (GsaPlugin.of(context).api?.startCheckout != null) {
+                    GsaPlugin.of(context).api!.startCheckout!(context);
                   } else {
                     Navigator.popUntil(context, (route) => route.isFirst);
                     const GsaRouteCheckout().push(context: context);

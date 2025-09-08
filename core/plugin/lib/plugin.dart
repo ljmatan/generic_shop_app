@@ -1,23 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 
-export 'src/api.dart';
-export 'src/client.dart';
-export 'src/cookies.dart';
-export 'src/documents.dart';
-export 'src/routes.dart';
-export 'src/theme.dart';
+part 'src/api.dart';
+part 'src/cache_entries.dart';
+part 'src/client.dart';
+part 'src/cookies.dart';
+part 'src/documents.dart';
+part 'src/features.dart';
+part 'src/models.dart';
+part 'src/routes.dart';
+part 'src/services.dart';
+part 'src/theme.dart';
 
 /// The application client implementations base service definitions.
 ///
 /// These definitions are required to be implemented in order to comply with the
 /// application architecture, which may be based off of various client integrations.
 ///
-abstract class GsaPlugin {
-  /// Marks this plugin instance as the active application client.
+abstract class GsaPlugin extends InheritedWidget {
+  /// Constructs a new instance of the plugin.
   ///
-  void configureClient() {
-    GsaConfig.plugin = this;
+  const GsaPlugin({
+    super.key,
+    required super.child,
+  });
+
+  @override
+  updateShouldNotify(covariant GsaPlugin oldWidget) {
+    return false;
+  }
+
+  /// Returns the nearest ancestor widget of [GsaPlugin] type.
+  ///
+  static GsaPlugin of(BuildContext context) {
+    GsaPlugin? plugin;
+    context.visitAncestorElements(
+      (element) {
+        if (element.widget is GsaPlugin) {
+          plugin = element.widget as GsaPlugin;
+          return false;
+        }
+        return true;
+      },
+    );
+    if (plugin == null) {
+      throw Exception(
+        'Plugin not found in element tree.',
+      );
+    }
+    return plugin!;
   }
 
   /// The client specified for this plugin integration.
@@ -28,58 +59,53 @@ abstract class GsaPlugin {
   ///
   String get id;
 
-  /// Method implemented for managing and initialisation of the application resources.
+  /// A collection of functionalities specific to the plugin implementation.
   ///
-  /// The method is called by the [init] method, and it's invocation won't be repeated if
-  /// the [loadData] method call is unsuccessful.
+  /// See [GsaPluginFeatures] for more information.
   ///
-  /// Used for setting up the plugin services and other relevant application resources.
-  ///
-  Future<void> setupService() async {}
-
-  /// Method used for fetching runtime data from the backend or any other relevant sources.
-  ///
-  /// The method is called by the [init] method,
-  /// and is separated from the [setupService] method in order to differentiate it as a
-  /// "likely throwable" function.
-  ///
-  Future<void> fetchData() async {}
-
-  /// Property defining whether the [setupService] method has been executed successfully.
-  ///
-  bool _setupExecuted = false;
-
-  /// Method invoked on the application splash screen.
-  ///
-  /// Invokes the [setupService] and [fetchData] method,
-  /// while verifying the [setupService] method is not invoked multiple times if not necessary.
-  ///
-  /// [forceSetup] parameter can be optionally included in order to invoke the [setupService] method
-  /// on each of the [init] function call.
-  ///
-  Future<void> init([
-    bool forceSetup = false,
-  ]) async {
-    if (forceSetup || !_setupExecuted) {
-      await setupService();
-      _setupExecuted = true;
-    }
-    await fetchData();
+  GsaPluginFeatures get features {
+    return GsaPluginFeatures();
   }
 
-  /// App screen specified for display after the splash and user consent screens.
+  /// Collection of data models specific to the plugin implementation.
   ///
-  GsaRoute Function() get initialRoute;
+  /// See [GsaPluginModels] for more information.
+  ///
+  GsaPluginModels? get models {
+    return null;
+  }
 
   /// A collection of routes specific to the plugin implementation.
   ///
-  List<GsaRouteType>? get routes;
+  /// See [GsaPluginRoutes] for more information.
+  ///
+  GsaPluginRoutes get routes;
 
   /// Getter method providing information on the used cookies.
   ///
+  /// See [GsaPluginCookies] for more information.
+  ///
   GsaPluginCookies get enabledCookieTypes;
 
+  /// Cache entries specified for this plugin integration.
+  ///
+  /// See [GsaPluginCacheEntries] for more information.
+  ///
+  GsaPluginCacheEntries? get cacheEntries {
+    return null;
+  }
+
+  /// Services specified for this plugin integration.
+  ///
+  /// See [GsaPluginServices] for more information.
+  ///
+  GsaPluginServices? get services {
+    return null;
+  }
+
   /// Theme properties specified for this plugin integration.
+  ///
+  /// See [GsaPluginTheme] for more information.
   ///
   GsaPluginTheme get theme {
     return const GsaPluginTheme();
@@ -87,7 +113,9 @@ abstract class GsaPlugin {
 
   /// Collection of translations implemented for this plugin integration.
   ///
-  List<List<GsaServiceI18NBaseTranslations>> get translations;
+  List<List<GsaServiceI18NBaseTranslations>>? get translations {
+    return null;
+  }
 
   /// Document resource location specifications.
   ///
@@ -103,48 +131,80 @@ abstract class GsaPlugin {
     return null;
   }
 
-  /// Method used with login screen implementations for logging in a user with [username] and [password].
+  /// API methods specified for this plugin integration.
   ///
-  Future<void> Function({
-    required String username,
-    required String password,
-  })?
-  get loginWithUsernameAndPassword {
+  /// See [GsaPluginApi] for more information.
+  ///
+  GsaPluginApi? get api {
     return null;
   }
 
-  /// Method used for validating password input on the user authentication screens.
+  /// Method implemented for managing and initialisation of the plugin-specific implementations.
   ///
-  String? Function(
-    String?, {
-    GsaServiceI18NModelTranslatedValue? errorMessage,
-  })?
-  get passwordValidator {
-    return null;
+  /// This method is called before the [init] method invocation.
+  ///
+  @mustCallSuper
+  Future<void> setupService() async {
+    // Define model serialization options.
+    if (models != null) {
+      for (final model in models!.values) {
+        switch (model.reference) {
+          case const (GsaModelUser):
+            GsaModelUser.originDataFromJson = model.fromJson;
+            break;
+          case const (GsaModelSaleItem):
+            GsaModelSaleItem.originDataFromJson = model.fromJson;
+            break;
+          case const (GsaModelClient):
+            GsaModelClient.originDataFromJson = model.fromJson;
+            break;
+          default:
+            throw Exception(
+              'Model type not set up for serialisation: ${model.reference}.',
+            );
+        }
+      }
+    }
+    // Specify view configuration.
+    if (routes.replacements?.isNotEmpty == true) {
+      GsaRoutes.replacementRoute = (route) {
+        try {
+          return routes.replacements!.firstWhere(
+            (replacement) {
+              return replacement.original == route;
+            },
+          ).replacement;
+        } catch (e) {
+          return null;
+        }
+      };
+    }
+    // Set translation resources.
+    GsaServiceI18N.instance.setPluginTranslatableRouteTypes(
+      routes.values.map(
+        (route) {
+          return route.runtimeType;
+        },
+      ),
+    );
+    if (translations != null) {
+      GsaServiceI18N.instance.setPluginTranslatedValues(translations!);
+    }
+    // Register client cookie collection.
+    if (cacheEntries != null) {
+      GsaServiceCache.instance.registerCacheEntries(
+        cacheEntries!.values,
+      );
+    }
+    // Allocate service memory objects.
+    if (services != null) {
+      for (final service in services!.values) {
+        service;
+      }
+    }
   }
 
-  /// Used for product purchase intent registration.
+  /// Method implemented for managing and initialisation of the application resources.
   ///
-  Future<void> Function(
-    BuildContext context, {
-    required GsaModelSaleItem item,
-  })?
-  get addToCart {
-    return null;
-  }
-
-  /// Method optionally implemented for starting the checkout process from the cart page.
-  ///
-  Future<void> Function(
-    BuildContext context,
-  )?
-  get startCheckout {
-    return null;
-  }
-
-  /// Method implemented for retrieving promotional content displayed on the dashboard.
-  ///
-  Future<List<GsaModelPromoBanner>> Function()? get getPromoBanners {
-    return null;
-  }
+  Future<void> init() async {}
 }

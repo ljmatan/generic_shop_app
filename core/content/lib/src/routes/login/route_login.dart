@@ -13,7 +13,12 @@ class GsaRouteLogin extends GsacRoute {
 
   @override
   bool get enabled {
-    return GsaConfig.authenticationEnabled;
+    if (GsaRoute.navigatorContext == null) {
+      throw Exception(
+        'Navigator context not available.',
+      );
+    }
+    return GsaPlugin.of(GsaRoute.navigatorContext!).features.authentication;
   }
 
   @override
@@ -23,36 +28,38 @@ class GsaRouteLogin extends GsacRoute {
 class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
   final _formKey = GlobalKey<FormState>();
 
-  final _emailTextController = TextEditingController(
-        text: switch (GsaConfig.plugin.client) {
-          GsaPluginClient.froddoB2b => kDebugMode ? 'hyper@hyper.hr' : null,
-          _ => null,
-        },
-      ),
-      _passwordTextController = TextEditingController(
-        text: switch (GsaConfig.plugin.client) {
-          GsaPluginClient.froddoB2b => kDebugMode ? '1234' : null,
-          _ => null,
-        },
-      );
+  late TextEditingController _emailTextController, _passwordTextController;
+
+  late bool _userAgreementRequired;
 
   final _termsSwitchKey = GlobalKey<GsaWidgetSwitchState>();
-
-  final _userAgreementRequired = <String?>{
-    GsaConfig.plugin.documentUrls?.cookieNotice,
-    GsaConfig.plugin.documentUrls?.termsAndConditions,
-    GsaConfig.plugin.documentUrls?.privacyPolicy,
-  }.any(
-    (document) {
-      return document != null;
-    },
-  );
 
   late bool _userAgreementAccepted;
 
   @override
   void initState() {
     super.initState();
+    _emailTextController = TextEditingController(
+      text: switch (GsaPlugin.of(GsaRoute.navigatorContext!).client) {
+        GsaPluginClient.froddoB2b => kDebugMode ? 'hyper@hyper.hr' : null,
+        _ => null,
+      },
+    );
+    _passwordTextController = TextEditingController(
+      text: switch (GsaPlugin.of(GsaRoute.navigatorContext!).client) {
+        GsaPluginClient.froddoB2b => kDebugMode ? '1234' : null,
+        _ => null,
+      },
+    );
+    _userAgreementRequired = <String?>{
+      GsaPlugin.of(GsaRoute.navigatorContext!).documentUrls?.cookieNotice,
+      GsaPlugin.of(GsaRoute.navigatorContext!).documentUrls?.termsAndConditions,
+      GsaPlugin.of(GsaRoute.navigatorContext!).documentUrls?.privacyPolicy,
+    }.any(
+      (document) {
+        return document != null;
+      },
+    );
     _userAgreementAccepted = !_userAgreementRequired;
   }
 
@@ -122,9 +129,14 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                             Icons.lock,
                             color: Theme.of(context).primaryColor,
                           ),
-                          validator: GsaServiceInputValidation.instance.password,
+                          validator: (value) {
+                            return GsaServiceInputValidation.instance.password(
+                              context,
+                              input: value,
+                            );
+                          },
                         ),
-                        if (<GsaPluginClient>{}.contains(GsaConfig.plugin.client)) ...[
+                        if (<GsaPluginClient>{}.contains(GsaPlugin.of(context).client)) ...[
                           const SizedBox(height: 10),
                           GsaWidgetButton.text(
                             label: GsaRouteLoginI18N.openForgotPasswordScreenButtonTitle.value.display,
@@ -148,7 +160,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            if (GsaConfig.registrationEnabled) ...[
+                            if (GsaPlugin.of(context).features.registration) ...[
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.centerRight,
@@ -173,7 +185,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                             ],
                             Expanded(
                               child: Align(
-                                alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
+                                alignment: GsaPlugin.of(context).features.registration ? Alignment.centerLeft : Alignment.center,
                                 child: GsaWidgetButton.outlined(
                                   label: GsaRouteLoginI18N.loginButtonTitle.value.display,
                                   onTap: () async {
@@ -183,21 +195,21 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                       FocusScope.of(context).unfocus();
                                       const GsaWidgetOverlayContentBlocking().openDialog();
                                       try {
-                                        if (GsaConfig.plugin.loginWithUsernameAndPassword == null) {
+                                        if (GsaPlugin.of(context).api?.loginWithUsernameAndPassword == null) {
                                           throw Exception(
-                                            'GsaConfig.plugin.loginWithUsernameAndPassword '
-                                            'not applied for plugin ${GsaConfig.plugin.id}.',
+                                            'GsaPlugin.of(context).loginWithUsernameAndPassword '
+                                            'not applied for plugin ${GsaPlugin.of(context).id}.',
                                           );
                                         }
-                                        await GsaConfig.plugin.loginWithUsernameAndPassword!(
+                                        await GsaPlugin.of(context).api!.loginWithUsernameAndPassword!(
                                           username: _emailTextController.text,
                                           password: _passwordTextController.text,
                                         );
-                                        Navigator.pop(GsaRoute.navigatorKey.currentContext ?? context);
-                                        GsaConfig.plugin.initialRoute().push(replacement: true);
+                                        Navigator.pop(GsaRoute.navigatorContext ?? context);
+                                        GsaPlugin.of(context).routes.initialRoute().push(replacement: true);
                                       } catch (e) {
                                         GsaServiceLogging.instance.logError('Error logging in:\n$e');
-                                        Navigator.pop(GsaRoute.navigatorKey.currentContext ?? context);
+                                        Navigator.pop(GsaRoute.navigatorContext ?? context);
                                         GsaWidgetOverlayAlert(
                                           '$e',
                                         ).openDialog();
@@ -209,7 +221,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                             ),
                           ],
                         ),
-                        if (GsaConfig.guestLoginEnabled) ...[
+                        if (GsaPlugin.of(context).features.guestLogin) ...[
                           const SizedBox(height: 8),
                           GsaWidgetButton.text(
                             label: GsaRouteLoginI18N.continueAsGuestButtonTitle.value.display,

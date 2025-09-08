@@ -20,12 +20,12 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
   void initState() {
     super.initState();
     _getBannersFuture = () async {
-      if (GsaConfig.plugin.getPromoBanners == null) {
+      if (GsaPlugin.of(context).api?.getPromoBanners == null) {
         throw UnimplementedError(
-          'Promo carousel content endpoint not implemented for ${GsaConfig.plugin.id}.',
+          'Promo carousel content endpoint not implemented for ${GsaPlugin.of(context).id}.',
         );
       } else {
-        final value = await GsaConfig.plugin.getPromoBanners!();
+        final value = await GsaPlugin.of(context).api!.getPromoBanners!();
         _carouselItems.addAll(value);
         return value;
       }
@@ -50,7 +50,7 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    if (GsaConfig.plugin.getPromoBanners == null) return const SizedBox();
+    if (GsaPlugin.of(context).api?.getPromoBanners == null) return const SizedBox();
     return AnimatedContainer(
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeIn,

@@ -34,13 +34,25 @@ class _WidgetLogs<T> extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           if (hint != null) ...[
-            Card(
-              child: Padding(
-                padding: Theme.of(context).paddings.card(),
-                child: GsaWidgetText(
-                  hint!,
-                  style: TextStyle(
-                    fontSize: 12,
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Card(
+                child: Padding(
+                  padding: Theme.of(context).paddings.card(),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.info,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      const SizedBox(width: 10),
+                      GsaWidgetText(
+                        hint!,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -49,19 +61,22 @@ class _WidgetLogs<T> extends StatelessWidget {
           ],
           const Divider(),
           if (collection?.isNotEmpty == true)
-            ListView.builder(
-              padding: Theme.of(context).paddings.listView(),
-              itemCount: collection!.length,
-              itemBuilder: (context, index) {
-                final item = collection!.elementAt(index);
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (index != 0) const SizedBox(height: 10),
-                    itemBuilder(item),
-                  ],
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                padding: Theme.of(context).paddings.listView(),
+                itemCount: collection!.length,
+                itemBuilder: (context, index) {
+                  final item = collection!.elementAt(index);
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (index != 0) const SizedBox(height: 10),
+                      itemBuilder(item),
+                    ],
+                  );
+                },
+              ),
             )
           else ...[
             const SizedBox(height: 16),

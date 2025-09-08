@@ -1,3 +1,5 @@
+part of '../plugin.dart';
+
 /// Collection of cookie information related to a client integration.
 ///
 class GsaPluginCookies {

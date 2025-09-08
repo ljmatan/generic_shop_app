@@ -10,7 +10,12 @@ class GsaRouteAuth extends GsacRoute {
 
   @override
   bool get enabled {
-    return GsaConfig.authenticationEnabled;
+    if (GsaRoute.navigatorContext == null) {
+      throw Exception(
+        'Navigator context not available.',
+      );
+    }
+    return GsaPlugin.of(GsaRoute.navigatorContext!).features.authentication;
   }
 
   @override
@@ -56,7 +61,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                                 'we\'ve got you covered.\n\n',
                               ),
                               for (final info in <(String, String)>{
-                                if (GsaConfig.registrationEnabled)
+                                if (GsaPlugin.of(context).features.registration)
                                   (
                                     'Sign up',
                                     'Enjoy special perks and a tailored experience.',
@@ -65,7 +70,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                                   'Log in',
                                   'Pick up right where you left off.',
                                 ),
-                                if (GsaConfig.guestLoginEnabled)
+                                if (GsaPlugin.of(context).features.guestLogin)
                                   (
                                     'Continue as a guest',
                                     'No commitment, just pure access.',
@@ -96,7 +101,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (GsaConfig.registrationEnabled) ...[
+                        if (GsaPlugin.of(context).features.registration) ...[
                           Expanded(
                             child: Align(
                               alignment: Alignment.centerRight,
@@ -121,7 +126,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                         ],
                         Expanded(
                           child: Align(
-                            alignment: GsaConfig.registrationEnabled ? Alignment.centerLeft : Alignment.center,
+                            alignment: GsaPlugin.of(context).features.registration ? Alignment.centerLeft : Alignment.center,
                             child: GsaWidgetButton.outlined(
                               label: 'Login',
                               onTap: () {
@@ -133,7 +138,7 @@ class _GsaRouteAuthState extends GsaRouteState<GsaRouteAuth> {
                         ),
                       ],
                     ),
-                    if (GsaConfig.guestLoginEnabled) ...[
+                    if (GsaPlugin.of(context).features.guestLogin) ...[
                       const SizedBox(height: 8),
                       GsaWidgetButton.text(
                         label: 'Continue as Guest',

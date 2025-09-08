@@ -32,7 +32,7 @@ class GsaWidgetOverlay extends StatefulWidget {
   /// This property is used to specify the color of the modal barrier.
   ///
   Color get barrierColor {
-    if (GsaTheme.instance.data.brightness == Brightness.light) {
+    if (Theme.of(GsaRoute.navigatorContext!).brightness == Brightness.light) {
       return Colors.white70;
     } else {
       return Colors.black26;
@@ -46,7 +46,7 @@ class GsaWidgetOverlay extends StatefulWidget {
   /// Displays the overlay widget contents by utilising any given [BuildContext] object.
   ///
   Future<dynamic> openDialog([BuildContext? context]) async {
-    context ??= GsaRoute.navigatorKey.currentContext;
+    context ??= GsaRoute.navigatorContext;
     if (context != null) {
       return await showDialog(
         context: context,
@@ -92,7 +92,7 @@ class GsaWidgetOverlay extends StatefulWidget {
   /// Shows a modal Material Design bottom sheet.
   ///
   Future<dynamic> openBottomSheet([BuildContext? context]) async {
-    context ??= GsaRoute.navigatorKey.currentContext;
+    context ??= GsaRoute.navigatorContext;
     if (context != null) {
       return await showModalBottomSheet(
         context: context,

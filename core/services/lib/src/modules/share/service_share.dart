@@ -67,13 +67,13 @@ class GsaServiceShare extends GsaService {
     await share_plus.SharePlus.instance.share(
       share_plus.ShareParams(
         text: text,
-        sharePositionOrigin: GsaRoute.navigatorKey.currentContext == null
+        sharePositionOrigin: GsaRoute.navigatorContext == null
             ? null
             : Rect.fromLTWH(
                 0,
                 0,
-                MediaQuery.of(GsaRoute.navigatorKey.currentContext!).size.width,
-                MediaQuery.of(GsaRoute.navigatorKey.currentContext!).size.height / 2,
+                MediaQuery.of(GsaRoute.navigatorContext!).size.width,
+                MediaQuery.of(GsaRoute.navigatorContext!).size.height / 2,
               ),
         files: compressedValue != null
             ? [

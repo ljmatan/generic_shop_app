@@ -60,7 +60,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
           child: Stack(
             children: [
               widget.child,
-              if (GsaConfig.plugin.overlayBuilder != null) GsaConfig.plugin.overlayBuilder!,
+              if (GsaPlugin.of(context).overlayBuilder != null) GsaPlugin.of(context).overlayBuilder!,
             ],
           ),
           onPointerDown: (event) {

@@ -2,7 +2,7 @@ part of 'theme.dart';
 
 /// Extension methods and properties for the [ThemeData] object.
 ///
-extension GsaThemeExt on ThemeData {
+extension GsaThemeDataExt on ThemeData {
   /// Method providing screen specifications.
   ///
   /// [size] -> The current dimensions of the rectangle as last reported by the platform
@@ -29,7 +29,7 @@ extension GsaThemeExt on ThemeData {
   ///
   Size? get screenSize {
     try {
-      final navigatorKey = (GsaRoute.navigatorKeyOverride ?? GsaRoute.navigatorKey);
+      final navigatorKey = GsaRoute.navigatorKey;
       if (navigatorKey.currentContext == null) {
         throw Exception('No context available');
       }
@@ -46,7 +46,7 @@ extension GsaThemeExt on ThemeData {
   /// Scale at which the regular elements are being sized.
   ///
   double get elementScale {
-    if (GsaRoute.navigatorKey.currentContext == null) return 1;
+    if (GsaRoute.navigatorContext == null) return 1;
     return MediaQuery.of(GsaRoute.navigatorKey.currentContext!).textScaler.scale(1);
   }
 
