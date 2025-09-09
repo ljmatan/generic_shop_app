@@ -130,11 +130,12 @@ class GsaWidgetTextField extends StatefulWidget {
               : const Color(0xffb3b3b3);
     },
     border: (
+      BuildContext context,
       FocusNode? focusNode,
       TextEditingController? textEditingController,
     ) {
       return OutlineInputBorder(
-        borderRadius: GsaTheme.instance.borderRadius,
+        borderRadius: GsaPlugin.of(context).theme.borderRadius,
         borderSide: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
             ? const BorderSide(
                 color: Color(0xffE2E5EB),
@@ -143,21 +144,23 @@ class GsaWidgetTextField extends StatefulWidget {
       );
     },
     focusedBorder: (
+      BuildContext context,
       Color primaryColor,
     ) {
       return OutlineInputBorder(
-        borderRadius: GsaTheme.instance.borderRadius,
+        borderRadius: GsaPlugin.of(context).theme.borderRadius,
         borderSide: BorderSide(
           color: primaryColor,
         ),
       );
     },
     enabledBorder: (
+      BuildContext context,
       FocusNode? focusNode,
       TextEditingController? textEditingController,
     ) {
       return OutlineInputBorder(
-        borderRadius: GsaTheme.instance.borderRadius,
+        borderRadius: GsaPlugin.of(context).theme.borderRadius,
         borderSide: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
             ? const BorderSide(
                 color: Color(0xffE2E5EB),
@@ -166,10 +169,11 @@ class GsaWidgetTextField extends StatefulWidget {
       );
     },
     disabledBorder: (
+      BuildContext context,
       TextEditingController? textEditingController,
     ) {
       return OutlineInputBorder(
-        borderRadius: GsaTheme.instance.borderRadius,
+        borderRadius: GsaPlugin.of(context).theme.borderRadius,
         borderSide: textEditingController?.text.isNotEmpty != true
             ? BorderSide.none
             : const BorderSide(
@@ -177,29 +181,34 @@ class GsaWidgetTextField extends StatefulWidget {
               ),
       );
     },
-    errorBorder: () {
+    errorBorder: (
+      BuildContext context,
+    ) {
       return OutlineInputBorder(
-        borderRadius: GsaTheme.instance.borderRadius,
+        borderRadius: GsaPlugin.of(context).theme.borderRadius,
         borderSide: const BorderSide(
           color: Color(0xffDE1E36),
         ),
       );
     },
-    focusedErrorBorder: () {
+    focusedErrorBorder: (
+      BuildContext context,
+    ) {
       return OutlineInputBorder(
-        borderRadius: GsaTheme.instance.borderRadius,
+        borderRadius: GsaPlugin.of(context).theme.borderRadius,
         borderSide: const BorderSide(
           color: Color(0xffDE1E36),
         ),
       );
     },
     labelStyle: (
+      BuildContext context,
       FocusNode? focusNode,
       TextEditingController? textEditingController,
     ) {
       return TextStyle(
         fontWeight: focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true ? FontWeight.w600 : FontWeight.w400,
-        color: GsaTheme.instance.data.brightness == Brightness.light
+        color: GsaPlugin.of(context).theme.data.brightness == Brightness.light
             ? focusNode?.hasFocus == true || textEditingController?.text.isNotEmpty == true
                 ? const Color(0xff283033)
                 : const Color(0xff63747E)
@@ -208,7 +217,7 @@ class GsaWidgetTextField extends StatefulWidget {
     },
     textStyle: (BuildContext context) {
       return TextStyle(
-        color: GsaTheme.instance.data.brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
+        color: GsaPlugin.of(context).theme.data.brightness == Brightness.light ? const Color(0xff63747E) : Colors.white,
         fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
       );
     },
@@ -270,7 +279,8 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusNodeUpdate);
     _obscureText = widget.obscureText;
-    _horizontalPadding = ((widget.contentPadding ?? GsaTheme.instance.data.inputDecorationTheme.contentPadding)?.horizontal ?? 0) / 2;
+    _horizontalPadding =
+        ((widget.contentPadding ?? GsaPlugin.of(context).theme.data.inputDecorationTheme.contentPadding)?.horizontal ?? 0) / 2;
   }
 
   String? _errorText;
@@ -306,21 +316,29 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
                 _textController,
               ),
               border: GsaWidgetTextField.themeProperties.border(
+                context,
                 _focusNode,
                 _textController,
               ),
               focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
+                context,
                 Theme.of(context).primaryColor,
               ),
               enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
+                context,
                 _focusNode,
                 _textController,
               ),
               disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
+                context,
                 _textController,
               ),
-              errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
-              focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
+              errorBorder: GsaWidgetTextField.themeProperties.errorBorder(
+                context,
+              ),
+              focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(
+                context,
+              ),
               prefix: widget.prefix,
               prefixIconConstraints: widget.prefixIcon == null
                   ? BoxConstraints(
@@ -379,6 +397,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
               hintText: widget.hintText,
               labelText: widget.labelText,
               labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
+                context,
                 _focusNode,
                 _textController,
               ),

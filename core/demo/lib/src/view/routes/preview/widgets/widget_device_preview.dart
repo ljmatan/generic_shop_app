@@ -9,50 +9,20 @@ class _WidgetDevicePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery(
-      data: MediaQueryData(
-        size: state._device.screenSize,
-        devicePixelRatio: state._device.pixelRatio,
-        textScaler: GsaTheme.instance.textScaler(
-          context,
-          state._device.screenSize.width,
-        ),
-      ),
-      child: device_frame.DeviceFrame(
-        device: state._device,
-        screen: (switch (state._pluginClient) {
-          GsaPluginClient.demo => GsdPlugin.new,
-          GsaPluginClient.fitnessTracker => GftPlugin.new,
-          GsaPluginClient.froddoB2b => GfbPlugin.new,
-          GsaPluginClient.froddoB2c => GfcPlugin.new,
-        })(
-          child: Theme(
-            data: state._theme.data,
-            child: ScrollConfiguration(
-              behavior: const _TouchScrollBehavior(),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Navigator(
-                  key: GsaRoute.navigatorKey,
-                  observers: [
-                    state._navigatorObserver,
-                  ],
-                  initialRoute: state._routes[state._routeIndex].routeId,
-                  onDidRemovePage: (page) {
-                    state._onNavigatorChange();
-                  },
-                  onGenerateRoute: (settings) {
-                    return MaterialPageRoute(
-                      builder: (_) => state._routes
-                          .firstWhere(
-                            (route) => route.routeId == settings.name,
-                          )
-                          .widget(),
-                    );
-                  },
-                ),
-              ),
-            ),
+    return device_frame.DeviceFrame(
+      device: state._device,
+      screen: (switch (state._pluginClient) {
+        GsaPluginClient.demo => GsdPlugin.new,
+        GsaPluginClient.fitnessTracker => GftPlugin.new,
+        GsaPluginClient.froddoB2b => GfbPlugin.new,
+        GsaPluginClient.froddoB2c => GfcPlugin.new,
+      })(
+        theme: state._theme,
+        child: ScrollConfiguration(
+          behavior: const _TouchScrollBehavior(),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Gsa(),
           ),
         ),
       ),

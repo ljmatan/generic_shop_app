@@ -2,6 +2,8 @@ part of '../plugin.dart';
 
 /// A collection of API methods specific to the plugin implementation.
 ///
+/// Common or shared API implementations are defined with this class.
+///
 class GsaPluginApi {
   /// Core API functionalities for plugin integration.
   ///

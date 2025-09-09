@@ -17,39 +17,14 @@ part 'src/theme.dart';
 /// These definitions are required to be implemented in order to comply with the
 /// application architecture, which may be based off of various client integrations.
 ///
-abstract class GsaPlugin extends InheritedWidget {
+abstract class GsaPlugin extends StatelessWidget {
   /// Constructs a new instance of the plugin.
   ///
   const GsaPlugin({
     super.key,
-    required super.child,
-  });
-
-  @override
-  updateShouldNotify(covariant GsaPlugin oldWidget) {
-    return false;
-  }
-
-  /// Returns the nearest ancestor widget of [GsaPlugin] type.
-  ///
-  static GsaPlugin of(BuildContext context) {
-    GsaPlugin? plugin;
-    context.visitAncestorElements(
-      (element) {
-        if (element.widget is GsaPlugin) {
-          plugin = element.widget as GsaPlugin;
-          return false;
-        }
-        return true;
-      },
-    );
-    if (plugin == null) {
-      throw Exception(
-        'Plugin not found in element tree.',
-      );
-    }
-    return plugin!;
-  }
+    required this.child,
+    GsaPluginTheme? theme,
+  }) : _themeOverride = theme;
 
   /// The client specified for this plugin integration.
   ///
@@ -103,12 +78,28 @@ abstract class GsaPlugin extends InheritedWidget {
     return null;
   }
 
+  /// Theme value which overrides the [themeData] field with the [theme] getter.
+  ///
+  final GsaPluginTheme? _themeOverride;
+
   /// Theme properties specified for this plugin integration.
   ///
   /// See [GsaPluginTheme] for more information.
   ///
+  @protected
+  GsaPluginTheme get themeData {
+    return GsaPluginTheme();
+  }
+
+  /// Theme properties specified for this plugin integration.
+  ///
+  /// The value provided by this method will be either an override provided with the [_themeOverride] property,
+  /// or the default theme specification set as the [themeData] object value.
+  ///
+  /// Subclasses are intended to override the [themeData] method to provide custom specifications.
+  ///
   GsaPluginTheme get theme {
-    return const GsaPluginTheme();
+    return _themeOverride ?? themeData;
   }
 
   /// Collection of translations implemented for this plugin integration.
@@ -207,4 +198,34 @@ abstract class GsaPlugin extends InheritedWidget {
   /// Method implemented for managing and initialisation of the application resources.
   ///
   Future<void> init() async {}
+
+  /// Describes the configuration for an [Element].
+  ///
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
+
+  /// Returns the nearest ancestor widget of [GsaPlugin] type.
+  ///
+  static GsaPlugin of(BuildContext context) {
+    GsaPlugin? plugin;
+    context.visitAncestorElements(
+      (element) {
+        if (element.widget is GsaPlugin) {
+          plugin = element.widget as GsaPlugin;
+          return false;
+        }
+        return true;
+      },
+    );
+    if (plugin == null) {
+      throw Exception(
+        'Plugin not found in element tree.',
+      );
+    }
+    return plugin!;
+  }
 }

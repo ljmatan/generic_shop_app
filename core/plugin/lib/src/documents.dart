@@ -2,6 +2,8 @@ part of '../plugin.dart';
 
 /// Curated collection of plugin document resources.
 ///
+/// Document resources are displayed in relevant sections of the app.
+///
 class GsaPluginDocuments {
   /// Document collection constructor, accepting network URLs or asset file paths:
   ///

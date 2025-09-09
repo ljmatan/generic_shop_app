@@ -2,6 +2,8 @@ part of '../plugin.dart';
 
 /// A collection of feature flags specific to the plugin implementation.
 ///
+/// Features can be enabled or disabled by specifying the properties of this class.
+///
 class GsaPluginFeatures {
   /// Core feature flags for plugin integration.
   ///

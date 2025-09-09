@@ -2,6 +2,8 @@ part of '../plugin.dart';
 
 /// A collection of cache entries specific to the plugin implementation.
 ///
+/// Cache entries are registered with the [GsaServiceCache] for further processing.
+///
 class GsaPluginCacheEntries {
   /// Cache entry values implemented for plugin integration.
   ///

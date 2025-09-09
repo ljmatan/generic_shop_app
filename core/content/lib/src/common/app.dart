@@ -11,18 +11,19 @@ class Gsa extends StatefulWidget {
   ///
   const Gsa({
     super.key,
-    this.globalNavigatorKey = true,
+    this.navigatorKey,
   });
 
-  /// Whether this app root widget is specified with a
-  /// global navigator key instance [GsaRoute.navigatorKey].
+  /// Key handling the state of a [Navigator] widget.
   ///
-  final bool globalNavigatorKey;
+  final GlobalKey<NavigatorState>? navigatorKey;
 
   @override
   State<Gsa> createState() => GsaState();
 }
 
+/// The logic and internal state of the [Gsa] object.
+///
 class GsaState extends State<Gsa> {
   /// Property holding the value of the runtime resource allocation method.
   ///
@@ -60,20 +61,16 @@ class GsaState extends State<Gsa> {
         }
 
         return MaterialApp(
-          navigatorKey: widget.globalNavigatorKey ? GsaRoute.navigatorKey : null,
+          navigatorKey: widget.navigatorKey ?? GsaRoute.navigatorKey,
           debugShowCheckedModeBanner: false,
-          builder: (context, child) => GsaViewBuilder(child!),
-          navigatorObservers: [GsaRoute.navigatorObserver],
+          builder: (context, child) {
+            return GsaViewBuilder(child!);
+          },
+          navigatorObservers: [
+            if (widget.navigatorKey == null) GsaRoute.navigatorObserver,
+          ],
           home: const GsaRouteSplash(),
-          theme: (() {
-            try {
-              return GsaTheme.instance.data;
-            } catch (e) {
-              return GsaTheme(
-                plugin: GsaPlugin.of(context),
-              ).data;
-            }
-          })(),
+          theme: GsaPlugin.of(context).theme.data,
           onGenerateRoute: (settings) {
             return MaterialPageRoute(
               builder: (_) {

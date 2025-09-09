@@ -13,6 +13,7 @@ class GftPlugin extends GsaPlugin {
   const GftPlugin({
     super.key,
     required super.child,
+    super.theme,
   });
 
   @override
@@ -29,7 +30,9 @@ class GftPlugin extends GsaPlugin {
   GsaPluginRoutes get routes {
     return GsaPluginRoutes(
       values: GftRoutes.values,
-      initialRoute: () => const GftRouteSplash(),
+      initialRoute: (context) {
+        return const GftRouteSplash();
+      },
     );
   }
 
@@ -43,7 +46,7 @@ class GftPlugin extends GsaPlugin {
   }
 
   @override
-  GsaPluginTheme get theme {
+  GsaPluginTheme get themeData {
     return GsaPluginTheme(
       fontFamily: 'packages/$id/Open Sans',
       primaryColor: const Color(0xff10467c),

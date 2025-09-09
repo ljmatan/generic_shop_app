@@ -38,7 +38,7 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute<void>(
             builder: (BuildContext context) {
-              return GsaPlugin.of(context).routes.initialRoute();
+              return GsaPlugin.of(context).routes.initialRoute(context);
             },
           ),
           (route) => false,

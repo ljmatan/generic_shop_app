@@ -2,7 +2,7 @@ part of '../plugin.dart';
 
 /// A collection of application client integration identifiers.
 ///
-/// Used primarily for identifying of the current client during the app runtime.
+/// Used identifying of the current client during the app runtime.
 ///
 enum GsaPluginClient {
   /// Demo client integration, specified with mock data for app showcase.

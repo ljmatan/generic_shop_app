@@ -50,6 +50,6 @@ class GsaDataUser extends GsaData {
         '$e',
       ).openDialog();
     }
-    GsaPlugin.of(context).routes.initialRoute().push(replacement: true);
+    GsaPlugin.of(context).routes.initialRoute(context).push(replacement: true);
   }
 }

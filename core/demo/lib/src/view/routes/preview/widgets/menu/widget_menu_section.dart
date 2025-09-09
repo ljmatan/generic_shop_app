@@ -1,4 +1,4 @@
-part of '../route_preview.dart';
+part of '../../route_preview.dart';
 
 class _WidgetMenuSection extends StatefulWidget {
   const _WidgetMenuSection({

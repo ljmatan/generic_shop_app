@@ -206,7 +206,12 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                                           password: _passwordTextController.text,
                                         );
                                         Navigator.pop(GsaRoute.navigatorContext ?? context);
-                                        GsaPlugin.of(context).routes.initialRoute().push(replacement: true);
+                                        GsaPlugin.of(context)
+                                            .routes
+                                            .initialRoute(
+                                              GsaRoute.navigatorContext ?? context,
+                                            )
+                                            .push(replacement: true);
                                       } catch (e) {
                                         GsaServiceLogging.instance.logError('Error logging in:\n$e');
                                         Navigator.pop(GsaRoute.navigatorContext ?? context);

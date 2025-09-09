@@ -15,6 +15,7 @@ class GsdPlugin extends GsaPlugin {
   const GsdPlugin({
     super.key,
     required super.child,
+    super.theme,
   });
 
   @override
@@ -31,7 +32,22 @@ class GsdPlugin extends GsaPlugin {
   GsaPluginRoutes get routes {
     return GsaPluginRoutes(
       values: GsdRoutes.values,
-      initialRoute: () => GsdRouteDashboard(),
+      initialRoute: (context) {
+        final appState = context.findAncestorStateOfType<GsaState>();
+        if (appState == null) {
+          throw Exception(
+            'App state GsaState not found.',
+          );
+        }
+        final navigatorKey = appState.widget.navigatorKey;
+        if (navigatorKey != null) {
+          return GsdRouteDashboard(
+            navigatorKey: navigatorKey,
+          );
+        } else {
+          return GsaRoutes.values.first.widget();
+        }
+      },
     );
   }
 

@@ -172,22 +172,31 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
               _textController,
             ),
             border: GsaWidgetTextField.themeProperties.border(
+              context,
               _focusNode,
               _textController,
             ),
             focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
+              context,
               Theme.of(context).primaryColor,
             ),
             enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
+              context,
               _focusNode,
               _textController,
             ),
             disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
+              context,
               _textController,
             ),
-            errorBorder: GsaWidgetTextField.themeProperties.errorBorder(),
-            focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(),
+            errorBorder: GsaWidgetTextField.themeProperties.errorBorder(
+              context,
+            ),
+            focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(
+              context,
+            ),
             labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
+              context,
               _focusNode,
               _textController,
             ),

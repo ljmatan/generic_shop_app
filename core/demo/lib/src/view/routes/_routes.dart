@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_demo/demo.dart';
 
 export 'package:generic_shop_app_architecture/arch.dart';
@@ -17,11 +18,19 @@ enum GsdRoutes implements GsaRouteType {
   GsaRoute Function([dynamic args]) get widget {
     switch (this) {
       case GsdRoutes.components:
-        return ([args]) => const GsdRouteComponents();
+        return ([args]) {
+          return const GsdRouteComponents();
+        };
       case GsdRoutes.dashboard:
-        return ([args]) => const GsdRouteComponents();
+        return ([args]) {
+          return const GsdRouteComponents();
+        };
       case GsdRoutes.preview:
-        return ([args]) => const GsdRoutePreview();
+        return ([args]) {
+          return GsdRoutePreview(
+            navigatorKey: GlobalKey<NavigatorState>(),
+          );
+        };
     }
   }
 

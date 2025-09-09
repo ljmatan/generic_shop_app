@@ -108,7 +108,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                           id: themeOption.label,
                           label: themeOption.label,
                           onTap: () async {
-                            GsaTheme.instance.brightness = themeOption.value;
+                            GsaPlugin.of(context).theme.brightness = themeOption.value;
                             context.findAncestorStateOfType<GsaState>()?.setState(() {});
                             try {
                               await GsaServiceCacheEntry.themeBrightness.setValue(themeOption.value.name);

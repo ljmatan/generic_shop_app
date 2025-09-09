@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/content.dart';
@@ -27,15 +28,33 @@ class GsaViewBuilder extends StatefulWidget {
 }
 
 class _GsaViewBuilderState extends State<GsaViewBuilder> {
+  late Brightness _specifiedBrightness;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Handle platform theme brightness changes.
+    try {
+      _specifiedBrightness;
+    } catch (e) {
+      _specifiedBrightness = GsaPlugin.of(context).theme.brightness;
+    }
     if (GsaServiceCacheEntry.themeBrightness.value == null) {
-      final systemBrightness = MediaQuery.of(context).platformBrightness;
-      if (systemBrightness != GsaTheme.instance.brightness) {
-        GsaTheme.instance.brightness = systemBrightness;
-        context.findAncestorStateOfType<GsaState>()?.setState(() {});
+      final systemBrightness = PlatformDispatcher.instance.platformBrightness;
+      if (systemBrightness != _specifiedBrightness) {
+        _specifiedBrightness = systemBrightness;
+        GsaPlugin.of(context).theme.brightness = systemBrightness;
+        final ancestorState = context.findAncestorStateOfType<GsaState>();
+        if (ancestorState == null) {
+          throw Exception(
+            'Ancestor state GsaState not found.',
+          );
+        }
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) {
+            ancestorState.setState(() {});
+          },
+        );
       }
     }
   }
@@ -51,10 +70,10 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: GsaTheme.instance.systemUiOverlayStyle,
+      value: GsaPlugin.of(context).theme.systemUiOverlayStyle,
       child: MediaQuery(
         data: MediaQuery.of(context).copyWith(
-          textScaler: GsaTheme.instance.textScaler(context),
+          textScaler: GsaPlugin.of(context).theme.textScaler(context),
         ),
         child: Listener(
           child: Stack(

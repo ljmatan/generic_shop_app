@@ -20,8 +20,9 @@ class GsaTheme {
   /// the constructor fetches and applies any default or cached theme choices.
   ///
   GsaTheme({
-    required this.plugin,
     this.platform,
+    this.logoImagePath,
+    this.animatedAppBar = true,
     Brightness? brightness,
     Color? primaryColor,
     Color? secondaryColor,
@@ -39,24 +40,19 @@ class GsaTheme {
     this.borderRadius = borderRadius ?? _borderRadius;
     this.inputDecorationTheme = inputDecorationTheme ?? _inputDecorationTheme;
     this.roundedRectangleBorder = roundedRectangleBorder ?? _roundedRectangleBorder;
-    try {
-      instance;
-    } catch (e) {
-      instance = this;
-    }
   }
-
-  /// Globally-accessible class instance.
-  ///
-  static late GsaTheme instance;
-
-  /// The application client implementation.
-  ///
-  GsaPlugin plugin;
 
   /// The platform that user interaction should adapt to target.
   ///
   TargetPlatform? platform;
+
+  /// Asset or network path of the plugin client logo image.
+  ///
+  String? logoImagePath;
+
+  /// Whether the [GsaWidgetAppBar] element is to be animated for the app display.
+  ///
+  bool animatedAppBar;
 
   /// The setting indicating the current brightness mode of the host platform.
   ///
@@ -121,6 +117,9 @@ class GsaTheme {
               bodySmall: TextStyle(
                 color: Colors.grey.shade600,
               ),
+              bodyMedium: TextStyle(
+                color: Colors.grey.shade900,
+              ),
               titleLarge: TextStyle(
                 color: primaryColor,
               ),
@@ -133,6 +132,9 @@ class GsaTheme {
             )
           : TextTheme(
               bodySmall: const TextStyle(
+                color: Colors.grey,
+              ),
+              bodyMedium: const TextStyle(
                 color: Colors.grey,
               ),
               titleLarge: TextStyle(

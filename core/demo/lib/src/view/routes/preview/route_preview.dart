@@ -11,13 +11,22 @@ import 'package:generic_shop_app_froddo_b2c/froddo_b2c.dart';
 part 'misc/misc_navigator_observer.dart';
 part 'misc/misc_scroll_behaviour.dart';
 part 'widgets/widget_device_preview.dart';
-part 'widgets/widget_menu_section.dart';
-part 'widgets/widget_menu.dart';
+part 'widgets/menu/widget_menu.dart';
+part 'widgets/menu/widget_menu_section.dart';
+part 'widgets/menu/widget_menu_section_device.dart';
+part 'widgets/menu/widget_menu_section_client.dart';
+part 'widgets/menu/widget_menu_section_features.dart';
+part 'widgets/menu/widget_menu_section_theme.dart';
 
 class GsdRoutePreview extends GsdRoute {
   /// Default, unnamed widget constructor.
   ///
-  const GsdRoutePreview({super.key});
+  const GsdRoutePreview({
+    super.key,
+    required this.navigatorKey,
+  });
+
+  final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<GsdRoutePreview> createState() => _GsdRoutePreviewState();
@@ -66,8 +75,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
       ];
       GsaRoute.navigatorKey = GlobalKey<NavigatorState>();
       _routeDropdownKey = UniqueKey();
-      _theme = GsaTheme(
-        plugin: GsaPlugin.of(context),
+      _theme = GsaPluginTheme(
         platform: _platform,
       );
     });
@@ -91,30 +99,21 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     );
   }
 
-  late _NavigatorObserver _navigatorObserver;
-
   final _appOptions = GsaPluginFeatures();
 
-  late GsaTheme _theme;
+  late GsaPluginTheme _theme;
 
   @override
   void initState() {
     super.initState();
-    if (GsaRoute.navigatorContext == null) {
-      throw Exception('GsaRoute.navigatorContext is null.');
-    }
-    final plugin = GsaPlugin.of(GsaRoute.navigatorContext!);
+    final plugin = GsaPlugin.of(widget.navigatorKey.currentContext!);
     _pluginClient = plugin.client;
     _routes = [
       ...GsaRoutes.values,
       ...plugin.routes.values,
     ];
     GsaRoute.navigatorKey = GlobalKey<NavigatorState>();
-    _navigatorObserver = _NavigatorObserver(
-      _onNavigatorChange,
-    );
-    _theme = GsaTheme(
-      plugin: plugin,
+    _theme = GsaPluginTheme(
       platform: _platform,
     );
   }
