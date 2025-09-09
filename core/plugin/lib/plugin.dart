@@ -181,7 +181,7 @@ abstract class GsaPlugin {
   ///
   Future<void> init() async {}
 
-  /// Returns the nearest ancestor widget of [GsaPlugin] type.
+  /// Returns the nearest ancestor widget of [GsaPluginWrapper] type.
   ///
   static GsaPlugin of(BuildContext context) {
     final pluginWrapper = context.findAncestorWidgetOfExactType<GsaPluginWrapper>();

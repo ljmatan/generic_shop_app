@@ -9,6 +9,7 @@ class GsaWidgetTextField extends StatefulWidget {
   const GsaWidgetTextField({
     super.key,
     this.controller,
+    this.initialTextValue,
     this.focusNode,
     this.enabled = true,
     this.autofocus = false,
@@ -37,6 +38,10 @@ class GsaWidgetTextField extends StatefulWidget {
   /// The default controller for this text field.
   ///
   final TextEditingController? controller;
+
+  /// Text value to be specified with the [TextFormField.controller] property.
+  ///
+  final String? initialTextValue;
 
   /// The default focus node for this text field.
   ///
@@ -274,7 +279,16 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
   @override
   void initState() {
     super.initState();
-    _textController = widget.controller ?? TextEditingController();
+    if (widget.controller == null) {
+      _textController = TextEditingController(
+        text: widget.initialTextValue,
+      );
+    } else {
+      _textController = widget.controller!;
+      if (widget.initialTextValue?.isNotEmpty == true) {
+        _textController.text = widget.initialTextValue!;
+      }
+    }
     _textController.addListener(_onTextControllerUpdate);
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusNodeUpdate);
@@ -295,7 +309,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: Theme.of(context).actionElementHeight * (widget.maxLines ?? widget.minLines ?? 1),
+          height: GsaTheme.of(context).actionElementHeight * (widget.maxLines ?? widget.minLines ?? 1),
           child: TextFormField(
             controller: _textController,
             focusNode: _focusNode,

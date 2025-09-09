@@ -1,35 +1,60 @@
 part of '../../route_preview.dart';
 
-class _WidgetMenuSectionTheme extends StatelessWidget {
+class _WidgetMenuSectionTheme extends StatefulWidget {
   const _WidgetMenuSectionTheme({
     required this.state,
   });
 
   final _GsdRoutePreviewState state;
 
+  @override
+  State<_WidgetMenuSectionTheme> createState() => _WidgetMenuSectionThemeState();
+}
+
+class _WidgetMenuSectionThemeState extends State<_WidgetMenuSectionTheme> {
   void _setFontFamily(String value) {
-    state._plugin.theme.fontFamily = value;
-    state.rebuild();
+    widget.state._plugin.theme.fontFamily = value;
+    widget.state.rebuild();
   }
 
+  String _toHexString(Color value) {
+    final hexString = value.toHexString();
+    return hexString.startsWith('FF') && hexString.length > 6 ? hexString.replaceFirst('FF', '') : hexString;
+  }
+
+  late TextEditingController _primaryColorHexController, _secondaryColorHexController;
+
   void _setPrimaryColor(Color value) {
-    state._plugin.theme.primaryColor = value;
-    state.rebuild();
+    widget.state._plugin.theme.primaryColor = value;
+    _primaryColorHexController.text = _toHexString(value);
+    widget.state.rebuild();
   }
 
   void _setSecondaryColor(Color value) {
-    state._plugin.theme.secondaryColor = value;
-    state.rebuild();
+    widget.state._plugin.theme.secondaryColor = value;
+    _secondaryColorHexController.text = _toHexString(value);
+    widget.state.rebuild();
   }
 
   void _setThemeBrightness(Brightness value) {
-    state._plugin.theme.brightness = value;
-    state.rebuild();
+    widget.state._plugin.theme.brightness = value;
+    widget.state.rebuild();
   }
 
   void _setAnimatedAppBar(bool value) {
-    state._plugin.theme.animatedAppBar = value;
-    state.rebuild();
+    widget.state._plugin.theme.animatedAppBar = value;
+    widget.state.rebuild();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _primaryColorHexController = TextEditingController(
+      text: _toHexString(widget.state._plugin.theme.primaryColor),
+    );
+    _secondaryColorHexController = TextEditingController(
+      text: _toHexString(widget.state._plugin.theme.secondaryColor),
+    );
   }
 
   @override
@@ -78,17 +103,24 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
             _setFontFamily(value);
           },
         ),
-        for (final colorInput in {
+        for (final colorInput in <({
+          TextEditingController controller,
+          String label,
+          Color color,
+          Null Function(Color) onColorChanged,
+        })>{
           (
+            controller: _primaryColorHexController,
             label: 'Primary Color',
-            color: state._plugin.theme.primaryColor,
+            color: widget.state._plugin.theme.primaryColor,
             onColorChanged: (Color value) {
               _setPrimaryColor(value);
             },
           ),
           (
+            controller: _secondaryColorHexController,
             label: 'Secondary Color',
-            color: state._plugin.theme.secondaryColor,
+            color: widget.state._plugin.theme.secondaryColor,
             onColorChanged: (Color value) {
               _setSecondaryColor(value);
             },
@@ -97,6 +129,7 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
           const SizedBox(height: 20),
           InkWell(
             child: GsaWidgetTextField(
+              controller: colorInput.controller,
               labelText: colorInput.label,
               enabled: false,
               prefix: GsaWidgetText(
@@ -147,7 +180,7 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
         })>{
           (
             label: 'Dark Theme',
-            value: state._plugin.theme.brightness == Brightness.dark,
+            value: widget.state._plugin.theme.brightness == Brightness.dark,
             onChanged: (newValue) {
               _setThemeBrightness(
                 newValue ? Brightness.dark : Brightness.light,
@@ -156,7 +189,7 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
           ),
           (
             label: 'Animated App Bar',
-            value: state._plugin.theme.animatedAppBar,
+            value: widget.state._plugin.theme.animatedAppBar,
             onChanged: (newValue) {
               _setAnimatedAppBar(newValue);
             },
@@ -173,5 +206,12 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
         ],
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _primaryColorHexController.dispose();
+    _secondaryColorHexController.dispose();
+    super.dispose();
   }
 }

@@ -38,7 +38,7 @@ class _GsaWidgetSaleItemCarouselState extends State<GsaWidgetSaleItemCarousel> {
   ///
   int get _itemsPerRow {
     final screenWidth = MediaQuery.of(context).size.width;
-    if (Theme.of(context).dimensions.smallScreen) return 0;
+    if (GsaTheme.of(context).dimensions.smallScreen) return 0;
     return screenWidth < 1300
         ? 3
         : screenWidth < 1600
@@ -61,7 +61,7 @@ class _GsaWidgetSaleItemCarouselState extends State<GsaWidgetSaleItemCarousel> {
           ),
         ],
         const SizedBox(height: 12),
-        if (Theme.of(context).dimensions.smallScreen)
+        if (GsaTheme.of(context).dimensions.smallScreen)
           SizedBox(
             height: GsaWidgetSaleItemPreview.previewHeight,
             child: ListView.builder(

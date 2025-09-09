@@ -76,23 +76,23 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                             padding: widget.showBackButton && (_canPop == true || widget.onBackPressed != null)
                                 ? EdgeInsets.symmetric(
                                     horizontal: 56,
-                                    vertical: 14 * Theme.of(context).elementScale,
+                                    vertical: 14 * GsaTheme.of(context).elementScale,
                                   )
                                 : EdgeInsets.symmetric(
                                     horizontal: 16,
-                                    vertical: 14 * Theme.of(context).elementScale,
+                                    vertical: 14 * GsaTheme.of(context).elementScale,
                                   ),
                             child: GsaWidgetText(
                               widget.label ?? '',
-                              textAlign: Theme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
+                              textAlign: GsaTheme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
                                     shadows:
-                                        GsaPlugin.of(context).theme.animatedAppBar != false ? Theme.of(context).outline.shadows() : null,
+                                        GsaPlugin.of(context).theme.animatedAppBar != false ? GsaTheme.of(context).outline.shadows() : null,
                                   ),
                             ),
                           ),
                         ),
-                        if (Theme.of(context).dimensions.largeScreen && GsaPlugin.of(context).theme.logoImagePath != null)
+                        if (GsaTheme.of(context).dimensions.largeScreen && GsaPlugin.of(context).theme.logoImagePath != null)
                           Positioned(
                             top: 0,
                             bottom: 0,

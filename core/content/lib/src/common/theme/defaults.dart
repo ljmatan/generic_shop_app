@@ -20,9 +20,9 @@ extension _GsaThemeDefaults on GsaTheme {
 
   Color get _primaryColor {
     if (brightness == Brightness.light) {
-      return const Color(0xffDAB1DA);
+      return const Color(0xffE1BEE7);
     } else {
-      return const Color(0xff63183f);
+      return const Color(0xff90A4AE);
     }
   }
 

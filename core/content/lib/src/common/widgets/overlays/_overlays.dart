@@ -59,7 +59,7 @@ class GsaWidgetOverlay extends StatefulWidget {
               ? this
               : Center(
                   child: Card(
-                    margin: Theme.of(context).dimensions.smallScreen
+                    margin: GsaTheme.of(context).dimensions.smallScreen
                         ? const EdgeInsets.symmetric(
                             horizontal: 20,
                             vertical: 26,
@@ -67,7 +67,7 @@ class GsaWidgetOverlay extends StatefulWidget {
                         : EdgeInsets.zero,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        maxWidth: Theme.of(context).maxOverlayInlineWidth,
+                        maxWidth: GsaTheme.of(context).maxOverlayInlineWidth,
                       ),
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.fromLTRB(18, 26, 18, 16),

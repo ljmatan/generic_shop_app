@@ -20,12 +20,12 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
         children: [
           DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.grey.shade900,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30,
-                vertical: 16,
+              padding: EdgeInsets.symmetric(
+                horizontal: GsaTheme.of(context).paddings.listViewHorizontal(),
+                vertical: 20,
               ),
               child: Row(
                 children: [
@@ -43,6 +43,7 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
                         GsaWidgetText(
                           'GSA',
                           style: const TextStyle(
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
@@ -58,7 +59,7 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
                     'Widgets',
                   }.indexed) ...[
                     if (tab.$1 != 0) const SizedBox(width: 12),
-                    GsaWidgetButton.text(
+                    GsaWidgetButton.filled(
                       label: tab.$2,
                       onTap: _selectedTabIndex == tab.$1
                           ? null
@@ -69,6 +70,14 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
                             },
                     ),
                   ],
+                  const Spacer(),
+                  GsaWidgetButton.outlined(
+                    label: 'Export Configuration',
+                    icon: Icons.exit_to_app,
+                    onTap: () {
+                      // TODO
+                    },
+                  ),
                 ],
               ),
             ),

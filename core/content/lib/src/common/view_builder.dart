@@ -73,52 +73,63 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: GsaPlugin.of(context).theme.systemUiOverlayStyle,
-      child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaler: GsaPlugin.of(context).theme.textScaler(context),
-        ),
-        child: Listener(
-          child: ScrollConfiguration(
-            behavior: const _TouchScrollBehavior(),
-            child: Stack(
-              children: [
-                widget.child,
-                if (GsaPlugin.of(context).overlayBuilder != null) GsaPlugin.of(context).overlayBuilder!,
-              ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return GsaThemeWrapper(
+            theme: GsaPlugin.of(context).theme,
+            screenSize: constraints.biggest,
+            viewScale: MediaQuery.of(context).textScaler.scale(1),
+            child: MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: GsaPlugin.of(context).theme.textScaler(context: context),
+              ),
+              child: Listener(
+                child: ScrollConfiguration(
+                  behavior: context.findAncestorStateOfType<GsaState>()?.widget.navigatorKey != null
+                      ? ScrollBehavior()
+                      : const _TouchScrollBehavior(),
+                  child: Stack(
+                    children: [
+                      widget.child,
+                      if (GsaPlugin.of(context).overlayBuilder != null) GsaPlugin.of(context).overlayBuilder!,
+                    ],
+                  ),
+                ),
+                onPointerDown: (event) {
+                  if (GsaConfig.qaBuild) {
+                    _recordedNumberOfTaps++;
+                    if (_recordedNumberOfTaps == 10) {
+                      _recordedNumberOfTaps = 0;
+                      const GsaRouteDebug().push();
+                    } else {
+                      Future.delayed(
+                        const Duration(seconds: 3),
+                        () {
+                          if (_recordedNumberOfTaps > 0) _recordedNumberOfTaps--;
+                        },
+                      );
+                    }
+                  } else {
+                    _activePointerIds.add(event.pointer);
+                    if (_activePointerIds.length == 3) {
+                      _recordedNumberOfTaps++;
+                      if (_recordedNumberOfTaps == 4) {
+                        _recordedNumberOfTaps = 0;
+                        const GsaRouteDebug().push();
+                      }
+                    }
+                  }
+                },
+                onPointerUp: (PointerUpEvent event) {
+                  _activePointerIds.remove(event.pointer);
+                },
+                onPointerCancel: (PointerCancelEvent event) {
+                  _activePointerIds.remove(event.pointer);
+                },
+              ),
             ),
-          ),
-          onPointerDown: (event) {
-            if (GsaConfig.qaBuild) {
-              _recordedNumberOfTaps++;
-              if (_recordedNumberOfTaps == 10) {
-                _recordedNumberOfTaps = 0;
-                const GsaRouteDebug().push();
-              } else {
-                Future.delayed(
-                  const Duration(seconds: 3),
-                  () {
-                    if (_recordedNumberOfTaps > 0) _recordedNumberOfTaps--;
-                  },
-                );
-              }
-            } else {
-              _activePointerIds.add(event.pointer);
-              if (_activePointerIds.length == 3) {
-                _recordedNumberOfTaps++;
-                if (_recordedNumberOfTaps == 4) {
-                  _recordedNumberOfTaps = 0;
-                  const GsaRouteDebug().push();
-                }
-              }
-            }
-          },
-          onPointerUp: (PointerUpEvent event) {
-            _activePointerIds.remove(event.pointer);
-          },
-          onPointerCancel: (PointerCancelEvent event) {
-            _activePointerIds.remove(event.pointer);
-          },
-        ),
+          );
+        },
       ),
     );
   }

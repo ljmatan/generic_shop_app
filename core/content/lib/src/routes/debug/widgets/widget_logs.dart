@@ -23,7 +23,7 @@ class _WidgetLogs<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: Theme.of(context).paddings.listViewHorizontal(),
+        horizontal: GsaTheme.of(context).paddings.listViewHorizontal(),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +38,7 @@ class _WidgetLogs<T> extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: Card(
                 child: Padding(
-                  padding: Theme.of(context).paddings.card(),
+                  padding: GsaTheme.of(context).paddings.card(),
                   child: Row(
                     children: [
                       Icon(
@@ -63,7 +63,7 @@ class _WidgetLogs<T> extends StatelessWidget {
           if (collection?.isNotEmpty == true)
             Expanded(
               child: ListView.builder(
-                padding: Theme.of(context).paddings.listView(),
+                padding: GsaTheme.of(context).paddings.listView(),
                 itemCount: collection!.length,
                 itemBuilder: (context, index) {
                   final item = collection!.elementAt(index);

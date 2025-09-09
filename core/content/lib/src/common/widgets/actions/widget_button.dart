@@ -205,7 +205,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
     _icon = widget.iconWidget == null && widget.icon == null
         ? null
         : SizedBox(
-            height: Theme.of(context).actionElementHeight,
+            height: GsaTheme.of(context).actionElementHeight,
             child: Center(
               widthFactor: 1,
               child: widget.iconWidget ??
@@ -214,7 +214,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                           widget.icon,
                           color: widget.foregroundColor,
                           size: widget.elementSize,
-                          shadows: widget.outlined == true ? Theme.of(context).outline.shadows() : null,
+                          shadows: widget.outlined == true ? GsaTheme.of(context).outline.shadows() : null,
                         )
                       : null),
             ),
@@ -222,7 +222,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
     _label = widget.labelWidget == null && widget.label == null
         ? null
         : SizedBox(
-            height: Theme.of(context).actionElementHeight,
+            height: GsaTheme.of(context).actionElementHeight,
             child: Center(
               widthFactor: 1,
               child: widget.labelWidget != null
@@ -236,7 +236,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                             fontWeight: FontWeight.w700,
                             color: widget.foregroundColor,
                             fontSize: widget.elementSize,
-                            shadows: widget.outlined == true ? Theme.of(context).outline.shadows() : null,
+                            shadows: widget.outlined == true ? GsaTheme.of(context).outline.shadows() : null,
                             decoration: widget._type == _GsaWidgetButtonType.text ? TextDecoration.underline : null,
                           ),
                         ),
@@ -264,7 +264,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
           : null,
     );
     return SizedBox(
-      height: Theme.of(context).actionElementHeight,
+      height: GsaTheme.of(context).actionElementHeight,
       child: switch (widget._type) {
         _GsaWidgetButtonType.filled => widget.tonal
             ? _icon == null

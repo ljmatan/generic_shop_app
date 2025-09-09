@@ -1,53 +1,41 @@
 part of 'theme.dart';
 
-/// Extension methods and properties for the [ThemeData] object.
-///
-extension GsaThemeDataExt on ThemeData {
-  /// Method providing screen specifications.
-  ///
-  /// [size] -> The current dimensions of the rectangle as last reported by the platform
-  /// into which scenes rendered in this view are drawn.
-  ///
-  /// [ratio] -> The number of device pixels for each logical pixel for the screen
-  /// this view is displayed on.
-  ///
-  ({
-    Size? size,
-    double? ratio,
-  }) get screenSpecifications {
-    final size = dart_ui.PlatformDispatcher.instance.implicitView?.physicalSize;
-    final ratio = dart_ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio;
-    return (
-      size: size,
-      ratio: ratio,
-    );
+class GsaThemeWrapper extends StatelessWidget {
+  GsaThemeWrapper({
+    required this.theme,
+    required this.screenSize,
+    required this.viewScale,
+    required this.child,
+  });
+
+  final GsaTheme theme;
+
+  final Size screenSize;
+
+  final double viewScale;
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
   }
 
-  /// Returns the screen dimension specification in DIP format.
+  /// Used to scale the incoming font size by multiplying it with the given text scale factor.
   ///
-  /// Returns `null` if the data cannot be retrieved.
-  ///
-  Size? get screenSize {
-    try {
-      final navigatorKey = GsaRoute.navigatorKey;
-      if (navigatorKey.currentContext == null) {
-        throw Exception('No context available');
-      }
-      return MediaQuery.of(navigatorKey.currentContext!).size;
-    } catch (e) {
-      final screenSpecs = screenSpecifications;
-      if (screenSpecs.size == null || screenSpecs.ratio == null) {
-        return null;
-      }
-      return Size(screenSpecs.size!.width / screenSpecs.ratio!, screenSpecs.size!.height / screenSpecs.ratio!);
-    }
+  TextScaler get textScaler {
+    return theme.textScaler(
+      screenSpecs: (
+        scale: viewScale,
+        width: screenSize.width,
+      ),
+    );
   }
 
   /// Scale at which the regular elements are being sized.
   ///
   double get elementScale {
-    if (GsaRoute.navigatorContext == null) return 1;
-    return MediaQuery.of(GsaRoute.navigatorKey.currentContext!).textScaler.scale(1);
+    return textScaler.scale(1);
   }
 
   /// Getter method defining available screen dimensions.
@@ -56,23 +44,16 @@ extension GsaThemeDataExt on ThemeData {
     bool smallScreen,
     bool largeScreen,
   }) get dimensions {
-    final size = screenSize;
-    if (size == null) {
-      return (
-        smallScreen: true,
-        largeScreen: false,
-      );
-    }
     return (
-      smallScreen: size.width < 1000,
-      largeScreen: size.width >= 1000,
+      smallScreen: screenSize.width < 1000,
+      largeScreen: screenSize.width >= 1000,
     );
   }
 
   /// Default font size applied to [Text] widgets.
   ///
   double get defaultTextSize {
-    return textTheme.bodyMedium?.fontSize ?? kDefaultFontSize;
+    return theme.data.textTheme.bodyMedium?.fontSize ?? kDefaultFontSize;
   }
 
   /// Default height of "action-type" elements (e.g., buttons).
@@ -123,7 +104,7 @@ extension GsaThemeDataExt on ThemeData {
   /// Maximum specified width for overlay and inline elements.
   ///
   double get maxOverlayInlineWidth {
-    return dimensions.smallScreen ? (screenSize?.width ?? double.infinity) : 800;
+    return dimensions.smallScreen ? screenSize.width : 800;
   }
 
   /// Method used for calculating approximate [Text] widget size.
@@ -132,9 +113,6 @@ extension GsaThemeDataExt on ThemeData {
     required String text,
     required TextStyle style,
   }) {
-    if (GsaRoute.navigatorKey.currentContext == null) {
-      return const Size(0, 0);
-    }
     final TextPainter textPainter = TextPainter(
       text: TextSpan(
         text: text,
@@ -142,9 +120,7 @@ extension GsaThemeDataExt on ThemeData {
       ),
       maxLines: 1,
       textDirection: TextDirection.ltr,
-      textScaler: MediaQuery.of(
-        GsaRoute.navigatorKey.currentContext!,
-      ).textScaler,
+      textScaler: textScaler,
     )..layout();
     return textPainter.size;
   }

@@ -21,7 +21,7 @@ class _WidgetHeader extends StatefulWidget {
 
 class _WidgetHeaderState extends State<_WidgetHeader> {
   void _openDrawer() {
-    if (Theme.of(context).dimensions.smallScreen) {
+    if (GsaTheme.of(context).dimensions.smallScreen) {
       Scaffold.of(context).openDrawer();
     } else {
       Scaffold.of(context).openEndDrawer();
@@ -43,7 +43,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
-            children: Theme.of(context).dimensions.smallScreen
+            children: GsaTheme.of(context).dimensions.smallScreen
                 ? [
                     Stack(
                       alignment: Alignment.center,

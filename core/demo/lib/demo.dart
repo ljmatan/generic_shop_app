@@ -24,6 +24,9 @@ class GsdPlugin extends GsaPlugin {
   final String id = 'generic_shop_app_demo';
 
   @override
+  final GsaPluginFeatures features = GsaPluginFeatures();
+
+  @override
   final GsaPluginRoutes routes = GsaPluginRoutes(
     values: GsdRoutes.values,
     initialRoute: (context) {
@@ -47,6 +50,11 @@ class GsdPlugin extends GsaPlugin {
     functional: true,
     marketing: true,
     statistical: true,
+  );
+
+  @override
+  final GsaPluginTheme theme = GsaPluginTheme(
+    fontFamily: 'packages/generic_shop_app_fitness_tracker/Open Sans',
   );
 
   /// Collection of all available plugin integrations.

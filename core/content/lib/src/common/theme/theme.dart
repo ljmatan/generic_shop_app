@@ -7,9 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/content.dart';
 
 part 'defaults.dart';
-part 'ext_data.dart';
-part 'ext_theme.dart';
 part 'text_styles.dart';
+part 'wrapper.dart';
 
 /// The default theme configuration for the application project.
 ///
@@ -87,36 +86,6 @@ class GsaTheme {
   /// Specifications for a default rectangular border with rounded corners.
   ///
   late RoundedRectangleBorder roundedRectangleBorder;
-
-  /// Method used for instantiating a new class instance with custom-defined properties.
-  ///
-  GsaTheme copyWith({
-    TargetPlatform? platform,
-    String? logoImagePath,
-    bool? animatedAppBar,
-    Brightness? brightness,
-    Color? primaryColor,
-    Color? secondaryColor,
-    String? fontFamily,
-    SystemUiOverlayStyle? systemUiOverlayStyle,
-    BorderRadius? borderRadius,
-    InputDecorationTheme? inputDecorationTheme,
-    RoundedRectangleBorder? roundedRectangleBorder,
-  }) {
-    return GsaTheme(
-      platform: platform ?? this.platform,
-      logoImagePath: logoImagePath ?? this.logoImagePath,
-      animatedAppBar: animatedAppBar ?? this.animatedAppBar,
-      brightness: brightness ?? this.brightness,
-      primaryColor: primaryColor ?? this.primaryColor,
-      secondaryColor: secondaryColor ?? this.secondaryColor,
-      fontFamily: fontFamily ?? this.fontFamily,
-      systemUiOverlayStyle: systemUiOverlayStyle ?? this.systemUiOverlayStyle,
-      borderRadius: borderRadius ?? this.borderRadius,
-      inputDecorationTheme: inputDecorationTheme ?? this.inputDecorationTheme,
-      roundedRectangleBorder: roundedRectangleBorder ?? this.roundedRectangleBorder,
-    );
-  }
 
   /// Getter method for the [ThemeData] implementation.
   ///
@@ -205,6 +174,7 @@ class GsaTheme {
           ),
           textStyle: WidgetStatePropertyAll(
             TextStyle(
+              fontFamily: fontFamily,
               color: brightness == Brightness.light ? null : Colors.white,
               fontWeight: FontWeight.w700,
             ),
@@ -231,6 +201,7 @@ class GsaTheme {
           ),
           textStyle: WidgetStatePropertyAll(
             TextStyle(
+              fontFamily: fontFamily,
               color: brightness == Brightness.light ? null : Colors.white,
               fontWeight: FontWeight.w700,
             ),
@@ -254,6 +225,7 @@ class GsaTheme {
           ),
           textStyle: WidgetStatePropertyAll(
             TextStyle(
+              fontFamily: fontFamily,
               color: brightness == Brightness.light ? null : Colors.white,
               fontWeight: FontWeight.w700,
             ),
@@ -268,6 +240,13 @@ class GsaTheme {
           splashFactory: NoSplash.splashFactory,
           overlayColor: WidgetStateProperty.all(
             Colors.transparent,
+          ),
+          textStyle: WidgetStatePropertyAll(
+            TextStyle(
+              fontFamily: fontFamily,
+              color: brightness == Brightness.light ? null : Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ),
@@ -357,13 +336,22 @@ class GsaTheme {
 
   /// Used to scale the incoming font size by multiplying it with the given text scale factor.
   ///
-  TextScaler textScaler(
-    BuildContext context, [
-    double? screenWidth,
-  ]) {
-    screenWidth ??= MediaQuery.of(context).size.width;
+  TextScaler textScaler({
+    BuildContext? context,
+    ({
+      double scale,
+      double width,
+    })? screenSpecs,
+  }) {
+    if (context == null && screenSpecs == null) {
+      throw Exception(
+        'Either context or screenSpecs property must be provided.',
+      );
+    }
+    final screenWidth = screenSpecs?.width ?? MediaQuery.of(context!).size.width;
+    final scale = screenSpecs?.scale ?? MediaQuery.of(context!).textScaler.scale(1);
     return TextScaler.linear(
-      MediaQuery.of(context).textScaler.scale(1) *
+      scale *
           (screenWidth < 400
               ? 1
               : screenWidth < 600
@@ -376,5 +364,28 @@ class GsaTheme {
                               ? 1.4
                               : 1.6),
     );
+  }
+
+  /// Returns the nearest ancestor widget of [GsaThemeWrapper] type.
+  ///
+  static GsaThemeWrapper of(BuildContext context) {
+    GsaThemeWrapper? themeWrapper = context.findAncestorWidgetOfExactType<GsaThemeWrapper>();
+    if (themeWrapper == null) {
+      context.visitAncestorElements(
+        (element) {
+          if (element.widget is GsaThemeWrapper) {
+            themeWrapper = element.widget as GsaThemeWrapper;
+            return false;
+          }
+          return true;
+        },
+      );
+    }
+    if (themeWrapper == null) {
+      throw Exception(
+        'Theme wrapper not found in element tree.',
+      );
+    }
+    return themeWrapper!;
   }
 }

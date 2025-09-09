@@ -54,6 +54,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor.withValues(alpha: .1),
       body: Row(
         children: [
           _WidgetMenu(
