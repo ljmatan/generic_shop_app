@@ -4,10 +4,7 @@ import 'package:generic_shop_app_demo/demo.dart';
 class GsdRouteDashboard extends GsdRoute {
   const GsdRouteDashboard({
     super.key,
-    required this.navigatorKey,
   });
-
-  final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   GsaRouteState<GsdRouteDashboard> createState() => _GsdRouteDashboardState();
@@ -57,6 +54,7 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
                   const SizedBox(width: 16),
                   for (final tab in const <String>{
                     'Client',
+                    'Routes',
                     'Widgets',
                   }.indexed) ...[
                     if (tab.$1 != 0) const SizedBox(width: 12),
@@ -78,13 +76,12 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
           const Divider(),
           Expanded(
             child: switch (_selectedTabIndex) {
-              0 => GsdRoutePreview(
-                  navigatorKey: widget.navigatorKey,
-                ),
-              1 => GsdRouteComponents(),
+              0 => const GsdRoutePreview(),
+              1 => const GsdRouteRoutes(),
+              2 => const GsdRouteWidgets(),
               int() => throw UnimplementedError(
                   'Tab index $_selectedTabIndex not implemented with GsdRouteDashboard.',
-                )
+                ),
             },
           ),
         ],

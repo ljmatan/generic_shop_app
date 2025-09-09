@@ -11,17 +11,18 @@ class _WidgetMenuSectionClient extends StatelessWidget {
   Widget build(BuildContext context) {
     return _WidgetMenuSection(
       label: 'Client',
-      description: 'Client and route selection.',
+      description: 'Plugin client selection.',
+      initiallyExpanded: true,
       children: [
-        GsaWidgetDropdownMenu<GsaPluginClient>(
+        GsaWidgetDropdownMenu<GsaPlugin>(
           labelText: 'Provider',
           enableFilter: false,
           enableSearch: false,
-          initialSelection: state._pluginClient,
+          initialSelection: state._plugin,
           dropdownMenuEntries: [
-            for (final provider in GsaPluginClient.values)
+            for (final provider in GsdPlugin.pluginCollection)
               DropdownMenuEntry(
-                label: provider.name,
+                label: provider.client.name,
                 value: provider,
               ),
           ],
@@ -31,31 +32,7 @@ class _WidgetMenuSectionClient extends StatelessWidget {
                 'The specified provider value must not be null.',
               );
             }
-            state._setClient(value);
-          },
-        ),
-        const SizedBox(height: 20),
-        GsaWidgetDropdownMenu(
-          key: state._routeDropdownKey,
-          labelText: 'Route',
-          enableFilter: false,
-          enableSearch: false,
-          initialSelection: state._routeIndex,
-          dropdownMenuEntries: [
-            for (final route in state._routes.indexed)
-              DropdownMenuEntry(
-                label: route.$2.displayName,
-                value: route.$1,
-              ),
-          ],
-          onSelected: (value) {
-            if (value == null) {
-              throw Exception(
-                'The specified route value must not be null.',
-              );
-            }
-            state._routeIndex = value;
-            GsaRoute.navigatorKey = GlobalKey<NavigatorState>();
+            state._plugin = value;
             state.rebuild();
           },
         ),

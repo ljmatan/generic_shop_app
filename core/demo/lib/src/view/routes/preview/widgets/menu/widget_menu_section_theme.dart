@@ -8,27 +8,27 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
   final _GsdRoutePreviewState state;
 
   void _setFontFamily(String value) {
-    state._theme.fontFamily = value;
+    state._plugin.theme.fontFamily = value;
     state.rebuild();
   }
 
   void _setPrimaryColor(Color value) {
-    state._theme.primaryColor = value;
+    state._plugin.theme.primaryColor = value;
     state.rebuild();
   }
 
   void _setSecondaryColor(Color value) {
-    state._theme.secondaryColor = value;
+    state._plugin.theme.secondaryColor = value;
     state.rebuild();
   }
 
   void _setThemeBrightness(Brightness value) {
-    state._theme.brightness = value;
+    state._plugin.theme.brightness = value;
     state.rebuild();
   }
 
   void _setAnimatedAppBar(bool value) {
-    state._theme.animatedAppBar = value;
+    state._plugin.theme.animatedAppBar = value;
     state.rebuild();
   }
 
@@ -81,14 +81,14 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
         for (final colorInput in {
           (
             label: 'Primary Color',
-            color: state._theme.primaryColor,
+            color: state._plugin.theme.primaryColor,
             onColorChanged: (Color value) {
               _setPrimaryColor(value);
             },
           ),
           (
             label: 'Secondary Color',
-            color: state._theme.secondaryColor,
+            color: state._plugin.theme.secondaryColor,
             onColorChanged: (Color value) {
               _setSecondaryColor(value);
             },
@@ -147,7 +147,7 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
         })>{
           (
             label: 'Dark Theme',
-            value: state._theme.brightness == Brightness.dark,
+            value: state._plugin.theme.brightness == Brightness.dark,
             onChanged: (newValue) {
               _setThemeBrightness(
                 newValue ? Brightness.dark : Brightness.light,
@@ -156,7 +156,7 @@ class _WidgetMenuSectionTheme extends StatelessWidget {
           ),
           (
             label: 'Animated App Bar',
-            value: state._theme.animatedAppBar,
+            value: state._plugin.theme.animatedAppBar,
             onChanged: (newValue) {
               _setAnimatedAppBar(newValue);
             },

@@ -16,23 +16,44 @@ class _WidgetMenuSectionFeatures extends StatelessWidget {
         for (final option in <({String label, bool value, Function(bool) specify})>{
           (
             label: 'Checkout',
-            value: state._appOptions.cart,
+            value: state._plugin.features.cart,
             specify: (bool value) {
-              state._appOptions.cart = value;
+              state._plugin.features.cart = value;
+            }
+          ),
+          (
+            label: 'Bookmarks',
+            value: state._plugin.features.bookmarks,
+            specify: (bool value) {
+              state._plugin.features.bookmarks = value;
+            }
+          ),
+          (
+            label: 'Authentication',
+            value: state._plugin.features.authentication,
+            specify: (bool value) {
+              state._plugin.features.authentication = value;
             }
           ),
           (
             label: 'Registration',
-            value: state._appOptions.registration,
+            value: state._plugin.features.registration,
             specify: (bool value) {
-              state._appOptions.registration = value;
+              state._plugin.features.registration = value;
             }
           ),
           (
             label: 'Guest Login',
-            value: state._appOptions.guestLogin,
+            value: state._plugin.features.guestLogin,
             specify: (bool value) {
-              state._appOptions.guestLogin = value;
+              state._plugin.features.guestLogin = value;
+            }
+          ),
+          (
+            label: 'Currency Conversion',
+            value: state._plugin.features.currencyConversion,
+            specify: (bool value) {
+              state._plugin.features.currencyConversion = value;
             }
           ),
         }.indexed) ...[

@@ -9,20 +9,21 @@ class _WidgetDevicePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return device_frame.DeviceFrame(
-      device: state._device,
-      screen: (switch (state._pluginClient) {
-        GsaPluginClient.demo => GsdPlugin.new,
-        GsaPluginClient.fitnessTracker => GftPlugin.new,
-        GsaPluginClient.froddoB2b => GfbPlugin.new,
-        GsaPluginClient.froddoB2c => GfcPlugin.new,
-      })(
-        theme: state._theme,
-        child: ScrollConfiguration(
-          behavior: const _TouchScrollBehavior(),
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: Gsa(),
+    return InteractiveViewer(
+      trackpadScrollCausesScale: true,
+      child: Padding(
+        padding: const EdgeInsets.all(30),
+        child: SizedBox.expand(
+          child: device_frame.DeviceFrame(
+            device: state._device,
+            orientation: state._deviceOrientation,
+            screen: GsaPluginWrapper(
+              plugin: state._plugin,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Gsa(),
+              ),
+            ),
           ),
         ),
       ),

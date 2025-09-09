@@ -3,7 +3,8 @@ import 'package:generic_shop_app_demo/demo.dart';
 
 void main() {
   runApp(
-    GsdPlugin(
+    GsaPluginWrapper(
+      plugin: GsdPlugin.pluginCollection.first,
       child: Gsa(
         navigatorKey: GlobalKey<NavigatorState>(),
       ),

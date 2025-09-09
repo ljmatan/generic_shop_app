@@ -36,7 +36,7 @@ class _WidgetMenuSectionState extends State<_WidgetMenuSection> {
     return AnimatedSize(
       duration: _animationDuration,
       curve: Curves.easeInOut,
-      alignment: Alignment.topCenter,
+      alignment: Alignment.topLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

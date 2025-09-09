@@ -1,15 +1,8 @@
-import 'dart:ui' as dart_ui;
-
 import 'package:flutter/material.dart';
 import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' as colorpicker;
 import 'package:generic_shop_app_demo/demo.dart';
-import 'package:generic_shop_app_fitness_tracker/fitness_tracker.dart';
-import 'package:generic_shop_app_froddo_b2b/froddo_b2b.dart';
-import 'package:generic_shop_app_froddo_b2c/froddo_b2c.dart';
 
-part 'misc/misc_navigator_observer.dart';
-part 'misc/misc_scroll_behaviour.dart';
 part 'widgets/widget_device_preview.dart';
 part 'widgets/menu/widget_menu.dart';
 part 'widgets/menu/widget_menu_section.dart';
@@ -23,10 +16,7 @@ class GsdRoutePreview extends GsdRoute {
   ///
   const GsdRoutePreview({
     super.key,
-    required this.navigatorKey,
   });
-
-  final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<GsdRoutePreview> createState() => _GsdRoutePreviewState();
@@ -44,6 +34,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   device_frame.DeviceInfo _device = device_frame.Devices.ios.iPhone12;
 
+  Orientation _deviceOrientation = Orientation.portrait;
+
   void _setPlatform(
     TargetPlatform value,
   ) {
@@ -57,66 +49,7 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
     });
   }
 
-  late GsaPluginClient _pluginClient;
-
-  int _routeIndex = 0;
-
-  Key _routeDropdownKey = UniqueKey();
-
-  late List<GsaRouteType> _routes;
-
-  void _setClient(GsaPluginClient value) {
-    setState(() {
-      _pluginClient = value;
-      _routeIndex = 0;
-      _routes = [
-        ...GsaRoutes.values,
-        ...GsaPlugin.of(context).routes.values,
-      ];
-      GsaRoute.navigatorKey = GlobalKey<NavigatorState>();
-      _routeDropdownKey = UniqueKey();
-      _theme = GsaPluginTheme(
-        platform: _platform,
-      );
-    });
-  }
-
-  void _onNavigatorChange() {
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        final routeIndex = _routes.indexWhere(
-          (route) {
-            return route.routeRuntimeType == GsaRoute.presenting.widget.runtimeType;
-          },
-        );
-        if (routeIndex != -1 && _routeIndex != routeIndex) {
-          setState(() {
-            _routeIndex = routeIndex;
-            _routeDropdownKey = UniqueKey();
-          });
-        }
-      },
-    );
-  }
-
-  final _appOptions = GsaPluginFeatures();
-
-  late GsaPluginTheme _theme;
-
-  @override
-  void initState() {
-    super.initState();
-    final plugin = GsaPlugin.of(widget.navigatorKey.currentContext!);
-    _pluginClient = plugin.client;
-    _routes = [
-      ...GsaRoutes.values,
-      ...plugin.routes.values,
-    ];
-    GsaRoute.navigatorKey = GlobalKey<NavigatorState>();
-    _theme = GsaPluginTheme(
-      platform: _platform,
-    );
-  }
+  GsaPlugin _plugin = GsdPlugin.pluginCollection.first;
 
   @override
   Widget view(BuildContext context) {
@@ -128,16 +61,8 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
           ),
           Expanded(
             child: Center(
-              child: InteractiveViewer(
-                trackpadScrollCausesScale: true,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: SizedBox.expand(
-                    child: _WidgetDevicePreview(
-                      state: this,
-                    ),
-                  ),
-                ),
+              child: _WidgetDevicePreview(
+                state: this,
               ),
             ),
           ),

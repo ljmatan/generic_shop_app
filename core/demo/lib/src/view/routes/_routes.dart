@@ -3,33 +3,37 @@ import 'package:generic_shop_app_demo/demo.dart';
 
 export 'package:generic_shop_app_architecture/arch.dart';
 
-export 'components/route_components.dart';
 export 'dashboard/route_dashboard.dart';
 export 'preview/route_preview.dart';
+export 'routes/route_routes.dart';
+export 'widgets/route_widgets.dart';
 
 /// Collection of Route objects implemented by the "Generic Shop App" project.
 ///
 enum GsdRoutes implements GsaRouteType {
-  components,
   dashboard,
-  preview;
+  preview,
+  routes,
+  widgets;
 
   @override
   GsaRoute Function([dynamic args]) get widget {
     switch (this) {
-      case GsdRoutes.components:
-        return ([args]) {
-          return const GsdRouteComponents();
-        };
       case GsdRoutes.dashboard:
         return ([args]) {
-          return const GsdRouteComponents();
+          return const GsdRouteWidgets();
         };
       case GsdRoutes.preview:
         return ([args]) {
-          return GsdRoutePreview(
-            navigatorKey: GlobalKey<NavigatorState>(),
-          );
+          return const GsdRoutePreview();
+        };
+      case GsdRoutes.routes:
+        return ([args]) {
+          return const GsdRouteRoutes();
+        };
+      case GsdRoutes.widgets:
+        return ([args]) {
+          return const GsdRouteWidgets();
         };
     }
   }
@@ -37,12 +41,14 @@ enum GsdRoutes implements GsaRouteType {
   @override
   Type get routeRuntimeType {
     switch (this) {
-      case GsdRoutes.components:
-        return GsdRouteComponents;
       case GsdRoutes.dashboard:
         return GsdRouteDashboard;
       case GsdRoutes.preview:
         return GsdRoutePreview;
+      case GsdRoutes.routes:
+        return GsdRouteRoutes;
+      case GsdRoutes.widgets:
+        return GsdRouteWidgets;
     }
   }
 

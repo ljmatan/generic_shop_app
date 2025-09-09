@@ -1,3 +1,5 @@
+import 'dart:ui' as dart_ui;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,11 +78,14 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
           textScaler: GsaPlugin.of(context).theme.textScaler(context),
         ),
         child: Listener(
-          child: Stack(
-            children: [
-              widget.child,
-              if (GsaPlugin.of(context).overlayBuilder != null) GsaPlugin.of(context).overlayBuilder!,
-            ],
+          child: ScrollConfiguration(
+            behavior: const _TouchScrollBehavior(),
+            child: Stack(
+              children: [
+                widget.child,
+                if (GsaPlugin.of(context).overlayBuilder != null) GsaPlugin.of(context).overlayBuilder!,
+              ],
+            ),
           ),
           onPointerDown: (event) {
             if (GsaConfig.qaBuild) {
@@ -117,4 +122,14 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
       ),
     );
   }
+}
+
+class _TouchScrollBehavior extends MaterialScrollBehavior {
+  const _TouchScrollBehavior();
+
+  @override
+  Set<dart_ui.PointerDeviceKind> get dragDevices => {
+        dart_ui.PointerDeviceKind.touch,
+        dart_ui.PointerDeviceKind.mouse,
+      };
 }

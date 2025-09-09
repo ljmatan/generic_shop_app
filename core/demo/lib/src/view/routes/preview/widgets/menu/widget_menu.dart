@@ -28,11 +28,11 @@ class _WidgetMenuState extends State<_WidgetMenu> {
         child: ListView(
           padding: Theme.of(context).paddings.listView(),
           children: [
-            _WidgetMenuSectionDevice(
+            _WidgetMenuSectionClient(
               state: widget.state,
             ),
             const SizedBox(height: 20),
-            _WidgetMenuSectionClient(
+            _WidgetMenuSectionDevice(
               state: widget.state,
             ),
             const SizedBox(height: 20),

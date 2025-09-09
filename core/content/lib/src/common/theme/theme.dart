@@ -88,6 +88,36 @@ class GsaTheme {
   ///
   late RoundedRectangleBorder roundedRectangleBorder;
 
+  /// Method used for instantiating a new class instance with custom-defined properties.
+  ///
+  GsaTheme copyWith({
+    TargetPlatform? platform,
+    String? logoImagePath,
+    bool? animatedAppBar,
+    Brightness? brightness,
+    Color? primaryColor,
+    Color? secondaryColor,
+    String? fontFamily,
+    SystemUiOverlayStyle? systemUiOverlayStyle,
+    BorderRadius? borderRadius,
+    InputDecorationTheme? inputDecorationTheme,
+    RoundedRectangleBorder? roundedRectangleBorder,
+  }) {
+    return GsaTheme(
+      platform: platform ?? this.platform,
+      logoImagePath: logoImagePath ?? this.logoImagePath,
+      animatedAppBar: animatedAppBar ?? this.animatedAppBar,
+      brightness: brightness ?? this.brightness,
+      primaryColor: primaryColor ?? this.primaryColor,
+      secondaryColor: secondaryColor ?? this.secondaryColor,
+      fontFamily: fontFamily ?? this.fontFamily,
+      systemUiOverlayStyle: systemUiOverlayStyle ?? this.systemUiOverlayStyle,
+      borderRadius: borderRadius ?? this.borderRadius,
+      inputDecorationTheme: inputDecorationTheme ?? this.inputDecorationTheme,
+      roundedRectangleBorder: roundedRectangleBorder ?? this.roundedRectangleBorder,
+    );
+  }
+
   /// Getter method for the [ThemeData] implementation.
   ///
   ThemeData get data {

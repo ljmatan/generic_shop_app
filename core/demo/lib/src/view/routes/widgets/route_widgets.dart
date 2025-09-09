@@ -1,14 +1,14 @@
 import 'package:generic_shop_app_demo/src/view/routes/_routes.dart';
 import 'package:flutter/material.dart';
 
-class GsdRouteComponents extends GsdRoute {
-  const GsdRouteComponents({super.key});
+class GsdRouteWidgets extends GsdRoute {
+  const GsdRouteWidgets({super.key});
 
   @override
-  State<GsdRouteComponents> createState() => _GsdRouteComponentsState();
+  State<GsdRouteWidgets> createState() => _GsdRouteComponentsState();
 }
 
-class _GsdRouteComponentsState extends GsaRouteState<GsdRouteComponents> {
+class _GsdRouteComponentsState extends GsaRouteState<GsdRouteWidgets> {
   @override
   Widget view(BuildContext context) {
     return Scaffold(

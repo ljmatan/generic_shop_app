@@ -12,7 +12,6 @@ class _WidgetMenuSectionDevice extends StatelessWidget {
     return _WidgetMenuSection(
       label: 'Device',
       description: 'Operating system and device model options.',
-      initiallyExpanded: true,
       children: [
         GsaWidgetDropdownMenu<TargetPlatform>(
           labelText: 'Platform',
@@ -60,6 +59,42 @@ class _WidgetMenuSectionDevice extends StatelessWidget {
               );
             }
             state._device = value;
+            state.rebuild();
+          },
+        ),
+        const SizedBox(height: 20),
+        GsaWidgetDropdownMenu<Orientation>(
+          labelText: 'Orientation',
+          enableFilter: false,
+          enableSearch: false,
+          dropdownMenuEntries: [
+            for (final orientation in <({
+              String label,
+              Orientation value,
+            })>{
+              (
+                label: 'Portrait',
+                value: Orientation.portrait,
+              ),
+              (
+                label: 'Landscape',
+                value: Orientation.landscape,
+              ),
+            })
+              DropdownMenuEntry(
+                label: orientation.label,
+                value: orientation.value,
+              ),
+          ],
+          initialSelection: state._deviceOrientation,
+          width: MediaQuery.of(context).size.width * .25 - 40,
+          onSelected: (value) {
+            if (value == null) {
+              throw Exception(
+                'Device orientation value must not be null.',
+              );
+            }
+            state._deviceOrientation = value;
             state.rebuild();
           },
         ),
