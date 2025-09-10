@@ -33,7 +33,11 @@ class _WidgetDevicePreview extends StatelessWidget {
                 plugin: state._plugin,
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
-                  child: Gsa(),
+                  child: Gsa(
+                    key: Key(
+                      state._plugin.client.name,
+                    ),
+                  ),
                 ),
               ),
             ),

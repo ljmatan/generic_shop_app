@@ -71,6 +71,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDemoImplementation = context.findAncestorStateOfType<GsaState>()?.widget.navigatorKey != null;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: GsaPlugin.of(context).theme.systemUiOverlayStyle,
       child: LayoutBuilder(
@@ -85,9 +86,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
               ),
               child: Listener(
                 child: ScrollConfiguration(
-                  behavior: context.findAncestorStateOfType<GsaState>()?.widget.navigatorKey != null
-                      ? ScrollBehavior()
-                      : const _TouchScrollBehavior(),
+                  behavior: isDemoImplementation ? ScrollBehavior() : const _TouchScrollBehavior(),
                   child: Stack(
                     children: [
                       widget.child,
@@ -95,37 +94,43 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
                     ],
                   ),
                 ),
-                onPointerDown: (event) {
-                  if (GsaConfig.qaBuild) {
-                    _recordedNumberOfTaps++;
-                    if (_recordedNumberOfTaps == 10) {
-                      _recordedNumberOfTaps = 0;
-                      const GsaRouteDebug().push();
-                    } else {
-                      Future.delayed(
-                        const Duration(seconds: 3),
-                        () {
-                          if (_recordedNumberOfTaps > 0) _recordedNumberOfTaps--;
-                        },
-                      );
-                    }
-                  } else {
-                    _activePointerIds.add(event.pointer);
-                    if (_activePointerIds.length == 3) {
-                      _recordedNumberOfTaps++;
-                      if (_recordedNumberOfTaps == 4) {
-                        _recordedNumberOfTaps = 0;
-                        const GsaRouteDebug().push();
-                      }
-                    }
-                  }
-                },
-                onPointerUp: (PointerUpEvent event) {
-                  _activePointerIds.remove(event.pointer);
-                },
-                onPointerCancel: (PointerCancelEvent event) {
-                  _activePointerIds.remove(event.pointer);
-                },
+                onPointerDown: isDemoImplementation
+                    ? null
+                    : (event) {
+                        if (GsaConfig.qaBuild) {
+                          _recordedNumberOfTaps++;
+                          if (_recordedNumberOfTaps == 10) {
+                            _recordedNumberOfTaps = 0;
+                            const GsaRouteDebug().push();
+                          } else {
+                            Future.delayed(
+                              const Duration(seconds: 3),
+                              () {
+                                if (_recordedNumberOfTaps > 0) _recordedNumberOfTaps--;
+                              },
+                            );
+                          }
+                        } else {
+                          _activePointerIds.add(event.pointer);
+                          if (_activePointerIds.length == 3) {
+                            _recordedNumberOfTaps++;
+                            if (_recordedNumberOfTaps == 4) {
+                              _recordedNumberOfTaps = 0;
+                              const GsaRouteDebug().push();
+                            }
+                          }
+                        }
+                      },
+                onPointerUp: isDemoImplementation
+                    ? null
+                    : (PointerUpEvent event) {
+                        _activePointerIds.remove(event.pointer);
+                      },
+                onPointerCancel: isDemoImplementation
+                    ? null
+                    : (PointerCancelEvent event) {
+                        _activePointerIds.remove(event.pointer);
+                      },
               ),
             ),
           );

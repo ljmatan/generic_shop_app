@@ -24,7 +24,7 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: GsaTheme.of(context).paddings.listViewHorizontal(),
+                horizontal: GsaTheme.of(context).paddings.widget.listViewHorizontal,
                 vertical: 20,
               ),
               child: Row(

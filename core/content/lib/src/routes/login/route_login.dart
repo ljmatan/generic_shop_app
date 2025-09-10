@@ -78,7 +78,7 @@ class _GsaRouteLoginState extends GsaRouteState<GsaRouteLogin> {
                   maxWidth: GsaTheme.of(context).maxOverlayInlineWidth,
                 ),
                 child: SingleChildScrollView(
-                  padding: GsaTheme.of(context).paddings.listView(),
+                  padding: GsaTheme.of(context).paddings.widget.listView,
                   child: Form(
                     key: _formKey,
                     child: Column(

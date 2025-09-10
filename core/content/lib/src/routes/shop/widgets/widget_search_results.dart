@@ -16,7 +16,7 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
       children: [
         if (GsaTheme.of(context).dimensions.smallScreen)
           ListView.builder(
-            padding: GsaTheme.of(context).paddings.listView(),
+            padding: GsaTheme.of(context).paddings.widget.listView,
             itemCount: widget.results.length,
             itemBuilder: (context, index) {
               final saleItem = widget.results[index];
@@ -34,7 +34,7 @@ class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
           )
         else
           GridView.builder(
-            padding: GsaTheme.of(context).paddings.listView(),
+            padding: GsaTheme.of(context).paddings.widget.listView,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: MediaQuery.of(context).size.width < 1400 ? 3 : 4,
               mainAxisExtent: 160,

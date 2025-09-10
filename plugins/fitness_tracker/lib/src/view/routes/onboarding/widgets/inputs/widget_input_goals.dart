@@ -48,7 +48,7 @@ class _WidgetInputGoalsState extends State<_WidgetInputGoals> {
                     child: Card(
                       color: widget.trainee.goal == goalOption ? Theme.of(context).colorScheme.primary : null,
                       child: Padding(
-                        padding: GsaTheme.of(context).paddings.card(),
+                        padding: GsaTheme.of(context).paddings.widget.card,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,

@@ -214,7 +214,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                           widget.icon,
                           color: widget.foregroundColor,
                           size: widget.elementSize,
-                          shadows: widget.outlined == true ? GsaTheme.of(context).outline.shadows() : null,
+                          shadows: widget.outlined == true ? GsaTheme.of(context).outline.shadows : null,
                         )
                       : null),
             ),
@@ -236,7 +236,7 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
                             fontWeight: FontWeight.w700,
                             color: widget.foregroundColor,
                             fontSize: widget.elementSize,
-                            shadows: widget.outlined == true ? GsaTheme.of(context).outline.shadows() : null,
+                            shadows: widget.outlined == true ? GsaTheme.of(context).outline.shadows : null,
                             decoration: widget._type == _GsaWidgetButtonType.text ? TextDecoration.underline : null,
                           ),
                         ),

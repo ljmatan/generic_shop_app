@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/content.dart';
 
 part 'defaults.dart';
+part 'paddings.dart';
 part 'text_styles.dart';
 part 'wrapper.dart';
 
@@ -217,6 +218,9 @@ class GsaTheme {
           overlayColor: WidgetStateProperty.all(
             Colors.transparent,
           ),
+          shape: WidgetStatePropertyAll(
+            roundedRectangleBorder,
+          ),
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
           ),
@@ -240,6 +244,9 @@ class GsaTheme {
           splashFactory: NoSplash.splashFactory,
           overlayColor: WidgetStateProperty.all(
             Colors.transparent,
+          ),
+          shape: WidgetStatePropertyAll(
+            roundedRectangleBorder,
           ),
           textStyle: WidgetStatePropertyAll(
             TextStyle(

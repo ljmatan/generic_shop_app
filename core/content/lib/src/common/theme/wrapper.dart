@@ -1,19 +1,35 @@
 part of 'theme.dart';
 
+/// Wrapper widget implemented for access to property values via widget tree.
+///
 class GsaThemeWrapper extends StatelessWidget {
-  GsaThemeWrapper({
+  /// A wrapper for theme-related functionality within the application.
+  ///
+  /// This file is intended to provide utilities or classes that help manage
+  /// and apply consistent theming across the app.
+  ///
+  const GsaThemeWrapper({
+    super.key,
     required this.theme,
     required this.screenSize,
     required this.viewScale,
     required this.child,
   });
 
+  /// Relevant theme instance.
+  ///
   final GsaTheme theme;
 
+  /// Screen size values in DIP units.
+  ///
   final Size screenSize;
 
+  /// The scale of elements specified by with OS accessibility services.
+  ///
   final double viewScale;
 
+  /// The child descendant.
+  ///
   final Widget child;
 
   @override
@@ -63,44 +79,6 @@ class GsaThemeWrapper extends StatelessWidget {
     return (kMinInteractiveDimension - textSize) + textSize * elementScale;
   }
 
-  /// Default element padding values.
-  ///
-  ({
-    double Function() cardHorizontal,
-    double Function() cardVertical,
-    EdgeInsets Function() card,
-    double Function() listViewHorizontal,
-    double Function() listViewVertical,
-    EdgeInsets Function() listView,
-  }) get paddings {
-    return (
-      cardHorizontal: () {
-        return dimensions.smallScreen ? 16 : 20;
-      },
-      cardVertical: () {
-        return dimensions.smallScreen ? 12 : 16;
-      },
-      card: () {
-        return EdgeInsets.symmetric(
-          horizontal: paddings.cardHorizontal(),
-          vertical: paddings.cardVertical(),
-        );
-      },
-      listViewHorizontal: () {
-        return dimensions.smallScreen ? 20 : 26;
-      },
-      listViewVertical: () {
-        return dimensions.smallScreen ? 24 : 30;
-      },
-      listView: () {
-        return EdgeInsets.symmetric(
-          horizontal: paddings.listViewHorizontal(),
-          vertical: paddings.listViewVertical(),
-        );
-      },
-    );
-  }
-
   /// Maximum specified width for overlay and inline elements.
   ///
   double get maxOverlayInlineWidth {
@@ -128,15 +106,13 @@ class GsaThemeWrapper extends StatelessWidget {
   /// Specifications for element (e.g., [Text] or [Icon] widget) outline.
   ///
   ({
-    double Function() width,
-    List<Shadow> Function() shadows,
+    double width,
+    List<Shadow> shadows,
   }) get outline {
     return (
-      width: () {
-        return dimensions.smallScreen ? .1 : .4;
-      },
-      shadows: () {
-        final width = outline.width();
+      width: dimensions.smallScreen ? .1 : .4,
+      shadows: (() {
+        final width = dimensions.smallScreen ? .1 : .4;
         return [
           for (final offset in <Offset>{
             Offset(-width, -width),
@@ -149,7 +125,7 @@ class GsaThemeWrapper extends StatelessWidget {
               color: Colors.black,
             ),
         ];
-      },
+      })(),
     );
   }
 }

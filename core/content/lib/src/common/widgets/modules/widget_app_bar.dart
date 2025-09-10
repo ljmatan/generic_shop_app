@@ -87,7 +87,7 @@ class _GsaWidgetAppBarState extends State<GsaWidgetAppBar> {
                               textAlign: GsaTheme.of(context).dimensions.smallScreen ? TextAlign.center : TextAlign.left,
                               style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
                                     shadows:
-                                        GsaPlugin.of(context).theme.animatedAppBar != false ? GsaTheme.of(context).outline.shadows() : null,
+                                        GsaPlugin.of(context).theme.animatedAppBar != false ? GsaTheme.of(context).outline.shadows : null,
                                   ),
                             ),
                           ),

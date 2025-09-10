@@ -83,7 +83,7 @@ class _GiotRouteDashboardState extends State<GiotRouteDashboard> {
                             color: Theme.of(context).primaryColor,
                             child: Center(
                               child: Padding(
-                                padding: GsaTheme.of(context).paddings.card(),
+                                padding: GsaTheme.of(context).paddings.widget.card,
                                 child: Column(
                                   children: [
                                     GsaWidgetText(

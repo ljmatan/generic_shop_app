@@ -26,7 +26,7 @@ class _WidgetMenuState extends State<_WidgetMenu> {
       child: SizedBox(
         width: 400,
         child: ListView(
-          padding: GsaTheme.of(context).paddings.listView(),
+          padding: GsaTheme.of(context).paddings.widget.listView,
           children: [
             _WidgetMenuSectionClient(
               state: widget.state,
