@@ -243,22 +243,19 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
             ),
           );
     _buttonStyle = ButtonStyle(
-      shape: widget.rounded
-          ? WidgetStateProperty.all<RoundedRectangleBorder>(
-              const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(100),
-                ),
-              ),
-            )
-          : null,
+      shape: WidgetStatePropertyAll(
+        GsaTheme.of(context).theme.roundedRectangleBorder.copyWith(
+              side: widget._type == _GsaWidgetButtonType.outlined ? null : BorderSide.none,
+              borderRadius: widget.rounded ? BorderRadius.circular(1000) : null,
+            ),
+      ),
       backgroundColor: widget.backgroundColor != null
-          ? WidgetStateProperty.all<Color>(
+          ? WidgetStatePropertyAll(
               widget.backgroundColor!,
             )
           : null,
       foregroundColor: widget.foregroundColor != null
-          ? WidgetStateProperty.all<Color>(
+          ? WidgetStatePropertyAll(
               widget.foregroundColor!,
             )
           : null,

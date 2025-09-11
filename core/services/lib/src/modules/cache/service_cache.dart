@@ -12,8 +12,7 @@ part '../../i18n/service_cache_i18n.dart';
 part 'service_cache_entry.dart';
 part 'service_cache_value.dart';
 
-/// Cache data manager, implemented with the
-/// [shared_preferences](https://pub.dev/packages/shared_preferences) package.
+/// Cache data manager, providing permanent / device storage solutions to app clients.
 ///
 class GsaServiceCache extends GsaService {
   GsaServiceCache._();
@@ -61,6 +60,10 @@ class GsaServiceCache extends GsaService {
   /// Runtime collection of values retrieved from the secure storage.
   ///
   Map<int, String>? _dbStorageEntries;
+
+  /// Prefix assigned to each of the cached item entries.
+  ///
+  String? cacheIdPrefix;
 
   /// Initialises the [_sharedPreferences] property and handle data cache versions.
   ///
@@ -119,12 +122,16 @@ class GsaServiceCache extends GsaService {
   ///
   Future<void> onCookieConsentAcknowledged() async {
     final version = GsaServiceCacheEntry.version.value as int?;
-    // If the cached version is different than the current [_version], handle logic for updating cached values.
+
+    /// If the cached version is different than the current [_version],
+    /// handle logic for updating cached values.
     if (_version != version) {
       if (version == null) {
-        /// If the cached [version] argument is `null`, the user hasn't previously acknowledged cache service consent.
+        /// If the cached [version] argument is `null`,
+        /// the user hasn't previously acknowledged cache service consent.
         ///
-        /// Once the user has given their consent, default values defined for [GsaServiceCacheEntry] objects are recorded to device storage.
+        /// Once the user has given their consent,
+        /// default values defined for [GsaServiceCacheEntry] objects are recorded to device storage.
         ///
         for (final cacheId in GsaServiceCacheEntry.values) {
           if (cacheId.defaultValue != null) {
@@ -137,8 +144,7 @@ class GsaServiceCache extends GsaService {
         }
       } else {
         switch (version) {
-          /// Here we can add logic for handling cached values if is a newer version of cache manager
-          /// for every new version add a new case
+          /// Here we can add logic for handling cached values if is a newer version of cache manager.
           case _version:
             // Version is up-to-date.
             break;

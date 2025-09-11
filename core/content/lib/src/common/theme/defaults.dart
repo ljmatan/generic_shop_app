@@ -71,6 +71,10 @@ extension _GsaThemeDefaults on GsaTheme {
           );
   }
 
+  Color get _borderColor {
+    return brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700;
+  }
+
   BorderRadius get _borderRadius {
     return BorderRadius.circular(10);
   }

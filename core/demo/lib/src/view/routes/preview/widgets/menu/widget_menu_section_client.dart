@@ -7,6 +7,12 @@ class _WidgetMenuSectionClient extends StatelessWidget {
 
   final _GsdRoutePreviewState state;
 
+  void _setClient(GsaPlugin value) async {
+    await GsaData.clearAll();
+    state._plugin = value;
+    state.rebuild();
+  }
+
   @override
   Widget build(BuildContext context) {
     return _WidgetMenuSection(
@@ -32,8 +38,7 @@ class _WidgetMenuSectionClient extends StatelessWidget {
                 'The specified provider value must not be null.',
               );
             }
-            state._plugin = value;
-            state.rebuild();
+            _setClient(value);
           },
         ),
       ],

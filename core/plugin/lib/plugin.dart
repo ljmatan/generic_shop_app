@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 
 part 'src/api.dart';
@@ -184,10 +183,21 @@ abstract class GsaPlugin {
   /// Returns the nearest ancestor widget of [GsaPluginWrapper] type.
   ///
   static GsaPlugin of(BuildContext context) {
-    final pluginWrapper = context.findAncestorWidgetOfExactType<GsaPluginWrapper>();
+    GsaPluginWrapper? pluginWrapper = context.findAncestorWidgetOfExactType<GsaPluginWrapper>();
+    if (pluginWrapper?.plugin == null) {
+      context.visitAncestorElements(
+        (element) {
+          if (element.widget is GsaPluginWrapper) {
+            pluginWrapper = element.widget as GsaPluginWrapper;
+            return false;
+          }
+          return true;
+        },
+      );
+    }
     if (pluginWrapper?.plugin == null) {
       throw Exception(
-        'Plugin not found in element tree.',
+        'Plugin wrapper not found in element tree.',
       );
     }
     return pluginWrapper!.plugin;

@@ -61,6 +61,8 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
                     if (tab.$1 != 0) const SizedBox(width: 12),
                     GsaWidgetButton.filled(
                       label: tab.$2,
+                      backgroundColor: tab.$1 == _selectedTabIndex ? Colors.white10 : Colors.transparent,
+                      foregroundColor: tab.$1 == _selectedTabIndex ? Colors.white : Colors.grey,
                       onTap: _selectedTabIndex == tab.$1
                           ? null
                           : () {
@@ -70,14 +72,6 @@ class _GsdRouteDashboardState extends GsaRouteState<GsdRouteDashboard> {
                             },
                     ),
                   ],
-                  const Spacer(),
-                  GsaWidgetButton.outlined(
-                    label: 'Export Configuration',
-                    icon: Icons.exit_to_app,
-                    onTap: () {
-                      // TODO
-                    },
-                  ),
                 ],
               ),
             ),

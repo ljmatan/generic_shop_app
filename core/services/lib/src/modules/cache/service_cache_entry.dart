@@ -72,8 +72,13 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   }
 
   @override
-  String? get cacheIdPrefix {
-    return null;
+  bool get noCacheIdPrefix {
+    switch (this) {
+      case GsaServiceCacheEntry.version:
+        return true;
+      default:
+        return false;
+    }
   }
 
   @override

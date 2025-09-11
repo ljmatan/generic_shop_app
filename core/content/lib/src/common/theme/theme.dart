@@ -28,18 +28,24 @@ class GsaTheme {
     Color? secondaryColor,
     String? fontFamily,
     SystemUiOverlayStyle? systemUiOverlayStyle,
+    Color? borderColor,
     BorderRadius? borderRadius,
-    InputDecorationTheme? inputDecorationTheme,
-    RoundedRectangleBorder? roundedRectangleBorder,
   }) {
     this.brightness = brightness ?? _brightness;
     this.primaryColor = primaryColor ?? _primaryColor;
     this.secondaryColor = secondaryColor ?? _secondaryColor;
     this.fontFamily = fontFamily ?? _fontFamily;
     this.systemUiOverlayStyle = systemUiOverlayStyle ?? _systemUiOverlayStyle;
+    this.borderColor = borderColor ?? _borderColor;
     this.borderRadius = borderRadius ?? _borderRadius;
-    this.inputDecorationTheme = inputDecorationTheme ?? _inputDecorationTheme;
-    this.roundedRectangleBorder = roundedRectangleBorder ?? _roundedRectangleBorder;
+    roundedRectangleBorder = _roundedRectangleBorder.copyWith(
+      side: borderColor == null
+          ? null
+          : BorderSide(
+              color: borderColor,
+            ),
+    );
+    inputDecorationTheme = _inputDecorationTheme;
   }
 
   /// The platform that user interaction should adapt to target.
@@ -76,17 +82,21 @@ class GsaTheme {
   ///
   late SystemUiOverlayStyle systemUiOverlayStyle;
 
+  /// Color applied to border of elements such as [Card] or to [Divider] elements.
+  ///
+  late Color borderColor;
+
   /// Border radius value applied to elements such as [Card], [OutlinedButton], etc.
   ///
   late BorderRadius borderRadius;
 
-  /// Defines the default appearance of the [InputDecorator] widgets.
-  ///
-  late InputDecorationTheme inputDecorationTheme;
-
   /// Specifications for a default rectangular border with rounded corners.
   ///
   late RoundedRectangleBorder roundedRectangleBorder;
+
+  /// Defines the default appearance of the [InputDecorator] widgets.
+  ///
+  late InputDecorationTheme inputDecorationTheme;
 
   /// Getter method for the [ThemeData] implementation.
   ///
@@ -147,7 +157,7 @@ class GsaTheme {
                 color: primaryColor,
               ),
             ),
-      dividerColor: brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
+      dividerColor: borderColor,
       dividerTheme: const DividerThemeData(
         thickness: .4,
         space: .4,
@@ -194,6 +204,9 @@ class GsaTheme {
           shape: WidgetStatePropertyAll(
             roundedRectangleBorder,
           ),
+          side: WidgetStatePropertyAll(
+            roundedRectangleBorder.side,
+          ),
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
           ),
@@ -217,9 +230,6 @@ class GsaTheme {
           splashFactory: NoSplash.splashFactory,
           overlayColor: WidgetStateProperty.all(
             Colors.transparent,
-          ),
-          shape: WidgetStatePropertyAll(
-            roundedRectangleBorder,
           ),
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
@@ -311,12 +321,7 @@ class GsaTheme {
         elevation: 0,
         color: brightness == Brightness.light ? Colors.white : const Color(0xff212121),
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: borderRadius,
-          side: BorderSide(
-            color: Colors.grey.withValues(alpha: .2),
-          ),
-        ),
+        shape: roundedRectangleBorder,
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStatePropertyAll(primaryColor),

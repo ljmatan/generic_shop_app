@@ -27,10 +27,11 @@ class Gsa extends StatefulWidget {
 class GsaState extends State<Gsa> {
   /// Property holding the value of the runtime resource allocation method.
   ///
-  Future<void> _initFuture = GsaConfig.init();
+  Future<void>? _initFuture;
 
   @override
   Widget build(BuildContext context) {
+    _initFuture ??= GsaConfig.init(context);
     return FutureBuilder(
       future: _initFuture,
       builder: (context, snapshot) {
@@ -51,7 +52,7 @@ class GsaState extends State<Gsa> {
                   snapshot.error.toString(),
                   retry: () {
                     setState(() {
-                      _initFuture = GsaConfig.init();
+                      _initFuture = GsaConfig.init(context);
                     });
                   },
                 ),

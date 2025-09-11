@@ -7,6 +7,18 @@ class _WidgetMenuSectionDevice extends StatelessWidget {
 
   final _GsdRoutePreviewState state;
 
+  void _setPlatform(
+    TargetPlatform value,
+  ) {
+    state._platform = value;
+    state._device = device_frame.Devices.all.firstWhere(
+      (device) {
+        return device.identifier.platform == value;
+      },
+    );
+    state.rebuild();
+  }
+
   @override
   Widget build(BuildContext context) {
     return _WidgetMenuSection(
@@ -31,7 +43,7 @@ class _WidgetMenuSectionDevice extends StatelessWidget {
                 'Target platform value must not be null.',
               );
             }
-            state._setPlatform(value);
+            _setPlatform(value);
           },
         ),
         const SizedBox(height: 20),

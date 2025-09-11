@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 
@@ -55,7 +56,7 @@ class GsaConfig {
 
   /// Initialise the runtime resources with the specified parameters.
   ///
-  static Future<void> init() async {
+  static Future<void> init(BuildContext context) async {
     // Configure the visual display.
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     // Allocate the application runtime resources according to the given configuration.
@@ -81,6 +82,8 @@ class GsaConfig {
     GsaServiceSearch.instance;
     GsaServiceTracking.instance;
     GsaServiceUrlLauncher.instance;
+    final plugin = GsaPlugin.of(context);
+    GsaServiceCache.instance.cacheIdPrefix = plugin.id;
     await GsaServiceCache.instance.init();
     await GsaService.initAll();
     GsaDataCheckout.instance;

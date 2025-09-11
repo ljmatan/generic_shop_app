@@ -36,19 +36,6 @@ class _GsdRoutePreviewState extends GsaRouteState<GsdRoutePreview> {
 
   Orientation _deviceOrientation = Orientation.portrait;
 
-  void _setPlatform(
-    TargetPlatform value,
-  ) {
-    setState(() {
-      _platform = value;
-      _device = device_frame.Devices.all.firstWhere(
-        (device) {
-          return device.identifier.platform == value;
-        },
-      );
-    });
-  }
-
   GsaPlugin _plugin = GsdPlugin.pluginCollection.first;
 
   @override

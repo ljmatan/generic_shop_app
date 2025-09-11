@@ -16,8 +16,7 @@ class GsaPluginTheme extends GsaTheme {
     super.secondaryColor,
     super.fontFamily,
     super.systemUiOverlayStyle,
+    super.borderColor,
     super.borderRadius,
-    super.inputDecorationTheme,
-    super.roundedRectangleBorder,
   });
 }

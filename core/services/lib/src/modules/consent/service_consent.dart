@@ -50,4 +50,12 @@ class GsaServiceConsent extends GsaService {
     functionalCookies: () => GsaServiceCacheEntry.cookieConsentFunctional.value,
     statisticalCookies: () => GsaServiceCacheEntry.cookieConsentStatistical.value,
   );
+
+  @override
+  Future<void> init() async {
+    await super.init();
+    if (hasMandatoryConsent) {
+      await GsaServiceCache.instance.onCookieConsentAcknowledged();
+    }
+  }
 }

@@ -22,7 +22,7 @@ class _WidgetMenuSectionThemeState extends State<_WidgetMenuSectionTheme> {
     return hexString.startsWith('FF') && hexString.length > 6 ? hexString.replaceFirst('FF', '') : hexString;
   }
 
-  late TextEditingController _primaryColorHexController, _secondaryColorHexController;
+  late TextEditingController _primaryColorHexController, _secondaryColorHexController, _borderColorHexController;
 
   void _setPrimaryColor(Color value) {
     widget.state._plugin.theme.primaryColor = value;
@@ -33,6 +33,17 @@ class _WidgetMenuSectionThemeState extends State<_WidgetMenuSectionTheme> {
   void _setSecondaryColor(Color value) {
     widget.state._plugin.theme.secondaryColor = value;
     _secondaryColorHexController.text = _toHexString(value);
+    widget.state.rebuild();
+  }
+
+  void _setBorderColor(Color value) {
+    widget.state._plugin.theme.borderColor = value;
+    widget.state._plugin.theme.roundedRectangleBorder = widget.state._plugin.theme.roundedRectangleBorder.copyWith(
+      side: BorderSide(
+        color: value,
+      ),
+    );
+    _borderColorHexController.text = _toHexString(value);
     widget.state.rebuild();
   }
 
@@ -54,6 +65,9 @@ class _WidgetMenuSectionThemeState extends State<_WidgetMenuSectionTheme> {
     );
     _secondaryColorHexController = TextEditingController(
       text: _toHexString(widget.state._plugin.theme.secondaryColor),
+    );
+    _borderColorHexController = TextEditingController(
+      text: _toHexString(widget.state._plugin.theme.borderColor),
     );
   }
 
@@ -123,6 +137,14 @@ class _WidgetMenuSectionThemeState extends State<_WidgetMenuSectionTheme> {
             color: widget.state._plugin.theme.secondaryColor,
             onColorChanged: (Color value) {
               _setSecondaryColor(value);
+            },
+          ),
+          (
+            controller: _borderColorHexController,
+            label: 'Border Color',
+            color: widget.state._plugin.theme.borderColor,
+            onColorChanged: (Color value) {
+              _setBorderColor(value);
             },
           ),
         }) ...[
@@ -212,6 +234,7 @@ class _WidgetMenuSectionThemeState extends State<_WidgetMenuSectionTheme> {
   void dispose() {
     _primaryColorHexController.dispose();
     _secondaryColorHexController.dispose();
+    _borderColorHexController.dispose();
     super.dispose();
   }
 }

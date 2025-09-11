@@ -7,17 +7,21 @@ abstract mixin class GsaServiceCacheValue {
   ///
   String get cacheId;
 
-  /// Prefix assigned to each of the cached item entries.
+  /// Certain cache values don't need to be prefixed with the [GsaServiceCache.instance.cacheIdPrefix].
   ///
-  String? get cacheIdPrefix;
+  /// These values are marked with below getter method.
+  ///
+  bool get noCacheIdPrefix {
+    return false;
+  }
 
   /// Unique cache value identifier, derived from [cacheId] and [cacheIdPrefix].
   ///
   String get _cacheId {
-    if (cacheIdPrefix == null) {
+    if (noCacheIdPrefix || GsaServiceCache.instance.cacheIdPrefix == null) {
       return cacheId;
     } else {
-      return '$cacheIdPrefix-$cacheId';
+      return '${GsaServiceCache.instance.cacheIdPrefix}-$cacheId';
     }
   }
 
