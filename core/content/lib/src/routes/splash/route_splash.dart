@@ -60,7 +60,7 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
     } else {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) async {
-          await const GsaWidgetOverlayConsent().openDialog();
+          await const GsaWidgetOverlayCookieConsent().openDialog();
           setState(
             () {
               _readyToInitialise = true;

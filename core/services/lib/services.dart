@@ -20,7 +20,6 @@ export 'src/modules/i18n/service_i18n.dart';
 export 'src/modules/input_validation/service_input_validation.dart';
 export 'src/modules/location/service_location.dart';
 export 'src/modules/logging/service_logging.dart';
-export 'src/modules/mock/service_mock.dart';
 export 'src/modules/permissions/service_permissions.dart';
 export 'src/modules/share/service_share.dart';
 export 'src/modules/ssl_override/service_ssl_override.dart';

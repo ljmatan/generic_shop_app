@@ -75,7 +75,6 @@ class GsaConfig {
     GsaServiceInputValidation.instance;
     GsaServiceLocation.instance;
     GsaServiceLogging.instance;
-    GsaServiceMock.instance;
     GsaServicePermissions.instance;
     GsaServiceShare.instance;
     GsaServiceSslOverride.instance;

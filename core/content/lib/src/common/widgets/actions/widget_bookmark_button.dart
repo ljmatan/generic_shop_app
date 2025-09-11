@@ -43,10 +43,18 @@ class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
   }
 
   Future<void> _onBookmarkStateChange() async {
-    if (_bookmarked) {
-      await GsaServiceBookmarks.instance.removeBookmark(widget.saleItem.id ?? '');
+    if (GsaServiceCacheEntry.bookmarks.value == true) {
+      if (_bookmarked) {
+        await GsaServiceBookmarks.instance.removeBookmark(widget.saleItem.id ?? '');
+      } else {
+        await GsaServiceBookmarks.instance.addBookmark(widget.saleItem.id ?? '');
+      }
     } else {
-      await GsaServiceBookmarks.instance.addBookmark(widget.saleItem.id ?? '');
+      await const GsaWidgetOverlayAlert(
+        'You haven\'t enabled functional cookies, so bookmarks can\'t be saved.\n\n'
+        'Update your cookie preferences to use this feature.',
+      ).openDialog();
+      const GsaWidgetOverlayCookieConsent().openDialog();
     }
   }
 

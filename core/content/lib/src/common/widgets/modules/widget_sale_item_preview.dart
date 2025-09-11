@@ -95,31 +95,32 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                                           height: 100,
                                         ),
                                 ),
-                                Positioned(
-                                  right: 4,
-                                  bottom: 4,
-                                  child: GsaWidgetText(
-                                    'ILLUSTRATION IMAGE\nActual product may vary.',
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      color: Colors.black,
-                                      fontSize: 6,
-                                      shadows: [
-                                        for (final offset in <Offset>{
-                                          const Offset(-.5, -.5),
-                                          const Offset(.5, -.5),
-                                          const Offset(.5, .5),
-                                          const Offset(-.5, .5),
-                                        })
-                                          Shadow(
-                                            offset: offset,
-                                            color: Colors.white,
-                                          ),
-                                      ],
+                                if (widget.saleItem.imageUrls?.isNotEmpty == true || widget.saleItem.thumbnailUrls?.isNotEmpty == true)
+                                  Positioned(
+                                    right: 4,
+                                    bottom: 4,
+                                    child: GsaWidgetText(
+                                      'ILLUSTRATION IMAGE\nActual product may vary.',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        color: Colors.black,
+                                        fontSize: 6,
+                                        shadows: [
+                                          for (final offset in <Offset>{
+                                            const Offset(-.5, -.5),
+                                            const Offset(.5, -.5),
+                                            const Offset(.5, .5),
+                                            const Offset(-.5, .5),
+                                          })
+                                            Shadow(
+                                              offset: offset,
+                                              color: Colors.white,
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                             if (widget.saleItem.price?.discount?.centum != null)
@@ -234,22 +235,8 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
                       const SizedBox(height: 10),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: GsaWidgetButton.outlined(
-                          backgroundColor: _cartCount == 0 ? Theme.of(context).primaryColor : null,
-                          foregroundColor: _cartCount == 0 ? null : Theme.of(context).primaryColor,
-                          label: !widget.saleItem.itemPriceExists && !widget.saleItem.itemOptionPriceExists ? 'INQUIRE' : '$_cartCount',
-                          icon: !widget.saleItem.itemPriceExists && !widget.saleItem.itemOptionPriceExists ? null : Icons.shopping_cart,
-                          interpolatedText: widget.saleItem.itemPriceExists || widget.saleItem.itemOptionPriceExists,
-                          onTap: () async {
-                            if (GsaPlugin.of(context).api?.addToCart != null) {
-                              await GsaPlugin.of(context).api!.addToCart!(
-                                context,
-                                item: widget.saleItem,
-                              );
-                            } else {
-                              debugPrint('GsaPlugin.of(context).addToCart not defined.');
-                            }
-                          },
+                        child: _AddToCartButton(
+                          state: this,
                         ),
                       ),
                     ],
@@ -275,6 +262,106 @@ class _GsaWidgetSaleItemPreviewState extends State<GsaWidgetSaleItemPreview> {
   @override
   void dispose() {
     GsaDataCheckout.instance.removeListener(id: _cartCountListenerId);
+    super.dispose();
+  }
+}
+
+class _AddToCartButton extends StatefulWidget {
+  const _AddToCartButton({
+    required this.state,
+  });
+
+  final _GsaWidgetSaleItemPreviewState state;
+
+  @override
+  State<_AddToCartButton> createState() => __AddToCartButtonState();
+}
+
+class __AddToCartButtonState extends State<_AddToCartButton> with SingleTickerProviderStateMixin {
+  late GsaModelSaleItem _saleItem;
+
+  int? _cartCount;
+
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _saleItem = widget.state.widget.saleItem;
+    _cartCount = widget.state._cartCount;
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+  }
+
+  void _triggerBounce() async {
+    await _animationController.forward();
+    await _animationController.reverse();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: Tween(begin: 1.0, end: 1.1).animate(
+        CurvedAnimation(
+          parent: _animationController,
+          curve: Curves.bounceInOut,
+        ),
+      ),
+      child: GsaWidgetButton.outlined(
+        backgroundColor: _cartCount != null ? Theme.of(context).primaryColor : null,
+        foregroundColor: _cartCount != null ? Colors.white : Theme.of(context).primaryColor,
+        label: _cartCount != null
+            ? null
+            : !_saleItem.itemPriceExists && !_saleItem.itemOptionPriceExists
+                ? 'INQUIRE'
+                : 'Add to Cart',
+        labelWidget: _cartCount != null
+            ? DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(
+                    GsaTheme.of(context).paddings.content.extraSmall,
+                  ),
+                  child: GsaWidgetText(
+                    '${_cartCount}',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+              )
+            : null,
+        icon: !_saleItem.itemPriceExists && !_saleItem.itemOptionPriceExists ? null : Icons.shopping_cart,
+        interpolatedText: _saleItem.itemPriceExists || _saleItem.itemOptionPriceExists,
+        onTap: () async {
+          if (GsaPlugin.of(context).api?.addToCart != null) {
+            await GsaPlugin.of(context).api!.addToCart!(
+              context,
+              item: _saleItem,
+            );
+          } else {
+            final newCount = GsaDataCheckout.instance.orderDraft.addItem(
+              saleItem: _saleItem,
+            );
+            setState(() {
+              _cartCount = newCount;
+            });
+          }
+          _triggerBounce();
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
     super.dispose();
   }
 }

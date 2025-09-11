@@ -30,7 +30,7 @@ class _WidgetCategoriesState extends State<_WidgetCategories> {
           ),
         ),
         const SizedBox(height: 16),
-        for (final category in widget.categories.indexed) ...[
+        for (final category in widget.categories.take(6).indexed) ...[
           if (category.$1 != 0) const SizedBox(height: 16),
           SizedBox(
             width: MediaQuery.of(context).size.width,

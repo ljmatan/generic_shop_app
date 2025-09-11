@@ -5,6 +5,8 @@ import 'package:generic_shop_app_froddo_b2c/froddo_b2c.dart';
 
 export 'package:generic_shop_app_architecture/arch.dart';
 
+export 'src/services/_services.dart';
+
 /// Generic Shop App Demo Plugin.
 ///
 /// The class implementes resources required for the plugin to function.
@@ -43,5 +45,19 @@ class GsdPlugin extends GsaPlugin {
   @override
   final GsaPluginTheme theme = GsaPluginTheme(
     fontFamily: 'packages/generic_shop_app_fitness_tracker/Open Sans',
+  );
+
+  @override
+  final GsaPluginServices services = GsaPluginServices(
+    values: [
+      GsdServiceMock.instance,
+    ],
+  );
+
+  @override
+  final GsaPluginDocuments documentUrls = GsaPluginDocuments(
+    termsAndConditions: 'https://ljmatan.github.io/static/example/terms-and-conditions.html',
+    privacyPolicy: 'https://ljmatan.github.io/static/example/privacy-policy.html',
+    cookieNotice: 'https://ljmatan.github.io/static/example/cookie-agreement.html',
   );
 }

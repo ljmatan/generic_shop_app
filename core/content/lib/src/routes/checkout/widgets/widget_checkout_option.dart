@@ -156,7 +156,11 @@ class _WidgetCheckoutOptionState extends State<_WidgetCheckoutOption> with Autom
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                       side: BorderSide(
-                        color: _selectedOption == option.$2 ? Theme.of(context).primaryColor : Colors.grey.withOpacity(.2),
+                        color: _selectedOption == option.$2
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey.withValues(
+                                alpha: .2,
+                              ),
                       ),
                     ),
                     child: Padding(

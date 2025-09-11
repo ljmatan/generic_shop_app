@@ -37,6 +37,7 @@ class _WidgetBookmarks extends StatelessWidget {
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       child: const Icon(
                         Icons.favorite_border,
+                        color: Colors.white,
                       ),
                     ),
                   ],

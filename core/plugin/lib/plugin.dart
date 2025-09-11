@@ -171,7 +171,7 @@ abstract class GsaPlugin {
     // Allocate service memory objects.
     if (services != null) {
       for (final service in services!.values) {
-        service;
+        await service.init();
       }
     }
   }

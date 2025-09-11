@@ -9,8 +9,8 @@ class GsaModelCategory extends _Model {
   // ignore: public_member_api_docs
   GsaModelCategory({
     required super.id,
-    required super.originId,
-    required super.categoryId,
+    super.originId,
+    super.categoryId,
     required this.name,
     this.featured,
   });

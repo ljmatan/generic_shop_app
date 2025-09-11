@@ -13,6 +13,16 @@ class GsaWidgetTotalCartPrice extends StatefulWidget {
 }
 
 class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
+  late String _cartCountListenerId;
+
+  @override
+  void initState() {
+    super.initState();
+    _cartCountListenerId = GsaDataCheckout.instance.addListener(
+      () => setState(() {}),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -89,5 +99,13 @@ class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    GsaDataCheckout.instance.removeListener(
+      id: _cartCountListenerId,
+    );
+    super.dispose();
   }
 }

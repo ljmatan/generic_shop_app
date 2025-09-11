@@ -151,6 +151,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: GsaWidgetDropdownButton(
+                            key: UniqueKey(),
                             initialSelectionIndex: dropdownMenuOption.initialSelectionIndex,
                             children: dropdownMenuOption.dropdownEntries,
                           ),
@@ -172,7 +173,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                       label: 'Cookies',
                       onTap: () {
                         Navigator.pop(context);
-                        const GsaWidgetOverlayConsent().openDialog();
+                        const GsaWidgetOverlayCookieConsent().openDialog();
                       },
                     ),
                     if (GsaDataMerchant.instance.merchant != null)
@@ -180,7 +181,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         label: 'Contact',
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, 'contact');
+                          const GsaRouteMerchantContact().push();
                         },
                       ),
                     if (GsaPlugin.of(context).documentUrls?.helpAndFaq != null)
@@ -188,7 +189,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         label: 'Help & FAQ',
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, 'help');
+                          const GsaRouteHelp().push();
                         },
                       ),
                     (
@@ -203,7 +204,9 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         label: 'Terms and Conditions',
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, 'privacy-policy');
+                          GsaRouteLegalConsent(
+                            url: GsaPlugin.of(context).documentUrls!.termsAndConditions!,
+                          ).push();
                         },
                       ),
                     if (GsaPlugin.of(context).documentUrls?.privacyPolicy != null)
@@ -211,7 +214,19 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         label: 'Privacy Policy',
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, 'privacy-policy');
+                          GsaRouteLegalConsent(
+                            url: GsaPlugin.of(context).documentUrls!.privacyPolicy!,
+                          ).push();
+                        },
+                      ),
+                    if (GsaPlugin.of(context).documentUrls?.cookieNotice != null)
+                      (
+                        label: 'Cookie Notice',
+                        onTap: () {
+                          Navigator.pop(context);
+                          GsaRouteLegalConsent(
+                            url: GsaPlugin.of(context).documentUrls!.cookieNotice!,
+                          ).push();
                         },
                       ),
                   })

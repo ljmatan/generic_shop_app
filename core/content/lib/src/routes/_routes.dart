@@ -99,7 +99,12 @@ enum GsaRoutes implements GsaRouteType {
       case GsaRoutes.help:
         return ([args]) => const GsaRouteHelp();
       case GsaRoutes.legalConsent:
-        return ([args]) => const GsaRouteLegalConsent();
+        return ([args]) {
+          final url = args['url'] as String;
+          return GsaRouteLegalConsent(
+            url: url,
+          );
+        };
       case GsaRoutes.licences:
         return ([args]) => const GsaRouteLicences();
       case GsaRoutes.login:

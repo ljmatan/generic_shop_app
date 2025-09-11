@@ -24,12 +24,13 @@ class _WidgetAnimatedBlob extends StatefulWidget {
 
 class _WidgetAnimatedBlobState extends State<_WidgetAnimatedBlob> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+
   late List<_ModelBlobPoint> _points;
 
   @override
   void initState() {
     super.initState();
-    final rand = dart_math.Random();
+    final random = dart_math.Random();
     _controller = AnimationController(
       vsync: this,
       duration: widget.duration,
@@ -49,9 +50,9 @@ class _WidgetAnimatedBlobState extends State<_WidgetAnimatedBlob> with SingleTic
         final angle = 2 * dart_math.pi * i / widget.pointCount;
         return _ModelBlobPoint(
           angle: angle,
-          offset: rand.nextDouble() * dart_math.pi * 2,
-          amplitude: 10 + rand.nextDouble() * 20,
-          speed: 0.5 + rand.nextDouble(),
+          offset: random.nextDouble() * dart_math.pi * 2,
+          amplitude: 10 + random.nextDouble() * 20,
+          speed: 0.5 + random.nextDouble(),
         );
       },
     );

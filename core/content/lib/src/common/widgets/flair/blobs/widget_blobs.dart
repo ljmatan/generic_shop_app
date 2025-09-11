@@ -41,7 +41,7 @@ class GsaWidgetFlairBlobBackground extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         _WidgetBlobBackground(
-          color: color,
+          color: color ?? Theme.of(context).primaryColor,
           count: count,
           centerOverlay: centerOverlay,
         ),

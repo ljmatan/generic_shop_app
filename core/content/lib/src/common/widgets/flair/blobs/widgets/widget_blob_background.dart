@@ -1,6 +1,6 @@
 part of '../widget_blobs.dart';
 
-class _WidgetBlobBackground extends StatelessWidget {
+class _WidgetBlobBackground extends StatefulWidget {
   const _WidgetBlobBackground({
     required this.color,
     required this.count,
@@ -14,36 +14,56 @@ class _WidgetBlobBackground extends StatelessWidget {
   final bool centerOverlay;
 
   @override
+  State<_WidgetBlobBackground> createState() => _WidgetBlobBackgroundState();
+}
+
+class _WidgetBlobBackgroundState extends State<_WidgetBlobBackground> {
+  Color? _specifiedColor;
+
+  List<Color>? _blobColors;
+
+  int? _pointCount;
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: List.generate(
-        count,
+        widget.count,
         (i) {
+          final random = dart_math.Random(i);
+
           final blobSize = MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
               ? MediaQuery.of(context).size.height
               : MediaQuery.of(context).size.width;
 
-          final rand = dart_math.Random(i);
+          final specifiedColor = widget.color ?? Theme.of(context).primaryColor;
 
-          final hueVariation = 5;
-          final minLightness = 0.3;
-          final maxLightness = 0.8;
+          if (_specifiedColor == null || _specifiedColor!.toARGB32() != specifiedColor.toARGB32()) {
+            _specifiedColor = specifiedColor;
+            _blobColors = List.generate(
+              widget.count,
+              (_) {
+                final hueVariation = 5;
+                final minLightness = .3;
+                final maxLightness = .8;
+                final hueOffset = random.nextDouble() * hueVariation * (random.nextBool() ? 1 : -1);
+                final newHue = (HSLColor.fromColor(
+                          _specifiedColor!,
+                        ).hue +
+                        hueOffset) %
+                    360;
+                final lightness = minLightness + random.nextDouble() * (maxLightness - minLightness);
+                final saturation = .3 + random.nextDouble() * .7;
+                return HSLColor.fromAHSL(1, newHue, saturation, lightness).toColor().withValues(
+                      alpha: .2 + random.nextDouble() * 0.3,
+                    );
+              },
+            );
+          }
 
-          final blobColors = List.generate(count, (i) {
-            final hueOffset = rand.nextDouble() * hueVariation * (rand.nextBool() ? 1 : -1);
-            final newHue = (HSLColor.fromColor(
-                      color ?? Theme.of(context).primaryColor,
-                    ).hue +
-                    hueOffset) %
-                360;
+          _pointCount ??= widget.count + random.nextInt(8);
 
-            final lightness = minLightness + rand.nextDouble() * (maxLightness - minLightness);
-            final saturation = 0.3 + rand.nextDouble() * 0.7;
-            return HSLColor.fromAHSL(1.0, newHue, saturation, lightness).toColor();
-          })
-            ..shuffle();
-
-          if (centerOverlay) {
+          if (widget.centerOverlay) {
             double top, left;
             switch (i % 8) {
               case 0: // top-left corner
@@ -52,14 +72,14 @@ class _WidgetBlobBackground extends StatelessWidget {
                 break;
               case 1: // top edge (random left)
                 top = -blobSize / 2;
-                left = rand.nextDouble() * (MediaQuery.of(context).size.width - blobSize);
+                left = random.nextDouble() * (MediaQuery.of(context).size.width - blobSize);
                 break;
               case 2: // top-right corner
                 top = -blobSize / 2;
                 left = MediaQuery.of(context).size.width - blobSize / 2;
                 break;
               case 3: // right edge (random top)
-                top = rand.nextDouble() * (MediaQuery.of(context).size.height - blobSize);
+                top = random.nextDouble() * (MediaQuery.of(context).size.height - blobSize);
                 left = MediaQuery.of(context).size.width - blobSize / 2;
                 break;
               case 4: // bottom-right corner
@@ -68,14 +88,14 @@ class _WidgetBlobBackground extends StatelessWidget {
                 break;
               case 5: // bottom edge (random left)
                 top = MediaQuery.of(context).size.height - blobSize / 2;
-                left = rand.nextDouble() * (MediaQuery.of(context).size.width - blobSize);
+                left = random.nextDouble() * (MediaQuery.of(context).size.width - blobSize);
                 break;
               case 6: // bottom-left corner
                 top = MediaQuery.of(context).size.height - blobSize / 2;
                 left = -blobSize / 2;
                 break;
               case 7: // left edge (random top)
-                top = rand.nextDouble() * (MediaQuery.of(context).size.height - blobSize);
+                top = random.nextDouble() * (MediaQuery.of(context).size.height - blobSize);
                 left = -blobSize / 2;
                 break;
               default:
@@ -90,13 +110,11 @@ class _WidgetBlobBackground extends StatelessWidget {
                 width: blobSize,
                 height: blobSize,
                 child: _WidgetAnimatedBlob(
-                  color: blobColors[i % blobColors.length].withOpacity(
-                    0.25 + rand.nextDouble() * 0.3,
-                  ),
-                  pointCount: 16 + rand.nextInt(8),
+                  color: _blobColors![i % _blobColors!.length],
+                  pointCount: _pointCount!,
                   baseRadius: blobSize / 2.4,
                   duration: Duration(
-                    seconds: 6 + rand.nextInt(10),
+                    seconds: 6 + random.nextInt(10),
                   ),
                 ),
               ),
@@ -105,14 +123,10 @@ class _WidgetBlobBackground extends StatelessWidget {
             final blobSize = (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
                     ? MediaQuery.of(context).size.height
                     : MediaQuery.of(context).size.width) +
-                rand.nextDouble() * 200;
+                random.nextDouble() * 200;
 
-            final top = rand.nextDouble() * MediaQuery.of(context).size.height - blobSize / 2;
-            final left = rand.nextDouble() * MediaQuery.of(context).size.width - blobSize / 2;
-
-            final color = blobColors[i % blobColors.length].withOpacity(
-              0.15 + rand.nextDouble() * 0.3,
-            );
+            final top = random.nextDouble() * MediaQuery.of(context).size.height - blobSize / 2;
+            final left = random.nextDouble() * MediaQuery.of(context).size.width - blobSize / 2;
 
             return Positioned(
               top: top,
@@ -121,11 +135,11 @@ class _WidgetBlobBackground extends StatelessWidget {
                 width: blobSize,
                 height: blobSize,
                 child: _WidgetAnimatedBlob(
-                  color: color,
-                  pointCount: 16 + rand.nextInt(6),
+                  color: _blobColors![i % _blobColors!.length],
+                  pointCount: _pointCount!,
                   baseRadius: blobSize / 2.1,
                   duration: Duration(
-                    seconds: 6 + rand.nextInt(10),
+                    seconds: 6 + random.nextInt(10),
                   ),
                 ),
               ),

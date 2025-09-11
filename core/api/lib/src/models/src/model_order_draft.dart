@@ -10,12 +10,14 @@ class GsaModelOrderDraft extends _Model {
     super.originId,
     required this.items,
     this.client,
-    this.deliveryType,
-    this.paymentType,
+    GsaModelSaleItem? deliveryType,
+    GsaModelSaleItem? paymentType,
     this.couponCode,
     this.price,
     this.note,
-  }) : itemCount = [];
+  })  : _deliveryType = deliveryType,
+        _paymentType = paymentType,
+        itemCount = [];
 
   /// List of products in the order.
   ///
@@ -33,13 +35,43 @@ class GsaModelOrderDraft extends _Model {
   ///
   GsaModelAddress? deliveryAddress, invoiceAddress;
 
+  /// Property holding the value for the [deliveryType] method.
+  ///
+  GsaModelSaleItem? _deliveryType;
+
   /// The type of delivery option specified for the order.
   ///
-  GsaModelSaleItem? deliveryType;
+  GsaModelSaleItem? get deliveryType => _deliveryType;
+
+  /// Setter method for the [_deliveryType] field.
+  ///
+  /// Notifies listeners on each update.
+  ///
+  set deliveryType(GsaModelSaleItem? value) {
+    _deliveryType = value;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      GsaDataCheckout.instance.notifyListeners();
+    });
+  }
 
   /// Payment type specified for the order.
   ///
-  GsaModelSaleItem? paymentType;
+  GsaModelSaleItem? _paymentType;
+
+  /// The type of delivery option specified for the order.
+  ///
+  GsaModelSaleItem? get paymentType => _paymentType;
+
+  /// Setter method for the [_deliveryType] field.
+  ///
+  /// Notifies listeners on each update.
+  ///
+  set paymentType(GsaModelSaleItem? value) {
+    _paymentType = value;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      GsaDataCheckout.instance.notifyListeners();
+    });
+  }
 
   /// The specified merchant / executor for this order.
   ///
@@ -363,7 +395,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
   ///
   /// Returns the current item cart count.
   ///
-  void addItem({
+  int addItem({
     required GsaModelSaleItem saleItem,
     int? newCount,
   }) {
@@ -384,6 +416,7 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
     }
     // Check for existing items in the cart.
     final saleItemCount = getItemCount(saleItem);
+    late int cartCount;
     if (saleItemCount == null) {
       // This item hasn't been previously added to the cart.
       if (items.where(
@@ -393,11 +426,12 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
       ).isEmpty) {
         items.add(saleItem);
       }
+      cartCount = newCount ?? 1;
       itemCount.add(
         GsaModelOrderDraftItemCount(
           id: saleItem.id!,
           optionId: null,
-          count: newCount ?? 1,
+          count: cartCount,
         ),
       );
     } else {
@@ -412,15 +446,21 @@ extension GsaModelOrderDraftOperationsExt on GsaModelOrderDraft {
         );
       }
       final currentCount = itemCount[cartItemIndex].count;
-      final updatedCount = newCount ?? (currentCount + 1);
-      if (saleItem.maxCount != null && updatedCount > saleItem.maxCount!) {
+      cartCount = newCount ?? (currentCount + 1);
+      if (saleItem.maxCount != null && cartCount > saleItem.maxCount!) {
         throw Exception(
-          'Amount $updatedCount larger than max count ${saleItem.maxCount}.',
+          'Amount $cartCount larger than max count ${saleItem.maxCount}.',
         );
       }
-      itemCount[cartItemIndex].count = updatedCount;
+      itemCount[cartItemIndex].count = cartCount;
     }
-    GsaDataCheckout.instance.notifyListeners();
+    Future.delayed(
+      Duration.zero,
+      () {
+        GsaDataCheckout.instance.notifyListeners();
+      },
+    );
+    return cartCount;
   }
 
   /// Validates the [saleItem] and [optionIndex] values.

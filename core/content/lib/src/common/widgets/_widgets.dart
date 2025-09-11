@@ -76,7 +76,7 @@ enum GsaWidgets {
       case GsaWidgets.overlayContentBlocking:
         return GsaWidgetOverlayContentBlocking;
       case GsaWidgets.overlayLegalConsent:
-        return GsaWidgetOverlayConsent;
+        return GsaWidgetOverlayCookieConsent;
       case GsaWidgets.overlaySaleItem:
         return GsaWidgetOverlaySaleItem;
       case GsaWidgets.appBar:

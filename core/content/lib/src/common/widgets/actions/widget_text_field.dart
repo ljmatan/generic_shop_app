@@ -394,9 +394,11 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
                           focusNode: _buttonFocusNode,
                           onTap: widget.obscureText == true
                               ? () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
+                                  if (mounted) {
+                                    setState(() {
+                                      _obscureText = !_obscureText;
+                                    });
+                                  }
                                 }
                               : () {
                                   _textController.clear();
@@ -423,9 +425,11 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
                     final errorText = widget.validator!(value);
                     if (_errorText != errorText) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        setState(() {
-                          _errorText = errorText;
-                        });
+                        if (mounted) {
+                          setState(() {
+                            _errorText = errorText;
+                          });
+                        }
                       });
                     }
                     return errorText;
