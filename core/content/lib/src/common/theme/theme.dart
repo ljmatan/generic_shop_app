@@ -24,25 +24,31 @@ class GsaTheme {
     this.logoImagePath,
     this.animatedAppBar = true,
     Brightness? brightness,
-    Color? primaryColor,
-    Color? secondaryColor,
+    Color? primaryColorLight,
+    Color? primaryColorDark,
+    Color? secondaryColorLight,
+    Color? secondaryColorDark,
     String? fontFamily,
     SystemUiOverlayStyle? systemUiOverlayStyle,
-    Color? borderColor,
+    Color? borderColorLight,
+    Color? borderColorDark,
     BorderRadius? borderRadius,
   }) {
     this.brightness = brightness ?? _brightness;
-    this.primaryColor = primaryColor ?? _primaryColor;
-    this.secondaryColor = secondaryColor ?? _secondaryColor;
+    this.primaryColorLight = primaryColorLight ?? _primaryColorLight;
+    this.primaryColorDark = primaryColorDark ?? _primaryColorDark;
+    this.secondaryColorLight = secondaryColorLight ?? _secondaryColor;
+    this.secondaryColorDark = secondaryColorDark ?? _secondaryColor;
     this.fontFamily = fontFamily ?? _fontFamily;
     this.systemUiOverlayStyle = systemUiOverlayStyle ?? _systemUiOverlayStyle;
-    this.borderColor = borderColor ?? _borderColor;
+    this.borderColorLight = borderColorLight ?? _borderColor;
+    this.borderColorDark = borderColorDark ?? _borderColor;
     this.borderRadius = borderRadius ?? _borderRadius;
     roundedRectangleBorder = _roundedRectangleBorder.copyWith(
-      side: borderColor == null
+      side: this.brightness == Brightness.light && borderColorLight == null || this.brightness == Brightness.dark && borderColorDark == null
           ? null
           : BorderSide(
-              color: borderColor,
+              color: this.brightness == Brightness.light ? borderColorLight! : borderColorDark!,
             ),
     );
     inputDecorationTheme = _inputDecorationTheme;
@@ -66,13 +72,25 @@ class GsaTheme {
   ///
   late Brightness brightness;
 
+  /// Properties defining available options for the [primaryColor] field.
+  ///
+  late Color primaryColorLight, primaryColorDark;
+
   /// The background color for major parts of the app (e.g., toolbars or tab bars).
   ///
-  late Color primaryColor;
+  Color get primaryColor {
+    return brightness == Brightness.light ? primaryColorLight : primaryColorDark;
+  }
+
+  /// Properties defining available options for the [secondaryColor] field.
+  ///
+  late Color secondaryColorLight, secondaryColorDark;
 
   /// Color used for less prominent components in the UI.
   ///
-  late Color secondaryColor;
+  Color get secondaryColor {
+    return brightness == Brightness.light ? secondaryColorLight : secondaryColorDark;
+  }
 
   /// The name of the font to use when painting the text.
   ///
@@ -82,9 +100,15 @@ class GsaTheme {
   ///
   late SystemUiOverlayStyle systemUiOverlayStyle;
 
+  /// Properties defining available options for the [borderColor] field.
+  ///
+  late Color borderColorLight, borderColorDark;
+
   /// Color applied to border of elements such as [Card] or to [Divider] elements.
   ///
-  late Color borderColor;
+  Color get borderColor {
+    return brightness == Brightness.light ? borderColorLight : borderColorDark;
+  }
 
   /// Border radius value applied to elements such as [Card], [OutlinedButton], etc.
   ///
@@ -175,7 +199,9 @@ class GsaTheme {
             Colors.transparent,
           ),
           shape: WidgetStatePropertyAll(
-            roundedRectangleBorder,
+            roundedRectangleBorder.copyWith(
+              side: BorderSide.none,
+            ),
           ),
           padding: WidgetStatePropertyAll(
             _inputDecorationThemePadding,
@@ -256,7 +282,9 @@ class GsaTheme {
             Colors.transparent,
           ),
           shape: WidgetStatePropertyAll(
-            roundedRectangleBorder,
+            roundedRectangleBorder.copyWith(
+              side: BorderSide.none,
+            ),
           ),
           textStyle: WidgetStatePropertyAll(
             TextStyle(

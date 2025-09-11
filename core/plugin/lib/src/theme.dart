@@ -12,11 +12,14 @@ class GsaPluginTheme extends GsaTheme {
     super.logoImagePath,
     super.animatedAppBar = true,
     super.brightness,
-    super.primaryColor,
-    super.secondaryColor,
+    super.primaryColorLight,
+    super.primaryColorDark,
+    super.secondaryColorLight,
+    super.secondaryColorDark,
     super.fontFamily,
     super.systemUiOverlayStyle,
-    super.borderColor,
+    super.borderColorLight,
+    super.borderColorDark,
     super.borderRadius,
   });
 }

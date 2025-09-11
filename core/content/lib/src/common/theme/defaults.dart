@@ -18,12 +18,12 @@ extension _GsaThemeDefaults on GsaTheme {
     return dart_ui.PlatformDispatcher.instance.platformBrightness;
   }
 
-  Color get _primaryColor {
-    if (brightness == Brightness.light) {
-      return const Color(0xffE1BEE7);
-    } else {
-      return const Color(0xff90A4AE);
-    }
+  Color get _primaryColorLight {
+    return const Color(0xffE1BEE7);
+  }
+
+  Color get _primaryColorDark {
+    return const Color(0xff90A4AE);
   }
 
   Color get _secondaryColor {
@@ -116,7 +116,7 @@ extension _GsaThemeDefaults on GsaTheme {
     return RoundedRectangleBorder(
       borderRadius: borderRadius,
       side: BorderSide(
-        color: brightness == Brightness.light ? Colors.grey.shade200 : Colors.grey.shade700,
+        color: _borderColor,
       ),
     );
   }

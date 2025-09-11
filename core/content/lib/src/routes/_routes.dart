@@ -273,7 +273,9 @@ abstract class GsacRoute extends GsaRoute {
   @override
   GsaRouteType get routeType {
     return GsaRoutes.values.firstWhere(
-      (route) => route.routeRuntimeType == runtimeType,
+      (route) {
+        return route.routeRuntimeType == runtimeType;
+      },
     );
   }
 }

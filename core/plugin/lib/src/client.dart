@@ -5,6 +5,10 @@ part of '../plugin.dart';
 /// Used identifying of the current client during the app runtime.
 ///
 enum GsaPluginClient {
+  /// Application Content Management System.
+  ///
+  cms,
+
   /// Demo client integration, specified with mock data for app showcase.
   ///
   demo,

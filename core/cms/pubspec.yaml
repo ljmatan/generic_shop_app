@@ -1,0 +1,48 @@
+name: generic_shop_app_cms
+description: "Content Management System for the GSA Project."
+version: 0.0.1
+homepage: https://github.com/ljmatan
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  generic_shop_app_architecture:
+    path: ../../core/arch
+  generic_shop_app_demo:
+    path: ../../plugins/demo
+  generic_shop_app_fitness_tracker:
+    path: ../../plugins/fitness_tracker
+  generic_shop_app_froddo_b2b:
+    path: ../../plugins/froddo_b2b
+  generic_shop_app_froddo_b2c:
+    path: ../../plugins/froddo_b2c
+  device_frame_plus: ^1.5.0
+  flutter_colorpicker: ^1.1.0
+  file_picker: ^10.3.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/svg/
+    - assets/images/
+    - assets/demo/
+    - assets/demo/svg/
+    - assets/fitness_tracker/
+    - assets/froddo_b2b/
+    - assets/froddo_b2b/svg/
+    - assets/froddo_b2c/
+    - assets/froddo_b2c/svg/
