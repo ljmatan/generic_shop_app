@@ -36,6 +36,7 @@ class GftPlugin extends GsaPlugin {
   @override
   final GsaPluginTheme theme = GsaPluginTheme(
     fontFamily: 'packages/generic_shop_app_fitness_tracker/Open Sans',
-    primaryColor: const Color(0xff10467c),
+    primaryColorLight: const Color(0xff10467c),
+    primaryColorDark: const Color(0xff10467c),
   );
 }

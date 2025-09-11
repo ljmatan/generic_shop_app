@@ -82,7 +82,9 @@ abstract class GftRoute extends GsaRoute {
   @override
   GsaRouteType get routeType {
     return GftRoutes.values.firstWhere(
-      (route) => route.routeRuntimeType == runtimeType,
+      (route) {
+        return route.routeRuntimeType == runtimeType;
+      },
     );
   }
 }

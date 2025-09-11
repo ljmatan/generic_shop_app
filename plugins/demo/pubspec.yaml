@@ -1,0 +1,54 @@
+name: generic_shop_app_demo
+description: "Generic Shop App Project Demo Showcase."
+version: 0.0.1
+homepage: https://github.com/ljmatan
+publish_to: none
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: '>=3.3.0'
+  
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  generic_shop_app_architecture:
+    path: ../../core/arch
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/svg/
+    - assets/images/
+    - assets/demo/
+    - assets/demo/svg/
+    
+  fonts:
+    - family: Comic Neue
+      fonts:
+        - asset: assets/fonts/ComicNeue-Light.ttf
+          weight: 100
+        - asset: assets/fonts/ComicNeue-Light.ttf
+          weight: 200
+        - asset: assets/fonts/ComicNeue-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/ComicNeue-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/ComicNeue-Regular.ttf
+          weight: 500
+        - asset: assets/fonts/ComicNeue-Regular.ttf
+          weight: 600
+        - asset: assets/fonts/ComicNeue-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/ComicNeue-Bold.ttf
+          weight: 800
+        - asset: assets/fonts/ComicNeue-Bold.ttf
+          weight: 900
