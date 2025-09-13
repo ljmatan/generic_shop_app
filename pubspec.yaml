@@ -8,10 +8,11 @@ environment:
 workspace:
   - core/api
   - core/arch
+  - core/cms
   - core/content 
-  - core/data 
-  - core/demo 
+  - core/data
   - core/services
+  - plugins/demo 
   - plugins/fitness_tracker
   - plugins/froddo_b2b
   - plugins/froddo_b2c
