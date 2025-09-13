@@ -19,7 +19,11 @@ class _GsaWidgetTotalCartPriceState extends State<GsaWidgetTotalCartPrice> {
   void initState() {
     super.initState();
     _cartCountListenerId = GsaDataCheckout.instance.addListener(
-      () => setState(() {}),
+      () {
+        if (mounted) {
+          setState(() {});
+        }
+      },
     );
   }
 

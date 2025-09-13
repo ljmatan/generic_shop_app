@@ -319,7 +319,7 @@ class _GsaWidgetTextFieldState extends State<GsaWidgetTextField> {
             keyboardType: widget.keyboardType,
             minLines: widget.minLines,
             maxLines: _obscureText ? 1 : widget.maxLines,
-            textInputAction: widget.textInputAction,
+            textInputAction: widget.textInputAction ?? TextInputAction.done,
             textAlign: widget.textAlign,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(

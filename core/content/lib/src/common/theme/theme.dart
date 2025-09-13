@@ -184,7 +184,8 @@ class GsaTheme {
               ),
             ),
       dividerColor: borderColor,
-      dividerTheme: const DividerThemeData(
+      dividerTheme: DividerThemeData(
+        color: borderColor,
         thickness: .4,
         space: .4,
       ),
@@ -340,7 +341,7 @@ class GsaTheme {
               error: Colors.red.shade300,
               onError: Colors.white,
               surface: Colors.white,
-              onSurface: Colors.grey.shade200,
+              onSurface: const Color(0xff1C1B1F),
               surfaceTint: Colors.white,
             )
           : ColorScheme(
@@ -352,7 +353,7 @@ class GsaTheme {
               error: Colors.red.shade700,
               onError: Colors.white,
               surface: const Color(0xff333333),
-              onSurface: Colors.grey.shade300,
+              onSurface: const Color(0xffE6E1E5),
               surfaceTint: const Color(0xff212121),
             ),
       iconTheme: IconThemeData(

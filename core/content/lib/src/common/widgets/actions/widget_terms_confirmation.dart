@@ -119,8 +119,8 @@ class _GsaWidgetTermsConfirmationState extends State<GsaWidgetTermsConfirmation>
           fontSize: 12,
         ),
       ),
-      onTap: (value) {
-        widget.onValueChanged(value);
+      onTap: (newValue) {
+        widget.onValueChanged(newValue);
       },
     );
   }

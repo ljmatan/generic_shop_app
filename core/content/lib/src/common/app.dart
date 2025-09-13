@@ -50,7 +50,7 @@ class GsaState extends State<Gsa> {
               child: Center(
                 child: GsaWidgetError(
                   snapshot.error.toString(),
-                  retry: () {
+                  action: () {
                     setState(() {
                       _initFuture = GsaConfig.init(context);
                     });

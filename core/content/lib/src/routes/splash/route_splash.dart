@@ -88,7 +88,7 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
             return Center(
               child: GsaWidgetError(
                 snapshot.error.toString(),
-                retry: () {
+                action: () {
                   _initialiser = _initialise();
                   setState(() {});
                 },

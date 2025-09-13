@@ -5,6 +5,8 @@ import 'package:generic_shop_app_content/content.dart';
 import 'package:image/image.dart' as imglib;
 import 'package:zxing2/qrcode.dart' as zxing;
 
+part 'i18n/route_camera_i18n.dart';
+
 /// Defines the functional mode of the camera within the GSA route flow.
 ///
 /// This is used to distinguish between scanning functionality (e.g., QR or barcode scanning)
@@ -39,6 +41,7 @@ enum GsaRouteCameraMode {
   /// User-visible descriptive explanation for this mode.
   ///
   /// Can be used in tooltips, onboarding messages, or inline instructions.
+  ///
   String get description {
     switch (this) {
       case GsaRouteCameraMode.scan:
@@ -195,12 +198,22 @@ class _GsaRouteCameraState extends GsaRouteState<GsaRouteCamera> with WidgetsBin
                       );
                       if (saleItem == null) {
                         await GsaWidgetOverlayAlert(
-                          'Product $code not found.',
+                          '${GsaRouteCameraI18N.saleItemNotFoundAlertMessage.value.display}: $code',
                         ).openDialog();
                       } else {
+                        final cartCount = saleItem.cartCountWithOptions();
+                        if (cartCount != null) {
+                          GsaWidgetOverlayAlert(
+                            '${GsaRouteCameraI18N.saleItemAlreadyAddedAlertMessage.value.display}: $code',
+                          ).openDialog();
+                          return;
+                        }
+                        GsaDataCheckout.instance.orderDraft.addItem(
+                          saleItem: saleItem,
+                          newCount: 0,
+                        );
                         await _releaseCameraResources();
                         Navigator.pop(context);
-                        GsaRouteSaleItemDetails(saleItem).push();
                       }
                       break;
                     default:
@@ -265,7 +278,7 @@ class _GsaRouteCameraState extends GsaRouteState<GsaRouteCamera> with WidgetsBin
                   return Center(
                     child: GsaWidgetError(
                       snapshot.error.toString(),
-                      retry: () {
+                      action: () {
                         setState(() => _cameraInitFutureKey = UniqueKey());
                       },
                     ),

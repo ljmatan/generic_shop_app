@@ -130,108 +130,111 @@ class _GsaWidgetDropdownMenuState<T> extends State<GsaWidgetDropdownMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownMenuFormField<T>(
-      key: _key,
-      dropdownMenuEntries: widget.dropdownMenuEntries,
-      enableFilter: widget.enableFilter,
-      enableSearch: widget.enableSearch,
-      controller: _textController,
-      focusNode: _focusNode,
-      enabled: widget.enabled,
-      leadingIcon: widget.prefixIcon,
-      trailingIcon: widget.suffixIcon,
-      label: widget.labelText == null
-          ? null
-          : GsaWidgetText(
-              widget.labelText!,
-            ),
-      hintText: widget.hintText,
-      width: widget.width,
-      menuHeight: widget.height,
-      initialSelection: _initialSelection,
-      expandedInsets: EdgeInsets.zero,
-      textStyle: GsaWidgetTextField.themeProperties.textStyle(context),
-      menuStyle: Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(
-            minimumSize: WidgetStatePropertyAll(
-              Size(
-                0,
-                widget.width ?? 0,
+    return SizedBox(
+      height: GsaTheme.of(context).actionElementHeight,
+      child: DropdownMenuFormField<T>(
+        key: _key,
+        dropdownMenuEntries: widget.dropdownMenuEntries,
+        enableFilter: widget.enableFilter,
+        enableSearch: widget.enableSearch,
+        controller: _textController,
+        focusNode: _focusNode,
+        enabled: widget.enabled,
+        leadingIcon: widget.prefixIcon,
+        trailingIcon: widget.suffixIcon,
+        label: widget.labelText == null
+            ? null
+            : GsaWidgetText(
+                widget.labelText!,
+              ),
+        hintText: widget.hintText,
+        width: widget.width,
+        menuHeight: widget.height,
+        initialSelection: _initialSelection,
+        expandedInsets: EdgeInsets.zero,
+        textStyle: GsaWidgetTextField.themeProperties.textStyle(context),
+        menuStyle: Theme.of(context).dropdownMenuTheme.menuStyle?.copyWith(
+              minimumSize: WidgetStatePropertyAll(
+                Size(
+                  0,
+                  widget.width ?? 0,
+                ),
+              ),
+              maximumSize: WidgetStatePropertyAll(
+                Size(
+                  MediaQuery.of(context).size.height,
+                  widget.width ?? MediaQuery.of(context).size.width,
+                ),
               ),
             ),
-            maximumSize: WidgetStatePropertyAll(
-              Size(
-                MediaQuery.of(context).size.height,
-                widget.width ?? MediaQuery.of(context).size.width,
+        inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
+              fillColor: GsaWidgetTextField.themeProperties.fillColor(
+                Theme.of(context).brightness,
+                _focusNode,
+                _textController,
+              ),
+              border: GsaWidgetTextField.themeProperties.border(
+                context,
+                _focusNode,
+                _textController,
+              ),
+              focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
+                context,
+                Theme.of(context).primaryColor,
+              ),
+              enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
+                context,
+                _focusNode,
+                _textController,
+              ),
+              disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
+                context,
+                _textController,
+              ),
+              errorBorder: GsaWidgetTextField.themeProperties.errorBorder(
+                context,
+              ),
+              focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(
+                context,
+              ),
+              labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
+                context,
+                _focusNode,
+                _textController,
               ),
             ),
-          ),
-      inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
-            fillColor: GsaWidgetTextField.themeProperties.fillColor(
-              Theme.of(context).brightness,
-              _focusNode,
-              _textController,
-            ),
-            border: GsaWidgetTextField.themeProperties.border(
-              context,
-              _focusNode,
-              _textController,
-            ),
-            focusedBorder: GsaWidgetTextField.themeProperties.focusedBorder(
-              context,
-              Theme.of(context).primaryColor,
-            ),
-            enabledBorder: GsaWidgetTextField.themeProperties.enabledBorder(
-              context,
-              _focusNode,
-              _textController,
-            ),
-            disabledBorder: GsaWidgetTextField.themeProperties.disabledBorder(
-              context,
-              _textController,
-            ),
-            errorBorder: GsaWidgetTextField.themeProperties.errorBorder(
-              context,
-            ),
-            focusedErrorBorder: GsaWidgetTextField.themeProperties.focusedErrorBorder(
-              context,
-            ),
-            labelStyle: GsaWidgetTextField.themeProperties.labelStyle(
-              context,
-              _focusNode,
-              _textController,
-            ),
-          ),
-      onSaved: (value) {
-        if (value is String) {
-          _textController.text = value;
-          _initialSelection = value;
-          _onTextControllerUpdate();
-        }
-      },
-      onSelected: (value) {
-        if (value is String) {
-          _textController.text = value;
-          _initialSelection = value;
-          _onTextControllerUpdate();
-        }
-        if (widget.onSelected != null) {
-          widget.onSelected!(value);
-          if (widget.clearOnSelected == true) {
-            _textController.clear();
+        onSaved: (value) {
+          if (value is String) {
+            _textController.text = value;
+            _initialSelection = value;
+            _onTextControllerUpdate();
           }
-        }
-      },
-      textInputAction: TextInputAction.done,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: widget.validator != null
-          ? (value) {
-              if (value is String || value == null) {
-                return widget.validator!(value as String?);
-              } else {
-                return 'DropdownMenuFormField.validator not set with proper type.';
-              }
+        },
+        onSelected: (value) {
+          if (value is String) {
+            _textController.text = value;
+            _initialSelection = value;
+            _onTextControllerUpdate();
+          }
+          if (widget.onSelected != null) {
+            widget.onSelected!(value);
+            if (widget.clearOnSelected == true) {
+              _textController.clear();
             }
-          : null,
+          }
+        },
+        textInputAction: TextInputAction.done,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: widget.validator != null
+            ? (value) {
+                if (value is String || value == null) {
+                  return widget.validator!(value as String?);
+                } else {
+                  return 'DropdownMenuFormField.validator not set with proper type.';
+                }
+              }
+            : null,
+      ),
     );
   }
 

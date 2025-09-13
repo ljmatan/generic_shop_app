@@ -8,8 +8,8 @@ class GsaWidgetError extends StatefulWidget {
   const GsaWidgetError(
     this.message, {
     super.key,
-    this.retry,
-    this.retryLabel,
+    this.action,
+    this.actionLabel,
   });
 
   /// Error message displayed to the user.
@@ -18,11 +18,11 @@ class GsaWidgetError extends StatefulWidget {
 
   /// An optional method aimed at handling invocation retry attempt.
   ///
-  final Function? retry;
+  final Function? action;
 
-  /// Custom label applied to the button with dedicated [retry] functionality.
+  /// Custom label applied to the button with dedicated [action] functionality.
   ///
-  final String? retryLabel;
+  final String? actionLabel;
 
   @override
   State<GsaWidgetError> createState() => _GsaWidgetErrorState();
@@ -56,10 +56,16 @@ class _GsaWidgetErrorState extends State<GsaWidgetError> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 14),
-          if (widget.retry != null)
-            GsaWidgetButton.outlined(
-              label: widget.retryLabel ?? 'Retry',
-              onTap: () => widget.retry!(),
+          if (widget.action != null)
+            TextButton(
+              child: GsaWidgetText(
+                widget.actionLabel ?? 'Retry',
+              ),
+              onPressed: widget.action == null
+                  ? null
+                  : () {
+                      widget.action!();
+                    },
             ),
         ],
       ),

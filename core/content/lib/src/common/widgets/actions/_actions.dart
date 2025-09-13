@@ -5,6 +5,7 @@ export 'widget_dropdown_menu_gender.dart';
 export 'widget_dropdown_menu.dart';
 export 'widget_expansion_tile.dart';
 export 'widget_phone_number_input.dart';
+export 'widget_popup_menu.dart';
 export 'widget_radio_button.dart';
 export 'widget_sticky_bottom_button.dart';
 export 'widget_switch.dart';

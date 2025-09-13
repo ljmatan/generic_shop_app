@@ -36,14 +36,14 @@ class GsaServiceSearch extends GsaService {
 
   /// Compares the contents of [comparisonValue] instances against the given [searchTerm] with the specified [comparator].
   ///
-  Future<List<dynamic>> findByCharacters({
+  Future<List<T>> findByCharacters<T>({
     required String searchTerm,
-    required Iterable<dynamic> comparisonValues,
-    required Iterable<String> Function(dynamic value) comparator,
+    required Iterable<T> comparisonValues,
+    required Iterable<String> Function(T value) comparator,
   }) async {
     final normalizedSearchTerm = _normalizeComparisonValue(searchTerm);
     if (normalizedSearchTerm.isEmpty) return [];
-    final results = <dynamic>[];
+    final results = <T>[];
     for (final comparison in comparisonValues) {
       final comparisonValues = comparator(comparison);
       for (final comparisonValue in comparisonValues) {

@@ -81,7 +81,8 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
         const SizedBox(height: 10),
         const GsaWidgetHeadline('Cart Items'),
         GsaWidgetText(
-          'Cart item prices may deviate from actual costs due to factors like promotions, taxes, and occasional errors. '
+          'Cart item prices may deviate from actual costs due to factors like '
+          'promotions, taxes, and occasional errors. '
           'For precise totals, verify the information with the merchant.',
           style: const TextStyle(
             color: Colors.grey,
@@ -89,27 +90,38 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
           ),
         ),
         const SizedBox(height: 16),
-        for (final product in GsaDataCheckout.instance.orderDraft.items.indexed)
+        for (final saleItem in GsaDataCheckout.instance.orderDraft.items.indexed)
           Padding(
-            padding: product.$1 == 0 ? EdgeInsets.zero : const EdgeInsets.only(top: 8),
+            padding: saleItem.$1 == 0 ? EdgeInsets.zero : const EdgeInsets.only(top: 8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: product.$2.imageUrls?.isNotEmpty == true
-                        ? GsaWidgetImage.network(
-                            product.$2.imageUrls![0],
-                            width: 60,
-                            height: 60,
-                          )
-                        : GsaWidgetImage.placeholder(
-                            width: 60,
-                            height: 60,
-                          ),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(1),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: saleItem.$2.imageUrls?.isNotEmpty == true
+                          ? GsaWidgetImage.network(
+                              saleItem.$2.imageUrls![0],
+                              width: 60,
+                              height: 60,
+                            )
+                          : GsaWidgetImage.placeholder(
+                              width: 60,
+                              height: 60,
+                            ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: GsaTheme.of(context).paddings.content.small,
                 ),
                 Flexible(
                   child: SizedBox(
@@ -121,7 +133,7 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GsaWidgetText(
-                            product.$2.name ?? 'N/A',
+                            saleItem.$2.name ?? 'N/A',
                             maxLines: 2,
                             style: const TextStyle(
                               fontWeight: FontWeight.w300,
@@ -131,7 +143,7 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
                           Row(
                             children: [
                               GsaWidgetText(
-                                '${product.$2.cartCount()} x ${product.$2.price?.formatted} '
+                                '${saleItem.$2.cartCount()} x ${saleItem.$2.price?.formatted} '
                                 '${GsaConfig.currency.code} ',
                                 style: const TextStyle(
                                   fontSize: 12,
@@ -139,7 +151,7 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
                               ),
                               const Spacer(),
                               GsaWidgetText(
-                                ' ${((product.$2.cartCount() ?? 0) * (product.$2.price?.unity ?? 0)).toStringAsFixed(2)} ${GsaConfig.currency.code}',
+                                ' ${((saleItem.$2.cartCount() ?? 0) * (saleItem.$2.price?.unity ?? 0)).toStringAsFixed(2)} ${GsaConfig.currency.code}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,
@@ -162,9 +174,9 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
         const SizedBox(height: 6),
         GsaWidgetTermsConfirmation(
           value: _termsAccepted,
-          onValueChanged: (value) {
+          onValueChanged: (newValue) {
             setState(() {
-              _termsAccepted = !_termsAccepted;
+              _termsAccepted = newValue;
             });
           },
           checkboxKey: _checkboxKey,
@@ -177,8 +189,7 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
               ? () async {
                   const GsaWidgetOverlayContentBlocking().openDialog();
                   await Future.delayed(const Duration(seconds: 2));
-                  GsaDataCheckout.instance.clear();
-                  Navigator.popUntil(context, (route) => route.isFirst);
+                  Navigator.pop(context);
                   const GsaRouteOrderStatus().push();
                 }
               : () {
