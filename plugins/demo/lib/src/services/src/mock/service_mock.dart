@@ -11,6 +11,7 @@ part 'values/service_mock_values_sale_item_name.dart';
 part 'values/service_mock_values_prices.dart';
 part 'values/service_mock_values_state.dart';
 part 'values/service_mock_values_street.dart';
+part 'values/service_mock_values_words.dart';
 
 /// Data mocking services used for debugging and automated testing.
 ///
@@ -28,6 +29,8 @@ class GsdServiceMock extends GsaService {
     return true;
   }
 
+  final _random = dart_math.Random();
+
   /// Generates a random string of [length]
   /// with options to [includeChars], [includeNumbers], and [includeSpecialChars].
   ///
@@ -44,15 +47,15 @@ class GsdServiceMock extends GsaService {
     const specialChars = '!@#%^&*()_-+={}[]|:;"<>,.?/~`';
     String value = '';
     while (validParameters && value.length < length) {
-      switch (dart_math.Random().nextInt(3)) {
+      switch (_random.nextInt(3)) {
         case 0:
-          if (includeChars) value += chars[dart_math.Random().nextInt(chars.length)];
+          if (includeChars) value += chars[_random.nextInt(chars.length)];
           break;
         case 1:
-          if (includeNumbers) value += numbers[dart_math.Random().nextInt(numbers.length)];
+          if (includeNumbers) value += numbers[_random.nextInt(numbers.length)];
           break;
         case 2:
-          if (includeSpecialChars) value += specialChars[dart_math.Random().nextInt(specialChars.length)];
+          if (includeSpecialChars) value += specialChars[_random.nextInt(specialChars.length)];
           break;
       }
     }
@@ -78,10 +81,38 @@ class GsdServiceMock extends GsaService {
 
   /// Returns a random entry from the provided [collection].
   ///
-  dynamic getRandomEntry(Iterable collection) {
+  dynamic getRandomEntry<T>(Iterable<T> collection) {
     return collection.elementAt(
-      dart_math.Random().nextInt(collection.length),
+      _random.nextInt(collection.length),
     );
+  }
+
+  /// Returns a random text description.
+  ///
+  String generateRandomDescription({
+    int minWords = 20,
+    int maxWords = 50,
+  }) {
+    final length = minWords + _random.nextInt(maxWords - minWords + 1);
+    final buffer = StringBuffer();
+    int wordsInSentence = 0;
+    int sentenceLength = 4 + _random.nextInt(8);
+    for (var i = 0; i < length; i++) {
+      String w = getRandomEntry<String>(_valueWords);
+      if (wordsInSentence == 0) {
+        w = w[0].toUpperCase() + w.substring(1);
+      }
+      buffer.write(w);
+      wordsInSentence++;
+      if (wordsInSentence >= sentenceLength || i == length - 1) {
+        buffer.write('. ');
+        wordsInSentence = 0;
+        sentenceLength = 4 + _random.nextInt(8);
+      } else {
+        buffer.write(' ');
+      }
+    }
+    return buffer.toString().trim();
   }
 
   @override
@@ -111,6 +142,7 @@ class GsdServiceMock extends GsaService {
         return GsaModelCategory(
           id: mockCategory.id,
           name: mockCategory.name,
+          description: generateRandomDescription(),
         );
       },
     ).toList();
@@ -145,6 +177,7 @@ class GsdServiceMock extends GsaService {
             GsaDataSaleItems.instance.categories,
           ) as GsaModelCategory)
               .id,
+          description: generateRandomDescription(),
           price: GsaModelPrice(
             centum: mockSaleItem.priceCentum,
           ),

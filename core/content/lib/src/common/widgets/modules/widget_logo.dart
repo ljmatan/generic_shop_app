@@ -1,3 +1,5 @@
+import 'dart:convert' as dart_convert;
+
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/content.dart';
 
@@ -21,8 +23,21 @@ class GsaWidgetLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logoImagePath = GsaPlugin.of(context).theme.logoImagePath;
+    final plugin = GsaPlugin.of(context);
+    final logoImagePath = plugin.theme.logoImagePath;
     if (logoImagePath != null) {
+      if (logoImagePath.startsWith('BASE64/')) {
+        String imageDataEncoded = logoImagePath.replaceAll('BASE64/', '');
+        final type = imageDataEncoded.split('/').first;
+        imageDataEncoded = imageDataEncoded.replaceAll('$type/', '');
+        final imageDataDecoded = dart_convert.base64Decode(imageDataEncoded);
+        return GsaWidgetImage.bytes(
+          imageDataDecoded,
+          type: type == 'svg' ? GsaWidgetImageByteType.svg : GsaWidgetImageByteType.standard,
+          width: width,
+          height: height,
+        );
+      }
       if (logoImagePath.startsWith('assets') || logoImagePath.startsWith('packages')) {
         return GsaWidgetImage.asset(
           logoImagePath,
@@ -36,6 +51,21 @@ class GsaWidgetLogo extends StatelessWidget {
           height: height,
         );
       }
+    } else if (plugin.client == GsaPluginClient.demo) {
+      return SizedBox(
+        width: width,
+        height: height,
+        child: Center(
+          child: GsaWidgetText(
+            'Your Logo Here',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              shadows: GsaTheme.of(context).outline.shadows,
+            ),
+          ),
+        ),
+      );
     }
     return SizedBox(
       width: width,

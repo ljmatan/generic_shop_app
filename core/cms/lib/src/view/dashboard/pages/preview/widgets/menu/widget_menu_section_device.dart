@@ -53,6 +53,7 @@ class _WidgetMenuSectionDeviceState extends State<_WidgetMenuSectionDevice> {
         ),
         const SizedBox(height: 20),
         GsaWidgetDropdownMenu<device_frame.DeviceInfo>(
+          key: UniqueKey(),
           labelText: 'Model',
           enableFilter: false,
           enableSearch: false,

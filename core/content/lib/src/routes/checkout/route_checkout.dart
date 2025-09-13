@@ -6,7 +6,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:generic_shop_app_content/content.dart';
 
 part 'widgets/widget_checkout_option.dart';
-part 'widgets/widget_vendor_option.dart';
 part 'widgets/widget_merchant_map_finder.dart';
 part 'widgets/widget_checkout_overview.dart';
 
@@ -25,8 +24,28 @@ class GsaRouteCheckout extends GsacRoute {
 class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
   final _pageController = PageController();
 
+  final _animationDuration = const Duration(milliseconds: 500);
+
+  Future<void> _goToStep(int step) async {
+    return await _pageController.animateToPage(
+      step,
+      duration: _animationDuration,
+      curve: Curves.ease,
+    );
+  }
+
+  Future<void> _goToPreviousStep() async {
+    return await _pageController.previousPage(
+      duration: _animationDuration,
+      curve: Curves.ease,
+    );
+  }
+
   Future<void> _goToNextStep() async {
-    return await _pageController.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.ease);
+    return await _pageController.nextPage(
+      duration: _animationDuration,
+      curve: Curves.ease,
+    );
   }
 
   @override
@@ -48,11 +67,7 @@ class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
                 if ((_pageController.page ?? 0) > 1 && _pageController.page! < 2) {
                   GsaDataCheckout.instance.orderDraft.paymentType = null;
                 }
-                await _pageController.animateToPage(
-                  (_pageController.page! - 1 > 0 ? _pageController.page! - 1 : 0).toInt(),
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.ease,
-                );
+                await _goToPreviousStep();
               } else {
                 Navigator.pop(context);
               }
@@ -88,7 +103,7 @@ class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
                     onCartSettingsUpdate: () => setState(() {}),
                     goToNextStep: _goToNextStep,
                   ),
-                if (GsaDataMerchant.instance.merchant == null)
+                if (1 == 2 && GsaDataMerchant.instance.merchant == null)
                   _WidgetMerchantMapFinder(
                     notice: GsaModelTranslated(
                       values: [
@@ -100,7 +115,9 @@ class _GsaRouteCheckoutState extends GsaRouteState<GsaRouteCheckout> {
                     ),
                     goToNextStep: _goToNextStep,
                   ),
-                const _WidgetCheckoutOverview(),
+                _WidgetCheckoutOverview(
+                  state: this,
+                ),
               ],
             ),
           ),

@@ -37,24 +37,32 @@ class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
     _bookmarked = GsaServiceBookmarks.instance.isFavorited(widget.saleItem.id ?? '');
     _subscriptionBookmarkUpdates = GsaServiceBookmarks.instance.controllerUpdate.stream.listen(
       (bookmarkId) {
-        if (bookmarkId == widget.saleItem.id) setState(() => _bookmarked = !_bookmarked);
+        if (bookmarkId == null) {
+          setState(() {
+            _bookmarked = false;
+          });
+        } else if (bookmarkId == widget.saleItem.id) {
+          setState(() {
+            _bookmarked = !_bookmarked;
+          });
+        }
       },
     );
   }
 
   Future<void> _onBookmarkStateChange() async {
-    if (GsaServiceCacheEntry.bookmarks.value == true) {
+    if (GsaServiceCacheEntry.cookieConsentFunctional.value == true) {
       if (_bookmarked) {
         await GsaServiceBookmarks.instance.removeBookmark(widget.saleItem.id ?? '');
       } else {
         await GsaServiceBookmarks.instance.addBookmark(widget.saleItem.id ?? '');
       }
     } else {
-      await const GsaWidgetOverlayAlert(
-        'You haven\'t enabled functional cookies, so bookmarks can\'t be saved.\n\n'
-        'Update your cookie preferences to use this feature.',
+      const GsaWidgetOverlayCookieConsentMissing(
+        message: 'You haven\'t enabled functional cookies, so bookmarks can\'t be saved.\n\n'
+            'Update your cookie preferences to use this feature.',
+        functional: true,
       ).openDialog();
-      const GsaWidgetOverlayCookieConsent().openDialog();
     }
   }
 

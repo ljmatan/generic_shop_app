@@ -233,7 +233,7 @@ class _GsaWidgetImageBuilder extends StatelessWidget {
       }
     }
     if (widget.bytes.isNotEmpty) {
-      if (widget.type == GsaWidgetImageByteType.standard) {
+      if (widget.type != GsaWidgetImageByteType.svg) {
         return Image.memory(
           Uint8List.fromList(widget.bytes),
           width: widget.width,
@@ -241,6 +241,7 @@ class _GsaWidgetImageBuilder extends StatelessWidget {
           color: widget.colorFilter,
           fit: widget.fit,
           alignment: widget.alignment,
+          gaplessPlayback: true,
         );
       } else {
         return SvgPicture.memory(
@@ -273,6 +274,14 @@ class _GsaWidgetImageBuilder extends StatelessWidget {
                   ),
             fit: widget.fit,
             alignment: widget.alignment,
+            errorBuilder: (context, error, stackTrace) {
+              return GsaWidgetImage.placeholder(
+                width: widget.width,
+                height: widget.height,
+                fit: widget.fit,
+                alignment: widget.alignment,
+              );
+            },
           );
         } else {
           return SvgPicture.asset(
@@ -308,6 +317,14 @@ class _GsaWidgetImageBuilder extends StatelessWidget {
             color: widget.colorFilter,
             fit: widget.fit,
             alignment: widget.alignment,
+            errorBuilder: (context, error, stackTrace) {
+              return GsaWidgetImage.placeholder(
+                width: widget.width,
+                height: widget.height,
+                fit: widget.fit,
+                alignment: widget.alignment,
+              );
+            },
           );
         }
       }

@@ -173,7 +173,28 @@ class _WidgetMenuSectionThemeState extends State<_WidgetMenuSectionTheme> {
           ),
         ),
         SizedBox(
-          height: GsaTheme.of(context).paddings.content.mediumLarge,
+          height: GsaTheme.of(context).paddings.content.regular,
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: GsaWidgetButton.outlined(
+            label: 'Logo Upload',
+            icon: Icons.photo,
+            onTap: () async {
+              final imageFile = await GsdServiceOpenFile.instance.openImageFile();
+              if (imageFile != null) {
+                widget.state.setState(() {
+                  final base64EncodedImage =
+                      'BASE64/${imageFile.name.split('.').last}/'
+                      '${dart_convert.base64Encode(imageFile.bytes)}';
+                  widget.state._plugin.theme.logoImagePath = base64EncodedImage;
+                });
+              }
+            },
+          ),
+        ),
+        SizedBox(
+          height: GsaTheme.of(context).paddings.content.medium,
         ),
         Row(
           children: [

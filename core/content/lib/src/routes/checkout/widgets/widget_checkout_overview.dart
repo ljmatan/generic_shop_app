@@ -1,7 +1,11 @@
 part of '../route_checkout.dart';
 
 class _WidgetCheckoutOverview extends StatefulWidget {
-  const _WidgetCheckoutOverview();
+  const _WidgetCheckoutOverview({
+    required this.state,
+  });
+
+  final _GsaRouteCheckoutState state;
 
   @override
   State<_WidgetCheckoutOverview> createState() => _WidgetCheckoutOverviewState();
@@ -9,6 +13,8 @@ class _WidgetCheckoutOverview extends StatefulWidget {
 
 class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
   bool _termsAccepted = false;
+
+  final _checkboxKey = GlobalKey<GsaWidgetSwitchState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,9 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
             'Delivery',
             action: (
               label: 'EDIT',
-              onTap: () {},
+              onTap: () async {
+                await widget.state._goToStep(0);
+              },
             ),
           ),
           GsaWidgetText(
@@ -46,7 +54,11 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
               'Payment',
               action: (
                 label: 'EDIT',
-                onTap: () {},
+                onTap: () async {
+                  await widget.state._goToStep(
+                    GsaDataCheckout.instance.orderDraft.deliveryType != null ? 1 : 0,
+                  );
+                },
               ),
             ),
           ),
@@ -83,18 +95,22 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (product.$2.imageUrls?.isNotEmpty == true)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: GsaWidgetImage.network(
-                        product.$2.imageUrls![0],
-                        width: 60,
-                        height: 60,
-                      ),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: product.$2.imageUrls?.isNotEmpty == true
+                        ? GsaWidgetImage.network(
+                            product.$2.imageUrls![0],
+                            width: 60,
+                            height: 60,
+                          )
+                        : GsaWidgetImage.placeholder(
+                            width: 60,
+                            height: 60,
+                          ),
                   ),
+                ),
                 Flexible(
                   child: SizedBox(
                     height: 60,
@@ -146,22 +162,32 @@ class _WidgetCheckoutOverviewState extends State<_WidgetCheckoutOverview> {
         const SizedBox(height: 6),
         GsaWidgetTermsConfirmation(
           value: _termsAccepted,
-          onValueChanged: (value) => setState(() => _termsAccepted = !_termsAccepted),
+          onValueChanged: (value) {
+            setState(() {
+              _termsAccepted = !_termsAccepted;
+            });
+          },
+          checkboxKey: _checkboxKey,
         ),
         const SizedBox(height: 16),
         GsaWidgetButton.filled(
           label: 'Confirm Order',
+          backgroundColor: _termsAccepted ? null : Colors.grey,
           onTap: _termsAccepted
               ? () async {
                   const GsaWidgetOverlayContentBlocking().openDialog();
                   await Future.delayed(const Duration(seconds: 2));
                   GsaDataCheckout.instance.clear();
                   Navigator.popUntil(context, (route) => route.isFirst);
-                  Navigator.of(context).pushNamed('order-status');
+                  const GsaRouteOrderStatus().push();
                 }
-              : null,
+              : () {
+                  _checkboxKey.currentState?.validate();
+                },
         ),
-        SizedBox(height: MediaQuery.of(context).padding.bottom),
+        SizedBox(
+          height: MediaQuery.of(context).padding.bottom,
+        ),
       ],
     );
   }

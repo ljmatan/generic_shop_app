@@ -8,7 +8,6 @@ class GsaWidgetDropdownButton extends StatefulWidget {
     this.initialSelectionIndex,
     this.children,
     this.labelStyle,
-    this.height = 52,
     this.padding = 12,
     this.loading = false,
   }) : assert(label != null || children != null);
@@ -20,8 +19,6 @@ class GsaWidgetDropdownButton extends StatefulWidget {
   final List<GsaWidgetDropdownEntry>? children;
 
   final TextStyle? labelStyle;
-
-  final double height;
 
   final double padding;
 
@@ -35,35 +32,35 @@ class GsaWidgetDropdownButton extends StatefulWidget {
 
 class GsaWidgetDropdownButtonState extends State<GsaWidgetDropdownButton> {
   final _key = GlobalKey();
+
   RenderBox? _renderBox;
+
   Offset? _widgetOffset;
 
   bool? _displayBelow;
 
-  double get _fullItemsHeight => (widget.children!.length - 1) * widget.height;
-  double get _heightCutoff => MediaQuery.of(context).size.height * .4;
-  double get _itemsHeight => _fullItemsHeight < _heightCutoff ? _fullItemsHeight : _heightCutoff;
+  double? _height;
+
+  double get _fullItemsHeight {
+    return (widget.children!.length - 1) * _height!;
+  }
+
+  double get _heightCutoff {
+    return MediaQuery.of(context).size.height * .4;
+  }
+
+  double get _itemsHeight {
+    return _fullItemsHeight < _heightCutoff ? _fullItemsHeight : _heightCutoff;
+  }
 
   void _getWidgetInfo() {
-    if (1 == 1) {
-      _renderBox = _key.currentContext!.findRenderObject() as RenderBox;
-      _widgetOffset = _renderBox!.localToGlobal(Offset.zero);
-      _displayBelow = MediaQuery.of(context).size.height - _widgetOffset!.dy - 100 > _itemsHeight;
-      _widgetOffset = Offset(
-        _widgetOffset!.dx,
-        _widgetOffset!.dy - (_displayBelow! ? -widget.height - 10 : 10 + _itemsHeight),
-      );
-    } else {
-      _renderBox = _key.currentContext!.findRenderObject() as RenderBox;
-      _widgetOffset = _renderBox!.localToGlobal(Offset.zero);
-      _displayBelow = MediaQuery.of(context).size.height - _widgetOffset!.dy - 100 > _itemsHeight;
-      _widgetOffset = Offset(
-        _widgetOffset!.dx,
-        _widgetOffset!.dy -
-            MediaQueryData.fromView(WidgetsBinding.instance.window).padding.top +
-            (_displayBelow! ? widget.height + 10 : -_itemsHeight - 10),
-      );
-    }
+    _renderBox = _key.currentContext!.findRenderObject() as RenderBox;
+    _widgetOffset = _renderBox!.localToGlobal(Offset.zero);
+    _displayBelow = MediaQuery.of(context).size.height - _widgetOffset!.dy - 100 > _itemsHeight;
+    _widgetOffset = Offset(
+      _widgetOffset!.dx,
+      _widgetOffset!.dy - (_displayBelow! ? -_height! - 10 : 10 + _itemsHeight),
+    );
   }
 
   String? _selected, _selectedId;
@@ -74,7 +71,9 @@ class GsaWidgetDropdownButtonState extends State<GsaWidgetDropdownButton> {
   void initState() {
     super.initState();
     if (widget.children != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _getWidgetInfo());
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _getWidgetInfo();
+      });
     }
     if (widget.label == null || widget.initialSelectionIndex != null) {
       _selected = widget.children?[widget.initialSelectionIndex ?? 0].label;
@@ -91,6 +90,7 @@ class GsaWidgetDropdownButtonState extends State<GsaWidgetDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
+    _height ??= GsaTheme.of(context).actionElementHeight;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -125,7 +125,7 @@ class GsaWidgetDropdownButtonState extends State<GsaWidgetDropdownButton> {
                 ),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: widget.height,
+                  height: _height,
                   child: Padding(
                     padding: EdgeInsets.only(left: widget.padding, right: 12),
                     child: Row(
@@ -199,7 +199,7 @@ class GsaWidgetDropdownButtonState extends State<GsaWidgetDropdownButton> {
                                                 behavior: HitTestBehavior.opaque,
                                                 child: SizedBox(
                                                   width: _renderBox!.size.width,
-                                                  height: widget.height,
+                                                  height: _height,
                                                   child: Padding(
                                                     padding: EdgeInsets.symmetric(
                                                       horizontal: widget.padding,
@@ -266,7 +266,7 @@ class GsaWidgetDropdownButtonState extends State<GsaWidgetDropdownButton> {
                 ),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: widget.height,
+                  height: _height,
                 ),
               ),
           ],

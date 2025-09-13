@@ -26,9 +26,7 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (!<GsaPluginClient>{
-                  GsaPluginClient.froddoB2b,
-                }.contains(GsaPlugin.of(context).client)) ...[
+                if (GsaPlugin.of(context).features.authentication) ...[
                   InkWell(
                     child: Row(
                       children: [
@@ -230,12 +228,28 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                         },
                       ),
                   })
-                    GsaWidgetButton.text(
-                      label: action.label,
+                    InkWell(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: GsaTheme.of(context).paddings.content.small,
+                          ),
+                          child: GsaWidgetText(
+                            action.label,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
                       onTap: action.onTap,
                     ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 16, 14, 0),
+                    padding: EdgeInsets.only(
+                      top: GsaTheme.of(context).paddings.content.regular,
+                    ),
                     child: GsaWidgetText.rich(
                       [
                         const GsaWidgetTextSpan(

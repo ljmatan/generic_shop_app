@@ -156,9 +156,11 @@ class GsaTheme {
               ),
               titleLarge: TextStyle(
                 color: primaryColor,
+                fontSize: 20,
               ),
               titleMedium: TextStyle(
                 color: primaryColor,
+                fontSize: 16,
               ),
               titleSmall: TextStyle(
                 color: primaryColor,
@@ -219,6 +221,14 @@ class GsaTheme {
           foregroundColor: WidgetStatePropertyAll(
             brightness == Brightness.light ? null : Colors.white,
           ),
+          backgroundColor: WidgetStateProperty.resolveWith(
+            (states) {
+              if (states.contains(WidgetState.disabled)) {
+                return Colors.grey;
+              }
+              return null;
+            },
+          ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -249,6 +259,14 @@ class GsaTheme {
           foregroundColor: WidgetStatePropertyAll(
             brightness == Brightness.light ? null : Colors.white,
           ),
+          backgroundColor: WidgetStateProperty.resolveWith(
+            (states) {
+              if (states.contains(WidgetState.disabled)) {
+                return Colors.grey;
+              }
+              return null;
+            },
+          ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -273,6 +291,14 @@ class GsaTheme {
           foregroundColor: WidgetStatePropertyAll(
             brightness == Brightness.light ? null : Colors.white,
           ),
+          backgroundColor: WidgetStateProperty.resolveWith(
+            (states) {
+              if (states.contains(WidgetState.disabled)) {
+                return Colors.grey;
+              }
+              return null;
+            },
+          ),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -292,6 +318,14 @@ class GsaTheme {
               color: brightness == Brightness.light ? null : Colors.white,
               fontWeight: FontWeight.w700,
             ),
+          ),
+          backgroundColor: WidgetStateProperty.resolveWith(
+            (states) {
+              if (states.contains(WidgetState.disabled)) {
+                return Colors.grey;
+              }
+              return null;
+            },
           ),
         ),
       ),

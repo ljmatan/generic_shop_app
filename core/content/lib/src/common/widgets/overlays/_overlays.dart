@@ -4,6 +4,7 @@ import 'package:generic_shop_app_content/content.dart';
 export 'widget_overlay_alert.dart';
 export 'widget_overlay_confirmation.dart';
 export 'widget_overlay_content_blocking.dart';
+export 'widget_overlay_cookie_consent_missing.dart';
 export 'widget_overlay_legal_consent.dart';
 export 'widget_overlay_sale_item.dart';
 
@@ -33,7 +34,7 @@ class GsaWidgetOverlay extends StatefulWidget {
   ///
   Color get barrierColor {
     if (Theme.of(GsaRoute.navigatorContext!).brightness == Brightness.light) {
-      return Colors.white70;
+      return Colors.grey.withValues(alpha: .4);
     } else {
       return Colors.black26;
     }
@@ -101,6 +102,9 @@ class GsaWidgetOverlay extends StatefulWidget {
         barrierColor: barrierColor,
         useSafeArea: useSafeArea,
         useRootNavigator: false,
+        shape: GsaPlugin.of(context).theme.roundedRectangleBorder.copyWith(
+              borderRadius: BorderRadius.circular(26),
+            ),
         builder: (context) {
           return customBuilder ? this : this;
         },

@@ -20,6 +20,8 @@ class _WidgetHeader extends StatefulWidget {
 }
 
 class _WidgetHeaderState extends State<_WidgetHeader> {
+  bool? _canPop;
+
   void _openDrawer() {
     if (GsaTheme.of(context).dimensions.smallScreen) {
       Scaffold.of(context).openDrawer();
@@ -38,6 +40,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
 
   @override
   Widget build(BuildContext context) {
+    _canPop ??= Navigator.of(context).canPop();
     return InkWell(
       child: GsaWidgetAppBar(
         child: Padding(
@@ -56,10 +59,10 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GsaWidgetButton.filled(
-                              icon: Navigator.of(context).canPop() ? Icons.chevron_left : Icons.menu,
+                              icon: _canPop == true ? Icons.chevron_left : Icons.menu,
                               backgroundColor: Colors.white,
                               foregroundColor: Theme.of(context).primaryColor,
-                              onTap: Navigator.of(context).canPop()
+                              onTap: _canPop == true
                                   ? () {
                                       Navigator.pop(context);
                                     }
@@ -103,7 +106,7 @@ class _WidgetHeaderState extends State<_WidgetHeader> {
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Row(
                           children: [
-                            if (Navigator.of(context).canPop()) ...[
+                            if (_canPop == true) ...[
                               GsaWidgetButton.filled(
                                 icon: Icons.chevron_left,
                                 backgroundColor: Colors.white,

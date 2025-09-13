@@ -159,6 +159,7 @@ class GsaServiceCache extends GsaService {
         await cacheEntry.removeValue();
       }
     }
+    GsaServiceBookmarks.instance.controllerUpdate.add(null);
   }
 
   /// Persistent cache data; shouldn't be deleted.

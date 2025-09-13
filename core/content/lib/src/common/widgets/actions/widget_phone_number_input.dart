@@ -40,7 +40,6 @@ class _GsaWidgetPhoneNumberInputState extends State<GsaWidgetPhoneNumberInput> {
           child: GsaWidgetDropdownButton(
             padding: 20,
             initialSelectionIndex: _phonePrefixes.indexOf(widget.prefix()),
-            height: 52,
             children: [
               for (var i = 0; i < _phonePrefixes.length; i++)
                 GsaWidgetDropdownEntry(

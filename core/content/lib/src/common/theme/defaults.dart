@@ -19,7 +19,7 @@ extension _GsaThemeDefaults on GsaTheme {
   }
 
   Color get _primaryColorLight {
-    return const Color(0xffE1BEE7);
+    return const dart_ui.Color(0xFFB57BBF);
   }
 
   Color get _primaryColorDark {

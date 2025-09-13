@@ -72,7 +72,15 @@ class _WidgetBookmarks extends StatelessWidget {
         ),
       ),
       onTap: () {
-        const GsaRouteBookmarks().push();
+        if (GsaServiceCacheEntry.cookieConsentFunctional.value == true) {
+          const GsaRouteBookmarks().push();
+        } else {
+          const GsaWidgetOverlayCookieConsentMissing(
+            message: 'You haven\'t enabled functional cookies, so bookmarks can\'t be saved.\n\n'
+                'Update your cookie preferences to use this feature.',
+            functional: true,
+          ).openDialog();
+        }
       },
     );
   }

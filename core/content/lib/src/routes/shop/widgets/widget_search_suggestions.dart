@@ -3,9 +3,12 @@ part of '../route_shop.dart';
 class _WidgetSearchSuggestions extends StatefulWidget {
   const _WidgetSearchSuggestions({
     required this.updateSearchTerm,
+    required this.setCategory,
   });
 
   final Function(String value) updateSearchTerm;
+
+  final Function(GsaModelCategory category) setCategory;
 
   @override
   State<_WidgetSearchSuggestions> createState() => _WidgetSearchSuggestionsState();
@@ -40,7 +43,7 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                     children: [
                       Expanded(
                         child: GsaWidgetText(
-                          'View Your Favorites',
+                          'View Your Bookmarks',
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor,
@@ -65,9 +68,15 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                 ),
               ),
               onTap: () {
-                const GsaRouteBookmarks().push(
-                  context: context,
-                );
+                if (GsaServiceCacheEntry.cookieConsentFunctional.value == true) {
+                  const GsaRouteBookmarks().push();
+                } else {
+                  const GsaWidgetOverlayCookieConsentMissing(
+                    message: 'You haven\'t enabled functional cookies, so bookmarks can\'t be saved.\n\n'
+                        'Update your cookie preferences to use this feature.',
+                    functional: true,
+                  ).openDialog();
+                }
               },
             ),
           ),
@@ -100,7 +109,8 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                         child: GsaWidgetButton.filled(
                           label: category.$2.name ?? 'N/A',
                           onTap: () {
-                            // TODO.
+                            print('aaaa');
+                            widget.setCategory(category.$2);
                           },
                         ),
                       ),

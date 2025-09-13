@@ -13,7 +13,9 @@ class _WidgetCustomerNoticeState extends State<_WidgetCustomerNotice> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const GsaWidgetHeadline('Customer Notice'),
+        const GsaWidgetHeadline(
+          'Customer Notice',
+        ),
         const SizedBox(height: 6),
         GsaWidgetText(
           'The information provided on this application is for informational purposes only. '

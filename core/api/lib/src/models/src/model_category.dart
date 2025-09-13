@@ -12,6 +12,7 @@ class GsaModelCategory extends _Model {
     super.originId,
     super.categoryId,
     required this.name,
+    this.description,
     this.featured,
   });
 

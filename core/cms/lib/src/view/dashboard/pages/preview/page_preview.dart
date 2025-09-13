@@ -1,9 +1,10 @@
+import 'dart:convert' as dart_convert;
+
 import 'package:flutter/material.dart';
 import 'package:device_frame_plus/device_frame_plus.dart' as device_frame;
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' as colorpicker;
 import 'package:generic_shop_app_cms/cms.dart';
-import 'package:generic_shop_app_demo/demo.dart';
 
 part 'widgets/widget_device_preview.dart';
 part 'widgets/menu/widget_menu.dart';

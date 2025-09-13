@@ -77,7 +77,9 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
           try {
             await _updateSearchTermHistory(_filters.searchTerm!);
           } catch (e) {
-            GsaServiceLogging.instance.logError('Couldn\'t update search term history:\n$e');
+            GsaServiceLogging.instance.logError(
+              'Couldn\'t update search term history:\n$e',
+            );
           }
         }
         return List<GsaModelSaleItem>.from(searchTermResults ?? categoryResults ?? []);
@@ -186,6 +188,10 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                           updateSearchTerm: (value) {
                             _searchTermController.text = value;
                           },
+                          setCategory: (category) {
+                            _filters.categoryId = category.id;
+                            _onFiltersUpdated();
+                          },
                         );
                       } else {
                         if (_searchFuture == null || searchResponse.connectionState != ConnectionState.done) {
@@ -281,7 +287,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                               child: const _WidgetCustomerNotice(),
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).padding.bottom + 100,
+                              height: MediaQuery.of(context).padding.bottom + GsaTheme.of(context).actionElementHeight,
                             ),
                           ],
                         ),

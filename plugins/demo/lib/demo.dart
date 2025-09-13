@@ -1,7 +1,5 @@
+import 'package:flutter/services.dart';
 import 'package:generic_shop_app_demo/demo.dart';
-import 'package:generic_shop_app_fitness_tracker/fitness_tracker.dart';
-import 'package:generic_shop_app_froddo_b2b/froddo_b2b.dart';
-import 'package:generic_shop_app_froddo_b2c/froddo_b2c.dart';
 
 export 'package:generic_shop_app_architecture/arch.dart';
 
@@ -44,7 +42,7 @@ class GsdPlugin extends GsaPlugin {
 
   @override
   final GsaPluginTheme theme = GsaPluginTheme(
-    fontFamily: 'packages/generic_shop_app_fitness_tracker/Open Sans',
+    fontFamily: 'packages/generic_shop_app_content/Quicksand',
   );
 
   @override
@@ -59,5 +57,38 @@ class GsdPlugin extends GsaPlugin {
     termsAndConditions: 'https://ljmatan.github.io/static/example/terms-and-conditions.html',
     privacyPolicy: 'https://ljmatan.github.io/static/example/privacy-policy.html',
     cookieNotice: 'https://ljmatan.github.io/static/example/cookie-agreement.html',
+  );
+
+  @override
+  final GsaPluginApi api = GsaPluginApi(
+    getPromoBanners: () async {
+      final images = <Uint8List>[
+        for (int i = 0; i < 2; i++)
+          (await rootBundle.load(
+            'packages/generic_shop_app_demo/assets/demo/banner_$i.jpg',
+          ))
+              .buffer
+              .asUint8List(),
+      ];
+      return [
+        for (final promoEntry in {
+          (
+            label: 'Happiness in Your Hands',
+            description: 'Fast, simple, and beautiful shopping. Try out the demo experience now.',
+          ),
+          (
+            label: 'Delight in Every Tap',
+            description: 'A showcase of how modern apps make shopping intuitive, joyful, and always within reach.',
+          ),
+        }.indexed)
+          GsaModelPromoBanner(
+            label: promoEntry.$2.label,
+            description: promoEntry.$2.description,
+            contentUrl: null,
+            photoUrl: null,
+            photoByteData: images[promoEntry.$1],
+          ),
+      ];
+    },
   );
 }

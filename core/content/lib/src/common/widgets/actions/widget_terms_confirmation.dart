@@ -1,32 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/content.dart';
 
-class GsaWidgetTermsConfirmation extends StatelessWidget {
+class GsaWidgetTermsConfirmation extends StatefulWidget {
   const GsaWidgetTermsConfirmation({
     super.key,
     required this.value,
     required this.onValueChanged,
     this.checkboxKey,
-    this.includeTermsAndConditions = true,
-    this.includePrivacyPolicy = true,
     this.includeCookieAgreement = false,
   });
 
+  /// Initially-specified checkbox value.
+  ///
   final bool value;
 
-  final Function(bool value) onValueChanged;
+  /// Method invoked on each value update.
+  ///
+  final Function(bool newValue) onValueChanged;
 
+  /// Key handling the [GsaWidgetSwitch] state.
+  ///
   final GlobalKey<GsaWidgetSwitchState>? checkboxKey;
 
   /// Property defining whether a legal document entry is required for agreement display.
   ///
-  final bool includeTermsAndConditions, includePrivacyPolicy, includeCookieAgreement;
+  final bool includeCookieAgreement;
 
   @override
+  State<GsaWidgetTermsConfirmation> createState() {
+    return _GsaWidgetTermsConfirmationState();
+  }
+}
+
+class _GsaWidgetTermsConfirmationState extends State<GsaWidgetTermsConfirmation> {
+  @override
   Widget build(BuildContext context) {
+    final plugin = GsaPlugin.of(context);
+    if (plugin.documentUrls?.termsAndConditions == null &&
+        plugin.documentUrls?.privacyPolicy == null &&
+        (!widget.includeCookieAgreement || plugin.documentUrls?.cookieNotice == null)) {
+      return const SizedBox();
+    }
     return GsaWidgetSwitch(
-      key: checkboxKey,
-      value: value,
+      key: widget.checkboxKey,
+      value: widget.value,
       label: GsaWidgetText(
         'User Agreement',
         style: const TextStyle(
@@ -39,33 +56,62 @@ class GsaWidgetTermsConfirmation extends StatelessWidget {
           const GsaWidgetTextSpan(
             'I confirm that I have reviewed and agree to abide by the ',
           ),
-          GsaWidgetTextSpan(
-            'Terms and Conditions',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Theme.of(context).primaryColor,
-              decoration: TextDecoration.underline,
+          if (plugin.documentUrls?.termsAndConditions != null) ...[
+            GsaWidgetTextSpan(
+              'Terms and Conditions',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).primaryColor,
+                decoration: TextDecoration.underline,
+              ),
+              onTap: () {
+                GsaRouteLegalConsent(
+                  url: plugin.documentUrls!.termsAndConditions!,
+                ).push();
+              },
             ),
-            onTap: () {
-              Navigator.of(context).pushNamed('terms-and-conditions');
-            },
-          ),
-          const GsaWidgetTextSpan(
-            ' and ',
-          ),
-          GsaWidgetTextSpan(
-            'Privacy Policy',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Theme.of(context).primaryColor,
-              decoration: TextDecoration.underline,
+          ],
+          if (plugin.documentUrls?.privacyPolicy != null) ...[
+            if (plugin.documentUrls?.termsAndConditions != null)
+              const GsaWidgetTextSpan(
+                ' and ',
+              ),
+            GsaWidgetTextSpan(
+              'Privacy Policy',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).primaryColor,
+                decoration: TextDecoration.underline,
+              ),
+              onTap: () {
+                GsaRouteLegalConsent(
+                  url: plugin.documentUrls!.privacyPolicy!,
+                ).push();
+              },
             ),
-            onTap: () {
-              Navigator.of(context).pushNamed('privacy-policy');
-            },
-          ),
+          ],
+          if (widget.includeCookieAgreement && plugin.documentUrls?.cookieNotice != null) ...[
+            if (plugin.documentUrls?.termsAndConditions != null || plugin.documentUrls?.privacyPolicy != null)
+              const GsaWidgetTextSpan(
+                ' and ',
+              ),
+            GsaWidgetTextSpan(
+              'Cookie Agreement',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).primaryColor,
+                decoration: TextDecoration.underline,
+              ),
+              onTap: () {
+                GsaRouteLegalConsent(
+                  url: plugin.documentUrls!.cookieNotice!,
+                ).push();
+              },
+            ),
+          ],
           const GsaWidgetTextSpan(
             '.',
+            interpolated: true,
           ),
         ],
         style: const TextStyle(
@@ -73,7 +119,9 @@ class GsaWidgetTermsConfirmation extends StatelessWidget {
           fontSize: 12,
         ),
       ),
-      onTap: (value) => onValueChanged(value),
+      onTap: (value) {
+        widget.onValueChanged(value);
+      },
     );
   }
 }

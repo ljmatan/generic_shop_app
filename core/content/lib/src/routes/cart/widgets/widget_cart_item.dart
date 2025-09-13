@@ -36,30 +36,34 @@ class _GsaRouteCartWidgetCartItemState extends State<GsaRouteCartWidgetCartItem>
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (widget.cartItem.imageUrls?.isNotEmpty == true) ...[
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).primaryColor,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(1),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: GsaWidgetImage.network(
-                        widget.cartItem.imageUrls![0],
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                        cached: true,
-                      ),
-                    ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(1),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: widget.cartItem.imageUrls?.isNotEmpty == true
+                        ? GsaWidgetImage.network(
+                            widget.cartItem.imageUrls![0],
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                            cached: true,
+                          )
+                        : GsaWidgetImage.placeholder(
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
-                const SizedBox(width: 10),
-              ],
+              ),
+              const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,17 +210,19 @@ class _WidgetCartItemAmountSpecificationState extends State<_WidgetCartItemAmoun
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            GsaWidgetText(
-                              switch (GsaPlugin.of(context).client) {
-                                    GsaPluginClient.froddoB2b => '${GsaRouteCartI18N.cartItemEntrySizeLabel.value.display} ',
-                                    _ => '',
-                                  } +
-                                  '${widget.saleItem.productCode}',
-                              style: const TextStyle(
-                                fontSize: 12,
+                            if (widget.saleItem.productCode != null) ...[
+                              GsaWidgetText(
+                                switch (GsaPlugin.of(context).client) {
+                                      GsaPluginClient.froddoB2b => '${GsaRouteCartI18N.cartItemEntrySizeLabel.value.display} ',
+                                      _ => '',
+                                    } +
+                                    '${widget.saleItem.productCode}',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 2),
+                              const SizedBox(height: 2),
+                            ],
                             GsaWidgetText(
                               '$_cartCount x ${widget.saleItem.price?.formatted}',
                               style: const TextStyle(

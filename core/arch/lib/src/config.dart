@@ -20,10 +20,6 @@ class GsaConfig {
   ///
   static bool qaBuild = kDebugMode || const String.fromEnvironment('gsaDebugBuild').toLowerCase() == 'true';
 
-  /// If below value is true, data will be mocked instead of fetched from server.
-  ///
-  static bool mockBuild = const String.fromEnvironment('gsaMockBuild').toLowerCase() == 'true';
-
   /// Defines whether the app edit mode is enabled.
   ///
   /// With app edit mode, content editing is possible.

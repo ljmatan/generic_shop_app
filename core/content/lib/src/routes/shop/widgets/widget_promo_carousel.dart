@@ -7,10 +7,15 @@ class _WidgetPromoCarousel extends StatefulWidget {
   State<_WidgetPromoCarousel> createState() => _WidgetPromoCarouselState();
 }
 
-class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
-  late Future<List<GsaModelPromoBanner>> Function() _getBannersFuture;
+class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive {
+    return true;
+  }
 
-  final _carouselItems = <GsaModelPromoBanner>[];
+  late Future<List<GsaModelPromoBanner>> _getBannersFuture;
+
+  final _carouselItems = <GsaModelPromoBanner>{};
 
   int _carouselItemIndex = 0;
 
@@ -19,21 +24,23 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
   @override
   void initState() {
     super.initState();
-    _getBannersFuture = () async {
-      if (GsaPlugin.of(context).api?.getPromoBanners == null) {
-        throw UnimplementedError(
-          'Promo carousel content endpoint not implemented for ${GsaPlugin.of(context).id}.',
-        );
-      } else {
-        final value = await GsaPlugin.of(context).api!.getPromoBanners!();
-        _carouselItems.addAll(value);
-        return value;
-      }
-    };
+    _getBannersFuture = Future(
+      () async {
+        if (GsaPlugin.of(context).api?.getPromoBanners == null) {
+          throw UnimplementedError(
+            'Promo carousel content endpoint not implemented for ${GsaPlugin.of(context).id}.',
+          );
+        } else {
+          final value = await GsaPlugin.of(context).api!.getPromoBanners!();
+          _carouselItems.addAll(value);
+          return value;
+        }
+      },
+    );
     _fadeTimer = Timer.periodic(
       const Duration(seconds: 4),
       (_) {
-        if (_carouselItems.isNotEmpty) {
+        if (_carouselItems.length > 1) {
           setState(
             () {
               if (_carouselItemIndex + 1 == _carouselItems.length) {
@@ -50,12 +57,13 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (GsaPlugin.of(context).api?.getPromoBanners == null) return const SizedBox();
     return AnimatedContainer(
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeIn,
       child: FutureBuilder(
-        future: _getBannersFuture(),
+        future: _getBannersFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done || snapshot.hasError) {
             if (snapshot.hasError) {
@@ -80,15 +88,23 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
                           child: DecoratedBox(
                             decoration: BoxDecoration(
                               boxShadow: kElevationToShadow[1],
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: GsaPlugin.of(context).theme.borderRadius,
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: GsaPlugin.of(context).theme.borderRadius,
                               child: Stack(
                                 children: [
                                   if (carouselItemUrl.$2.photoUrl != null)
                                     GsaWidgetImage.network(
                                       carouselItemUrl.$2.photoUrl!,
+                                      width: MediaQuery.of(context).size.width,
+                                      height: MediaQuery.of(context).size.height,
+                                      fit: BoxFit.cover,
+                                    )
+                                  else if (carouselItemUrl.$2.photoByteData != null)
+                                    GsaWidgetImage.bytes(
+                                      carouselItemUrl.$2.photoByteData!,
+                                      type: GsaWidgetImageByteType.jpg,
                                       width: MediaQuery.of(context).size.width,
                                       height: MediaQuery.of(context).size.height,
                                       fit: BoxFit.cover,
@@ -111,9 +127,9 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
                                         decoration: BoxDecoration(
                                           boxShadow: kElevationToShadow[16],
                                           color: Colors.white,
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(12),
-                                            bottomRight: Radius.circular(12),
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: GsaPlugin.of(context).theme.borderRadius.bottomLeft,
+                                            bottomRight: GsaPlugin.of(context).theme.borderRadius.bottomRight,
                                           ),
                                         ),
                                         child: Padding(
@@ -128,9 +144,6 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> {
                                               if (carouselItemUrl.$2.label != null)
                                                 GsaWidgetText(
                                                   carouselItemUrl.$2.label!,
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                  ),
                                                 ),
                                               if (carouselItemUrl.$2.description != null) ...[
                                                 if (carouselItemUrl.$2.label != null) const SizedBox(height: 4),
