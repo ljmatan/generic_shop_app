@@ -1,7 +1,12 @@
 part of '../route_shop.dart';
 
 class _WidgetSearchResults extends StatefulWidget {
-  const _WidgetSearchResults(this.results);
+  const _WidgetSearchResults({
+    required this.state,
+    required this.results,
+  });
+
+  final _GsaRouteShopState state;
 
   final List<GsaModelSaleItem> results;
 
@@ -12,78 +17,103 @@ class _WidgetSearchResults extends StatefulWidget {
 class _WidgetSearchResultsState extends State<_WidgetSearchResults> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (GsaTheme.of(context).dimensions.smallScreen)
-          ListView.builder(
-            padding: GsaTheme.of(context).paddings.widget.listView,
-            itemCount: widget.results.length,
-            itemBuilder: (context, index) {
-              final saleItem = widget.results[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (index != 0) const SizedBox(height: 12),
-                  _WidgetSearchResultsEntry(
-                    saleItem: saleItem,
-                  ),
-                ],
-              );
-            },
-          )
-        else
-          GridView.builder(
-            padding: GsaTheme.of(context).paddings.widget.listView,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: MediaQuery.of(context).size.width < 1400 ? 3 : 4,
-              mainAxisExtent: 160,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-            ),
-            itemCount: widget.results.length,
-            itemBuilder: (context, index) {
-              final saleItem = widget.results[index];
-              return _WidgetSearchResultsEntry(
-                saleItem: saleItem,
-              );
-            },
+        if (widget.state._filters.searchTerm != null && widget.state._filters.searchTerm!.length > 2) ...[
+          SizedBox(
+            height: GsaTheme.of(context).paddings.content.medium,
           ),
-        Positioned(
-          right: 16,
-          bottom: 16 + MediaQuery.of(context).padding.bottom,
-          child: GsaWidgetButton.filled(
-            label: 'Filters',
-            icon: Icons.tune,
-            onTap: () {
-              FocusManager.instance.primaryFocus?.unfocus();
-              FocusScope.of(context).unfocus();
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                showDragHandle: true,
-                builder: (context) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(26, 0, 26, 16),
-                    child: Column(
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: GsaTheme.of(context).paddings.widget.listViewHorizontal,
+            ),
+            child: GsaWidgetText(
+              'Results for: "${widget.state._filters.searchTerm!}"',
+            ),
+          ),
+          SizedBox(
+            height: GsaTheme.of(context).paddings.content.small,
+          ),
+          const Divider(),
+        ],
+        Expanded(
+          child: Stack(
+            children: [
+              if (GsaTheme.of(context).dimensions.smallScreen)
+                ListView.builder(
+                  padding: GsaTheme.of(context).paddings.widget.listView,
+                  itemCount: widget.results.length,
+                  itemBuilder: (context, index) {
+                    final saleItem = widget.results[index];
+                    return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Flexible(
-                          child: GsaWidgetText(
-                            'Filters',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 18,
-                            ),
-                          ),
+                        if (index != 0) const SizedBox(height: 12),
+                        _WidgetSearchResultsEntry(
+                          saleItem: saleItem,
                         ),
                       ],
-                    ),
-                  );
-                },
-              );
-            },
+                    );
+                  },
+                )
+              else
+                GridView.builder(
+                  padding: GsaTheme.of(context).paddings.widget.listView,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: MediaQuery.of(context).size.width < 1400 ? 3 : 4,
+                    mainAxisExtent: 160,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                  ),
+                  itemCount: widget.results.length,
+                  itemBuilder: (context, index) {
+                    final saleItem = widget.results[index];
+                    return _WidgetSearchResultsEntry(
+                      saleItem: saleItem,
+                    );
+                  },
+                ),
+              Positioned(
+                right: 16,
+                bottom: 16 + MediaQuery.of(context).padding.bottom,
+                child: GsaWidgetButton.filled(
+                  label: 'Filters' + (widget.state._filters.appliedCount != null ? ' (${widget.state._filters.appliedCount})' : ''),
+                  icon: Icons.tune,
+                  onTap: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    FocusScope.of(context).unfocus();
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      showDragHandle: true,
+                      builder: (context) {
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(26, 0, 26, 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              GsaWidgetText(
+                                'Filters',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              const Center(
+                                child: GsaWidgetTodo(),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -127,22 +157,37 @@ class _WidgetSearchResultsEntryState extends State<_WidgetSearchResultsEntry> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (widget.saleItem.imageUrls?.isNotEmpty == true)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(1),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: GsaWidgetImage.network(
-                          widget.saleItem.imageUrls![0],
-                          width: 60,
-                          height: 70,
-                          cached: true,
-                        ),
+                        child: widget.saleItem.imageUrls?.isNotEmpty == true
+                            ? GsaWidgetImage.network(
+                                widget.saleItem.imageUrls![0],
+                                width: 60,
+                                height: 60,
+                                cached: true,
+                              )
+                            : GsaWidgetImage.placeholder(
+                                width: 60,
+                                height: 60,
+                              ),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    width: GsaTheme.of(context).paddings.content.small,
+                  ),
                   Flexible(
                     child: SizedBox(
-                      height: 70,
+                      height: 60,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,9 +229,11 @@ class _WidgetSearchResultsEntryState extends State<_WidgetSearchResultsEntry> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
               SizedBox(
-                height: 48,
+                height: GsaTheme.of(context).paddings.content.small,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
                 child: GsaWidgetButton.filled(
                   label: 'Add to Cart' + (_cartCount != null && _cartCount! > 0 ? ' ($_cartCount)' : ''),
                   icon: Icons.shopping_cart,
@@ -197,7 +244,12 @@ class _WidgetSearchResultsEntryState extends State<_WidgetSearchResultsEntry> {
                         item: widget.saleItem,
                       );
                     } else {
-                      debugPrint('GsaPlugin.of(context).addToCart not defined.');
+                      final newCount = GsaDataCheckout.instance.orderDraft.addItem(
+                        saleItem: widget.saleItem,
+                      );
+                      setState(() {
+                        _cartCount = newCount;
+                      });
                     }
                   },
                 ),

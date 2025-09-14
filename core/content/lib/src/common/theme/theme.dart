@@ -389,8 +389,22 @@ class GsaTheme {
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStatePropertyAll(primaryColor),
         trackColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected) ? primaryColor.withValues(alpha: .6) : null,
+          (states) {
+            if (states.contains(WidgetState.selected)) {
+              return primaryColor.withValues(alpha: .6);
+            }
+            return borderColor;
+          },
         ),
+        trackOutlineColor: WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(WidgetState.selected)) {
+              return primaryColor.withValues(alpha: .6);
+            }
+            return borderColor;
+          },
+        ),
+        splashRadius: 0,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 0,

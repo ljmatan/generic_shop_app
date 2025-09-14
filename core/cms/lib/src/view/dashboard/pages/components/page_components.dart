@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_architecture/arch.dart';
 
 class GscPageComponents extends StatefulWidget {
   const GscPageComponents({super.key});
@@ -10,9 +11,9 @@ class GscPageComponents extends StatefulWidget {
 class _GscPageComponentsState extends State<GscPageComponents> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [],
+    return const Scaffold(
+      body: Center(
+        child: GsaWidgetTodo(),
       ),
     );
   }

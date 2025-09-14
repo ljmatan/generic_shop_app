@@ -1,4 +1,6 @@
-import 'dart:async';
+import 'dart:async' as dart_async;
+import 'dart:convert' as dart_convert;
+import 'dart:typed_data' as dart_typed_data;
 
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/content.dart';
@@ -31,7 +33,6 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
     id: null,
     originId: null,
     searchTerm: '',
-    categoryId: null,
     sortCategoryId: null,
   );
 
@@ -45,30 +46,31 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
       <String>{
         if (previousTerms is Iterable) ...previousTerms,
         searchTerm,
-      }.toList().reversed.take(5).toList(),
+      }.toList().reversed.take(5),
     );
   }
 
   void _onFiltersUpdated() {
     _searchFuture = Future(
       () async {
-        final categoryResults = _filters.categoryId == null
+        final categoryResults = _filters.categoryIds.isEmpty
             ? null
             : GsaDataSaleItems.instance.collection.where(
                 (product) {
-                  return product.categoryId == _filters.categoryId;
+                  return _filters.categoryIds.contains(
+                    product.categoryId,
+                  );
                 },
               ).toList();
         final searchTermResults = _filters.searchTerm?.trim().isNotEmpty == true
-            ? await GsaServiceSearch.instance.findByCharacters(
+            ? await GsaServiceSearch.instance.findByCharacters<GsaModelSaleItem>(
                 searchTerm: _filters.searchTerm!,
                 comparisonValues: categoryResults ?? GsaDataSaleItems.instance.collection,
                 comparator: (value) {
-                  final saleItem = value as GsaModelSaleItem;
                   return [
-                    if (saleItem.name?.isNotEmpty == true) saleItem.name!,
-                    if (saleItem.productCode?.isNotEmpty == true) saleItem.productCode!,
-                    if (saleItem.id?.isNotEmpty == true) saleItem.id!,
+                    if (value.name?.isNotEmpty == true) value.name!,
+                    if (value.productCode?.isNotEmpty == true) value.productCode!,
+                    if (value.id?.isNotEmpty == true) value.id!,
                   ];
                 },
               )
@@ -88,16 +90,28 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
     setState(() {});
   }
 
-  Timer? _searchFutureUpdateTimer;
+  dart_async.Timer? _searchFutureUpdateTimer;
 
   final _searchTermFocusNode = FocusNode();
+
+  bool _searchTermHasFocus = false;
 
   final _searchTermController = TextEditingController();
 
   final _searchTermNotifier = ValueNotifier<String>('');
 
   void _onSearchStatusUpdate() {
-    setState(() {});
+    Future.delayed(
+      const Duration(milliseconds: 100),
+      () {
+        if (mounted) {
+          setState(() {
+            _searchTermHasFocus = _searchTermFocusNode.hasFocus;
+          });
+        }
+      },
+    );
+    return;
   }
 
   void _onSearchTermControllerUpdate() {
@@ -119,7 +133,7 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
       // Clear current state.
       setState(() => _searchFuture = null);
       // Set timer to run in 600ms.
-      _searchFutureUpdateTimer = Timer(
+      _searchFutureUpdateTimer = dart_async.Timer(
         const Duration(milliseconds: 600),
         () {
           return _onFiltersUpdated();
@@ -162,13 +176,18 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
   }
 
   bool get _searchActive {
-    return _searchTermFocusNode.hasFocus || _filters.active == true;
+    return _searchTermHasFocus || _filters.active == true;
   }
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  /// Whether the route is displayed as an overlay (and not as a start screen).
+  ///
+  bool? _canPop;
+
   @override
   Widget view(BuildContext context) {
+    _canPop ??= Navigator.of(context).canPop();
     return Scaffold(
       key: _scaffoldKey,
       body: Column(
@@ -189,8 +208,10 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                             _searchTermController.text = value;
                           },
                           setCategory: (category) {
-                            _filters.categoryId = category.id;
-                            _onFiltersUpdated();
+                            if (category.id != null) {
+                              _filters.categoryIds.add(category.id!);
+                              _onFiltersUpdated();
+                            }
                           },
                         );
                       } else {
@@ -204,7 +225,10 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                             searchResponse.hasError ? searchResponse.error.toString() : 'No results found.',
                           );
                         }
-                        return _WidgetSearchResults(searchResponse.data!);
+                        return _WidgetSearchResults(
+                          state: this,
+                          results: searchResponse.data!,
+                        );
                       }
                     },
                   )
@@ -273,8 +297,10 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                                 child: _WidgetCategories(
                                   GsaDataSaleItems.instance.categories,
                                   setCategory: (category) {
-                                    _filters.categoryId = category.id;
-                                    _onFiltersUpdated();
+                                    if (category.id != null) {
+                                      _filters.categoryIds.add(category.id!);
+                                      _onFiltersUpdated();
+                                    }
                                   },
                                 ),
                               ),
@@ -309,8 +335,10 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
                     const GsaRouteMerchantContact().push();
                   },
                 ),
-                if (GsaTheme.of(context).dimensions.smallScreen && Navigator.of(context).canPop()) ...[
-                  const SizedBox(height: 10),
+                if (GsaTheme.of(context).dimensions.smallScreen && _canPop == true) ...[
+                  SizedBox(
+                    height: GsaTheme.of(context).paddings.content.small,
+                  ),
                   GsaWidgetButton.filled(
                     icon: Icons.apps,
                     onTap: () {

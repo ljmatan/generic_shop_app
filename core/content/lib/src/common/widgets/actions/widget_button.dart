@@ -40,6 +40,7 @@ class GsaWidgetButton extends StatefulWidget {
     this.elementSize,
     this.backgroundColor,
     this.foregroundColor,
+    this.contentPadding,
     this.tonal = false,
     this.rounded = false,
     this.outlined = false,
@@ -60,6 +61,7 @@ class GsaWidgetButton extends StatefulWidget {
     this.elementSize,
     this.backgroundColor,
     this.foregroundColor,
+    this.contentPadding,
     this.rounded = false,
     this.outlined = false,
     this.focusNode,
@@ -80,6 +82,7 @@ class GsaWidgetButton extends StatefulWidget {
     this.elementSize,
     this.backgroundColor,
     this.foregroundColor,
+    this.contentPadding,
     this.rounded = false,
     this.outlined = false,
     this.focusNode,
@@ -99,6 +102,7 @@ class GsaWidgetButton extends StatefulWidget {
     this.tooltipMessage,
     this.elementSize,
     this.foregroundColor,
+    this.contentPadding,
     this.outlined = false,
     this.focusNode,
     this.interpolatedText = false,
@@ -117,6 +121,7 @@ class GsaWidgetButton extends StatefulWidget {
     this.tooltipMessage,
     this.elementSize,
     this.foregroundColor,
+    this.contentPadding,
     this.outlined = false,
     this.focusNode,
     required this.onTap,
@@ -163,6 +168,10 @@ class GsaWidgetButton extends StatefulWidget {
   /// Color applied to elements such as text or icons.
   ///
   final Color? foregroundColor;
+
+  /// Padding applied to button contents.
+  ///
+  final EdgeInsets? contentPadding;
 
   /// Whether the button will be displayed with a tonal variant.
   ///
@@ -274,24 +283,49 @@ class _GsaWidgetButtonState extends State<GsaWidgetButton> {
             backgroundColor: backgroundColor,
             foregroundColor: foregroundColor,
             shape: borderShape,
+            padding: widget.contentPadding == null
+                ? null
+                : WidgetStatePropertyAll(
+                    widget.contentPadding,
+                  ),
           ),
       _GsaWidgetButtonType.outlined => Theme.of(context).outlinedButtonTheme.style?.copyWith(
             backgroundColor: backgroundColor,
             foregroundColor: foregroundColor,
             shape: borderShape,
+            padding: widget.contentPadding == null
+                ? null
+                : WidgetStatePropertyAll(
+                    widget.contentPadding,
+                  ),
           ),
       _GsaWidgetButtonType.elevated => Theme.of(context).elevatedButtonTheme.style?.copyWith(
             backgroundColor: backgroundColor,
             foregroundColor: foregroundColor,
             shape: borderShape,
+            padding: widget.contentPadding == null
+                ? null
+                : WidgetStatePropertyAll(
+                    widget.contentPadding,
+                  ),
           ),
       _GsaWidgetButtonType.text => Theme.of(context).textButtonTheme.style?.copyWith(
             backgroundColor: backgroundColor,
             foregroundColor: foregroundColor,
+            padding: widget.contentPadding == null
+                ? null
+                : WidgetStatePropertyAll(
+                    widget.contentPadding,
+                  ),
           ),
       _GsaWidgetButtonType.icon => Theme.of(context).iconButtonTheme.style?.copyWith(
             backgroundColor: backgroundColor,
             foregroundColor: foregroundColor,
+            padding: widget.contentPadding == null
+                ? null
+                : WidgetStatePropertyAll(
+                    widget.contentPadding,
+                  ),
           ),
     };
     return _TooltipBuilder(

@@ -65,7 +65,7 @@ class _GsaWidgetTermsConfirmationState extends State<GsaWidgetTermsConfirmation>
                 decoration: TextDecoration.underline,
               ),
               onTap: () {
-                GsaRouteLegalConsent(
+                GsaRouteLegalConsent.termsAndConditions(
                   url: plugin.documentUrls!.termsAndConditions!,
                 ).push();
               },
@@ -84,7 +84,7 @@ class _GsaWidgetTermsConfirmationState extends State<GsaWidgetTermsConfirmation>
                 decoration: TextDecoration.underline,
               ),
               onTap: () {
-                GsaRouteLegalConsent(
+                GsaRouteLegalConsent.privacyPolicy(
                   url: plugin.documentUrls!.privacyPolicy!,
                 ).push();
               },
@@ -103,7 +103,7 @@ class _GsaWidgetTermsConfirmationState extends State<GsaWidgetTermsConfirmation>
                 decoration: TextDecoration.underline,
               ),
               onTap: () {
-                GsaRouteLegalConsent(
+                GsaRouteLegalConsent.cookieAgreement(
                   url: plugin.documentUrls!.cookieNotice!,
                 ).push();
               },

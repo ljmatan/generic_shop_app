@@ -8,14 +8,17 @@ class GsaModelShopSearch extends _Model {
   GsaModelShopSearch({
     super.id,
     super.originId,
-    required super.categoryId,
     required this.searchTerm,
     required this.sortCategoryId,
-  });
+  }) : categoryIds = {};
 
   /// Text search term applied to this search instance.
   ///
   String? searchTerm;
+
+  /// Collection of specified category identifiers to be applied.
+  ///
+  Set<String> categoryIds;
 
   /// The identifier for the sort option.
   ///
@@ -24,14 +27,22 @@ class GsaModelShopSearch extends _Model {
   /// Determines whether any filters are applied.
   ///
   bool get active {
-    return searchTerm?.isNotEmpty == true && searchTerm!.length > 2 || categoryId != null;
+    return searchTerm?.isNotEmpty == true && searchTerm!.length > 2 || categoryIds.isNotEmpty;
+  }
+
+  /// Returns the number of applied filters.
+  ///
+  int? get appliedCount {
+    int count = 0;
+    if (searchTerm != null && searchTerm!.length > 2) count++;
+    return count == 0 ? null : count;
   }
 
   /// Clears any applied filters.
   ///
   void clear() {
     searchTerm = null;
-    categoryId = null;
+    categoryIds.clear();
     sortCategoryId = null;
   }
 
@@ -53,7 +64,6 @@ class GsaModelShopSearch extends _Model {
   }) {
     return GsaModelShopSearch(
       searchTerm: _Model._generateRandomString(3),
-      categoryId: categoryId,
       sortCategoryId: sortCategoryId,
     );
   }

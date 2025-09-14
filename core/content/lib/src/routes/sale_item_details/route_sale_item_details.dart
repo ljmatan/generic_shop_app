@@ -39,9 +39,13 @@ class _GsaRouteSaleItemDetailsState extends GsaRouteState<GsaRouteSaleItemDetail
                 ? GsaWidgetWebContent(
                     widget.saleItem!.originUrl!,
                   )
-                : ListView(
-                    children: [],
-                  ),
+                : 1 == 1
+                    ? Center(
+                        child: GsaWidgetTodo(),
+                      )
+                    : ListView(
+                        children: [],
+                      ),
           ),
         ],
       ),

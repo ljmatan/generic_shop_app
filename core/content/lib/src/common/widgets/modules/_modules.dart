@@ -9,5 +9,6 @@ export 'widget_merchant_preview.dart';
 export 'widget_sale_item_carousel.dart';
 export 'widget_sale_item_preview.dart';
 export 'widget_text.dart';
+export 'widget_todo.dart';
 export 'widget_total_cart_price.dart';
 export 'widget_web_content.dart';

@@ -188,7 +188,9 @@ abstract mixin class GsaServiceCacheValue {
         case const (Iterable<String>):
         case const (List<String>):
         case const (Set<String>):
+          print('e');
           final listValue = (value as Iterable<String>).toList();
+          print('d');
           if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
             final encodedValue = dart_convert.jsonEncode(listValue);
             await GsaServiceCache.instance._setDbStorageValue(

@@ -109,7 +109,6 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                         child: GsaWidgetButton.filled(
                           label: category.$2.name ?? 'N/A',
                           onTap: () {
-                            print('aaaa');
                             widget.setCategory(category.$2);
                           },
                         ),
@@ -130,7 +129,30 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const GsaWidgetHeadline('Search History'),
-                if ((GsaServiceCacheEntry.shopSearchHistory.value as Iterable?)?.isNotEmpty != true)
+                if (GsaServiceConsent.instance.consentStatus.functionalCookies() != true) ...[
+                  GsaWidgetText(
+                    'Functional cookies disabled.',
+                    style: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(
+                    height: GsaTheme.of(context).paddings.content.small,
+                  ),
+                  GsaWidgetText(
+                    'Search history will not be stored until the consent is given.',
+                    style: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  GsaWidgetButton.text(
+                    label: 'Update Cookie Preferences',
+                    contentPadding: EdgeInsets.zero,
+                    onTap: () {
+                      const GsaWidgetOverlayCookieConsent().openDialog();
+                    },
+                  ),
+                ] else if ((GsaServiceCacheEntry.shopSearchHistory.value as Iterable?)?.isNotEmpty != true)
                   GsaWidgetText(
                     'No search history',
                     style: const TextStyle(
@@ -144,7 +166,7 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                         children: [
                           Expanded(
                             child: GsaWidgetText(
-                              searchHistoryEntry.$2,
+                              searchHistoryEntry.$2.toString(),
                             ),
                           ),
                           GsaWidgetButton.icon(

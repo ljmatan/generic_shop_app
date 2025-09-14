@@ -18,6 +18,7 @@ class GsaWidgetText extends StatefulWidget {
     this.overflow,
     this.isConstrained = false,
     this.isInterpolated = false,
+    this.autosize = true,
   })  : _key = key,
         labels = const [];
 
@@ -31,6 +32,7 @@ class GsaWidgetText extends StatefulWidget {
     this.maxLines,
     this.overflow,
     this.isConstrained = false,
+    this.autosize = true,
   })  : _key = key,
         label = '',
         isInterpolated = false;
@@ -83,6 +85,10 @@ class GsaWidgetText extends StatefulWidget {
   /// Whether the text value is provided as a variable (and not to be translated).
   ///
   final bool isInterpolated;
+
+  /// Whether to apply automatic text resizing with the [fl_auto_size_text] package.
+  ///
+  final bool autosize;
 
   @override
   State<GsaWidgetText> createState() {
@@ -154,6 +160,7 @@ class _GsaWidgetTextState extends State<GsaWidgetText> {
                   key: _textWidgetKey,
                   text: widget,
                   translatedText: snapshot.data!,
+                  autosize: widget.autosize,
                 );
               }
 
@@ -172,6 +179,7 @@ class _GsaWidgetTextState extends State<GsaWidgetText> {
             key: _textWidgetKey,
             text: widget,
             translatedText: null,
+            autosize: widget.autosize,
           );
   }
 
@@ -187,11 +195,14 @@ class _WidgetTextDisplay extends StatefulWidget {
     required super.key,
     required this.text,
     required this.translatedText,
+    required this.autosize,
   });
 
   final GsaWidgetText text;
 
   final List<String>? translatedText;
+
+  final bool autosize;
 
   @override
   State<_WidgetTextDisplay> createState() => _WidgetTextDisplayState();
@@ -248,35 +259,62 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
   @override
   Widget build(BuildContext context) {
     return widget.text.labels.isNotEmpty
-        ? fl_auto_size_text.AutoSizeText.rich(
-            TextSpan(
-              children: [
-                for (final label in widget.text.labels.indexed)
-                  TextSpan(
-                    text: _textValues[label.$1],
-                    style: label.$2.style,
-                    recognizer: label.$2.onTap != null ? (TapGestureRecognizer()..onTap = label.$2.onTap) : null,
-                  ),
-              ],
-            ),
-            textAlign: widget.text.textAlign,
-            style: widget.text.style,
-            maxLines: widget.text.maxLines,
-            overflow: widget.text.overflow,
-            minFontSize: 6,
-            locale: GsaServiceI18N.instance.language.locale,
-            textScaleFactor: GsaTheme.of(context).elementScale,
-          )
-        : fl_auto_size_text.AutoSizeText(
-            _textValues[0],
-            style: widget.text.style,
-            textAlign: widget.text.textAlign ?? TextAlign.start,
-            maxLines: widget.text.maxLines,
-            overflow: widget.text.overflow,
-            minFontSize: 6,
-            locale: GsaServiceI18N.instance.language.locale,
-            textScaleFactor: GsaTheme.of(context).elementScale,
-          );
+        ? widget.autosize
+            ? fl_auto_size_text.AutoSizeText.rich(
+                TextSpan(
+                  children: [
+                    for (final label in widget.text.labels.indexed)
+                      TextSpan(
+                        text: _textValues[label.$1],
+                        style: label.$2.style,
+                        recognizer: label.$2.onTap != null ? (TapGestureRecognizer()..onTap = label.$2.onTap) : null,
+                      ),
+                  ],
+                ),
+                textAlign: widget.text.textAlign,
+                style: widget.text.style,
+                maxLines: widget.text.maxLines,
+                overflow: widget.text.overflow,
+                minFontSize: 6,
+                locale: GsaServiceI18N.instance.language.locale,
+                textScaleFactor: GsaTheme.of(context).elementScale,
+              )
+            : Text.rich(
+                TextSpan(
+                  children: [
+                    for (final label in widget.text.labels.indexed)
+                      TextSpan(
+                        text: _textValues[label.$1],
+                        style: label.$2.style,
+                        recognizer: label.$2.onTap != null ? (TapGestureRecognizer()..onTap = label.$2.onTap) : null,
+                      ),
+                  ],
+                ),
+                textAlign: widget.text.textAlign,
+                style: widget.text.style,
+                maxLines: widget.text.maxLines,
+                overflow: widget.text.overflow,
+                locale: GsaServiceI18N.instance.language.locale,
+              )
+        : widget.autosize
+            ? fl_auto_size_text.AutoSizeText(
+                _textValues[0],
+                style: widget.text.style,
+                textAlign: widget.text.textAlign ?? TextAlign.start,
+                maxLines: widget.text.maxLines,
+                overflow: widget.text.overflow,
+                minFontSize: 6,
+                locale: GsaServiceI18N.instance.language.locale,
+                textScaleFactor: GsaTheme.of(context).elementScale,
+              )
+            : Text(
+                _textValues[0],
+                style: widget.text.style,
+                textAlign: widget.text.textAlign ?? TextAlign.start,
+                maxLines: widget.text.maxLines,
+                overflow: widget.text.overflow,
+                locale: GsaServiceI18N.instance.language.locale,
+              );
   }
 }
 

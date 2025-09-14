@@ -13,13 +13,21 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> with Automat
     return true;
   }
 
-  late Future<List<GsaModelPromoBanner>> _getBannersFuture;
+  late Future<
+      Iterable<
+          ({
+            GsaModelPromoBanner banner,
+            dart_typed_data.Uint8List? photoBytes,
+          })>> _getBannersFuture;
 
-  final _carouselItems = <GsaModelPromoBanner>{};
+  final _carouselItems = <({
+    GsaModelPromoBanner banner,
+    dart_typed_data.Uint8List? photoBytes,
+  })>{};
 
   int _carouselItemIndex = 0;
 
-  late Timer _fadeTimer;
+  late dart_async.Timer _fadeTimer;
 
   @override
   void initState() {
@@ -31,13 +39,25 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> with Automat
             'Promo carousel content endpoint not implemented for ${GsaPlugin.of(context).id}.',
           );
         } else {
-          final value = await GsaPlugin.of(context).api!.getPromoBanners!();
-          _carouselItems.addAll(value);
-          return value;
+          final banners = await GsaPlugin.of(context).api!.getPromoBanners!();
+          _carouselItems.addAll(
+            [
+              for (final banner in banners)
+                (
+                  banner: banner,
+                  photoBytes: banner.photoBase64 == null
+                      ? null
+                      : dart_convert.base64Decode(
+                          banner.photoBase64!,
+                        ),
+                ),
+            ],
+          );
+          return _carouselItems;
         }
       },
     );
-    _fadeTimer = Timer.periodic(
+    _fadeTimer = dart_async.Timer.periodic(
       const Duration(seconds: 4),
       (_) {
         if (_carouselItems.length > 1) {
@@ -94,22 +114,22 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> with Automat
                               borderRadius: GsaPlugin.of(context).theme.borderRadius,
                               child: Stack(
                                 children: [
-                                  if (carouselItemUrl.$2.photoUrl != null)
+                                  if (carouselItemUrl.$2.banner.photoUrl != null)
                                     GsaWidgetImage.network(
-                                      carouselItemUrl.$2.photoUrl!,
+                                      carouselItemUrl.$2.banner.photoUrl!,
                                       width: MediaQuery.of(context).size.width,
                                       height: MediaQuery.of(context).size.height,
                                       fit: BoxFit.cover,
                                     )
-                                  else if (carouselItemUrl.$2.photoByteData != null)
+                                  else if (carouselItemUrl.$2.photoBytes != null)
                                     GsaWidgetImage.bytes(
-                                      carouselItemUrl.$2.photoByteData!,
+                                      carouselItemUrl.$2.photoBytes!,
                                       type: GsaWidgetImageByteType.jpg,
                                       width: MediaQuery.of(context).size.width,
                                       height: MediaQuery.of(context).size.height,
                                       fit: BoxFit.cover,
                                     ),
-                                  if (carouselItemUrl.$2.contentUrl != null)
+                                  if (carouselItemUrl.$2.banner.contentUrl != null)
                                     const Positioned(
                                       top: 8,
                                       right: 8,
@@ -118,7 +138,7 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> with Automat
                                         color: Colors.white,
                                       ),
                                     ),
-                                  if (carouselItemUrl.$2.label != null || carouselItemUrl.$2.description != null)
+                                  if (carouselItemUrl.$2.banner.label != null || carouselItemUrl.$2.banner.description != null)
                                     Positioned(
                                       left: 0,
                                       right: 0,
@@ -141,14 +161,14 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> with Automat
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              if (carouselItemUrl.$2.label != null)
+                                              if (carouselItemUrl.$2.banner.label != null)
                                                 GsaWidgetText(
-                                                  carouselItemUrl.$2.label!,
+                                                  carouselItemUrl.$2.banner.label!,
                                                 ),
-                                              if (carouselItemUrl.$2.description != null) ...[
-                                                if (carouselItemUrl.$2.label != null) const SizedBox(height: 4),
+                                              if (carouselItemUrl.$2.banner.description != null) ...[
+                                                if (carouselItemUrl.$2.banner.label != null) const SizedBox(height: 4),
                                                 GsaWidgetText(
-                                                  carouselItemUrl.$2.description!,
+                                                  carouselItemUrl.$2.banner.description!,
                                                   style: Theme.of(context).textTheme.bodySmall,
                                                 ),
                                               ],
@@ -163,12 +183,12 @@ class _WidgetPromoCarouselState extends State<_WidgetPromoCarousel> with Automat
                           ),
                         ),
                       ),
-                      onTap: carouselItemUrl.$2.contentUrl != null
+                      onTap: carouselItemUrl.$2.banner.contentUrl != null
                           ? () {
                               GsaRouteWebView(
-                                url: carouselItemUrl.$2.contentUrl!,
-                                urlPath: Uri.parse(carouselItemUrl.$2.contentUrl!).path,
-                                title: carouselItemUrl.$2.label ?? 'Reading',
+                                url: carouselItemUrl.$2.banner.contentUrl!,
+                                urlPath: Uri.parse(carouselItemUrl.$2.banner.contentUrl!).path,
+                                title: carouselItemUrl.$2.banner.label ?? 'Reading',
                               ).push();
                             }
                           : null,

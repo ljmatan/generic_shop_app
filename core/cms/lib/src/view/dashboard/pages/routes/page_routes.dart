@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:generic_shop_app_cms/cms.dart';
 
 class GscPageRoutes extends StatefulWidget {
   const GscPageRoutes({super.key});
@@ -10,6 +11,10 @@ class GscPageRoutes extends StatefulWidget {
 class _GscPageRoutesState extends State<GscPageRoutes> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      body: Center(
+        child: GsaWidgetTodo(),
+      ),
+    );
   }
 }

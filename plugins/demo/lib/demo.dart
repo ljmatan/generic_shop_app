@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:generic_shop_app_demo/demo.dart';
 
@@ -86,7 +88,7 @@ class GsdPlugin extends GsaPlugin {
             description: promoEntry.$2.description,
             contentUrl: null,
             photoUrl: null,
-            photoByteData: images[promoEntry.$1],
+            photoBase64: base64Encode(images[promoEntry.$1]),
           ),
       ];
     },

@@ -9,11 +9,41 @@ class GsaRouteLegalConsent extends GsacRoute {
   const GsaRouteLegalConsent({
     super.key,
     required this.url,
-  });
+  }) : title = 'Cookie Agreement';
+
+  /// Constructs an instance of the screen displaying the terms and conditions.
+  ///
+  const GsaRouteLegalConsent.termsAndConditions({
+    super.key,
+    required this.url,
+  }) : title = 'Terms and Conditions';
+
+  /// Constructs an instance of the screen displaying the privacy policy.
+  ///
+  const GsaRouteLegalConsent.privacyPolicy({
+    super.key,
+    required this.url,
+  }) : title = 'Privacy Policy';
+
+  /// Constructs an instance of the screen displaying the cookie agreement.
+  ///
+  const GsaRouteLegalConsent.cookieAgreement({
+    super.key,
+    required this.url,
+  }) : title = 'Cookie Agreement';
 
   /// Location of the relevant web or asset resource.
   ///
   final String url;
+
+  /// User-facing title of this screen.
+  ///
+  final String title;
+
+  @override
+  String get displayName {
+    return title;
+  }
 
   @override
   State<GsaRouteLegalConsent> createState() => _GsaRouteLegalConsentState();

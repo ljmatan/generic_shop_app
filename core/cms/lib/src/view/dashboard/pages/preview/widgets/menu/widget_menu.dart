@@ -55,22 +55,24 @@ class _WidgetMenuState extends State<_WidgetMenu> {
                   ],
                 ),
               ),
-              const Divider(),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade700,
-                ),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: GsaWidgetButton.text(
-                    label: 'Export Configuration',
-                    foregroundColor: Colors.white,
-                    onTap: () {
-                      // TODO
-                    },
+              if (1 == 2) ...[
+                const Divider(),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade700,
+                  ),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: GsaWidgetButton.text(
+                      label: 'Export Configuration',
+                      foregroundColor: Colors.white,
+                      onTap: () {
+                        // TODO
+                      },
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),
