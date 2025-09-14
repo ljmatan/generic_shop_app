@@ -227,7 +227,7 @@ abstract class GsaRouteState<T extends GsaRoute> extends State<T> with RouteAwar
     SystemChrome.setApplicationSwitcherDescription(
       ApplicationSwitcherDescription(
         label: widget.routeType.displayName,
-        primaryColor: Theme.of(context).primaryColor.value,
+        primaryColor: context.mounted ? Theme.of(context).primaryColor.toARGB32() : null,
       ),
     );
   }

@@ -308,6 +308,14 @@ class _GsaWidgetImageBuilder extends StatelessWidget {
             color: widget.colorFilter,
             fit: widget.fit,
             alignment: widget.alignment as Alignment,
+            errorWidget: (context, url, error) {
+              return GsaWidgetImage.placeholder(
+                width: widget.width,
+                height: widget.height,
+                fit: widget.fit,
+                alignment: widget.alignment,
+              );
+            },
           );
         } else {
           Image.network(

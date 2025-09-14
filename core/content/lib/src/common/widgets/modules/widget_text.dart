@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
+import 'package:flutter_auto_size_text/flutter_auto_size_text.dart' as fl_auto_size_text;
 
 /// Flutter [Text] widget implementation with internationalization and editing features embedded.
 ///
@@ -247,7 +248,7 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
   @override
   Widget build(BuildContext context) {
     return widget.text.labels.isNotEmpty
-        ? Text.rich(
+        ? fl_auto_size_text.AutoSizeText.rich(
             TextSpan(
               children: [
                 for (final label in widget.text.labels.indexed)
@@ -262,13 +263,19 @@ class _WidgetTextDisplayState extends State<_WidgetTextDisplay> {
             style: widget.text.style,
             maxLines: widget.text.maxLines,
             overflow: widget.text.overflow,
+            minFontSize: 6,
+            locale: GsaServiceI18N.instance.language.locale,
+            textScaleFactor: GsaTheme.of(context).elementScale,
           )
-        : Text(
+        : fl_auto_size_text.AutoSizeText(
             _textValues[0],
             style: widget.text.style,
             textAlign: widget.text.textAlign ?? TextAlign.start,
             maxLines: widget.text.maxLines,
             overflow: widget.text.overflow,
+            minFontSize: 6,
+            locale: GsaServiceI18N.instance.language.locale,
+            textScaleFactor: GsaTheme.of(context).elementScale,
           );
   }
 }
