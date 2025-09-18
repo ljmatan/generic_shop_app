@@ -70,8 +70,9 @@ class GsaServiceLogging extends GsaService {
     }
   }
 
-  Future<void> init() async {
-    await super.init();
+  @override
+  Future<void> init(BuildContext context) async {
+    await super.init(context);
     final defaultErrorWidgetBuilder = ErrorWidget.builder;
     ErrorWidget.builder = (details) {
       StackTrace? parentStackTrace;

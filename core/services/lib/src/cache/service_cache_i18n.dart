@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs
 
-part of '../modules/cache/service_cache.dart';
+part of 'service_cache.dart';
 
 enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
-  invalidVersionErrorMessage(
+  _invalidVersionErrorMessage(
     GsaServiceI18NModelTranslatedValue(
       'Invalid cache manager version',
       enIe: 'Invalid cache manager version',
@@ -16,7 +16,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Neplatná verze správce mezipaměti',
     ),
   ),
-  version(
+  _version(
     GsaServiceI18NModelTranslatedValue(
       'Cache Service Version',
       enIe: 'Cache Service Version',
@@ -29,7 +29,20 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Verze služby mezipaměti',
     ),
   ),
-  translations(
+  _deviceId(
+    GsaServiceI18NModelTranslatedValue(
+      'Device Identifier',
+      enIe: 'Device Identifier',
+      enGb: 'Device Identifier',
+      de: 'Gerätekennung',
+      it: 'Identificativo dispositivo',
+      fr: 'Identifiant de l\'appareil',
+      es: 'Identificador de dispositivo',
+      hr: 'Identifikator uređaja',
+      cz: 'Identifikátor zařízení',
+    ),
+  ),
+  _translations(
     GsaServiceI18NModelTranslatedValue(
       'Translation Values',
       enIe: 'Translation Values',
@@ -42,7 +55,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Hodnoty překladu',
     ),
   ),
-  cookieConsentMandatory(
+  _cookieConsentMandatory(
     GsaServiceI18NModelTranslatedValue(
       'Mandatory Cookies',
       enIe: 'Mandatory Cookies',
@@ -55,7 +68,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Povinné cookies',
     ),
   ),
-  cookieConsentFunctional(
+  _cookieConsentFunctional(
     GsaServiceI18NModelTranslatedValue(
       'Functional Cookies',
       enIe: 'Functional Cookies',
@@ -68,7 +81,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Funkční cookies',
     ),
   ),
-  cookieConsentStatistical(
+  _cookieConsentStatistical(
     GsaServiceI18NModelTranslatedValue(
       'Statistical Cookies',
       enIe: 'Statistical Cookies',
@@ -81,7 +94,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Statistické soubory cookie',
     ),
   ),
-  cookieConsentMarketing(
+  _cookieConsentMarketing(
     GsaServiceI18NModelTranslatedValue(
       'Marketing Cookies',
       enIe: 'Marketing Cookies',
@@ -94,7 +107,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Marketingové cookies',
     ),
   ),
-  authenticationToken(
+  _authenticationToken(
     GsaServiceI18NModelTranslatedValue(
       'Authentication Token',
       enIe: 'Authentication Token',
@@ -107,7 +120,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Autentizační token',
     ),
   ),
-  guestUserEncodedData(
+  _guestUserEncodedData(
     GsaServiceI18NModelTranslatedValue(
       'Guest User Data',
       enIe: 'Guest User Data',
@@ -120,7 +133,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Uživatelská data hosta',
     ),
   ),
-  bookmarks(
+  _bookmarks(
     GsaServiceI18NModelTranslatedValue(
       'Bookmarks',
       enIe: 'Bookmarks',
@@ -133,7 +146,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Záložky',
     ),
   ),
-  shopSearchHistory(
+  _shopSearchHistory(
     GsaServiceI18NModelTranslatedValue(
       'Shop Search History',
       enIe: 'Shop Search History',
@@ -146,7 +159,7 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Historie vyhledávání obchodů',
     ),
   ),
-  themeBrightness(
+  _themeBrightness(
     GsaServiceI18NModelTranslatedValue(
       'Theme Brightness',
       enIe: 'Theme Brightness',

@@ -46,12 +46,12 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
       ),
       (
         enabled: widget.plugin.enabledCookieTypes.functional,
-        cacheEntry: GsaServiceCacheEntry.cookieConsentFunctional,
+        cacheEntry: GsaServiceCacheEntry.cookieConsentFunctionality,
         label: GsaWidgetCookieConsentI18N.functionalCookiesDescription.value.display,
       ),
       (
         enabled: widget.plugin.enabledCookieTypes.statistical,
-        cacheEntry: GsaServiceCacheEntry.cookieConsentStatistical,
+        cacheEntry: GsaServiceCacheEntry.cookieConsentStatistics,
         label: GsaWidgetCookieConsentI18N.statisticalCookiesDescription.value.display,
       ),
       (

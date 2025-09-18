@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart' as att;
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 
 /// The AppTrackingTransparency framework presents an app-tracking authorization request to the user
@@ -34,8 +35,8 @@ class GsaServiceAppTrackingTransparency extends GsaService {
   }
 
   @override
-  Future<void> init() async {
-    await super.init();
+  Future<void> init(BuildContext context) async {
+    await super.init(context);
     consentGiven =
         kIsWeb || Platform.isAndroid || await att.AppTrackingTransparency.trackingAuthorizationStatus == att.TrackingStatus.authorized;
   }

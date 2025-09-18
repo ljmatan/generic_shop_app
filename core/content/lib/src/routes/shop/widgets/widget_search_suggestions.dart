@@ -68,7 +68,7 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                 ),
               ),
               onTap: () {
-                if (GsaServiceCacheEntry.cookieConsentFunctional.value == true) {
+                if (GsaServiceCacheEntry.cookieConsentFunctionality.value == true) {
                   const GsaRouteBookmarks().push();
                 } else {
                   const GsaWidgetOverlayCookieConsentMissing(
@@ -129,7 +129,7 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const GsaWidgetHeadline('Search History'),
-                if (GsaServiceConsent.instance.consentStatus.functionalCookies() != true) ...[
+                if (GsaServiceConsent.instance.consentStatus.functionalityCookies() != true) ...[
                   GsaWidgetText(
                     'Functional cookies disabled.',
                     style: const TextStyle(

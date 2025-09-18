@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs
 
-part of '../modules/input_validation/service_input_validation.dart';
+part of 'service_input_validation.dart';
 
 enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
-  personalNameInputEmpty(
+  _personalNameInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Personal name input is empty.',
       enIe: 'Personal name input is empty.',
@@ -16,7 +16,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup osobního jména je prázdný.',
     ),
   ),
-  personalNameRequiresVerification(
+  _personalNameRequiresVerification(
     GsaServiceI18NModelTranslatedValue(
       'Please verify your name input.',
       enIe: 'Please verify your name input.',
@@ -29,7 +29,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup osobního jména je prázdný.',
     ),
   ),
-  emailInputEmpty(
+  _emailInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Email input is empty.',
       enIe: 'Email input is empty.',
@@ -42,7 +42,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'E -mailový vstup je prázdný.',
     ),
   ),
-  emailRequiresVerification(
+  _emailRequiresVerification(
     GsaServiceI18NModelTranslatedValue(
       'Please verify your email input.',
       enIe: 'Please verify your email input.',
@@ -55,7 +55,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Ověřte prosím svůj e -mailový vstup.',
     ),
   ),
-  passwordInputEmpty(
+  _passwordInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Password input is empty.',
       enIe: 'Password input is empty.',
@@ -68,7 +68,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup hesla je prázdný.',
     ),
   ),
-  phoneNumberInputEmpty(
+  _phoneNumberInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Phone number input is empty.',
       enIe: 'Phone number input is empty.',
@@ -81,7 +81,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup telefonního čísla je prázdný.',
     ),
   ),
-  phoneNumberRequiresValidation(
+  _phoneNumberRequiresValidation(
     GsaServiceI18NModelTranslatedValue(
       'Please verify your phone number input.',
       enIe: 'Please verify your phone number input.',
@@ -94,7 +94,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Ověřte prosím vstup svého telefonního čísla.',
     ),
   ),
-  streetNameInputEmpty(
+  _streetNameInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Street name input is empty.',
       enIe: 'Street name input is empty.',
@@ -107,7 +107,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Název ulice je prázdný.',
     ),
   ),
-  streetNameRequiresValidation(
+  _streetNameRequiresValidation(
     GsaServiceI18NModelTranslatedValue(
       'Please verify your street name input.',
       enIe: 'Please verify your street name input.',
@@ -120,7 +120,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Ověřte prosím vstup název ulice.',
     ),
   ),
-  houseNumberInputEmpty(
+  _houseNumberInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'House number input is empty.',
       enIe: 'House number input is empty.',
@@ -133,7 +133,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup do domu je prázdný.',
     ),
   ),
-  postCodeInputEmpty(
+  _postCodeInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Postcode input is empty.',
       enIe: 'Postcode input is empty.',
@@ -146,7 +146,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup poštovního kódu je prázdný.',
     ),
   ),
-  cityInputEmpty(
+  _cityInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'City name input is empty.',
       enIe: 'City name input is empty.',
@@ -159,7 +159,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup název města je prázdný.',
     ),
   ),
-  stateInputEmpty(
+  _stateInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'State name input is empty.',
       enIe: 'State name input is empty.',
@@ -172,7 +172,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup název stavu je prázdný.',
     ),
   ),
-  countryInputEmpty(
+  _countryInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Country name input is empty.',
       enIe: 'Country name input is empty.',
@@ -185,7 +185,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Název země je prázdný.',
     ),
   ),
-  numberInputEmpty(
+  _numberInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Number input is empty.',
       enIe: 'Number input is empty.',
@@ -198,7 +198,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Vstup čísla je prázdný.',
     ),
   ),
-  numberInputRequiresVerification(
+  _numberInputRequiresVerification(
     GsaServiceI18NModelTranslatedValue(
       'Please verify your number input.',
       enIe: 'Please verify your number input.',
@@ -211,7 +211,7 @@ enum GsaServiceInputValidationI18N implements GsaServiceI18NBaseTranslations {
       cz: 'Ověřte prosím vstup na číslo.',
     ),
   ),
-  plainTextInputEmpty(
+  _plainTextInputEmpty(
     GsaServiceI18NModelTranslatedValue(
       'Input is empty.',
       enIe: 'Input is empty.',

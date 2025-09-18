@@ -51,7 +51,7 @@ class _GsaWidgetBookmarkButtonState extends State<GsaWidgetBookmarkButton> {
   }
 
   Future<void> _onBookmarkStateChange() async {
-    if (GsaServiceCacheEntry.cookieConsentFunctional.value == true) {
+    if (GsaServiceCacheEntry.cookieConsentFunctionality.value == true) {
       if (_bookmarked) {
         await GsaServiceBookmarks.instance.removeBookmark(widget.saleItem.id ?? '');
       } else {

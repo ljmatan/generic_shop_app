@@ -116,7 +116,7 @@ abstract class GsaPlugin {
   /// This method is called before the [init] method invocation.
   ///
   @mustCallSuper
-  Future<void> setupService() async {
+  Future<void> setupService(BuildContext context) async {
     // Define model serialization options.
     if (models != null) {
       for (final model in models!.values) {
@@ -171,7 +171,7 @@ abstract class GsaPlugin {
     // Allocate service memory objects.
     if (services != null) {
       for (final service in services!.values) {
-        await service.init();
+        await service.init(context);
       }
     }
   }

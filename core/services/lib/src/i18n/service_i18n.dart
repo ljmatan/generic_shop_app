@@ -3,7 +3,6 @@ import 'dart:convert' as dart_convert;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:generic_shop_app_content/content.dart';
 
 part 'base/service_i18n_base_translations.dart';
@@ -88,8 +87,8 @@ class GsaServiceI18N extends GsaService {
   };
 
   @override
-  Future<void> init() async {
-    await super.init();
+  Future<void> init(BuildContext context) async {
+    await super.init(context);
     final systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
     final matchingLanguage = GsaServiceI18NLanguage.values.firstWhereOrNull(
       (language) {

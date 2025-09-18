@@ -2,6 +2,7 @@ import 'dart:convert' as dart_convert;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 import 'package:shared_preferences/shared_preferences.dart' as shared_preferences;
 import 'package:sembast/sembast.dart' as sembast;
@@ -9,7 +10,7 @@ import 'package:sembast_web/sembast_web.dart' as sembast_web;
 import 'package:sembast/sembast_io.dart' as sembast_io;
 import 'package:sembast/utils/database_utils.dart' as sembast_utils;
 
-part '../../i18n/service_cache_i18n.dart';
+part 'service_cache_i18n.dart';
 part 'service_cache_entry.dart';
 part 'service_cache_value.dart';
 
@@ -148,7 +149,7 @@ class GsaServiceCache extends GsaService {
 
   /// Prefix assigned to each of the cached item entries.
   ///
-  String? cacheIdPrefix;
+  String? _cacheIdPrefix;
 
   /// Initialises the [_sharedPreferences] property and handle data cache versions.
   ///
@@ -156,8 +157,10 @@ class GsaServiceCache extends GsaService {
   /// as [GsaData] and [GsaService] implementations rely on the cache service.
   ///
   @override
-  Future<void> init() async {
-    await super.init();
+  Future<void> init(BuildContext context) async {
+    await super.init(context);
+    final plugin = GsaPlugin.of(context);
+    _cacheIdPrefix = plugin.id;
     const timeoutDuration = Duration(seconds: 10);
     const timeoutMessage = 'Failed to initialise cache service within alloted timeframe.';
     if (database) {
@@ -238,13 +241,19 @@ class GsaServiceCache extends GsaService {
             // Version is up-to-date.
             break;
           default:
-            throw '${GsaServiceCacheI18N.invalidVersionErrorMessage.value.display}: $version';
+            throw '${GsaServiceCacheI18N._invalidVersionErrorMessage.value.display}: $version';
         }
       }
     }
     // Clear cookies according to user consent status.
     for (final cacheEntry in _cacheEntries) {
-      if (cacheEntry.isFunctionalCookie && GsaServiceConsent.instance.consentStatus.functionalCookies() != true) {
+      final shouldRemoveFunctionalityCookie =
+          cacheEntry.isFunctionalCookie && GsaServiceConsent.instance.consentStatus.functionalityCookies() != true;
+      final shouldRemoveStatisticsCookie =
+          cacheEntry.isStatisticsCookie && GsaServiceConsent.instance.consentStatus.statisticsCookies() != true;
+      final shouldRemoveMarketingCookie =
+          cacheEntry.isMarkertingCookie && GsaServiceConsent.instance.consentStatus.marketingCookies() != true;
+      if (shouldRemoveFunctionalityCookie || shouldRemoveStatisticsCookie || shouldRemoveMarketingCookie) {
         await cacheEntry.removeValue();
       }
     }
@@ -256,9 +265,9 @@ class GsaServiceCache extends GsaService {
   final persistent = <GsaServiceCacheEntry>{
     GsaServiceCacheEntry.version,
     GsaServiceCacheEntry.cookieConsentMandatory,
-    GsaServiceCacheEntry.cookieConsentFunctional,
+    GsaServiceCacheEntry.cookieConsentFunctionality,
     GsaServiceCacheEntry.cookieConsentMarketing,
-    GsaServiceCacheEntry.cookieConsentStatistical,
+    GsaServiceCacheEntry.cookieConsentStatistics,
   };
 
   /// Collection of cached value keys stored to the user device.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 
-part '../../i18n/service_input_validation_i18n.dart';
+part 'service_input_validation_i18n.dart';
 
 /// User-generated input validation services.
 ///
@@ -22,12 +22,12 @@ class GsaServiceInputValidation extends GsaService {
   ) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.personalNameInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._personalNameInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
     if (trimmed!.length < 2 || trimmed.length > 20 || RegExp(r'\d').hasMatch(trimmed)) {
-      return GsaServiceInputValidationI18N.personalNameRequiresVerification.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._personalNameRequiresVerification.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -57,7 +57,7 @@ class GsaServiceInputValidation extends GsaService {
   String? email(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.emailInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._emailInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -66,7 +66,7 @@ class GsaServiceInputValidation extends GsaService {
         !RegExp(
           r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
         ).hasMatch(trimmed)) {
-      return GsaServiceInputValidationI18N.emailRequiresVerification.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._emailRequiresVerification.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -83,7 +83,7 @@ class GsaServiceInputValidation extends GsaService {
   }) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.passwordInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._passwordInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -100,14 +100,14 @@ class GsaServiceInputValidation extends GsaService {
   String? phoneNumber(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.passwordInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._passwordInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
     if (!RegExp(
       r'((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))',
     ).hasMatch(trimmed!)) {
-      return GsaServiceInputValidationI18N.phoneNumberRequiresValidation.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._phoneNumberRequiresValidation.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -121,12 +121,12 @@ class GsaServiceInputValidation extends GsaService {
   String? street(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.streetNameInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._streetNameInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
     if (trimmed!.length < 4) {
-      return GsaServiceInputValidationI18N.streetNameRequiresValidation.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._streetNameRequiresValidation.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -140,7 +140,7 @@ class GsaServiceInputValidation extends GsaService {
   String? houseNumber(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.houseNumberInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._houseNumberInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -154,7 +154,7 @@ class GsaServiceInputValidation extends GsaService {
   String? postCode(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.postCodeInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._postCodeInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -176,7 +176,7 @@ class GsaServiceInputValidation extends GsaService {
   String? city(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.cityInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._cityInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -190,7 +190,7 @@ class GsaServiceInputValidation extends GsaService {
   String? state(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.stateInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._stateInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -204,7 +204,7 @@ class GsaServiceInputValidation extends GsaService {
   String? country(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.countryInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._countryInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -218,12 +218,12 @@ class GsaServiceInputValidation extends GsaService {
   String? number(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.numberInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._numberInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
     if (int.tryParse(trimmed!) == null) {
-      return GsaServiceInputValidationI18N.numberInputRequiresVerification.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._numberInputRequiresVerification.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }
@@ -237,7 +237,7 @@ class GsaServiceInputValidation extends GsaService {
   String? plainText(String? input) {
     final trimmed = input?.trim();
     if (trimmed?.isNotEmpty != true) {
-      return GsaServiceInputValidationI18N.plainTextInputEmpty.value.display.translateFromType(
+      return GsaServiceInputValidationI18N._plainTextInputEmpty.value.display.translateFromType(
         ancestor: runtimeType,
       );
     }

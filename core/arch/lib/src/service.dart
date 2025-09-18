@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_content/content.dart';
 
 /// This abstract class defines a globally-accessible service with various Flutter APIs
@@ -39,19 +39,19 @@ abstract class GsaService with GsaMethods {
   /// Allocate the service resources.
   ///
   @mustCallSuper
-  Future<void> init() async {
+  Future<void> init(BuildContext context) async {
     if (!enabled) throw _disabledErrorMessage;
   }
 
   /// Initialises all of the active prioritised services.
   ///
-  static Future<void> initAll() async {
+  static Future<void> initAll(BuildContext context) async {
     await Future.wait(
       [
         for (final observable in _observables.where(
           (observable) => !observable.manualInit && observable.enabled,
         ))
-          (observable).init().catchError(
+          (observable).init(context).catchError(
             (e) {
               final errorMessage = 'Critical ${observable.runtimeType} service error: $e';
               if (e != observable._disabledErrorMessage) {

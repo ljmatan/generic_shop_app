@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 
 /// Class responsible for handling any user privacy-related consent requests and statuses.
@@ -40,20 +41,20 @@ class GsaServiceConsent extends GsaService {
   /// Property with which all of the defined consent statuses can be accessed.
   ///
   final ({
-    bool? Function() functionalCookies,
     bool? Function() mandatoryCookies,
+    bool? Function() functionalityCookies,
+    bool? Function() statisticsCookies,
     bool? Function() marketingCookies,
-    bool? Function() statisticalCookies,
   }) consentStatus = (
     mandatoryCookies: () => GsaServiceCacheEntry.cookieConsentMandatory.value,
+    functionalityCookies: () => GsaServiceCacheEntry.cookieConsentFunctionality.value,
+    statisticsCookies: () => GsaServiceCacheEntry.cookieConsentStatistics.value,
     marketingCookies: () => GsaServiceCacheEntry.cookieConsentMarketing.value,
-    functionalCookies: () => GsaServiceCacheEntry.cookieConsentFunctional.value,
-    statisticalCookies: () => GsaServiceCacheEntry.cookieConsentStatistical.value,
   );
 
   @override
-  Future<void> init() async {
-    await super.init();
+  Future<void> init(BuildContext context) async {
+    await super.init(context);
     if (hasMandatoryConsent) {
       await GsaServiceCache.instance.onCookieConsentAcknowledged();
     }

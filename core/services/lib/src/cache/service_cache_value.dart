@@ -18,10 +18,10 @@ abstract mixin class GsaServiceCacheValue {
   /// Unique cache value identifier, derived from [cacheId] and [cacheIdPrefix].
   ///
   String get _cacheId {
-    if (noCacheIdPrefix || GsaServiceCache.instance.cacheIdPrefix == null) {
+    if (noCacheIdPrefix || GsaServiceCache.instance._cacheIdPrefix == null) {
       return cacheId;
     } else {
-      return '${GsaServiceCache.instance.cacheIdPrefix}-$cacheId';
+      return '${GsaServiceCache.instance._cacheIdPrefix}-$cacheId';
     }
   }
 
@@ -35,8 +35,28 @@ abstract mixin class GsaServiceCacheValue {
 
   /// Method checking for the functional cookie permission type and status.
   ///
-  bool get _isFunctionalCookieEnabled {
-    return !isFunctionalCookie || GsaServiceConsent.instance.consentStatus.functionalCookies() == true;
+  bool get _isFunctionalityCookieEnabled {
+    return !isFunctionalCookie || GsaServiceConsent.instance.consentStatus.functionalityCookies() == true;
+  }
+
+  /// Whether this cache entry is defined as a statistics cookie.
+  ///
+  bool get isStatisticsCookie;
+
+  /// Method checking for the statistical cookie permission type and status.
+  ///
+  bool get _isStatisticsCookieEnabled {
+    return !isStatisticsCookie || GsaServiceConsent.instance.consentStatus.statisticsCookies() == true;
+  }
+
+  /// Whether this cache entry is defined as a marketing cookie.
+  ///
+  bool get isMarkertingCookie;
+
+  /// Method checking for the marketing cookie permission type and status.
+  ///
+  bool get _isMarketingCookieEnabled {
+    return !isMarkertingCookie || GsaServiceConsent.instance.consentStatus.marketingCookies() == true;
   }
 
   /// A default value assigned to this cache item on initial app setup.
@@ -60,7 +80,7 @@ abstract mixin class GsaServiceCacheValue {
   /// Retrieves the cached data (if exists) according to the specified [dataType].
   ///
   dynamic get value {
-    if (!isEnabled || !_isFunctionalCookieEnabled) {
+    if (!isEnabled || !_isFunctionalityCookieEnabled) {
       return null;
     }
     try {
@@ -151,7 +171,7 @@ abstract mixin class GsaServiceCacheValue {
         }.contains(dataType)) {
       throw 'Incorrect value type ${value.runtimeType} given for $_cacheId.';
     }
-    if (isEnabled && _isFunctionalCookieEnabled) {
+    if (isEnabled && _isFunctionalityCookieEnabled) {
       switch (dataType) {
         case const (int):
           if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
@@ -188,9 +208,7 @@ abstract mixin class GsaServiceCacheValue {
         case const (Iterable<String>):
         case const (List<String>):
         case const (Set<String>):
-          print('e');
           final listValue = (value as Iterable<String>).toList();
-          print('d');
           if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
             final encodedValue = dart_convert.jsonEncode(listValue);
             await GsaServiceCache.instance._setDbStorageValue(

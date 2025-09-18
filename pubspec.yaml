@@ -11,6 +11,7 @@ workspace:
   - core/cms
   - core/content 
   - core/data
+  - core/i18n
   - core/services
   - plugins/demo 
   - plugins/fitness_tracker

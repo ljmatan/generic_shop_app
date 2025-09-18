@@ -18,6 +18,7 @@ export 'clients/route_clients.dart';
 export 'contact/route_merchant_contact.dart';
 export 'cookie_consent/route_cookie_consent.dart';
 export 'debug/route_debug.dart';
+export 'forgot_password/route_forgot_password.dart';
 export 'guest_info/route_guest_info.dart';
 export 'help/route_help.dart';
 export 'legal_consent/route_legal_consent.dart';
@@ -48,6 +49,7 @@ enum GsaRoutes implements GsaRouteType {
   contact,
   cookieConsent,
   debug,
+  forgotPassword,
   guestInfo,
   help,
   legalConsent,
@@ -94,6 +96,8 @@ enum GsaRoutes implements GsaRouteType {
         return ([args]) => const GsaRouteCookieConsent();
       case GsaRoutes.debug:
         return ([args]) => const GsaRouteDebug();
+      case GsaRoutes.forgotPassword:
+        return ([args]) => const GsaRouteForgotPassword();
       case GsaRoutes.guestInfo:
         return ([args]) => const GsaRouteGuestInfo();
       case GsaRoutes.help:
@@ -186,6 +190,8 @@ enum GsaRoutes implements GsaRouteType {
         return GsaRouteCookieConsent;
       case GsaRoutes.debug:
         return GsaRouteDebug;
+      case GsaRoutes.forgotPassword:
+        return GsaRouteForgotPassword;
       case GsaRoutes.guestInfo:
         return GsaRouteGuestInfo;
       case GsaRoutes.help:

@@ -28,7 +28,7 @@ class _GsaRouteSplashState extends GsaRouteState<GsaRouteSplash> {
   ///
   Future<void> _initialise() async {
     if (!_serviceSetupComplete) {
-      await GsaPlugin.of(context).setupService();
+      await GsaPlugin.of(context).setupService(context);
       _serviceSetupComplete = true;
     }
     await GsaPlugin.of(context).init();

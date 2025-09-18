@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'package:generic_shop_app_architecture/arch.dart';
 
@@ -22,8 +23,8 @@ class GsaServiceBookmarks extends GsaService {
   late ValueNotifier<int> notifierBookmarkCount;
 
   @override
-  Future<void> init() async {
-    await super.init();
+  Future<void> init(BuildContext context) async {
+    await super.init(context);
     bookmarks.addAll(
       GsaServiceCacheEntry.bookmarks.value ?? [],
     );

@@ -60,9 +60,7 @@ class GsaConfig {
     GsaServiceAuth.instance;
     GsaServiceBookmarks.instance;
     GsaServiceCache.instance;
-    GsaServiceCalendar.instance;
     GsaServiceClipboard.instance;
-    GsaServiceCompress.instance;
     GsaServiceConsent.instance;
     GsaServiceDebug.instance;
     GsaServiceDeviceInfo.instance;
@@ -77,10 +75,8 @@ class GsaConfig {
     GsaServiceSearch.instance;
     GsaServiceTracking.instance;
     GsaServiceUrlLauncher.instance;
-    final plugin = GsaPlugin.of(context);
-    GsaServiceCache.instance.cacheIdPrefix = plugin.id;
-    await GsaServiceCache.instance.init();
-    await GsaService.initAll();
+    await GsaServiceCache.instance.init(context);
+    await GsaService.initAll(context);
     GsaDataCheckout.instance;
     GsaDataMerchant.instance;
     GsaDataSaleItems.instance;

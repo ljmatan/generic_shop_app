@@ -10,6 +10,14 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   ///
   version,
 
+  /// A unique identifier generated on and assigned to a user device.
+  ///
+  /// The value is marked as mandatory in order to ensure app security when communicating with the backend services,
+  /// however, it may also be used for functional, statistics, and marketing purposes,
+  /// which is why the user consent must be checked before accessing this value.
+  ///
+  deviceId,
+
   /// Collection of translations loaded into the app and updated with any relevant changes.
   ///
   /// Only used when [GsaConfig.editMode] is set to `true`.
@@ -28,14 +36,14 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   /// The status will be `null` if the user has not responded to the consent confirmation request,
   /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
   ///
-  cookieConsentFunctional,
+  cookieConsentFunctionality,
 
   /// Status of the statistical cookies user privacy consent.
   ///
   /// The status will be `null` if the user has not responded to the consent confirmation request,
   /// and should be `true` or `false` if the user has responded to the consent, to reflect the consent status.
   ///
-  cookieConsentStatistical,
+  cookieConsentStatistics,
 
   /// Status of the marketing cookies user privacy consent.
   ///
@@ -86,6 +94,8 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
     switch (this) {
       case GsaServiceCacheEntry.version:
         return int;
+      case GsaServiceCacheEntry.deviceId:
+        return String;
       case GsaServiceCacheEntry.translations:
         return Iterable<String>;
       case GsaServiceCacheEntry.authenticationToken:
@@ -94,9 +104,9 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
         return String;
       case GsaServiceCacheEntry.cookieConsentMandatory:
         return bool;
-      case GsaServiceCacheEntry.cookieConsentFunctional:
+      case GsaServiceCacheEntry.cookieConsentFunctionality:
         return bool;
-      case GsaServiceCacheEntry.cookieConsentStatistical:
+      case GsaServiceCacheEntry.cookieConsentStatistics:
         return bool;
       case GsaServiceCacheEntry.cookieConsentMarketing:
         return bool;
@@ -114,6 +124,8 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
     switch (this) {
       case GsaServiceCacheEntry.version:
         return false;
+      case GsaServiceCacheEntry.deviceId:
+        return true;
       case GsaServiceCacheEntry.translations:
         return true;
       case GsaServiceCacheEntry.authenticationToken:
@@ -122,9 +134,9 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
         return true;
       case GsaServiceCacheEntry.cookieConsentMandatory:
         return false;
-      case GsaServiceCacheEntry.cookieConsentFunctional:
+      case GsaServiceCacheEntry.cookieConsentFunctionality:
         return false;
-      case GsaServiceCacheEntry.cookieConsentStatistical:
+      case GsaServiceCacheEntry.cookieConsentStatistics:
         return false;
       case GsaServiceCacheEntry.cookieConsentMarketing:
         return false;
@@ -134,6 +146,66 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
         return true;
       case GsaServiceCacheEntry.themeBrightness:
         return true;
+    }
+  }
+
+  @override
+  bool get isStatisticsCookie {
+    switch (this) {
+      case GsaServiceCacheEntry.version:
+        return false;
+      case GsaServiceCacheEntry.deviceId:
+        return true;
+      case GsaServiceCacheEntry.translations:
+        return false;
+      case GsaServiceCacheEntry.authenticationToken:
+        return false;
+      case GsaServiceCacheEntry.guestUserEncodedData:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentMandatory:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentFunctionality:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentStatistics:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentMarketing:
+        return false;
+      case GsaServiceCacheEntry.bookmarks:
+        return false;
+      case GsaServiceCacheEntry.shopSearchHistory:
+        return false;
+      case GsaServiceCacheEntry.themeBrightness:
+        return false;
+    }
+  }
+
+  @override
+  bool get isMarkertingCookie {
+    switch (this) {
+      case GsaServiceCacheEntry.version:
+        return false;
+      case GsaServiceCacheEntry.deviceId:
+        return true;
+      case GsaServiceCacheEntry.translations:
+        return false;
+      case GsaServiceCacheEntry.authenticationToken:
+        return false;
+      case GsaServiceCacheEntry.guestUserEncodedData:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentMandatory:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentFunctionality:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentStatistics:
+        return false;
+      case GsaServiceCacheEntry.cookieConsentMarketing:
+        return false;
+      case GsaServiceCacheEntry.bookmarks:
+        return false;
+      case GsaServiceCacheEntry.shopSearchHistory:
+        return false;
+      case GsaServiceCacheEntry.themeBrightness:
+        return false;
     }
   }
 
@@ -150,6 +222,8 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   @override
   bool get isSecure {
     switch (this) {
+      case GsaServiceCacheEntry.deviceId:
+        return true;
       case GsaServiceCacheEntry.authenticationToken:
         return true;
       case GsaServiceCacheEntry.guestUserEncodedData:
@@ -163,27 +237,29 @@ enum GsaServiceCacheEntry with GsaServiceCacheValue {
   String get displayName {
     switch (this) {
       case GsaServiceCacheEntry.version:
-        return GsaServiceCacheI18N.version.value.display;
+        return GsaServiceCacheI18N._version.value.display;
+      case GsaServiceCacheEntry.deviceId:
+        return GsaServiceCacheI18N._deviceId.value.display;
       case GsaServiceCacheEntry.translations:
-        return GsaServiceCacheI18N.translations.value.display;
+        return GsaServiceCacheI18N._translations.value.display;
       case GsaServiceCacheEntry.authenticationToken:
-        return GsaServiceCacheI18N.authenticationToken.value.display;
+        return GsaServiceCacheI18N._authenticationToken.value.display;
       case GsaServiceCacheEntry.guestUserEncodedData:
-        return GsaServiceCacheI18N.guestUserEncodedData.value.display;
+        return GsaServiceCacheI18N._guestUserEncodedData.value.display;
       case GsaServiceCacheEntry.cookieConsentMandatory:
-        return GsaServiceCacheI18N.cookieConsentMandatory.value.display;
-      case GsaServiceCacheEntry.cookieConsentFunctional:
-        return GsaServiceCacheI18N.cookieConsentFunctional.value.display;
-      case GsaServiceCacheEntry.cookieConsentStatistical:
-        return GsaServiceCacheI18N.cookieConsentStatistical.value.display;
+        return GsaServiceCacheI18N._cookieConsentMandatory.value.display;
+      case GsaServiceCacheEntry.cookieConsentFunctionality:
+        return GsaServiceCacheI18N._cookieConsentFunctional.value.display;
+      case GsaServiceCacheEntry.cookieConsentStatistics:
+        return GsaServiceCacheI18N._cookieConsentStatistical.value.display;
       case GsaServiceCacheEntry.cookieConsentMarketing:
-        return GsaServiceCacheI18N.cookieConsentMarketing.value.display;
+        return GsaServiceCacheI18N._cookieConsentMarketing.value.display;
       case GsaServiceCacheEntry.bookmarks:
-        return GsaServiceCacheI18N.bookmarks.value.display;
+        return GsaServiceCacheI18N._bookmarks.value.display;
       case GsaServiceCacheEntry.shopSearchHistory:
-        return GsaServiceCacheI18N.shopSearchHistory.value.display;
+        return GsaServiceCacheI18N._shopSearchHistory.value.display;
       case GsaServiceCacheEntry.themeBrightness:
-        return GsaServiceCacheI18N.themeBrightness.value.display;
+        return GsaServiceCacheI18N._themeBrightness.value.display;
     }
   }
 }
