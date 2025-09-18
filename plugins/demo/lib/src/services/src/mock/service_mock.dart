@@ -1,5 +1,6 @@
 import 'dart:math' as dart_math;
 
+import 'package:flutter/material.dart';
 import 'package:generic_shop_app_architecture/arch.dart';
 
 part 'values/service_mock_values_category.dart';
@@ -116,8 +117,8 @@ class GsdServiceMock extends GsaService {
   }
 
   @override
-  Future<void> init() async {
-    await super.init();
+  Future<void> init(BuildContext context) async {
+    await super.init(context);
     // Register product categories.
     final mockCategories = <({
       String id,
