@@ -41,7 +41,7 @@ class _GsaViewBuilderState extends State<GsaViewBuilder> {
     } catch (e) {
       _specifiedBrightness = GsaPlugin.of(context).theme.brightness;
     }
-    if (GsaServiceCacheEntry.themeBrightness.value == null) {
+    if (GsaServiceCacheEntry.themeBrightness.functionalityCookie.value == null) {
       final systemBrightness = PlatformDispatcher.instance.platformBrightness;
       if (systemBrightness != _specifiedBrightness) {
         _specifiedBrightness = systemBrightness;

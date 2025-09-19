@@ -5,13 +5,7 @@ part of '../service_tracking.dart';
 /// The event specifies all of the parameters required for user activity collection.
 ///
 class GsaServiceTrackingModelEvent {
-  /// Constructs a new instance of an event log entry.
-  ///
-  GsaServiceTrackingModelEvent({
-    this.marketing = true,
-    required this.id,
-    this.properties,
-  }) {
+  void _assignLogValues() {
     userId ??= null; // TODO.
     timeIso8601 ??= DateTime.now().toIso8601String();
     platform ??= GsaServiceTrackingModelEventPlatform.current;
@@ -21,8 +15,31 @@ class GsaServiceTrackingModelEvent {
     gsaLibVersionId ??= GsaConfig.version;
   }
 
-  GsaServiceTrackingModelEvent._({
-    this.marketing = true,
+  /// Constructs a new instance of a statistics event log entry.
+  ///
+  GsaServiceTrackingModelEvent.statistics({
+    required this.id,
+    this.properties,
+  })  : statistics = true,
+        marketing = false {
+    _assignLogValues();
+  }
+
+  /// Constructs a new instance of a marketing event log entry.
+  ///
+  GsaServiceTrackingModelEvent.marketing({
+    required this.id,
+    this.properties,
+  })  : statistics = false,
+        marketing = true {
+    _assignLogValues();
+  }
+
+  /// Constructs a new class instance from JSON data.
+  ///
+  GsaServiceTrackingModelEvent._fromJson({
+    required this.statistics,
+    required this.marketing,
     required this.id,
     required this.userId,
     required this.timeIso8601,
@@ -34,9 +51,9 @@ class GsaServiceTrackingModelEvent {
     this.gsaLibVersionId,
   });
 
-  /// Whether this event logs are used for marketing purposes.
+  /// Whether this event logs are used for statistics or marketing purposes.
   ///
-  bool marketing;
+  bool statistics, marketing;
 
   /// Event identifier value.
   ///
@@ -86,7 +103,8 @@ class GsaServiceTrackingModelEvent {
   /// Generates a class instance from JSON-compatible format.
   ///
   factory GsaServiceTrackingModelEvent.fromJson(Map json) {
-    return GsaServiceTrackingModelEvent._(
+    return GsaServiceTrackingModelEvent._fromJson(
+      statistics: json['statistics'] == 1,
       marketing: json['marketing'] == 1,
       id: json['id'],
       userId: json['userId'],
@@ -114,6 +132,7 @@ class GsaServiceTrackingModelEvent {
   ///
   Map<String, dynamic> toJson() {
     return {
+      'statistics': statistics ? 1 : 0,
       'marketing': marketing ? 1 : 0,
       'id': id,
       'userId': userId,

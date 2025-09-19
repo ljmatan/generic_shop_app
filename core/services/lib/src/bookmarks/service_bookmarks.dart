@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:generic_shop_app_architecture/arch.dart';
@@ -26,7 +25,7 @@ class GsaServiceBookmarks extends GsaService {
   Future<void> init(BuildContext context) async {
     await super.init(context);
     bookmarks.addAll(
-      GsaServiceCacheEntry.bookmarks.value ?? [],
+      GsaServiceCacheEntry.bookmarks.functionalityCookie.value ?? [],
     );
     notifierBookmarkCount = ValueNotifier<int>(bookmarks.length);
   }
@@ -39,7 +38,9 @@ class GsaServiceBookmarks extends GsaService {
   ///
   Future<void> addBookmark(String saleItemId) async {
     bookmarks.add(saleItemId);
-    await GsaServiceCacheEntry.bookmarks.setValue(bookmarks.toList());
+    await GsaServiceCacheEntry.bookmarks.functionalityCookie.setValue(
+      bookmarks.toList(),
+    );
     notifierBookmarkCount.value = bookmarks.length;
     controllerUpdate.add(saleItemId);
   }
@@ -48,7 +49,9 @@ class GsaServiceBookmarks extends GsaService {
   ///
   Future<void> removeBookmark(String saleItemId) async {
     bookmarks.remove(saleItemId);
-    await GsaServiceCacheEntry.bookmarks.setValue(bookmarks.toList());
+    await GsaServiceCacheEntry.bookmarks.functionalityCookie.setValue(
+      bookmarks.toList(),
+    );
     notifierBookmarkCount.value = bookmarks.length;
     controllerUpdate.add(saleItemId);
   }

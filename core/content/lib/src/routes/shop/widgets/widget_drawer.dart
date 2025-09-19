@@ -112,7 +112,9 @@ class _WidgetDrawerState extends State<_WidgetDrawer> {
                                 GsaPlugin.of(context).theme.brightness = themeOption.value;
                                 context.findAncestorStateOfType<GsaState>()?.setState(() {});
                                 try {
-                                  await GsaServiceCacheEntry.themeBrightness.setValue(themeOption.value.name);
+                                  await GsaServiceCacheEntry.themeBrightness.functionalityCookie.setValue(
+                                    themeOption.value.name,
+                                  );
                                 } catch (e) {
                                   GsaServiceLogging.instance.logGeneral(
                                     'Failed to cached theme brightness data:\n$e',

@@ -73,7 +73,7 @@ class GsaServiceDeviceInfo extends GsaService {
   /// if not found recorded to the permanent device storage.
   ///
   Future<void> _generateDeviceId(BuildContext context) async {
-    final cachedDeviceId = GsaServiceCacheEntry.deviceId.value;
+    final cachedDeviceId = GsaServiceCacheEntry.deviceId.mandatoryCookie.value;
     if (cachedDeviceId is String && cachedDeviceId.isNotEmpty) {
       deviceId = cachedDeviceId;
     } else {
@@ -108,7 +108,7 @@ class GsaServiceDeviceInfo extends GsaService {
 
       deviceId = '$randomPart-$clientHash-$appVersion-$gsaLibVersion';
 
-      await GsaServiceCacheEntry.deviceId.setValue(deviceId);
+      await GsaServiceCacheEntry.deviceId.mandatoryCookie.setValue(deviceId);
     }
   }
 

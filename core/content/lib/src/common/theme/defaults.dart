@@ -4,7 +4,7 @@ part of 'theme.dart';
 ///
 extension _GsaThemeDefaults on GsaTheme {
   Brightness get _brightness {
-    final cachedBrightnessName = GsaServiceCacheEntry.themeBrightness.value;
+    final cachedBrightnessName = GsaServiceCacheEntry.themeBrightness.functionalityCookie.value;
     if (cachedBrightnessName != null) {
       final cachedBrightness = Brightness.values.firstWhereOrNull(
         (brightness) {

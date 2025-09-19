@@ -98,7 +98,7 @@ class GsaServiceI18N extends GsaService {
     if (matchingLanguage != null) {
       language = matchingLanguage;
     }
-    final translations = GsaServiceCacheEntry.translations.value;
+    final translations = GsaServiceCacheEntry.translations.mandatoryCookie.value;
     if (translations is Iterable) {
       final translationValues = <GsaServiceI18NModelTranslationValue>[];
       for (final translationValueEncoded in translations) {
@@ -260,7 +260,7 @@ class GsaServiceI18N extends GsaService {
               );
             },
           ).toList();
-          await GsaServiceCacheEntry.translations.setValue(cachedTranslationValues);
+          await GsaServiceCacheEntry.translations.mandatoryCookie.setValue(cachedTranslationValues);
         },
       );
     }

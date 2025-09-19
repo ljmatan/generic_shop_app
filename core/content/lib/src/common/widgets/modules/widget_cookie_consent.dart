@@ -63,7 +63,7 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
     _cookieIdConsentStatus = _cookieIds.map(
       (cookieId) {
         final isMandatory = cookieId.cacheEntry == GsaServiceCacheEntry.cookieConsentMandatory;
-        final userAccepted = cookieId.cacheEntry.value == true;
+        final userAccepted = cookieId.cacheEntry.mandatoryCookie.value == true;
         return cookieId.enabled && (isMandatory || userAccepted);
       },
     ).toList();
@@ -115,7 +115,7 @@ class _GsaWidgetCookieConsentState extends State<GsaWidgetCookieConsent> {
       );
     } else {
       for (final id in _cookieIds.indexed) {
-        await id.$2.cacheEntry.setValue(_cookieIdConsentStatus[id.$1]);
+        await id.$2.cacheEntry.mandatoryCookie.setValue(_cookieIdConsentStatus[id.$1]);
       }
       GsaServiceConsent.instance.onConsentStatusChanged();
       Navigator.pop(context);

@@ -68,7 +68,7 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                 ),
               ),
               onTap: () {
-                if (GsaServiceCacheEntry.cookieConsentFunctionality.value == true) {
+                if (GsaServiceCacheEntry.cookieConsentFunctionality.mandatoryCookie.value == true) {
                   const GsaRouteBookmarks().push();
                 } else {
                   const GsaWidgetOverlayCookieConsentMissing(
@@ -152,7 +152,7 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                       const GsaWidgetOverlayCookieConsent().openDialog();
                     },
                   ),
-                ] else if ((GsaServiceCacheEntry.shopSearchHistory.value as Iterable?)?.isNotEmpty != true)
+                ] else if ((GsaServiceCacheEntry.shopSearchHistory.functionalityCookie.value as Iterable?)?.isNotEmpty != true)
                   GsaWidgetText(
                     'No search history',
                     style: const TextStyle(
@@ -160,7 +160,8 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                     ),
                   )
                 else
-                  for (final searchHistoryEntry in (GsaServiceCacheEntry.shopSearchHistory.value as Iterable).indexed) ...[
+                  for (final searchHistoryEntry
+                      in (GsaServiceCacheEntry.shopSearchHistory.functionalityCookie.value as Iterable).indexed) ...[
                     InkWell(
                       child: Row(
                         children: [
@@ -172,10 +173,10 @@ class _WidgetSearchSuggestionsState extends State<_WidgetSearchSuggestions> {
                           GsaWidgetButton.icon(
                             icon: Icons.close,
                             onTap: () async {
-                              final searchTerms = (GsaServiceCacheEntry.shopSearchHistory.value as Iterable).toList();
+                              final searchTerms = (GsaServiceCacheEntry.shopSearchHistory.functionalityCookie.value as Iterable).toList();
                               searchTerms.remove(searchHistoryEntry.$2);
                               try {
-                                await GsaServiceCacheEntry.shopSearchHistory.setValue(
+                                await GsaServiceCacheEntry.shopSearchHistory.functionalityCookie.setValue(
                                   searchTerms.toSet(),
                                 );
                               } catch (e) {

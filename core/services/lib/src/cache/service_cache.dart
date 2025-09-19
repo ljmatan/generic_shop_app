@@ -213,7 +213,7 @@ class GsaServiceCache extends GsaService {
   /// Event triggered on user cookie acknowledgement.
   ///
   Future<void> onCookieConsentAcknowledged() async {
-    final version = GsaServiceCacheEntry.version.value as int?;
+    final version = GsaServiceCacheEntry.version.mandatoryCookie.value as int?;
 
     /// If the cached version is different than the current [_version],
     /// handle logic for updating cached values.
@@ -225,15 +225,7 @@ class GsaServiceCache extends GsaService {
         /// Once the user has given their consent,
         /// default values defined for [GsaServiceCacheEntry] objects are recorded to device storage.
         ///
-        for (final cacheId in GsaServiceCacheEntry.values) {
-          if (cacheId.defaultValue != null) {
-            try {
-              cacheId.setValue(cacheId.defaultValue);
-            } catch (e) {
-              GsaServiceLogging.instance.logError('Error setting default cache value: $e');
-            }
-          }
-        }
+        await GsaServiceCacheEntry.version.mandatoryCookie.setValue(_version);
       } else {
         switch (version) {
           /// Here we can add logic for handling cached values if is a newer version of cache manager.
@@ -247,14 +239,14 @@ class GsaServiceCache extends GsaService {
     }
     // Clear cookies according to user consent status.
     for (final cacheEntry in _cacheEntries) {
-      final shouldRemoveFunctionalityCookie =
-          cacheEntry.isFunctionalCookie && GsaServiceConsent.instance.consentStatus.functionalityCookies() != true;
-      final shouldRemoveStatisticsCookie =
-          cacheEntry.isStatisticsCookie && GsaServiceConsent.instance.consentStatus.statisticsCookies() != true;
-      final shouldRemoveMarketingCookie =
-          cacheEntry.isMarkertingCookie && GsaServiceConsent.instance.consentStatus.marketingCookies() != true;
-      if (shouldRemoveFunctionalityCookie || shouldRemoveStatisticsCookie || shouldRemoveMarketingCookie) {
-        await cacheEntry.removeValue();
+      if (cacheEntry.cookieType.functionality && GsaServiceConsent.instance.consentStatus.functionalityCookies() != true) {
+        await cacheEntry.functionalityCookie.removeValue();
+      }
+      if (cacheEntry.cookieType.statistics && GsaServiceConsent.instance.consentStatus.statisticsCookies() != true) {
+        await cacheEntry.statisticsCookie.removeValue();
+      }
+      if (cacheEntry.cookieType.marketing && GsaServiceConsent.instance.consentStatus.marketingCookies() != true) {
+        await cacheEntry.marketingCookie.removeValue();
       }
     }
     GsaServiceBookmarks.instance.controllerUpdate.add(null);

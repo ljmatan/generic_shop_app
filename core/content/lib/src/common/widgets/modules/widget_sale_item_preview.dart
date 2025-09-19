@@ -328,7 +328,7 @@ class __AddToCartButtonState extends State<_AddToCartButton> with SingleTickerPr
                     GsaTheme.of(context).paddings.content.extraSmall,
                   ),
                   child: GsaWidgetText(
-                    '${_cartCount}',
+                    '$_cartCount',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 10,

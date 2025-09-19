@@ -1,21 +1,20 @@
 part of '../service_tracking.dart';
 
 class _GsaServiceTrackingEventEngagement {
-  const _GsaServiceTrackingEventEngagement._();
+  const _GsaServiceTrackingEventEngagement();
+
+  static const observables = <_GsaServiceTrackingEventEngagement>[];
+
+  _GsaServiceTrackingEventEngagement._() {
+    observables.add(this);
+  }
 
   /// Records an app open / start event.
   ///
-  /// If this is the first app open on installation,
-  /// [isFirstAppOpen] parameter should be provided as `true`.
-  ///
-  Future<void> logAppOpen({
-    bool isFirstAppOpen = false,
-  }) async {
-    await GsaServiceTracking.instance._logEvent(
-      GsaServiceTrackingModelEvent(
-        id: isFirstAppOpen ? _GsaServiceTrackingEventEngagementTypes.firstAppOpen.id : _GsaServiceTrackingEventEngagementTypes.appOpen.id,
-      ),
-    );
+  Future<void> logAppOpen() async {
+    for (final observable in observables) {
+      await observable.logAppOpen();
+    }
   }
 
   /// Records a sign in / login event.
@@ -25,16 +24,11 @@ class _GsaServiceTrackingEventEngagement {
   Future<void> logSignIn({
     String? client,
   }) async {
-    await GsaServiceTracking.instance._logEvent(
-      GsaServiceTrackingModelEvent(
-        id: _GsaServiceTrackingEventEngagementTypes.signIn.id,
-        properties: client == null
-            ? null
-            : {
-                'client': client,
-              },
-      ),
-    );
+    for (final observable in observables) {
+      await observable.logSignIn(
+        client: client,
+      );
+    }
   }
 
   /// Records a registration event.
@@ -44,16 +38,11 @@ class _GsaServiceTrackingEventEngagement {
   Future<void> logRegistration({
     String? client,
   }) async {
-    await GsaServiceTracking.instance._logEvent(
-      GsaServiceTrackingModelEvent(
-        id: _GsaServiceTrackingEventEngagementTypes.registration.id,
-        properties: client == null
-            ? null
-            : {
-                'client': client,
-              },
-      ),
-    );
+    for (final observable in observables) {
+      await observable.logRegistration(
+        client: client,
+      );
+    }
   }
 
   /// Records the total app usage time for a runtime session,
@@ -63,29 +52,16 @@ class _GsaServiceTrackingEventEngagement {
     required Duration sessionTime,
     required List<GsaRoute> viewedRoutes,
   }) async {
-    await GsaServiceTracking.instance._logEvent(
-      GsaServiceTrackingModelEvent(
-        id: _GsaServiceTrackingEventEngagementTypes.session.id,
-        properties: {
-          'timeInMilliseconds': sessionTime.inMilliseconds.toString(),
-          'screenViews': jsonEncode(
-            viewedRoutes.map(
-              (route) {
-                return route.displayName;
-              },
-            ).toList(),
-          ),
-        },
-      ),
-    );
+    for (final observable in observables) {
+      await observable.logSession(
+        sessionTime: sessionTime,
+        viewedRoutes: viewedRoutes,
+      );
+    }
   }
 }
 
 enum _GsaServiceTrackingEventEngagementTypes {
-  /// Event invoked on first app open.
-  ///
-  firstAppOpen,
-
   /// Event invoked on every app open.
   ///
   appOpen,
@@ -104,8 +80,6 @@ enum _GsaServiceTrackingEventEngagementTypes {
 
   String get id {
     switch (this) {
-      case _GsaServiceTrackingEventEngagementTypes.firstAppOpen:
-        return 'first_app_open';
       case _GsaServiceTrackingEventEngagementTypes.appOpen:
         return 'app_open';
       case _GsaServiceTrackingEventEngagementTypes.signIn:

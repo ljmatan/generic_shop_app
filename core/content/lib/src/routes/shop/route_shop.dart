@@ -41,8 +41,8 @@ class _GsaRouteShopState extends GsaRouteState<GsaRouteShop> {
   Future<void> _updateSearchTermHistory(
     String searchTerm,
   ) async {
-    final previousTerms = GsaServiceCacheEntry.shopSearchHistory.value;
-    await GsaServiceCacheEntry.shopSearchHistory.setValue(
+    final previousTerms = GsaServiceCacheEntry.shopSearchHistory.functionalityCookie.value;
+    await GsaServiceCacheEntry.shopSearchHistory.functionalityCookie.setValue(
       <String>{
         if (previousTerms is Iterable) ...previousTerms,
         searchTerm,

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 part of 'service_cache.dart';
 
 /// A base class defining methods and properties for the cache value service.
@@ -7,69 +9,9 @@ abstract mixin class GsaServiceCacheValue {
   ///
   String get cacheId;
 
-  /// Certain cache values don't need to be prefixed with the [GsaServiceCache.instance.cacheIdPrefix].
-  ///
-  /// These values are marked with below getter method.
-  ///
-  bool get noCacheIdPrefix {
-    return false;
-  }
-
-  /// Unique cache value identifier, derived from [cacheId] and [cacheIdPrefix].
-  ///
-  String get _cacheId {
-    if (noCacheIdPrefix || GsaServiceCache.instance._cacheIdPrefix == null) {
-      return cacheId;
-    } else {
-      return '${GsaServiceCache.instance._cacheIdPrefix}-$cacheId';
-    }
-  }
-
   /// The specified data type for this cache value.
   ///
   Type get dataType;
-
-  /// Whether this cache entry is defined as a functional cookie.
-  ///
-  bool get isFunctionalCookie;
-
-  /// Method checking for the functional cookie permission type and status.
-  ///
-  bool get _isFunctionalityCookieEnabled {
-    return !isFunctionalCookie || GsaServiceConsent.instance.consentStatus.functionalityCookies() == true;
-  }
-
-  /// Whether this cache entry is defined as a statistics cookie.
-  ///
-  bool get isStatisticsCookie;
-
-  /// Method checking for the statistical cookie permission type and status.
-  ///
-  bool get _isStatisticsCookieEnabled {
-    return !isStatisticsCookie || GsaServiceConsent.instance.consentStatus.statisticsCookies() == true;
-  }
-
-  /// Whether this cache entry is defined as a marketing cookie.
-  ///
-  bool get isMarkertingCookie;
-
-  /// Method checking for the marketing cookie permission type and status.
-  ///
-  bool get _isMarketingCookieEnabled {
-    return !isMarkertingCookie || GsaServiceConsent.instance.consentStatus.marketingCookies() == true;
-  }
-
-  /// A default value assigned to this cache item on initial app setup.
-  ///
-  dynamic get defaultValue {
-    return null;
-  }
-
-  /// Whether the value is enabled for retrieval.
-  ///
-  bool get isEnabled {
-    return true;
-  }
 
   /// Whether the value should be encrypted before being recorded to the device storage.
   ///
@@ -77,10 +19,186 @@ abstract mixin class GsaServiceCacheValue {
     return false;
   }
 
+  /// User-visible name for this cache data instance.
+  ///
+  String get displayName;
+
+  /// Type of cookie declared with this cache entry.
+  ///
+  /// Cookies can be used for either of below [mandatory], [functionality], [statistics], or [marketing] purposes.
+  ///
+  /// To ensure appropriate cookie categorisation, these values are specified for each cookie or cache value entry.
+  ///
+  ({
+    bool mandatory,
+    bool functionality,
+    bool statistics,
+    bool marketing,
+  }) get cookieType;
+
+  /// Mandatory cookie value representation.
+  ///
+  _GsaServiceCacheValue get mandatoryCookie {
+    if (cookieType.mandatory != true) {
+      throw Exception(
+        'Mandatory cookie type not supported for $cacheId',
+      );
+    }
+    return _GsaServiceCacheValue(
+      isMandatoryCookieType: true,
+      id: cacheId,
+      type: dataType,
+      name: displayName,
+    );
+  }
+
+  /// Functionality cookie value representation.
+  ///
+  _GsaServiceCacheValue get functionalityCookie {
+    if (cookieType.functionality != true) {
+      throw Exception(
+        'Functionality cookie type not supported for $cacheId',
+      );
+    }
+    return _GsaServiceCacheValue(
+      isFunctionalityCookieType: true,
+      id: cacheId,
+      type: dataType,
+      name: displayName,
+    );
+  }
+
+  /// Statistics cookie value representation.
+  ///
+  _GsaServiceCacheValue get statisticsCookie {
+    if (cookieType.statistics != true) {
+      throw Exception(
+        'Statistics cookie type not supported for $cacheId',
+      );
+    }
+    return _GsaServiceCacheValue(
+      isStatisticsCookieType: true,
+      id: cacheId,
+      type: dataType,
+      name: displayName,
+    );
+  }
+
+  /// Marketing cookie value representation.
+  ///
+  _GsaServiceCacheValue get marketingCookie {
+    if (cookieType.marketing != true) {
+      throw Exception(
+        'Marketing cookie type not supported for $cacheId',
+      );
+    }
+    return _GsaServiceCacheValue(
+      isMarketingCookieType: true,
+      id: cacheId,
+      type: dataType,
+      name: displayName,
+    );
+  }
+}
+
+/// Value representing a cache entry.
+///
+/// The class is instantiated by the mixin class for all 4 possible cookie categories.
+///
+/// Cookie handling is defined with this class, while the superclass is used for enum integration.
+///
+class _GsaServiceCacheValue with GsaServiceCacheValue {
+  const _GsaServiceCacheValue({
+    this.isMandatoryCookieType = false,
+    this.isFunctionalityCookieType = false,
+    this.isStatisticsCookieType = false,
+    this.isMarketingCookieType = false,
+    required this.id,
+    required this.type,
+    required this.name,
+  });
+
+  /// Cookie value type, defining the processing logic.
+  ///
+  final bool isMandatoryCookieType, isFunctionalityCookieType, isStatisticsCookieType, isMarketingCookieType;
+
+  /// Unique identifier assigned to this value, defined with [cacheId] in mixin class.
+  ///
+  final String id;
+
+  /// Data type of the cookie value, defined with [dataType] in mixin class.
+  ///
+  final Type type;
+
+  /// User-visible cookie identifier, defined with [displayName] in mixin class.
+  ///
+  final String name;
+
+  @override
+  String get cacheId {
+    return id;
+  }
+
+  /// Unique cache value identifier, derived from [cacheId] and [cacheIdPrefix].
+  ///
+  String get _cacheId {
+    String id = '';
+    if (GsaServiceCache.instance._cacheIdPrefix != null) {
+      id += '${GsaServiceCache.instance._cacheIdPrefix}-';
+    }
+    if (isMandatoryCookieType) {
+      id += 'mandatory-';
+    }
+    if (isFunctionalityCookieType) {
+      id += 'functionality-';
+    }
+    if (isStatisticsCookieType) {
+      id += 'statistics-';
+    }
+    if (isMarketingCookieType) {
+      id += 'marketing-';
+    }
+    id += cacheId;
+    return id;
+  }
+
+  @override
+  Type get dataType {
+    return type;
+  }
+
+  @override
+  String get displayName {
+    return name;
+  }
+
+  @override
+  ({
+    bool mandatory,
+    bool functionality,
+    bool statistics,
+    bool marketing,
+  }) get cookieType {
+    return (
+      mandatory: isMandatoryCookieType,
+      functionality: isFunctionalityCookieType,
+      statistics: isStatisticsCookieType,
+      marketing: isMarketingCookieType,
+    );
+  }
+
+  bool get isEnabled {
+    final functionalityValueInaccessible =
+        isFunctionalityCookieType && GsaServiceConsent.instance.consentStatus.functionalityCookies() != true;
+    final statisticsValueInaccessible = isStatisticsCookieType && GsaServiceConsent.instance.consentStatus.statisticsCookies() != true;
+    final marketingValueInaccessible = isMarketingCookieType && GsaServiceConsent.instance.consentStatus.marketingCookies() != true;
+    return !functionalityValueInaccessible && !statisticsValueInaccessible && !marketingValueInaccessible;
+  }
+
   /// Retrieves the cached data (if exists) according to the specified [dataType].
   ///
   dynamic get value {
-    if (!isEnabled || !_isFunctionalityCookieEnabled) {
+    if (!isEnabled) {
       return null;
     }
     try {
@@ -91,11 +209,10 @@ abstract mixin class GsaServiceCacheValue {
             if (value?.isNotEmpty == true) {
               return int.tryParse(value!);
             } else {
-              return defaultValue;
+              return null;
             }
           } else {
-            final value = GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId);
-            return value ?? defaultValue;
+            return GsaServiceCache.instance._sharedPreferences?.getInt(_cacheId);
           }
         case const (bool):
           if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
@@ -103,11 +220,10 @@ abstract mixin class GsaServiceCacheValue {
             if (value?.isNotEmpty == true) {
               return bool.tryParse(value!);
             } else {
-              return defaultValue;
+              return null;
             }
           } else {
-            final value = GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId);
-            return value ?? defaultValue;
+            return GsaServiceCache.instance._sharedPreferences?.getBool(_cacheId);
           }
         case const (String):
           if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
@@ -115,11 +231,10 @@ abstract mixin class GsaServiceCacheValue {
             if (value != null) {
               return value;
             } else {
-              return defaultValue;
+              return null;
             }
           } else {
-            final value = GsaServiceCache.instance._sharedPreferences?.getString(_cacheId);
-            return value ?? defaultValue;
+            return GsaServiceCache.instance._sharedPreferences?.getString(_cacheId);
           }
         case const (Iterable<String>):
         case const (List<String>):
@@ -130,11 +245,10 @@ abstract mixin class GsaServiceCacheValue {
               final decodedValue = dart_convert.jsonDecode(value!);
               return List<String>.from(decodedValue);
             } else {
-              return defaultValue;
+              return null;
             }
           } else {
-            final value = GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
-            return value ?? defaultValue;
+            return GsaServiceCache.instance._sharedPreferences?.getStringList(_cacheId);
           }
         default:
           throw 'Value get method not implemented for $dataType with $_cacheId.';
@@ -171,7 +285,7 @@ abstract mixin class GsaServiceCacheValue {
         }.contains(dataType)) {
       throw 'Incorrect value type ${value.runtimeType} given for $_cacheId.';
     }
-    if (isEnabled && _isFunctionalityCookieEnabled) {
+    if (isEnabled) {
       switch (dataType) {
         case const (int):
           if (GsaServiceCache.instance.database && GsaServiceCache.instance._db != null) {
@@ -234,8 +348,4 @@ abstract mixin class GsaServiceCacheValue {
       await GsaServiceCache.instance._sharedPreferences?.remove(_cacheId);
     }
   }
-
-  /// User-visible name for this cache data instance.
-  ///
-  String get displayName;
 }

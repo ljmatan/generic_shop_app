@@ -171,6 +171,19 @@ enum GsaServiceCacheI18N implements GsaServiceI18NBaseTranslations {
       hr: 'Svjetlina teme',
       cz: 'Jas motivu',
     ),
+  ),
+  _firstAppOpenTime(
+    GsaServiceI18NModelTranslatedValue(
+      'First App Open Time',
+      enIe: 'First App Open Time',
+      enGb: 'First App Open Time',
+      de: 'Erste App-Öffnungszeit',
+      it: 'Orario primo avvio app',
+      fr: 'Première ouverture de l\'application',
+      es: 'Hora de la primera apertura de la app',
+      hr: 'Vrijeme prvog otvaranja aplikacije',
+      cz: 'Čas prvního otevření aplikace',
+    ),
   );
 
   const GsaServiceCacheI18N(

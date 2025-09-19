@@ -72,7 +72,7 @@ class _WidgetBookmarks extends StatelessWidget {
         ),
       ),
       onTap: () {
-        if (GsaServiceCacheEntry.cookieConsentFunctionality.value == true) {
+        if (GsaServiceCacheEntry.cookieConsentFunctionality.mandatoryCookie.value == true) {
           const GsaRouteBookmarks().push();
         } else {
           const GsaWidgetOverlayCookieConsentMissing(

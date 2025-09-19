@@ -46,10 +46,10 @@ class GsaServiceConsent extends GsaService {
     bool? Function() statisticsCookies,
     bool? Function() marketingCookies,
   }) consentStatus = (
-    mandatoryCookies: () => GsaServiceCacheEntry.cookieConsentMandatory.value,
-    functionalityCookies: () => GsaServiceCacheEntry.cookieConsentFunctionality.value,
-    statisticsCookies: () => GsaServiceCacheEntry.cookieConsentStatistics.value,
-    marketingCookies: () => GsaServiceCacheEntry.cookieConsentMarketing.value,
+    mandatoryCookies: () => GsaServiceCacheEntry.cookieConsentMandatory.mandatoryCookie.value,
+    functionalityCookies: () => GsaServiceCacheEntry.cookieConsentFunctionality.mandatoryCookie.value,
+    statisticsCookies: () => GsaServiceCacheEntry.cookieConsentStatistics.mandatoryCookie.value,
+    marketingCookies: () => GsaServiceCacheEntry.cookieConsentMarketing.mandatoryCookie.value,
   );
 
   @override
