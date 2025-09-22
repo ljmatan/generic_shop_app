@@ -3,7 +3,7 @@ part of '../service_tracking.dart';
 class _GsaServiceTrackingEventEngagement {
   const _GsaServiceTrackingEventEngagement();
 
-  static const observables = <_GsaServiceTrackingEventEngagement>[];
+  static final observables = <_GsaServiceTrackingEventEngagement>[];
 
   _GsaServiceTrackingEventEngagement._() {
     observables.add(this);

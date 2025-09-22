@@ -39,6 +39,18 @@ enum GsaThemeTextStyles {
   ///
   title,
 
+  /// Prominent heading text, larger than [title].
+  ///
+  /// Example: Section headers, dashboard labels.
+  ///
+  headline,
+
+  /// Very large display text, for emphasis or branding.
+  ///
+  /// Example: Onboarding hero text, welcome screens.
+  ///
+  display,
+
   /// Subtitle or secondary heading.
   ///
   /// Example: Subsection label under a title.
@@ -57,18 +69,6 @@ enum GsaThemeTextStyles {
   ///
   button,
 
-  /// Prominent heading text, larger than [title].
-  ///
-  /// Example: Section headers, dashboard labels.
-  ///
-  headline,
-
-  /// Very large display text, for emphasis or branding.
-  ///
-  /// Example: Onboarding hero text, welcome screens.
-  ///
-  display,
-
   /// Error messages or validation feedback.
   ///
   /// Example: "Password is too short".
@@ -83,7 +83,9 @@ enum GsaThemeTextStyles {
 
   /// Retrieve the value of a [TextStyle] for this [GsaWidgetTextStyle] entry.
   ///
-  TextStyle get value {
+  TextStyle value(
+    BuildContext context,
+  ) {
     switch (this) {
       case GsaThemeTextStyles.small:
         return const TextStyle(

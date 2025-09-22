@@ -3,7 +3,7 @@ part of '../service_tracking.dart';
 class _GsaServiceTrackingEventCart {
   const _GsaServiceTrackingEventCart();
 
-  static const observables = <_GsaServiceTrackingEventCart>[];
+  static final observables = <_GsaServiceTrackingEventCart>[];
 
   _GsaServiceTrackingEventCart._() {
     observables.add(this);
